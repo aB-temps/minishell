@@ -71,7 +71,7 @@ ifeq ($(TOTAL_FILES),0)
 	TOTAL_FILES = $(words $(OBJS))
 endif
 CURRENT_FILE	:= 0
-BAR_LENGTH		:= 25
+BAR_LENGTH		:= 50
 
 #-------------------------------- COLORS -------------------------------------#
 
@@ -89,7 +89,7 @@ RESET		:=	\033[0m
 BOLD		:=	\033[1m
 
 define draw_progress_bar
-	@printf "\r$(CYAN)$(BOLD)Compiling libft: $(RESET)["
+	@printf "\r$(CYAN)$(BOLD)Compiling libft:     $(RESET)["
 	@n=$(CURRENT_FILE); \
 	total=$(TOTAL_FILES); \
 	pct=$$(expr $$n '*' 100 / $$total); \
@@ -111,7 +111,7 @@ endef
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@printf "\n$(BLUE)$(BOLD)[INFO]$(RESET) $(WHITE)Creating library...$(RESET)\n"
+	@printf "\n$(BLUE)$(BOLD)[INFO]$(RESET) $(WHITE)Creating library $(NAME)...\n"
 	@$(AR) $(NAME) $(OBJS)
 	@printf "$(GREEN)$(BOLD)[SUCCESS]$(RESET) $(WHITE)Library built successfully!$(RESET)\n"
 
@@ -123,7 +123,7 @@ $(BUILD_DIR)%.o: %.c
 	@$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -MMD -MP -c $< -o $@
 
 clean:
-	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Cleaning object files from libft...$(RESET)\n"
+	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Cleaning object files from $(CYAN)$(NAME)$(RESET)\n"
 	@$(RM) -r $(BUILD_DIR)
 
 fclean: clean
