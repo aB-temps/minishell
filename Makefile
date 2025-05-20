@@ -82,12 +82,12 @@ RESET		:=	\033[0m
 BOLD		:=	\033[1m
 
 # COMPONENTS ==========================================================================
-COMPONENTS :=	PARSING \
+# COMPONENTS :=	PARSING \
 
 # FILES ===============================================================================
 F_MAIN :=		main.c
 
-F_PARSING :=	tutu.c
+# F_PARSING :=	tutu.c
 
 # VARS GENERATION =====================================================================
 $(foreach comp,$(COMPONENTS),$(eval $(call generate_var_sources_dir,$(comp))))
