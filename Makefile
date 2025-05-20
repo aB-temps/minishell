@@ -21,7 +21,7 @@ LIB_FLAGS	:= -L$(DIR_LIB) -lft
 
 
 COMP 		:= $(CC) $(C_FLAGS) $(INC_FLAGS)
-LINK		:= $(LIB_FLAGS)
+LINK		:= $(LIB_FLAGS) -lreadline
 
 ANTI_RELINK	:= Makefile $(DIR_INC) $(DIR_INC_LIB) 
 
