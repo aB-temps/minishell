@@ -1,4 +1,4 @@
-#include "text_formatting.h"
+#include "style.h"
 
 void	welcome(void)
 {

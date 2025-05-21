@@ -89,7 +89,7 @@ COMPONENTS :=	PARSING \
 # FILES ===============================================================================
 F_MAIN :=		main.c
 
-# F_PARSING :=	.c
+F_PARSING :=	get_input.c
 
 F_STYLE :=		welcome.c \
 				build_prompt.c \

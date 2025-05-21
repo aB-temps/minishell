@@ -1,8 +1,6 @@
 #ifndef TEXT_FORMATTING_H
 # define TEXT_FORMATTING_H
 
-#include <stdio.h>
-
 // FOREGROUND COLORS
 # define FG_BLACK "\e[30m"
 # define FG_RED "\e[31m"
