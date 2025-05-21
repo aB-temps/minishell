@@ -13,10 +13,10 @@ DIR_INC_LIB	:= $(DIR_LIB)includes/
 
 # FLAGS & COMPILATOR SETTINGS =========================================================
 CC 			:= cc
-DEPS_FLAGS  := -MMD -MP
+DEPS_FLAGS	:= -MMD -MP
 WARN_FLAGS	:= -Wall -Werror -Wextra
 C_FLAGS		:= $(WARN_FLAGS) $(DEPS_FLAGS)
-INC_FLAGS 	:= -I$(DIR_INC) -I$(DIR_INC_LIB)
+INC_FLAGS	:= -I$(DIR_INC) -I$(DIR_INC_LIB)
 LIB_FLAGS	:= -L$(DIR_LIB) -lft
 
 
@@ -48,7 +48,7 @@ ifeq ($(TOTAL_FILES),0)
 	TOTAL_FILES =	$(words $(OBJS))
 endif
 CURRENT_FILE	:=	0
-BAR_LENGTH		:=	25
+BAR_LENGTH		:=	50
 
 define draw_progress_bar
 	@printf "\r$(CYAN)$(BOLD)Compiling $(NAME): $(RESET)["
@@ -110,8 +110,9 @@ DEPS := $(foreach comp, $(COMPONENTS), $(DEPS_$(comp))) \
 
 # COMPILATION =========================================================================
 $(NAME) : $(OBJS)
+	@printf "$(BLUE)$(BOLD)[INFO]$(RESET) $(WHITE)Linking objects...$(RESET)\n"
 	$(COMP) $^ -o $@ $(LINK)
-	@echo ✨ $(NAME) compiled ✨
+	@printf "$(GREEN)$(BOLD)[SUCCESS]$(RESET) $(WHITE)Build successful!$(RESET) Created $(BOLD)$(CYAN)$(NAME)$(RESET)\n"
 
 $(DIR_BUILD) :
 	@mkdir -p $(DIR_BUILD)
@@ -122,8 +123,6 @@ $(DIR_BUILD)%.o : $(DIR_SRC)%.c $(ANTI_RELINK) | $(DIR_BUILD)
 	$(call draw_progress_bar)
 	$(COMP) -c $< -o $@
 	@if [ $(CURRENT_FILE) = $(TOTAL_FILES) ]; then echo; fi
-
-
 
 -include $(DEPS)
 
@@ -136,13 +135,18 @@ lib :
 
 # clean -------------------------------------------------------------------------------
 clean:
+	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Cleaning object files from $(CYAN)$(NAME)$(RESET)...\n"
 	@make -s clean -C $(DIR_LIB)
 	@rm -rf $(DIR_BUILD)
 
-fclean: clean
+fclean: 
 	@make -s fclean -C $(DIR_LIB)
+	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Cleaning object files from $(CYAN)$(NAME)$(RESET)...\n"
+	@rm -rf $(DIR_BUILD)
+	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Removing executables...$(RESET)\n"
 	@rm -f $(NAME)
-	
+	@printf "$(GREEN)$(BOLD)[DONE]$(RESET) $(WHITE)Clean complete!$(RESET)\n"
+
 re: fclean all
 
 .DEFAULT_GOAL = all
