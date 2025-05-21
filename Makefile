@@ -16,8 +16,8 @@ CC 			:= cc
 DEPS_FLAGS	:= -MMD -MP
 WARN_FLAGS	:= -Wall -Werror -Wextra
 C_FLAGS		:= $(WARN_FLAGS) $(DEPS_FLAGS)
-INC_FLAGS	:= -I$(DIR_INC) -I$(DIR_INC_LIB)
-LIB_FLAGS	:= -L$(DIR_LIB) -lft
+INC_FLAGS	:= -I $(DIR_INC) -I $(DIR_INC_LIB)
+LIB_FLAGS	:= -L $(DIR_LIB) -lft
 
 
 COMP 		:= $(CC) $(C_FLAGS) $(INC_FLAGS)
@@ -42,13 +42,23 @@ define generate_var_deps
 DEPS_$(1) = $(patsubst $(DIR_SRC)%.c,$(DIR_BUILD)%.d,$(SRC_$(1)))
 endef
 
-# PROGRESS BAR ========================================================================
+# FUNCTIONS ===========================================================================
 TOTAL_FILES		:=	$(shell find $(OBJS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
 ifeq ($(TOTAL_FILES),0)
 	TOTAL_FILES =	$(words $(OBJS))
 endif
 CURRENT_FILE	:=	0
 BAR_LENGTH		:=	50
+
+define exec_cmd_with_status
+    output=$$($(1) 2>&1); \
+    exit_code=$$?; \
+    if [ $$exit_code -ne 0 ]; then \
+        printf "\n$(RED)$(BOLD)[ERROR]$(RESET)$(WHITE) Compilation of$(BOLD)$(RED)$(1) failed$(RESET)\n"; \
+        printf "$(WHITE)$$output$(RESET)\n"; \
+        exit $$exit_code; \
+    fi;
+endef
 
 define draw_progress_bar
 	@printf "\r$(CYAN)$(BOLD)Compiling $(NAME): $(RESET)["
@@ -69,13 +79,13 @@ endef
 
 # COLORS ==============================================================================
 BLACK		:=	\033[38;2;0;0;0m
-RED			:=	\033[38;2;220;20;60m
-GREEN		:=	\033[38;2;46;139;87m
+RED			:=	\033[38;2;178;34;34m
+GREEN		:=	\033[38;2;60;179;113m
 BLUE		:=	\033[38;2;30;144;255m
 YELLOW		:=	\033[38;2;255;215;0m
 MAGENTA		:=	\033[38;2;186;85;211m
 CYAN		:=	\033[38;2;0;206;209m
-WHITE		:=	\033[38;2;255;255;255m
+WHITE		:=	\033[38;2;230;230;230m
 ORANGE		:=	\033[38;2;255;140;0m
 PURPLE		:=	\033[38;2;147;112;219m
 RESET		:=	\033[0m
@@ -104,7 +114,7 @@ DEPS := $(foreach comp, $(COMPONENTS), $(DEPS_$(comp))) \
 # COMPILATION =========================================================================
 $(NAME) : $(OBJS)
 	@printf "$(BLUE)$(BOLD)[INFO]$(RESET) $(WHITE)Linking objects...$(RESET)\n"
-	$(COMP) $^ -o $@ $(LINK)
+	$(call exec_cmd_with_status, $(COMP) $^ -o $@ $(LINK))
 	@printf "$(GREEN)$(BOLD)[SUCCESS]$(RESET) $(WHITE)Build successful!$(RESET) Created $(BOLD)$(CYAN)$(NAME)$(RESET)\n"
 
 $(DIR_BUILD) :
@@ -114,7 +124,7 @@ $(DIR_BUILD)%.o : $(DIR_SRC)%.c $(ANTI_RELINK) | $(DIR_BUILD)
 	@mkdir -p $(dir $@)
 	$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
 	$(call draw_progress_bar)
-	$(COMP) -c $< -o $@
+	$(call exec_cmd_with_status, $(COMP) -c $< -o $@)
 	@if [ $(CURRENT_FILE) = $(TOTAL_FILES) ]; then echo; fi
 
 -include $(DEPS)
@@ -147,5 +157,6 @@ re: fclean all
 # debug -------------------------------------------------------------------------------
 print-%:
 	@echo $($(patsubst print-%,%,$@))
+
 
 .PHONY: all lib clean fclean re print-%
