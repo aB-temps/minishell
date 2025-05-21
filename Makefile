@@ -93,11 +93,18 @@ BOLD		:=	\033[1m
 
 # COMPONENTS ==========================================================================
 COMPONENTS :=	PARSING \
+				STYLE \
+				UTILS \
 
 # FILES ===============================================================================
 F_MAIN :=		main.c
 
-F_PARSING :=	test.c
+F_PARSING :=	get_input.c
+
+F_STYLE :=		welcome.c \
+				build_prompt.c \
+
+F_UTILS :=		get_line_in_env.c \
 
 # VARS GENERATION =====================================================================
 $(foreach comp,$(COMPONENTS),$(eval $(call generate_var_sources_dir,$(comp))))
