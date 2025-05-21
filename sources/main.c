@@ -6,6 +6,5 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	welcome();
 	get_input(env);
-
 	return (0);
 }

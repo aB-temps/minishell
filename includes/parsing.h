@@ -3,8 +3,9 @@
 
 # include "env.h"
 # include "libft.h"
-# include "readline/readline.h"
 # include "style.h"
+# include <readline/history.h>
+# include <readline/readline.h>
 
 void	get_input(char **env);
 

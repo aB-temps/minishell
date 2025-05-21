@@ -1,3 +1,4 @@
+#include "lexing.h"
 #include "parsing.h"
 
 void	get_input(char **env)
@@ -13,7 +14,11 @@ void	get_input(char **env)
 		if (!prompt)
 			exit(EXIT_FAILURE);
 		line = readline(prompt);
+		add_history(line);
+		// if (lexing(line) == 1)
+		// 	break ;
 		free(line);
 		free(prompt);
 	}
+	printf("Exited minishell\n");
 }
