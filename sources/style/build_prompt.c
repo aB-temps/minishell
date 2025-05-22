@@ -19,7 +19,7 @@ char	*build_prompt(char *username)
 	prompt = str_free_to_join(prompt, cwd);
 	if (!prompt)
 		return (NULL);
-	prompt = str_free_to_join(prompt, "\n⚡  " R_ALL);
+	prompt = str_free_to_join(prompt, " ⚡> " R_ALL);
 	if (!prompt)
 		return (NULL);
 	return (prompt);
