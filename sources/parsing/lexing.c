@@ -19,24 +19,20 @@ t_token	*handle_single_quote(char *line, size_t *i)
 	t_token	*token;
 
 	token = NULL;
-
+	start = *i;
+	(*i)++;
+	while (line[*i] && line[*i] != '\'')
+		(*i)++;
 	if (line[*i] == '\'')
 	{
-		start = *i;
+		content = ft_substr(line, start + 1, *i - start - 1);
+		token = create_token(TOKEN_SINGLE_QUOTE, content);
 		(*i)++;
-		while (line[*i] && line[*i] != '\'')
-			(*i)++;
-		if (line[*i] == '\'')
-		{
-			content = ft_substr(line, start + 1, *i - start - 1);
-			token = create_token(TOKEN_SINGLE_QUOTE, content);
-			(*i)++;
-		}
-		else
-		{
-			content = ft_substr(line, start + 1, *i - start - 1);
-			token = create_token(TOKEN_ERROR, content);
-		}
+	}
+	else
+	{
+		content = ft_substr(line, start + 1, *i - start - 1);
+		token = create_token(TOKEN_ERROR, content);
 	}
 	return (token);
 }
@@ -48,41 +44,36 @@ t_token	*handle_double_quote(char *line, size_t *i)
 	t_token	*token;
 
 	token = NULL;
-
+	start = *i;
+	(*i)++;
+	while (line[*i] && line[*i] != '\"')
+		(*i)++;
 	if (line[*i] == '\"')
 	{
-		start = *i;
+		content = ft_substr(line, start + 1, *i - start - 1);
+		token = create_token(TOKEN_DOUBLE_QUOTE, content);
 		(*i)++;
-		while (line[*i] && line[*i] != '\"')
-			(*i)++;
-		if (line[*i] == '\"')
-		{
-			content = ft_substr(line, start + 1, *i - start - 1);
-			token = create_token(TOKEN_DOUBLE_QUOTE, content);
-			(*i)++;
-		}
-		else
-		{
-			content = ft_substr(line, start + 1, *i - start - 1);
-			token = create_token(TOKEN_ERROR, content);
-		}
+	}
+	else
+	{
+		content = ft_substr(line, start + 1, *i - start - 1);
+		token = create_token(TOKEN_ERROR, content);
 	}
 	return (token);
 }
 
-t_token *handle_less_than(char *line, size_t *i)
+t_token	*handle_less_than(char *line, size_t *i)
 {
-	t_token *token;
-	token = NULL;
+	t_token	*token;
 
+	token = NULL;
 	if (line[*(i) + 1] == '<')
 	{
 		token = create_token(TOKEN_HEREDOC, ft_strdup("<<"));
+		(*i)++;
 	}
 	else
-	{
 		token = create_token(TOKEN_REDIRECT_IN, ft_strdup("<"));
-	}
 	(*i)++;
 	return (token);
 }
@@ -133,7 +124,6 @@ int	put_lex(char *line, t_list **lexing_lst)
 	token = NULL;
 	while (line[i])
 	{
-
 		if (!line[i])
 			break ;
 		if (line[i] == '\'')
@@ -157,11 +147,19 @@ int	put_lex(char *line, t_list **lexing_lst)
 		}
 		else
 			token = handle_word(line, &i);
-		if (token == NULL || token->content == NULL)
+		if (token == NULL)												//DEBUG
 		{
 			printf("[DEBUG]: Error un lexing.c\n");
+			printf("[DEBUG]: token = NULL\n");
 			return (1);
 		}
+		else if (token->content == NULL)
+		{
+			printf("[DEBUG]: Error un lexing.c\n");
+			printf("[DEBUG]: token->content = %s\n", token->content);
+			return (1);
+		}																//DEBUG
+		
 		ft_lstadd_back(lexing_lst, ft_lstnew(token));
 	}
 	return (0);
@@ -186,7 +184,6 @@ void	print_lexing(t_list *lexing_lst)
 
 int	lexing(char *line, t_list **lexing_lst)
 {
-
 	if (!line)
 		return (0);
 	if (put_lex(line, lexing_lst) == 1)
