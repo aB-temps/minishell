@@ -100,7 +100,7 @@ COMPONENTS :=	PARSING \
 F_MAIN :=		main.c
 
 F_PARSING :=	get_input.c \
-				lexing.c
+				lexing.c \
 
 F_STYLE :=		welcome.c \
 				build_prompt.c \

@@ -26,14 +26,14 @@ void	handle_single_quote(char *line, t_list **lexing_list, size_t *i)
 			(*i)++;
 		if (line[*i] == '\'')
 		{
-			content = ft_substr(line, start + 1, *i - start - 1);
+			content = ft_substr(line, start + 1, *i - start - 1); // pas protégé
 			token = create_token(TOKEN_SINGLE_QUOTE, content);
 			ft_lstadd_back(lexing_list, ft_lstnew(token));
 			(*i)++;
 		}
 		else
 		{
-			content = ft_substr(line, start + 1, *i - start - 1);
+			content = ft_substr(line, start + 1, *i - start - 1); // pas protégé
 			token = create_token(TOKEN_ERROR, content);
 			ft_lstadd_back(lexing_list, ft_lstnew(token));
 		}
@@ -54,14 +54,14 @@ void	handle_double_quote(char *line, t_list **lexing_list, size_t *i)
 			(*i)++;
 		if (line[*i] == '\"')
 		{
-			content = ft_substr(line, start + 1, *i - start - 1);
+			content = ft_substr(line, start + 1, *i - start - 1); // pas protégé
 			token = create_token(TOKEN_DOUBLE_QUOTE, content);
 			ft_lstadd_back(lexing_list, ft_lstnew(token));
 			(*i)++;
 		}
 		else
 		{
-			content = ft_substr(line, start + 1, *i - start - 1);
+			content = ft_substr(line, start + 1, *i - start - 1); // pas protégé
 			token = create_token(TOKEN_ERROR, content);
 			ft_lstadd_back(lexing_list, ft_lstnew(token));
 		}
@@ -82,7 +82,7 @@ void	handle_word(char *line, t_list **lexing_list, size_t *i)
 			&& line[*i] != '\"' && line[*i] != '|' && line[*i] != '<'
 			&& line[*i] != '>')
 			(*i)++;
-		content = ft_substr(line, start, *i - start);
+		content = ft_substr(line, start, *i - start); // pas protégé
 		token = create_token(TOKEN_WORD, content);
 		ft_lstadd_back(lexing_list, ft_lstnew(token));
 	}
@@ -124,7 +124,7 @@ void	print_lexing(t_list *lexing_list)
 	while (current != NULL)
 	{
 		token = (t_token *)current->content;
-		ft_printf("Token type: %d, Content: \"%s\"\n", token->type, token->content);
+		ft_printf("Token type: %d, Content: \"%s\"\n", token->type, token->content); // utiliser vrai printf
 		current = current->next;
 	}
 }
