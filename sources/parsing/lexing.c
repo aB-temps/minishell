@@ -12,11 +12,13 @@ t_token	*create_token(int type, char *content)
 	return (new_token);
 }
 
-void	handle_single_quote(char *line, t_list **lexing_list, size_t *i)
+t_token	*handle_single_quote(char *line, size_t *i)
 {
 	size_t	start;
 	char	*content;
 	t_token	*token;
+
+	token = NULL;
 
 	if (line[*i] == '\'')
 	{
@@ -26,25 +28,26 @@ void	handle_single_quote(char *line, t_list **lexing_list, size_t *i)
 			(*i)++;
 		if (line[*i] == '\'')
 		{
-			content = ft_substr(line, start + 1, *i - start - 1); // pas protégé
+			content = ft_substr(line, start + 1, *i - start - 1);
 			token = create_token(TOKEN_SINGLE_QUOTE, content);
-			ft_lstadd_back(lexing_list, ft_lstnew(token));
 			(*i)++;
 		}
 		else
 		{
-			content = ft_substr(line, start + 1, *i - start - 1); // pas protégé
+			content = ft_substr(line, start + 1, *i - start - 1);
 			token = create_token(TOKEN_ERROR, content);
-			ft_lstadd_back(lexing_list, ft_lstnew(token));
 		}
 	}
+	return (token);
 }
 
-void	handle_double_quote(char *line, t_list **lexing_list, size_t *i)
+t_token	*handle_double_quote(char *line, size_t *i)
 {
 	size_t	start;
 	char	*content;
 	t_token	*token;
+
+	token = NULL;
 
 	if (line[*i] == '\"')
 	{
@@ -54,26 +57,59 @@ void	handle_double_quote(char *line, t_list **lexing_list, size_t *i)
 			(*i)++;
 		if (line[*i] == '\"')
 		{
-			content = ft_substr(line, start + 1, *i - start - 1); // pas protégé
+			content = ft_substr(line, start + 1, *i - start - 1);
 			token = create_token(TOKEN_DOUBLE_QUOTE, content);
-			ft_lstadd_back(lexing_list, ft_lstnew(token));
 			(*i)++;
 		}
 		else
 		{
-			content = ft_substr(line, start + 1, *i - start - 1); // pas protégé
+			content = ft_substr(line, start + 1, *i - start - 1);
 			token = create_token(TOKEN_ERROR, content);
-			ft_lstadd_back(lexing_list, ft_lstnew(token));
 		}
 	}
+	return (token);
 }
 
-void	handle_word(char *line, t_list **lexing_list, size_t *i)
+t_token *handle_less_than(char *line, size_t *i)
+{
+	t_token *token;
+	token = NULL;
+
+	if (line[*(i) + 1] == '<')
+	{
+		token = create_token(TOKEN_HEREDOC, ft_strdup("<<"));
+	}
+	else
+	{
+		token = create_token(TOKEN_REDIRECT_IN, ft_strdup("<"));
+	}
+	(*i)++;
+	return (token);
+}
+
+t_token	*handle_greater_than(char *line, size_t *i)
+{
+	t_token	*token;
+
+	token = NULL;
+	if (line[*i + 1] == '>')
+	{
+		token = create_token(TOKEN_APPEND, ft_strdup(">>"));
+		(*i)++;
+	}
+	else
+		token = create_token(TOKEN_REDIRECT_OUT, ft_strdup(">"));
+	(*i)++;
+	return (token);
+}
+
+t_token	*handle_word(char *line, size_t *i)
 {
 	size_t	start;
 	char	*content;
 	t_token	*token;
 
+	token = NULL;
 	if (line[*i] && line[*i] != ' ' && line[*i] != '\'' && line[*i] != '\"'
 		&& line[*i] != '|' && line[*i] != '<' && line[*i] != '>')
 	{
@@ -82,61 +118,79 @@ void	handle_word(char *line, t_list **lexing_list, size_t *i)
 			&& line[*i] != '\"' && line[*i] != '|' && line[*i] != '<'
 			&& line[*i] != '>')
 			(*i)++;
-		content = ft_substr(line, start, *i - start); // pas protégé
+		content = ft_substr(line, start, *i - start);
 		token = create_token(TOKEN_WORD, content);
-		ft_lstadd_back(lexing_list, ft_lstnew(token));
 	}
+	return (token);
 }
 
-void	put_lex(char *line, t_list **lexing_list)
+int	put_lex(char *line, t_list **lexing_lst)
 {
 	size_t	i;
 	t_token	*token;
 
 	i = 0;
+	token = NULL;
 	while (line[i])
 	{
-		while (line[i] == ' ')
-			i++;
+
 		if (!line[i])
 			break ;
 		if (line[i] == '\'')
-			handle_single_quote(line, lexing_list, &i);
+			token = handle_single_quote(line, &i);
+		else if (line[i] == '>')
+			token = handle_greater_than(line, &i);
 		else if (line[i] == '\"')
-			handle_double_quote(line, lexing_list, &i);
+			token = handle_double_quote(line, &i);
+		else if (line[i] == '<')
+			token = handle_less_than(line, &i);
 		else if (line[i] == '|')
 		{
 			token = create_token(TOKEN_PIPE, ft_strdup("|"));
-			ft_lstadd_back(lexing_list, ft_lstnew(token));
 			i++;
 		}
+		else if (line[i] == ' ')
+		{
+			token = create_token(TOKEN_WHITESPACE, ft_strdup(" "));
+			while (line[i] == ' ')
+				i++;
+		}
 		else
-			handle_word(line, lexing_list, &i);
+			token = handle_word(line, &i);
+		if (token == NULL || token->content == NULL)
+		{
+			printf("[DEBUG]: Error un lexing.c\n");
+			return (1);
+		}
+		ft_lstadd_back(lexing_lst, ft_lstnew(token));
 	}
+	return (0);
 }
 
-void	print_lexing(t_list *lexing_list)
+void	print_lexing(t_list *lexing_lst)
 {
 	t_list	*current;
 	t_token	*token;
 
-	current = lexing_list;
+	current = lexing_lst;
+	if (current == NULL)
+		printf("No token\n");
 	while (current != NULL)
 	{
 		token = (t_token *)current->content;
-		ft_printf("Token type: %d, Content: \"%s\"\n", token->type, token->content); // utiliser vrai printf
+		printf("Token type: %d, Content: \"%s\"\n", token->type,
+			token->content);
 		current = current->next;
 	}
 }
 
-int	lexing(char *line)
+int	lexing(char *line, t_list **lexing_lst)
 {
-	t_list	*lexing_list;
 
 	if (!line)
+		return (0);
+	if (put_lex(line, lexing_lst) == 1)
 		return (1);
-	lexing_list = NULL;
-	put_lex(line, &lexing_list);
-	print_lexing(lexing_list);
+	print_lexing(*lexing_lst);
 	return (0);
 }
