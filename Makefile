@@ -105,7 +105,7 @@ F_STYLE :=		welcome.c \
 				build_prompt.c
 
 F_UTILS :=		init_struct.c \
-				get_line_in_env.c \
+
 
 # VARS GENERATION =====================================================================
 $(foreach comp,$(COMPONENTS),$(eval $(call generate_var_sources_dir,$(comp))))
