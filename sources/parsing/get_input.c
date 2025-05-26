@@ -6,16 +6,19 @@
 
 void	get_input(char **env)
 {
+	(void)env;
 	t_input input;
 	char *line;
-	char *prompt[_SC_LOGIN_NAME_MAX + PATH_MAX];
+	char *prompt;
 
 	init_input(&input);
 	line = (void *)0;
-	while (1)
+	for (int i = 0; i < 5; i++)
 	{
-		build_prompt(prompt, env);
-		line = readline(*prompt);
+		prompt = (void *)0;
+		build_prompt(&prompt);
+		line = readline(prompt);
 		free(line);
+		free(prompt);
 	}
 }

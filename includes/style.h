@@ -8,6 +8,6 @@
 # include <unistd.h>
 
 void	welcome(void);
-void	build_prompt(char *prompt[_SC_LOGIN_NAME_MAX + PATH_MAX], char **env);
+void	build_prompt(char **prompt);
 
 #endif

@@ -1,0 +1,13 @@
+{
+	<readline-leaks>
+	Memcheck:Leak
+	...
+	fun:readline
+}
+
+{
+	<readline-leaks>
+	Memcheck:Leak
+	...
+	fun:*/bin/*
+}
