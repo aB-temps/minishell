@@ -5,6 +5,5 @@
 # include <stdio.h>
 
 void	welcome(void);
-char	*build_prompt(char *username);
 
 #endif
