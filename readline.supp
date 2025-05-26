@@ -6,7 +6,7 @@
 }
 
 {
-	<readline-leaks>
+	<bin-leaks>
 	Memcheck:Leak
 	...
 	fun:*/bin/*
