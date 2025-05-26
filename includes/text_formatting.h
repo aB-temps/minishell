@@ -9,6 +9,7 @@
 # define FG_BLUE "\e[34m"
 # define FG_MAGENTA "\e[35m"
 # define FG_CYAN "\e[36m"
+# define FG_DEF "\e[39m"
 
 // BACKGROUND COLORS
 # define BG_BLACK "\e[40m"
