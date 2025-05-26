@@ -54,7 +54,7 @@ define exec_cmd_with_status
     output=$$($(1) 2>&1); \
     exit_code=$$?; \
     if [ $$exit_code -ne 0 ]; then \
-        printf "\n$(RED)$(BOLD)[ERROR]$(RESET)$(WHITE) Compilation of$(BOLD)$(RED)$(1) failed$(RESET)\n"; \
+        printf "\n$(RED)$(BOLD)[ERROR]$(RESET)$(WHITE) Compilation : $(BOLD)$(RED)$(1) failed$(RESET)\n\n"; \
         printf "$(WHITE)$$output$(RESET)\n"; \
         exit $$exit_code; \
     fi;
@@ -100,12 +100,12 @@ COMPONENTS :=	PARSING \
 F_MAIN :=		main.c
 
 F_PARSING :=	get_input.c \
-				lexing.c \
 
 F_STYLE :=		welcome.c \
-				build_prompt.c \
+				build_prompt.c
 
-F_UTILS :=		get_line_in_env.c \
+F_UTILS :=		init_struct.c \
+				get_line_in_env.c \
 
 # VARS GENERATION =====================================================================
 $(foreach comp,$(COMPONENTS),$(eval $(call generate_var_sources_dir,$(comp))))

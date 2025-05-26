@@ -5,5 +5,6 @@
 # include <stdio.h>
 
 void	welcome(void);
+void	build_prompt(char *prompt, char **env);
 
 #endif

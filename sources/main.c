@@ -1,8 +1,12 @@
+#include "parsing.h"
+#include "style.h"
+#include <stdio.h>
 
 int	main(int ac, char **av, char **env)
 {
-	(void)av;
 	(void)ac;
+	(void)av;
+	(void)env;
 	welcome();
 	get_input(env);
 	return (0);
