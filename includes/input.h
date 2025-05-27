@@ -29,9 +29,8 @@ struct					s_token
 
 struct					s_input
 {
+	size_t				token_qty;
 	t_token				*token;
-	t_input				*prev;
-	t_input				*next;
 };
 
 void					init_input(t_input *input);
