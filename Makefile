@@ -109,6 +109,7 @@ F_STYLE :=		welcome.c \
 
 F_UTILS :=		init_struct.c \
 				is_whitespace.c \
+				is_operator.c \
 
 
 # VARS GENERATION =====================================================================
