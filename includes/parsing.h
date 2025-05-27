@@ -11,6 +11,6 @@ void	get_input(char **env);
 bool	line_is_valid(char *line);
 bool	is_whitespace(char c);
 t_input	*parse_input(char *line);
-void	lex_input(t_input *input, char *line);
+void	tokenize_input(t_input *input, char *line);
 
 #endif

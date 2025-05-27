@@ -1,6 +1,6 @@
 #include "parsing.h"
 
-void lex_input(t_input *input, char *line)
+void tokenize_input(t_input *input, char *line)
 {
 	int i;
 
