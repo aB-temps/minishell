@@ -29,7 +29,7 @@ struct					s_token
 
 struct					s_input
 {
-	size_t				token_qty;
+	ssize_t				token_qty;
 	t_token				*token;
 };
 

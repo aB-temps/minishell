@@ -2,12 +2,12 @@
 
 void	init_input(t_input *input)
 {
+	input->token_qty = -1;
 	input->token = (void *)0;
-	input->prev = (void *)0;
-	input->next = (void *)0;
 }
 void	init_token(t_token *token)
 {
 	token->type = -1;
-	token->content = (void *)0;
+	token->raw_content = (void *)0;
+	token->formatted_content = (void *)0;
 }
