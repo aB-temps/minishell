@@ -93,8 +93,9 @@ BOLD		:=	\033[1m
 
 # COMPONENTS ==========================================================================
 COMPONENTS :=	PARSING \
-				STYLE \
-				UTILS \
+				STYLE	\
+				UTILS	\
+				EXEC	\
 
 # FILES ===============================================================================
 F_MAIN :=		main.c
@@ -103,6 +104,14 @@ F_PARSING :=	get_input.c \
 				line_is_valid.c \
 				parse_input.c \
 				tokenize_input.c \
+
+F_EXEC :=		init.c \
+				parsing.c \
+				pipex.c \
+				prepare_cmd.c \
+				start.c \
+				utils.c \
+				wait_childs.c \
 
 F_STYLE :=		welcome.c \
 				build_prompt.c
