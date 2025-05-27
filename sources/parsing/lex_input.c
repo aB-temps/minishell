@@ -1,4 +1,3 @@
-#include "libft.h"
 #include "parsing.h"
 
 void lex_input(t_input *input, char *line)
@@ -8,6 +7,7 @@ void lex_input(t_input *input, char *line)
 	i = 0;
 	while (line[i])
 	{
+		
 		i++;
 	}
 }

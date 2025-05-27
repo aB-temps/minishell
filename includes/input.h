@@ -5,7 +5,16 @@
 
 enum					token_type
 {
-	CACA,
+	COMMAND,
+	ARG,
+	PIPE,
+	REDIR_OUT,
+	REDIR_IN,
+	HEREDOC,
+	ASSIGN,
+	S_QUOTES,
+	D_QUOTES,
+	ENV_VAR,
 };
 
 typedef struct s_input	t_input;
@@ -14,7 +23,8 @@ typedef struct s_token	t_token;
 struct					s_token
 {
 	ssize_t				type;
-	void				*content;
+	char				*raw_content;
+	void				*formatted_content;
 };
 
 struct					s_input
