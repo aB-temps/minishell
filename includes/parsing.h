@@ -4,8 +4,13 @@
 # include "input.h"
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <stdbool.h>
 # include <stdlib.h>
 
 void	get_input(char **env);
+bool	line_is_valid(char *line);
+bool	is_whitespace(char c);
+t_input	*parse_input(char *line);
+void	lex_input(t_input *input, char *line);
 
 #endif

@@ -100,11 +100,15 @@ COMPONENTS :=	PARSING \
 F_MAIN :=		main.c
 
 F_PARSING :=	get_input.c \
+				line_is_valid.c \
+				parse_input.c \
+				lex_input.c \
 
 F_STYLE :=		welcome.c \
 				build_prompt.c
 
 F_UTILS :=		init_struct.c \
+				is_whitespace.c \
 
 
 # VARS GENERATION =====================================================================

@@ -6,19 +6,23 @@
 
 void	get_input(char **env)
 {
-	(void)env;
-	t_input input;
-	char *line;
-	char *prompt;
+	t_input	*input;
+	char	*line;
+	char	*prompt;
 
-	init_input(&input);
+	(void)env;
 	line = (void *)0;
-	for (int i = 0; i < 5; i++)
+	while (1)
 	{
+		input = (void *)0;
 		prompt = (void *)0;
 		build_prompt(&prompt);
 		line = readline(prompt);
-		free(line);
+		if (line_is_valid(line))
+			input = parse_input(line);
+		// exec(input)
 		free(prompt);
+		free(line);
+		// clean input
 	}
 }

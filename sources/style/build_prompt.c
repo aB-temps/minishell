@@ -26,16 +26,16 @@ void	build_prompt(char **prompt)
 	cwd = getcwd(cwd, PATH_MAX);
 	if (!cwd)
 		return ;
-	plen = ft_strlen(username) + ft_strlen(hostname) + ft_strlen(cwd) + 5 + 52;
+	plen = ft_strlen(username) + ft_strlen(hostname) + ft_strlen(cwd) + 5 + 59;
 	*prompt = calloc(plen, sizeof(char));
 	if (!(*prompt))
 		return ;
 	ft_strlcat(*prompt, FG_CYAN BOLD, plen);
 	ft_strlcat(*prompt, username, plen);
-	ft_strlcat(*prompt, FG_DEF"@"FG_GREEN, plen);
+	ft_strlcat(*prompt, FG_MAGENTA "@" FG_CYAN, plen);
 	ft_strlcat(*prompt, hostname, plen);
-	ft_strlcat(*prompt, R_ALL FG_YELLOW"	", plen);
+	ft_strlcat(*prompt, R_ALL "  👻  ", plen);
 	ft_strlcat(*prompt, cwd, plen);
-	ft_strlcat(*prompt, FG_MAGENTA"\n➤  "R_ALL"\0", plen);
+	ft_strlcat(*prompt, FG_MAGENTA "\n➤  " R_ALL "\0", plen);
 	free(cwd);
 }
