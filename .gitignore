@@ -4,3 +4,4 @@
 *.out
 .vscode
 minishell
+sources/test/*
