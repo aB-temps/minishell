@@ -35,11 +35,11 @@ struct					s_token
 	void				*formatted_content;
 };
 
-struct					s_input
-{
-	ssize_t				token_qty;
-	t_vector			*v_tokens;
-};
+// struct					s_input
+// {
+// 	ssize_t				token_qty;
+// 	t_vector			*v_tokens;
+// };
 
 void					init_input(t_input *input);
 void					init_token(t_token *token);
