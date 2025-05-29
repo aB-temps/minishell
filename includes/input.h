@@ -11,6 +11,7 @@ enum					token_type
 	REDIR_OUT,
 	REDIR_IN,
 	HEREDOC,
+	APPEND,
 	ASSIGN,
 	S_QUOTES,
 	D_QUOTES,
@@ -20,6 +21,12 @@ enum					token_type
 typedef struct s_input	t_input;
 typedef struct s_token	t_token;
 
+struct					s_input
+{
+	ssize_t				token_qty;
+	t_token				*token;
+};
+
 struct					s_token
 {
 	ssize_t				type;
@@ -27,11 +34,6 @@ struct					s_token
 	void				*formatted_content;
 };
 
-struct					s_input
-{
-	ssize_t				token_qty;
-	t_token				*token;
-};
 
 void					init_input(t_input *input);
 void					init_token(t_token *token);

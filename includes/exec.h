@@ -3,8 +3,8 @@
 # define PIPEX_H
 
 /*-------------------------------- INCLUDES --------------------------------*/
-# include "libft.h"
 # include "input.h"
+# include "libft.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <signal.h>
@@ -61,5 +61,7 @@ void		middle_cmd(t_fd *fd, t_data *data);
 void		last_cmd(t_fd *fd, char *file_name, t_data *data);
 int			wait_childs(t_data *data);
 void		error_occured(t_fd *fd, t_data *data, char *error_msg);
+void		exec_cmd(t_input *input, char **env);
+void		free_input_content(t_input *input);
 
 #endif
