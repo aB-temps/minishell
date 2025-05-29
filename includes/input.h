@@ -9,8 +9,9 @@ enum					token_type
 	COMMAND,
 	ARG,
 	PIPE,
-	REDIR_OUT,
 	REDIR_IN,
+	REDIR_OUT,
+	APPEND,
 	HEREDOC,
 	APPEND,
 	ASSIGN,
@@ -38,7 +39,7 @@ struct					s_token
 struct					s_input
 {
 	ssize_t				token_qty;
-	t_vector			*token;
+	t_vector			*v_tokens;
 };
 
 void					init_input(t_input *input);
