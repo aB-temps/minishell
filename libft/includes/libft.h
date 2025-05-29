@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:45:04 by enchevri          #+#    #+#             */
-/*   Updated: 2025/03/31 19:59:12 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/05/29 18:30:31 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,17 @@
 #  define BUFFER_SIZE 42
 # endif
 # define GOOD_ARG "0123456789-+"
+
+typedef struct s_vector		t_vector;
+struct						s_vector
+{
+	void					*array;
+	size_t					datatype_size;
+	size_t					capacity;
+	size_t					nb_elements;
+	size_t					occupied_bytes;
+	void					(*clear_array)(t_vector *vec);
+};
 
 typedef struct s_list_db_cir
 {
@@ -113,6 +124,15 @@ int							ft_printf(const char *format, ...);
 int							print_digit(long n, int base, char c);
 int							print_hexa(unsigned long n);
 int							print_pointer(void *ptr);
+
+/***************************VECTORS****************************/
+
+t_vector					*create_vector(size_t capacity,
+								size_t datatype_size,
+								void (*clear_array)(t_vector *));
+bool						grow_vector(t_vector *vec, size_t new_elements);
+bool						add_element(t_vector *vec, void *element);
+void						clear_vector(t_vector *vec);
 
 /*************************************************************/
 
