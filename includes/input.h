@@ -2,14 +2,16 @@
 # define INPUT_H
 
 # include <sys/types.h>
+# include "libft.h"
 
 enum					token_type
 {
 	COMMAND,
 	ARG,
 	PIPE,
-	REDIR_OUT,
 	REDIR_IN,
+	REDIR_OUT,
+	APPEND,
 	HEREDOC,
 	ASSIGN,
 	S_QUOTES,
@@ -30,7 +32,7 @@ struct					s_token
 struct					s_input
 {
 	ssize_t				token_qty;
-	t_vector			*token;
+	t_vector			*v_tokens;
 };
 
 void					init_input(t_input *input);
