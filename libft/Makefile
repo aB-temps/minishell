@@ -8,13 +8,14 @@ RM		=	rm -f
 #-------------------------------- DIRECTORIES --------------------------------#
 INCLUDE_DIR		=	includes
 LIST_DIR		=	./src/list/
-TAB_DIR			=	./src/free_tab/
+UTILS_DIR		=	./src/utils/
 LIST_DB_CIR_DIR	=	./src/list_db_cir/
 CHAR_DIR		=	./src/char/
 STRING_DIR		=	./src/string/
 IO_DIR			=	./src/io/
 MEMORY_DIR		=	./src/memory/
 ADVANCE_DIR		=	./src/advance/
+VECTOR_DIR		=	./src/vectors/
 BUILD_DIR		=	.build/
 
 #-------------------------------- SOURCE FILES -------------------------------#
@@ -25,7 +26,7 @@ LIST_SRCS			=	ft_lstadd_front.c ft_lstlast.c \
 						ft_lstiter.c ft_lstmap.c \
 						ft_lstnew.c 
 
-TAB_SRCS			=	free_tab.c
+UTILS_SRCS			=	free_tab.c
 
 LIST_DB_CIR_SRCS	=	ft_lstadd_back_db_cir.c ft_lstsize_db_cir.c \
 						ft_lstclear_db_cir.c \
@@ -51,6 +52,9 @@ MEMORY_SRCS			=	ft_memset.c ft_bzero.c ft_memcpy.c \
 ADVANCE_SRCS		=	ft_atoi.c ft_split.c ft_itoa.c \
 						get_next_line.c ft_printf.c 
 
+VECTOR_SRCS			=	add_element.c clear_vector.c \
+						create_vector.c grow_vector.c
+
 SRCS				=	$(addprefix $(LIST_DIR), $(LIST_SRCS)) \
 						$(addprefix $(TAB_DIR), $(TAB_SRCS)) \
 						$(addprefix $(CHAR_DIR), $(CHAR_SRCS)) \
@@ -59,6 +63,7 @@ SRCS				=	$(addprefix $(LIST_DIR), $(LIST_SRCS)) \
 						$(addprefix $(MEMORY_DIR), $(MEMORY_SRCS)) \
 						$(addprefix $(ADVANCE_DIR), $(ADVANCE_SRCS)) \
 						$(addprefix $(LIST_DB_CIR_DIR), $(LIST_DB_CIR_SRCS)) \
+						$(addprefix $(VECTOR_DIR), $(VECTOR_SRCS)) \
 
 
 #-------------------------------- OBJECTS ------------------------------------#
