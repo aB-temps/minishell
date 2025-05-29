@@ -13,7 +13,6 @@ enum					token_type
 	REDIR_OUT,
 	APPEND,
 	HEREDOC,
-	APPEND,
 	ASSIGN,
 	S_QUOTES,
 	D_QUOTES,
