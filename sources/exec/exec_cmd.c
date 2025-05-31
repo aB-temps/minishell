@@ -2,9 +2,9 @@
 
 void handle_token(t_input *input, ssize_t i, char **env)
 {
-	if (input->token[i].type == COMMAND)
+	if (input->type == COMMAND)
 		printf("C'est une commande\n");
-	else if (input->token[i].type == PIPE)
+	else if (input->type == PIPE)
 		printf("C'est une '|'\n");
 }
 
