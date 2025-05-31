@@ -56,7 +56,7 @@ VECTOR_SRCS			=	add_element.c clear_vector.c \
 						create_vector.c grow_vector.c
 
 SRCS				=	$(addprefix $(LIST_DIR), $(LIST_SRCS)) \
-						$(addprefix $(TAB_DIR), $(TAB_SRCS)) \
+						$(addprefix $(UTILS_DIR), $(UTILS_SRCS)) \
 						$(addprefix $(CHAR_DIR), $(CHAR_SRCS)) \
 						$(addprefix $(STRING_DIR), $(STRING_SRCS)) \
 						$(addprefix $(IO_DIR), $(IO_SRCS)) \
