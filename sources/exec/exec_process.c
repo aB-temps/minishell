@@ -23,7 +23,7 @@ static int	handle_command_not_found(char **args, char *cmd_path)
 {
 	if (!cmd_path)
 	{
-		fprintf(stderr, "Command not found: %s\n", args[0]);
+		fprintf(stderr, "Command not found: %s\n", args[0]); // FAIRE NOUS MEME LE DPRINTF ?
 		free(args);
 		return (-1);
 	}
