@@ -1,9 +1,9 @@
 #include "parsing.h"
 
-int	tokenize_operator(t_input *input, int i, char *line, size_t line_len)
+int	tokenize_operator(t_input *input, size_t i, char *line, size_t line_len)
 {
 	t_token	token;
-	int		j;
+	size_t		j;
 
 	j = 0;
 	init_token(&token);

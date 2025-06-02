@@ -2,7 +2,7 @@
 
 void	clear_token(t_vector *tokens)
 {
-	int i;
+	size_t i;
 
 	i = 0;
 	while (i < tokens->occupied_bytes)

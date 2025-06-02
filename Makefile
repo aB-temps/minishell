@@ -108,6 +108,7 @@ F_STYLE :=		welcome.c \
 				build_prompt.c
 
 F_UTILS :=		init_struct.c \
+				clear_token.c \
 				is_whitespace.c \
 				is_operator.c \
 
