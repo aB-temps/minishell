@@ -3,13 +3,14 @@
 int	tokenize_operator(t_input *input, size_t i, char *line, size_t line_len)
 {
 	t_token	token;
-	size_t		j;
+	size_t	j;
 
 	j = 0;
 	init_token(&token);
 	if (line[i] == '|')
-		token.type = PIPE;
-	else if (line[i] == '>')
+		if (!create_token(&token, PIPE,"|"));
+			
+		else if (line[i] == '>')
 	{
 		if (i < line_len - 1 && line[i + 1] == '>')
 		{
@@ -28,6 +29,8 @@ int	tokenize_operator(t_input *input, size_t i, char *line, size_t line_len)
 		exit(EXIT_FAILURE);
 	}
 	input->token_qty++;
+	printf("%zu\n\n\n\n", input->token_qty);
+	print_input(input);
 	return (j);
 }
 
@@ -47,4 +50,5 @@ void	tokenize_input(t_input *input, char *line)
 		// comment je vais faire ca zebi faudra prendre les strings nik zebi */
 		i++;
 	}
+	// print_input(input);
 }

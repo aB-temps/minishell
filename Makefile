@@ -95,6 +95,7 @@ BOLD		:=	\033[1m
 COMPONENTS :=	PARSING \
 				STYLE \
 				UTILS \
+				DEBUG \
 
 # FILES ===============================================================================
 F_MAIN :=		main.c
@@ -111,6 +112,8 @@ F_UTILS :=		init_struct.c \
 				clear_token.c \
 				is_whitespace.c \
 				is_operator.c \
+
+F_DEBUG :=		print_input.c \
 
 
 # VARS GENERATION =====================================================================

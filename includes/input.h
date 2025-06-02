@@ -37,6 +37,8 @@ struct					s_input
 
 void					init_input(t_input *input);
 void					init_token(t_token *token);
+t_token					*create_token(t_token *token, int type,
+							char *raw_content);
 void					clear_token(t_vector *tokens);
 
 #endif
