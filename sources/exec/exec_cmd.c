@@ -44,11 +44,11 @@ static void	execute_all_commands(t_input *input, char **env)
 	launch_all_commands(input, env, pids);
 	wait_for_processes(pids, cmd_count);
 	free(pids);
-	printf("All cmd executed\n\n");
+	// printf("All cmd executed\n\n"); //debug
 }
 
 void	exec_cmd(t_input *input, char **env)
 {
-	debug_print_all_tokens(input, env);
+	// debug_print_all_tokens(input, env);
 	execute_all_commands(input, env);
 }

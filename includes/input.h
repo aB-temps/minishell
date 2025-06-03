@@ -1,8 +1,8 @@
 #ifndef INPUT_H
 # define INPUT_H
 
-# include <sys/types.h>
 # include "libft.h"
+# include <sys/types.h>
 
 enum					token_type
 {
@@ -43,5 +43,6 @@ struct					s_input
 
 void					init_input(t_input *input);
 void					init_token(t_token *token);
+void					clear_token(t_vector *tokens);
 
 #endif

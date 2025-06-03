@@ -23,7 +23,7 @@ static int	handle_command_not_found(char **args, char *cmd_path)
 {
 	if (!cmd_path)
 	{
-		fprintf(stderr, "Command not found: %s\n", args[0]); // FAIRE NOUS MEME LE DPRINTF ?
+		dprintf(STDERR_FILENO, "Command not found: %s\n", args[0]); // FAIRE NOUS MEME LE DPRINTF ?
 		free(args);
 		return (-1);
 	}
@@ -46,7 +46,7 @@ int	execute_simple_command_async(t_input *input, char **env, int start_idx,
 		return (0);
 	}
 	cmd_path = find_full_command_path(args[0], env);
-	printf("command path = '%s'\n", cmd_path);
+	printf("Command path = '%s'\n", cmd_path); // debug
 	if (handle_command_not_found(args, cmd_path) == -1)
 		return (-1);
 	pid = execute_child_process_async(cmd_path, args, env);
