@@ -10,12 +10,9 @@ void	create_token(t_input *input, int type, char *raw_content)
 		temp_token.raw_content = raw_content;
 	else
 	{
-		temp_token.raw_content = malloc(sizeof(char) * ft_strlen(raw_content) // strndup
-				+ 1);
+		temp_token.raw_content = ft_strdup(raw_content);
 		if (!temp_token.raw_content)
 			exit_minishell(input, EXIT_FAILURE); // free(readline...)
-		ft_strlcpy(temp_token.raw_content, raw_content, ft_strlen(raw_content)
-			+ 1);
 	}
 	if (!add_element(input->v_tokens, &temp_token))
 	{

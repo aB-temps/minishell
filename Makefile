@@ -127,6 +127,7 @@ F_UTILS :=		init_struct.c \
 				is_valid_arg_char.c \
 
 F_DEBUG :=		print_input.c \
+				print_tab.c \
 
 
 # VARS GENERATION =====================================================================

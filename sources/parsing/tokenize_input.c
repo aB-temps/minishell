@@ -30,10 +30,9 @@ void	tokenize_arg(t_input *input, size_t *i, char *line)
 	j = *i;
 	while (line[*i] && is_valid_arg_char(line[*i])) // peaufiner is_valid_arg
 		(*i)++;
-	raw_content = malloc(sizeof(char) * (*i - j) + 1); // strndup
+	raw_content = ft_strndup(&line[j], *i - j);
 	if (!raw_content)
 		exit_minishell(input, EXIT_FAILURE);
-	ft_strlcpy(raw_content, &line[j], *i - j + 1);
 	create_token(input, ARG, raw_content);
 	input->token_qty++;
 }
