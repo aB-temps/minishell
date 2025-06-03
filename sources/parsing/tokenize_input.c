@@ -28,9 +28,9 @@ void	tokenize_arg(t_input *input, size_t *i, char *line)
 	size_t	j;
 
 	j = *i;
-	while (line[*i] && is_valid_arg_char(line[*i]))
+	while (line[*i] && is_valid_arg_char(line[*i])) // peaufiner is_valid_arg
 		(*i)++;
-	raw_content = malloc(sizeof(char) * (*i - j) + 1);
+	raw_content = malloc(sizeof(char) * (*i - j) + 1); // strndup
 	if (!raw_content)
 		exit_minishell(input, EXIT_FAILURE);
 	ft_strlcpy(raw_content, &line[j], *i - j + 1);
@@ -49,10 +49,10 @@ void	tokenize_input(t_input *input, char *line)
 	{
 		if (is_operator(line[i]))
 			tokenize_operator(input, &i, line, line_len);
-		else if (is_valid_arg_char(line[i]))
+		else if (is_valid_arg_char(line[i])) // peaufiner is_valid_arg
 			tokenize_arg(input, &i, line);
 		else
 			i++;
 	}
-	print_input(input);
+	// print_input(input);
 }
