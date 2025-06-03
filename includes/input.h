@@ -37,8 +37,9 @@ struct					s_input
 
 void					init_input(t_input *input);
 void					init_token(t_token *token);
-void					create_token(t_input *input, t_token *temp_token,
-							int type, char *raw_content);
+void					create_token(t_input *input, int type,
+							char *raw_content);
 void					clear_token(t_vector *tokens);
+void					exit_minishell(t_input *input, int exit_code);
 
 #endif

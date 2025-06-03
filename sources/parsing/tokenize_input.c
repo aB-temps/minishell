@@ -3,23 +3,37 @@
 void	tokenize_operator(t_input *input, size_t *i, char *line,
 		size_t line_len)
 {
-	t_token	token;
-
-	init_token(&token);
 	if (line[*i] == '|')
-		create_token(input, &token, PIPE, "|");
+		create_token(input, PIPE, "|");
 	else if (line[*i] == '>')
 	{
 		if (*i < line_len - 1 && line[*i + 1] == '>')
 		{
-			create_token(input, &token, APPEND, ">>");
+			create_token(input, APPEND, ">>");
 			(*i)++;
 		}
 		else
-			create_token(input, &token, REDIR_OUT, ">");
+			create_token(input, REDIR_OUT, ">");
 	}
 	else if (line[*i] == '<')
-		create_token(input, &token, REDIR_IN, "<");
+		create_token(input, REDIR_IN, "<");
+	(*i)++;
+	input->token_qty++;
+}
+
+void	tokenize_alnum(t_input *input, size_t *i, char *line)
+{
+	char	*raw_content;
+	size_t	j;
+
+	j = *i;
+	while (line[*i] && ft_isalnum(line[*i]))
+		(*i)++;
+	raw_content = malloc(sizeof(char) * (*i - j) + 1);
+	if (!raw_content)
+		exit_minishell(input, EXIT_FAILURE);
+	ft_strlcpy(raw_content, &line[j], *i - j + 1);
+	create_token(input, ARG, raw_content);
 	input->token_qty++;
 }
 
@@ -34,10 +48,10 @@ void	tokenize_input(t_input *input, char *line)
 	{
 		if (is_operator(line[i]))
 			tokenize_operator(input, &i, line, line_len);
-		/* if (is_quote(line[i]))
-			i += tokenize_quote(input, i, line, line_len);
-		// comment je vais faire ca zebi faudra prendre les strings nik zebi */
-		i++;
+		else if (ft_isalnum(line[i]))
+			tokenize_alnum(input, &i, line);
+		else
+			i++;
 	}
 	print_input(input);
 }

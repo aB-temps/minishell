@@ -26,7 +26,7 @@ void	print_input(t_input *input)
 	{
 		printf("%s[TOKEN %zu]%s\n", BOLD, i + 1, R_ALL);
 		printf("Type : %s%s%s\n", BOLD, type[array[i].type], R_ALL);
-		printf("Raw Content : %s%s%s\n\n", BOLD, array[i].raw_content, R_ALL);
+		printf("Raw Content : '%s%s%s'\n\n", BOLD, array[i].raw_content, R_ALL);
 		i++;
 	}
 	printf("=========================================\n");
