@@ -1,5 +1,4 @@
-#include "parsing.h"
-#include "style.h"
+#include "debug.h"
 
 void	print_input(t_input *input)
 {
@@ -27,7 +26,9 @@ void	print_input(t_input *input)
 		printf("%s[TOKEN %zu]%s\n", BOLD, i + 1, R_ALL);
 		printf("Type : %s%s%s\n", BOLD, type[array[i].type], R_ALL);
 		printf("Raw Content : '%s%s%s'\n", BOLD, array[i].raw_content, R_ALL);
-		if (array[i].type != COMMAND)
+		if (array[i].type == COMMAND)
+			print_tab((char **)array[i].formatted_content);
+		else
 			printf("Formatted Content : '%s%s%s'\n\n", BOLD,
 				(char *)array[i].formatted_content, R_ALL);
 		i++;
