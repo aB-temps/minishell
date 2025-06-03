@@ -106,13 +106,12 @@ F_PARSING :=	get_input.c \
 				parse_input.c \
 				tokenize_input.c \
 
-F_EXEC :=		init.c \
-				parsing.c \
-				pipex.c \
-				prepare_cmd.c \
-				start.c \
-				utils.c \
-				wait_childs.c \
+F_EXEC :=		command_parser.c \
+				debug_token.c \
+				exec_cmd.c \
+				exec_launcher.c \
+				exec_process.c \
+				path_utils.c \
 
 F_STYLE :=		welcome.c \
 				build_prompt.c
