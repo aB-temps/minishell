@@ -10,7 +10,7 @@ void	create_token(t_input *input, int type, char *raw_content)
 		temp_token.raw_content = raw_content;
 	else
 	{
-		temp_token.raw_content = malloc(sizeof(char) * ft_strlen(raw_content)
+		temp_token.raw_content = malloc(sizeof(char) * ft_strlen(raw_content) // strndup
 				+ 1);
 		if (!temp_token.raw_content)
 			exit_minishell(input, EXIT_FAILURE); // free(readline...)
