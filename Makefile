@@ -110,6 +110,7 @@ F_STYLE :=		welcome.c \
 
 F_UTILS :=		init_struct.c \
 				clear_token.c \
+				create_token.c \
 				is_whitespace.c \
 				is_operator.c \
 

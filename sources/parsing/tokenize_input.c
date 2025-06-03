@@ -1,37 +1,26 @@
 #include "parsing.h"
 
-int	tokenize_operator(t_input *input, size_t i, char *line, size_t line_len)
+void	tokenize_operator(t_input *input, size_t *i, char *line,
+		size_t line_len)
 {
 	t_token	token;
-	size_t	j;
 
-	j = 0;
 	init_token(&token);
-	if (line[i] == '|')
-		if (!create_token(&token, PIPE,"|"));
-			
-		else if (line[i] == '>')
+	if (line[*i] == '|')
+		create_token(input, &token, PIPE, "|");
+	else if (line[*i] == '>')
 	{
-		if (i < line_len - 1 && line[i + 1] == '>')
+		if (*i < line_len - 1 && line[*i + 1] == '>')
 		{
-			token.type = APPEND;
-			j++;
+			create_token(input, &token, APPEND, ">>");
+			(*i)++;
 		}
 		else
-			token.type = REDIR_OUT;
+			create_token(input, &token, REDIR_OUT, ">");
 	}
-	else if (line[i] == '<')
-		token.type = REDIR_IN;
-	if (!add_element(input->v_tokens, &token))
-	{
-		clear_vector(input->v_tokens);
-		free(input);
-		exit(EXIT_FAILURE);
-	}
+	else if (line[*i] == '<')
+		create_token(input, &token, REDIR_IN, "<");
 	input->token_qty++;
-	printf("%zu\n\n\n\n", input->token_qty);
-	print_input(input);
-	return (j);
 }
 
 void	tokenize_input(t_input *input, char *line)
@@ -44,11 +33,11 @@ void	tokenize_input(t_input *input, char *line)
 	while (i < line_len)
 	{
 		if (is_operator(line[i]))
-			i += tokenize_operator(input, i, line, line_len);
+			tokenize_operator(input, &i, line, line_len);
 		/* if (is_quote(line[i]))
 			i += tokenize_quote(input, i, line, line_len);
 		// comment je vais faire ca zebi faudra prendre les strings nik zebi */
 		i++;
 	}
-	// print_input(input);
+	print_input(input);
 }
