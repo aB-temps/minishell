@@ -104,6 +104,7 @@ F_PARSING :=	get_input.c \
 				line_is_valid.c \
 				parse_input.c \
 				tokenize_input.c \
+				format_input.c \
 
 F_STYLE :=		welcome.c \
 				build_prompt.c
