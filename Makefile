@@ -114,6 +114,7 @@ F_UTILS :=		init_struct.c \
 				exit_minishell.c \
 				is_whitespace.c \
 				is_operator.c \
+				is_path.c \
 
 F_DEBUG :=		print_input.c \
 

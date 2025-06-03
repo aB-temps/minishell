@@ -1,3 +1,4 @@
+#include "debug.h"
 #include "parsing.h"
 
 void	tokenize_operator(t_input *input, size_t *i, char *line,
@@ -21,13 +22,13 @@ void	tokenize_operator(t_input *input, size_t *i, char *line,
 	input->token_qty++;
 }
 
-void	tokenize_alnum(t_input *input, size_t *i, char *line)
+void	tokenize_arg(t_input *input, size_t *i, char *line)
 {
 	char	*raw_content;
 	size_t	j;
 
 	j = *i;
-	while (line[*i] && ft_isalnum(line[*i]))
+	while (line[*i] && (ft_isalnum(line[*i]) || is_path(line[*i])))
 		(*i)++;
 	raw_content = malloc(sizeof(char) * (*i - j) + 1);
 	if (!raw_content)
@@ -48,8 +49,8 @@ void	tokenize_input(t_input *input, char *line)
 	{
 		if (is_operator(line[i]))
 			tokenize_operator(input, &i, line, line_len);
-		else if (ft_isalnum(line[i]))
-			tokenize_alnum(input, &i, line);
+		else if (ft_isalnum(line[i]) || is_path(line[i]))
+			tokenize_arg(input, &i, line);
 		else
 			i++;
 	}
