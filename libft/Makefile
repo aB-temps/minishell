@@ -47,7 +47,7 @@ IO_SRCS				=	ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
 
 MEMORY_SRCS			=	ft_memset.c ft_bzero.c ft_memcpy.c \
 						ft_memchr.c ft_memcmp.c ft_memmove.c \
-						ft_calloc.c 
+						ft_calloc.c ft_strndup.c
 
 ADVANCE_SRCS		=	ft_atoi.c ft_split.c ft_itoa.c \
 						get_next_line.c ft_printf.c 
