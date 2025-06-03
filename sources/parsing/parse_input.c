@@ -14,5 +14,6 @@ t_input	*parse_input(char *line)
 	if (!input->v_tokens)
 		return ((void *)0);
 	tokenize_input(input, line);
+	format_input(input);
 	return (input);
 }

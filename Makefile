@@ -105,6 +105,7 @@ F_PARSING :=	get_input.c \
 				line_is_valid.c \
 				parse_input.c \
 				tokenize_input.c \
+				format_input.c \
 
 F_EXEC :=		command_parser.c \
 				debug_token.c \
@@ -119,8 +120,10 @@ F_STYLE :=		welcome.c \
 F_UTILS :=		init_struct.c \
 				clear_token.c \
 				create_token.c \
+				exit_minishell.c \
 				is_whitespace.c \
 				is_operator.c \
+				is_path.c \
 
 F_DEBUG :=		print_input.c \
 
