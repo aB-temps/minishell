@@ -1,35 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 17:39:02 by enchevri          #+#    #+#             */
-/*   Updated: 2025/06/03 17:45:55 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/06/03 17:41:15 by enchevri          #+#    #+#             */
+/*   Updated: 2025/06/03 17:48:51 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "stdlib.h"
 
-void	ft_bzero(void *s, size_t n)
+char	*ft_strndup(char *s, size_t n)
 {
-	size_t				i;
-	size_t				count;
-	unsigned long long	*s_bis;
+	char	*ns;
+	size_t	i;
 
 	i = 0;
-	count = 0;
-	s_bis = (unsigned long long *)s;
-	if (n >= sizeof(unsigned long long))
+	ns = malloc(sizeof(char) * n + 1);
+	if (!ns)
+		return (NULL);
+	while (s[i] && i < n)
 	{
-		while (count < n - sizeof(unsigned long long))
-		{
-			
-			*(s_bis + i++) = 0;
-			count += sizeof(unsigned long long);
-		}
+		ns[i] = s[i];
+		i++;
 	}
-	while (count < n)
-		*(((unsigned char *)s_bis) + count++) = 0;
+	ns[i] = '\0';
+	return (ns);
 }
