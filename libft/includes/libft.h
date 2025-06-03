@@ -3,23 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:45:04 by enchevri          #+#    #+#             */
-/*   Updated: 2025/05/29 18:32:35 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/06/03 17:57:49 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <stdlib.h>
 # include <stdbool.h>
+# include <stdlib.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
-# define GOOD_ARG "0123456789-+"
 
 typedef struct s_vector		t_vector;
 struct						s_vector
@@ -80,6 +79,7 @@ int							ft_strncmp(const char *first, const char *second,
 								size_t length);
 void						*ft_calloc(size_t count, size_t size);
 char						*ft_strdup(const char *src);
+char						*ft_strndup(char *s, size_t n);
 char						*ft_substr(char const *s, unsigned int start,
 								size_t len);
 char						*ft_strjoin(char const *s1, char const *s2);

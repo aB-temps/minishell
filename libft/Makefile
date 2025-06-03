@@ -40,14 +40,14 @@ STRING_SRCS			=	ft_strlen.c ft_strchr.c ft_strrchr.c \
 						ft_strlcpy.c ft_strlcat.c ft_strnstr.c \
 						ft_strncmp.c ft_strjoin.c ft_str_free_to_join.c \
 						ft_strtrim.c ft_strmapi.c ft_striteri.c \
-						ft_strdup.c ft_substr.c 
+						ft_strdup.c ft_substr.c ft_strndup.c
 					
 IO_SRCS				=	ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c \
 						ft_putnbr_fd.c print_digit.c print_pointer.c 
 
 MEMORY_SRCS			=	ft_memset.c ft_bzero.c ft_memcpy.c \
 						ft_memchr.c ft_memcmp.c ft_memmove.c \
-						ft_calloc.c ft_strndup.c
+						ft_calloc.c 
 
 ADVANCE_SRCS		=	ft_atoi.c ft_split.c ft_itoa.c \
 						get_next_line.c ft_printf.c 
