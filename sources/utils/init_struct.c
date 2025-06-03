@@ -2,7 +2,7 @@
 
 void	init_input(t_input *input)
 {
-	input->token_qty = -1;
+	input->token_qty = 0;
 	input->v_tokens = (void *)0;
 }
 void	init_token(t_token *token)

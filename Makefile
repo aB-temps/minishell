@@ -96,6 +96,7 @@ COMPONENTS :=	PARSING \
 				STYLE	\
 				UTILS	\
 				EXEC	\
+				DEBUG \
 
 # FILES ===============================================================================
 F_MAIN :=		main.c
@@ -117,8 +118,12 @@ F_STYLE :=		welcome.c \
 				build_prompt.c
 
 F_UTILS :=		init_struct.c \
+				clear_token.c \
+				create_token.c \
 				is_whitespace.c \
 				is_operator.c \
+
+F_DEBUG :=		print_input.c \
 
 
 # VARS GENERATION =====================================================================

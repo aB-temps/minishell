@@ -23,8 +23,11 @@ void	get_input(char **env)
 		// exec(input)
 		free(prompt);
 		free(line);
-		clear_vector(input->v_tokens);
-		free(input);
+		if (input)
+		{
+			clear_vector(input->v_tokens);
+			free(input);
+		}
 		// clean input
 	}
 }

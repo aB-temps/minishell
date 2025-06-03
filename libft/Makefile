@@ -59,6 +59,7 @@ SRCS				=	$(addprefix $(LIST_DIR), $(LIST_SRCS)) \
 						$(addprefix $(UTILS_DIR), $(UTILS_SRCS)) \
 						$(addprefix $(CHAR_DIR), $(CHAR_SRCS)) \
 						$(addprefix $(STRING_DIR), $(STRING_SRCS)) \
+						$(addprefix $(UTILS_DIR), $(UTILS_SRCS)) \
 						$(addprefix $(IO_DIR), $(IO_SRCS)) \
 						$(addprefix $(MEMORY_DIR), $(MEMORY_SRCS)) \
 						$(addprefix $(ADVANCE_DIR), $(ADVANCE_SRCS)) \
