@@ -28,7 +28,7 @@ void	tokenize_arg(t_input *input, size_t *i, char *line)
 	size_t	j;
 
 	j = *i;
-	while (line[*i] && (ft_isalnum(line[*i]) || is_path(line[*i])))
+	while (line[*i] && is_valid_arg_char(line[*i]))
 		(*i)++;
 	raw_content = malloc(sizeof(char) * (*i - j) + 1);
 	if (!raw_content)
@@ -49,7 +49,7 @@ void	tokenize_input(t_input *input, char *line)
 	{
 		if (is_operator(line[i]))
 			tokenize_operator(input, &i, line, line_len);
-		else if (ft_isalnum(line[i]) || is_path(line[i]))
+		else if (is_valid_arg_char(line[i]))
 			tokenize_arg(input, &i, line);
 		else
 			i++;
