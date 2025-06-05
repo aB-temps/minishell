@@ -8,6 +8,8 @@ static char	*get_hostname(char *env_session)
 	int	i;
 
 	i = 0;
+	if (!env_session)
+		return ((void *)0);
 	while (env_session[i] != '.')
 		i++;
 	env_session[i] = '\0';
@@ -23,6 +25,8 @@ void	build_prompt(char **prompt)
 	size_t		plen;
 
 	cwd = (void *)0;
+	if (!username || !hostname)
+		return ;
 	cwd = getcwd(cwd, PATH_MAX);
 	if (!cwd)
 		return ;
