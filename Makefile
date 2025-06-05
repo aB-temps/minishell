@@ -107,9 +107,7 @@ F_PARSING :=	get_input.c \
 				tokenize_input.c \
 				format_input.c \
 
-F_EXEC :=		command_parser.c \
-				debug_token.c \
-				exec_cmd.c \
+F_EXEC :=		exec_cmd.c \
 				exec_launcher.c \
 				exec_process.c \
 				path_utils.c \

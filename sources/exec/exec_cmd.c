@@ -1,13 +1,6 @@
 #include "exec.h"
 #include <errno.h>
 
-t_token	*get_token_at_index(t_vector *vec, size_t index)
-{
-	if (!vec || !vec->array || index >= vec->nb_elements)
-		return (NULL);
-	return ((t_token *)((char *)vec->array + (index * vec->datatype_size)));
-}
-
 char	*get_path(char **env)
 {
 	int	i;
@@ -35,7 +28,7 @@ static void	execute_all_commands(t_input *input, char **env)
 	int	*pids;
 	int	cmd_count;
 
-	cmd_count = count_commands(input);
+	cmd_count = input->token_qty;
 	if (cmd_count == 0)
 		return ;
 	pids = ft_calloc(cmd_count, sizeof(int));
@@ -49,6 +42,5 @@ static void	execute_all_commands(t_input *input, char **env)
 
 void	exec_cmd(t_input *input, char **env)
 {
-	// debug_print_all_tokens(input, env);
 	execute_all_commands(input, env);
 }
