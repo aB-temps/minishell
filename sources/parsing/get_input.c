@@ -18,8 +18,16 @@ void	get_input(char **env)
 		prompt = (void *)0;
 		build_prompt(&prompt);
 		line = readline(prompt);
+		if (!line)
+		{
+			free(prompt);
+			break ;
+		}
 		if (line_is_valid(line))
+		{
+			add_history(line);
 			input = parse_input(line);
+		}
 		// exec(input)
 		free(prompt);
 		free(line);
@@ -28,6 +36,5 @@ void	get_input(char **env)
 			clear_vector(input->v_tokens);
 			free(input);
 		}
-		// clean input
 	}
 }
