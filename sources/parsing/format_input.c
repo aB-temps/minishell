@@ -56,6 +56,7 @@ void	format_redir(t_input *input, ssize_t *i)
 		(*i)++;
 	}
 }
+
 void	format_input(t_input *input)
 {
 	t_token	*array;
@@ -65,6 +66,9 @@ void	format_input(t_input *input)
 	array = (t_token *)input->v_tokens->array;
 	while (i < input->token_qty)
 	{
+		/* if (array[i].type == S_QUOTES || array[i].type == D_QUOTES)
+			format_quotes(input, &i);
+		else */
 		if (array[i].type >= REDIR_IN && array[i].type <= APPEND)
 			format_redir(input, &i);
 		else if (array[i].type == ARG)
