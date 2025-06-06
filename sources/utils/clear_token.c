@@ -13,6 +13,6 @@ void	clear_token(t_vector *tokens)
 			free_tab_return_null((char **)array[i].formatted_content);
 		else
 			free(array[i].formatted_content);
-		i += tokens->datatype_size;
+		i++;
 	}
 }

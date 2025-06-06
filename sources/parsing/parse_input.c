@@ -9,14 +9,14 @@ t_input	*parse_input(char *line)
 	input = ft_calloc(1, sizeof(t_input));
 	if (!input)
 		return ((void *)0);
-	init_input(input);
+	init_input(input, line);
 	input->v_tokens = create_vector(4, sizeof(t_token),
 			clear_token);
 	if (!input->v_tokens)
 		return ((void *)0);
 	tokenize_input(input, line);
-	// print_input(input);
-	format_input(input);
+	print_input(input);
+	// format_input(input);
 	// print_input(input);
 	return (input);
 }

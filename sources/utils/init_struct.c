@@ -1,9 +1,10 @@
 #include "input.h"
 
-void	init_input(t_input *input)
+void	init_input(t_input *input, char *line)
 {
 	input->token_qty = 0;
 	input->v_tokens = (void *)0;
+	input->line = line;
 }
 void	init_token(t_token *token)
 {
