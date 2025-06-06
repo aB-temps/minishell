@@ -28,23 +28,6 @@ typedef struct s_fd
 	int		fd2[2];
 }			t_fd;
 
-typedef struct s_data
-{
-	char	**av;
-	int		ac;
-	int		id;
-	char	*infile;
-	int		fd_infile;
-	char	*outfile;
-	int		fd_outfile;
-	char	***args;
-	char	**env;
-	int		cmd_count;
-	char	*path;
-	int		count_path;
-	char	**split_path;
-	pid_t	*pid_children;
-}			t_data;
 
 /*------------------------------- FUNCTIONS -------------------------------*/
 char		*get_path(char **env);

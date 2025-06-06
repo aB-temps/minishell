@@ -39,7 +39,7 @@ int	execute_command(t_token *current_token, char **env)
 
 	args = (char **)(current_token->formatted_content);
 	cmd_path = find_full_command_path(*args, env);
-	dprintf(2,"Command path = '%s'\n", cmd_path); // debug
+	// dprintf(2,"Command path = '%s'\n", cmd_path); // debug
 	if (handle_command_not_found(args, cmd_path) == -1)
 		return (-1);
 	pid = execute_child(cmd_path, args, env);

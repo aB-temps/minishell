@@ -1,3 +1,4 @@
+//#include "debug.h"
 #include "exec.h"
 #include <errno.h>
 
@@ -34,6 +35,7 @@ static void	execute_all_commands(t_input *input, char **env)
 	pids = ft_calloc(cmd_count, sizeof(int));
 	if (!pids)
 		return ;
+	//debug_print_all_arrays(input, pids, input->token_qty);
 	launch_all_commands(input, env, pids);
 	wait_for_processes(pids, cmd_count);
 	free(pids);
