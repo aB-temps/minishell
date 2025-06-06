@@ -26,14 +26,14 @@ void	build_prompt(char **prompt)
 
 	cwd = (void *)0;
 	if (!username || !hostname)
-		return ;
+		return ; // protect
 	cwd = getcwd(cwd, PATH_MAX);
 	if (!cwd)
-		return ;
+		return ; // protect
 	plen = ft_strlen(username) + ft_strlen(hostname) + ft_strlen(cwd) + 5 + 59;
 	*prompt = calloc(plen, sizeof(char));
 	if (!(*prompt))
-		return ;
+		return ; // protect
 	ft_strlcat(*prompt, FG_CYAN BOLD, plen);
 	ft_strlcat(*prompt, username, plen);
 	ft_strlcat(*prompt, FG_MAGENTA "@" FG_CYAN, plen);

@@ -1,7 +1,7 @@
 #include "debug.h"
 #include "parsing.h"
 
-void	tokenize_operator(t_input *input, size_t *i, char *line,
+static void	tokenize_redir(t_input *input, size_t *i, char *line,
 		size_t line_len)
 {
 	if (line[*i] == '|')
@@ -19,21 +19,36 @@ void	tokenize_operator(t_input *input, size_t *i, char *line,
 	else if (line[*i] == '<')
 		create_token(input, REDIR_IN, "<");
 	(*i)++;
+}
+
+static void	tokenize_operator(t_input *input, size_t *i, char *line,
+		size_t line_len)
+{
+	if (is_redir_or_pipe(line[*i]))
+		tokenize_redir(input, i, line, line_len);
 	input->token_qty++;
 }
 
-void	tokenize_arg(t_input *input, size_t *i, char *line)
+static void	tokenize_arg(t_input *input, size_t *i, char *line)
 {
 	char	*raw_content;
+	int		token_type;
 	size_t	j;
 
 	j = *i;
-	while (line[*i] && is_valid_arg_char(line[*i])) // peaufiner is_valid_arg
+	if (line[*i] == '\'')
+		token_type = S_QUOTES;
+	else if (line[*i] == '"')
+		token_type = D_QUOTES;
+	else
+		token_type = ARG;
+	// peaufiner is_valid_arg : reste peu de cas
+	while (line[*i] && is_valid_arg_char(line[*i]))
 		(*i)++;
 	raw_content = ft_strndup(&line[j], *i - j);
 	if (!raw_content)
 		exit_minishell(input, EXIT_FAILURE);
-	create_token(input, ARG, raw_content);
+	create_token(input, token_type, raw_content);
 	input->token_qty++;
 }
 
@@ -48,10 +63,10 @@ void	tokenize_input(t_input *input, char *line)
 	{
 		if (is_operator(line[i]))
 			tokenize_operator(input, &i, line, line_len);
-		else if (is_valid_arg_char(line[i])) // peaufiner is_valid_arg
+		else if (is_valid_arg_char(line[i]))
+			// peaufiner is_valid_arg : reste peu de cas
 			tokenize_arg(input, &i, line);
 		else
 			i++;
 	}
-	// print_input(input);
 }
