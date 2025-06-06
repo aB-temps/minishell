@@ -57,15 +57,6 @@ void	format_redir(t_input *input, ssize_t *i)
 	}
 }
 
-// void format_quotes(t_input*input, ssize_t *i)
-// {
-// 	t_token	*array;
-// 	array = (t_token *)input->v_tokens->array;
-
-// 	if (array[*i].type == S_QUOTES)
-
-// }
-
 void	format_input(t_input *input)
 {
 	t_token	*array;
