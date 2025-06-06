@@ -11,7 +11,8 @@ void	format_command(t_input *input, ssize_t *i)
 	array = (t_token *)input->v_tokens->array;
 	j = *i;
 	k = *i + 1;
-	while (j + 1 < input->token_qty && array[j + 1].type == ARG)
+	while (j + 1 < input->token_qty && (array[j + 1].type == ARG || array[j
+			+ 1].type == S_QUOTES || array[j + 1].type == D_QUOTES))
 		j++;
 	array[*i].type = COMMAND;
 	array[*i].formatted_content = ft_strdup(array[*i].raw_content);
