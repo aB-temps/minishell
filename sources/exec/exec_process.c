@@ -25,7 +25,6 @@ static int	handle_command_not_found(char **args, char *cmd_path)
 	{
 		dprintf(STDERR_FILENO, "Command not found: %s\n", args[0]);
 			// FAIRE NOUS MEME LE DPRINTF ?
-		free(args);
 		return (-1);
 	}
 	return (0);
@@ -43,6 +42,5 @@ int	execute_command(t_token *current_token, char **env)
 	if (handle_command_not_found(args, cmd_path) == -1)
 		return (-1);
 	pid = execute_child(cmd_path, args, env);
-	cleanup_command_resources(args, cmd_path);
 	return (pid);
 }
