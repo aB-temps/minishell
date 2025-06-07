@@ -3,7 +3,7 @@
 
 # include <stdbool.h>
 
-bool	line_is_valid(char *line);
+bool	is_valid_line(char *line);
 bool	is_whitespace(char c);
 bool	is_operator(char c);
 bool	is_quote(char c);

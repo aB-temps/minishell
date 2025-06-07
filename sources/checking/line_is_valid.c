@@ -1,6 +1,6 @@
 # include "parsing.h"
 
-bool	line_is_valid(char *line)
+bool	is_valid_line(char *line)
 {
 	int i;
 

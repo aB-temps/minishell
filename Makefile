@@ -113,7 +113,7 @@ F_LEXING :=		tokenize_input.c \
 				tokenize_redir.c \
 			
 
-F_CHECKING :=	line_is_valid.c \
+F_CHECKING :=	is_valid_line.c \
 				is_whitespace.c \
 				is_operator.c \
 				is_valid_arg_char.c \

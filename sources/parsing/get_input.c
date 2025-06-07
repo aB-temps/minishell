@@ -23,7 +23,7 @@ void	get_input(char **env)
 			free(prompt);
 			break ;
 		}
-		if (line_is_valid(line))
+		if (is_valid_line(line))
 		{
 			add_history(line);
 			input = parse_input(line);
