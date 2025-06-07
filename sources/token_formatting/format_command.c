@@ -1,28 +1,34 @@
 #include "token_formatting.h"
 
-void	format_command(t_input *input, t_token *array, ssize_t *i)
+ssize_t	count_args(t_input *input, t_token *array, ssize_t *i)
 {
-	char **temp;
-	ssize_t j;
-	ssize_t k;
+	ssize_t	j;
 
 	j = *i;
-	k = *i + 1;
-	while (j + 1 < input->token_qty && (array[j + 1].type == ARG || array[j
-			+ 1].type == S_QUOTES || array[j + 1].type == D_QUOTES))
+	while (j + 1 <= input->token_qty && !(array[j + 1].type >= PIPE && array[j
+			+ 1].type <= APPEND))
 		j++;
-	array[*i].type = COMMAND;
+	return (j - *i);
+}
+
+void	format_command(t_input *input, t_token *array, ssize_t *i)
+{
+	char	**temp;
+	ssize_t	j;
+	ssize_t	k;
+
+	temp = (void *)0;
+	k = 0;
+	j = count_args(input, array, i);
 	array[*i].formatted_content = ft_strdup(array[*i].raw_content);
-	if (!array[*i].formatted_content)
-		exit_minishell(input, EXIT_FAILURE);
-	while (k <= j)
+	while (k < j)
 	{
-		array[*i].formatted_content = str_free_to_join(array[*i].formatted_content,
-				" ");
-		if (!array[*i].formatted_content)
-			exit_minishell(input, EXIT_FAILURE);
-		array[*i].formatted_content = str_free_to_join(array[*i].formatted_content,
-				array[k].raw_content);
+		if (array[*i + k].type == ENV_VAR)
+			array[*i].formatted_content = str_free_to_join(array[*i
+					+ k].formatted_content, " ");
+		else
+			array[*i].formatted_content = str_free_to_join(array[*i].formatted_content,
+					array[*i + k].formatted_content);
 		if (!array[*i].formatted_content)
 			exit_minishell(input, EXIT_FAILURE);
 		k++;
@@ -32,5 +38,5 @@ void	format_command(t_input *input, t_token *array, ssize_t *i)
 		exit_minishell(input, EXIT_FAILURE);
 	free(array[*i].formatted_content);
 	array[*i].formatted_content = temp;
-	*i = j + 1;
+	*i += k;
 }

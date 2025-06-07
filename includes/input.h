@@ -34,9 +34,10 @@ struct					s_input
 	ssize_t				token_qty;
 	t_vector			*v_tokens;
 	char				*line;
+	char				*prompt;
 };
 
-void					init_input(t_input *input, char *line);
+void					init_input(t_input *input, char *line, char *prompt);
 void					init_token(t_token *token);
 void					create_token(t_input *input, int type,
 							char *raw_content);

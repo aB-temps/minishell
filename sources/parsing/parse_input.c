@@ -3,14 +3,14 @@
 #include "parsing.h"
 #include "token_formatting.h"
 
-t_input	*parse_input(char *line)
+t_input	*parse_input(char *line, char*prompt)
 {
 	t_input	*input;
 
 	input = malloc(sizeof(t_input));
 	if (!input)
 		return ((void *)0);
-	init_input(input, line);
+	init_input(input, line, prompt);
 	input->v_tokens = create_vector(4, sizeof(t_token), clear_token);
 	if (!input->v_tokens)
 		return ((void *)0);

@@ -26,7 +26,7 @@ void	get_input(char **env)
 		if (is_valid_line(line))
 		{
 			add_history(line);
-			input = parse_input(line);
+			input = parse_input(line, prompt);
 		}
 		// exec(input)
 		free(prompt);
