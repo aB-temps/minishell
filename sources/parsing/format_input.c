@@ -7,22 +7,22 @@ void	format_env_var(t_input *input, ssize_t *i)
 	char	*content;
 
 	array = (t_token *)input->v_tokens->array;
-	content = getenv(&array[*i].raw_content[1]);
 	array[*i].type = ARG;
-	array[*i].formatted_content = ft_strdup(content);
-	if (!array[*i].formatted_content)
+	content = getenv(&array[*i].raw_content[1]);
+	if (ft_strlen(content) == 0)
+		array[*i].raw_content = (void *)0;
+	array[*i].raw_content = ft_strdup(content);
+	if (!array[*i].raw_content)
 		exit_minishell(input, EXIT_FAILURE);
 	(*i)++;
 }
 
-void	format_command(t_input *input, ssize_t *i)
+void	format_command(t_input *input, t_token *array, ssize_t *i)
 {
-	t_token	*array;
 	char	**temp;
 	ssize_t	j;
 	ssize_t	k;
 
-	array = (t_token *)input->v_tokens->array;
 	j = *i;
 	k = *i + 1;
 	while (j + 1 < input->token_qty && (array[j + 1].type == ARG || array[j
@@ -101,7 +101,7 @@ void	format_input(t_input *input)
 		if (array[i].type >= REDIR_IN && array[i].type <= APPEND)
 			format_redir(input, &i);
 		else if (array[i].type == ARG)
-			format_command(input, &i);
+			format_command(input, array, &i);
 		else
 			i++;
 	}

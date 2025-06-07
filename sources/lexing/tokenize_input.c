@@ -1,4 +1,3 @@
-#include "debug.h"
 #include "parsing.h"
 
 static void	tokenize_redir(t_input *input, size_t *i, char *line,
