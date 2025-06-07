@@ -108,6 +108,10 @@ F_PARSING :=	get_input.c \
 				format_input.c \
 
 F_LEXING :=		tokenize_input.c \
+				tokenize_arg.c \
+				tokenize_operator.c \
+				tokenize_quote.c \
+				tokenize_redir.c \
 			
 
 F_CHECKING :=	line_is_valid.c \
