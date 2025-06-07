@@ -29,9 +29,7 @@ static void	tokenize_arg(t_input *input, size_t *i, int token_type, char *line)
 
 	j = *i;
 	while (line[*i] && is_valid_arg_char(line[*i]))
-	{
 		(*i)++;
-	}
 	raw_content = ft_strndup(&line[j], *i - j);
 	if (!raw_content)
 		exit_minishell(input, EXIT_FAILURE);

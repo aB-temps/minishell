@@ -1,6 +1,20 @@
 #include "debug.h"
 #include "parsing.h"
 
+void	format_env_var(t_input *input, ssize_t *i)
+{
+	t_token	*array;
+	char	*content;
+
+	array = (t_token *)input->v_tokens->array;
+	content = getenv(&array[*i].raw_content[1]);
+	array[*i].type = ARG;
+	array[*i].formatted_content = ft_strdup(content);
+	if (!array[*i].formatted_content)
+		exit_minishell(input, EXIT_FAILURE);
+	(*i)++;
+}
+
 void	format_command(t_input *input, ssize_t *i)
 {
 	t_token	*array;
@@ -57,6 +71,23 @@ void	format_redir(t_input *input, ssize_t *i)
 	}
 }
 
+void	replace_env_var(t_input *input)
+{
+	t_token	*array;
+	ssize_t	i;
+
+	array = (t_token *)input->v_tokens->array;
+	i = 0;
+	while (i < input->token_qty)
+	{
+		if ((array[i].type == D_QUOTES && array[i].raw_content[1] == '$')
+			|| array[i].type == ENV_VAR)
+			format_env_var(input, &i);
+		else
+			i++;
+	}
+}
+
 void	format_input(t_input *input)
 {
 	t_token	*array;
@@ -64,11 +95,9 @@ void	format_input(t_input *input)
 
 	i = 0;
 	array = (t_token *)input->v_tokens->array;
+	replace_env_var(input);
 	while (i < input->token_qty)
 	{
-		/* if (array[i].type == S_QUOTES || array[i].type == D_QUOTES)
-			format_quotes(input, &i);
-		else */
 		if (array[i].type >= REDIR_IN && array[i].type <= APPEND)
 			format_redir(input, &i);
 		else if (array[i].type == ARG)
