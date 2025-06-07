@@ -103,7 +103,6 @@ COMPONENTS :=	PARSING \
 F_MAIN :=		main.c
 
 F_PARSING :=	get_input.c \
-				line_is_valid.c \
 				parse_input.c \
 				format_input.c \
 

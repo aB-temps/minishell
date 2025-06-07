@@ -1,4 +1,4 @@
-#include "parsing.h"
+#include "lexing.h"
 
 void	*tokenize_input(t_input *input, char *line)
 {
