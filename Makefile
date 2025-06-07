@@ -95,39 +95,44 @@ BOLD		:=	\033[1m
 COMPONENTS :=	PARSING \
 				LEXING \
 				CHECKING \
+				TOKEN_FORMATTING \
 				STYLE \
 				UTILS \
 				DEBUG \
 
 # FILES ===============================================================================
-F_MAIN :=		main.c
+F_MAIN :=					main.c
 
-F_PARSING :=	get_input.c \
-				parse_input.c \
-				format_input.c \
+F_PARSING :=				get_input.c \
+							parse_input.c \
 
-F_LEXING :=		tokenize_input.c \
-				tokenize_arg.c \
-				tokenize_operator.c \
-				tokenize_quote.c \
-				tokenize_redir.c \
+F_LEXING :=					tokenize_input.c \
+							tokenize_arg.c \
+							tokenize_operator.c \
+							tokenize_quote.c \
+							tokenize_redir.c \
 			
 
-F_CHECKING :=	is_valid_line.c \
-				is_whitespace.c \
-				is_operator.c \
-				is_valid_arg_char.c \
+F_CHECKING :=				is_valid_line.c \
+							is_whitespace.c \
+							is_operator.c \
+							is_valid_arg_char.c \
 
-F_STYLE :=		welcome.c \
-				build_prompt.c
+F_TOKEN_FORMATTING :=		format_input.c \
+							format_command.c \
+							format_redir.c \
+							format_env_var.c \
 
-F_UTILS :=		init_struct.c \
-				clear_token.c \
-				create_token.c \
-				exit_minishell.c \
+F_STYLE :=					welcome.c \
+							build_prompt.c
 
-F_DEBUG :=		print_input.c \
-				print_tab.c \
+F_UTILS :=					init_struct.c \
+							clear_token.c \
+							create_token.c \
+							exit_minishell.c \
+
+F_DEBUG :=					print_input.c \
+							print_tab.c \
 
 
 # VARS GENERATION =====================================================================

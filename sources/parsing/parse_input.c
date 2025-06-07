@@ -1,6 +1,7 @@
 #include "debug.h"
-#include "libft.h"
+#include "lexing.h"
 #include "parsing.h"
+#include "token_formatting.h"
 
 t_input	*parse_input(char *line)
 {

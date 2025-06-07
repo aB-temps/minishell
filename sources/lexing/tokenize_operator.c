@@ -5,6 +5,11 @@ void	tokenize_operator(t_input *input, size_t *i, char *line,
 {
 	if (is_redir_or_pipe(line[*i]))
 		tokenize_redir(input, i, line, line_len);
-	else if (is_var_or_assign(line[*i]))
-		tokenize_arg(input, i, ENV_VAR, line);
+	else if (is_var(line[*i]))
+	{
+		if (is_assign(line))
+			tokenize_arg(input, i, ASSIGN, line);
+		else
+			tokenize_arg(input, i, ENV_VAR, line);
+	}
 }
