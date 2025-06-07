@@ -10,14 +10,14 @@ bool	is_var(char c)
 	return (c == '$');
 }
 
-bool	is_assign(char *s)
+bool	is_in_string(char *s, char c)
 {
 	int	i;
 
 	i = 0;
-	while (s[i] && is_valid_arg_char(s[i]))
+	while (s[i])
 	{
-		if (s[i] == '=')
+		if (s[i] == c)
 			return (true);
 		i++;
 	}

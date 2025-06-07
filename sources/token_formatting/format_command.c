@@ -8,35 +8,44 @@ ssize_t	count_args(t_input *input, t_token *array, ssize_t *i)
 	while (j + 1 <= input->token_qty && !(array[j + 1].type >= PIPE && array[j
 			+ 1].type <= APPEND))
 		j++;
-	return (j - *i);
+	return (j - *i + 1);
+}
+
+char	**join_args(t_input *input, t_token *array, ssize_t *i, size_t arg_qty)
+{
+	char	*joined_args;
+	size_t	j;
+
+	j = 1;
+	joined_args = ft_strdup(array[*i].raw_content);
+	if (!joined_args)
+		exit_minishell(input, EXIT_FAILURE);
+	while (j < arg_qty - 1)
+	{
+		joined_args = str_free_to_join(joined_args, " ");
+		if (!joined_args)
+			exit_minishell(input, EXIT_FAILURE);
+		if (array[*i + j].type == ENV_VAR)
+			joined_args = str_free_to_join(joined_args, array[*i
+					+ j].formatted_content);
+		else
+			joined_args = str_free_to_join(joined_args, array[*i
+					+ j].raw_content);
+		if (!joined_args)
+			exit_minishell(input, EXIT_FAILURE);
+		j++;
+	}
+	return (ft_split(joined_args, ' '));
 }
 
 void	format_command(t_input *input, t_token *array, ssize_t *i)
 {
-	char	**temp;
-	ssize_t	j;
-	ssize_t	k;
+	ssize_t	args;
 
-	temp = (void *)0;
-	k = 0;
-	j = count_args(input, array, i);
-	array[*i].formatted_content = ft_strdup(array[*i].raw_content);
-	while (k < j)
-	{
-		if (array[*i + k].type == ENV_VAR)
-			array[*i].formatted_content = str_free_to_join(array[*i
-					+ k].formatted_content, " ");
-		else
-			array[*i].formatted_content = str_free_to_join(array[*i].formatted_content,
-					array[*i + k].formatted_content);
-		if (!array[*i].formatted_content)
-			exit_minishell(input, EXIT_FAILURE);
-		k++;
-	}
-	temp = ft_split(array[*i].formatted_content, ' ');
-	if (!temp)
+	args = count_args(input, array, i);
+	array[*i].type = COMMAND;
+	array[*i].formatted_content = join_args(input, array, i, args);
+	if (!array[*i].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
-	free(array[*i].formatted_content);
-	array[*i].formatted_content = temp;
-	*i += k;
+	(*i) += args;
 }

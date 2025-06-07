@@ -7,7 +7,7 @@ void	tokenize_operator(t_input *input, size_t *i, char *line,
 		tokenize_redir(input, i, line, line_len);
 	else if (is_var(line[*i]))
 	{
-		if (is_assign(line))
+		if (is_in_string(line, '='))
 			tokenize_arg(input, i, ASSIGN, line);
 		else
 			tokenize_arg(input, i, ENV_VAR, line);

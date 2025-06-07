@@ -9,9 +9,9 @@ void	replace_env_var(t_input *input)
 	i = 0;
 	while (i < input->token_qty)
 	{
-		if ((array[i].type == D_QUOTES && array[i].raw_content[0] == '$')
-			|| array[i].type == ENV_VAR)
-			format_env_var(input, &i);
+		if ((array[i].type == D_QUOTES && is_in_string(array[i].raw_content,
+					'$')) || array[i].type == ENV_VAR)
+			format_env_var(input, array, &i);
 		else
 			i++;
 	}

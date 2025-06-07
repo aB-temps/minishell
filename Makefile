@@ -127,6 +127,7 @@ F_STYLE :=					welcome.c \
 							build_prompt.c
 
 F_UTILS :=					init_struct.c \
+							str_replace.c \
 							clear_token.c \
 							create_token.c \
 							exit_minishell.c \

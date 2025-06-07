@@ -9,7 +9,7 @@ bool	is_operator(char c);
 bool	is_quote(char c);
 bool	is_redir_or_pipe(char c);
 bool	is_var(char c);
-bool	is_assign(char *s);
+bool	is_in_string(char *s, char c);
 bool	is_valid_arg_char(char c);
 
 #endif
