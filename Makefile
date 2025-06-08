@@ -96,35 +96,35 @@ COMPONENTS :=	PARSING \
 				STYLE	\
 				UTILS	\
 				EXEC	\
-				DEBUG \
+				DEBUG	\
 
 # FILES ===============================================================================
 F_MAIN :=		main.c
 
-F_PARSING :=	get_input.c \
-				line_is_valid.c \
-				parse_input.c \
-				tokenize_input.c \
-				format_input.c \
+F_PARSING :=	get_input.c			\
+				line_is_valid.c 	\
+				parse_input.c		\
+				tokenize_input.c	\
+				format_input.c		\
 
-F_EXEC :=		exec_cmd.c \
-				exec_launcher.c \
-				exec_process.c \
-				path_utils.c \
+F_EXEC :=		exec_cmd.c		\
+				exec_launcher.c	\
+				exec_process.c	\
+				path_utils.c	\
 
-F_STYLE :=		welcome.c \
-				build_prompt.c
+F_STYLE :=		welcome.c		\
+				build_prompt.c	\
 
-F_UTILS :=		init_struct.c \
-				clear_token.c \
-				create_token.c \
-				exit_minishell.c \
-				is_whitespace.c \
-				is_operator.c \
-				is_valid_arg_char.c \
+F_UTILS :=		init_struct.c		\
+				clear_token.c		\
+				create_token.c		\
+				exit_minishell.c	\
+				is_whitespace.c		\
+				is_operator.c		\
+				is_valid_arg_char.c	\
 
-F_DEBUG :=		print_input.c \
-				print_tab.c \
+F_DEBUG :=		print_input.c	\
+				print_tab.c		\
 
 
 # VARS GENERATION =====================================================================
@@ -185,6 +185,5 @@ re: fclean all
 # debug -------------------------------------------------------------------------------
 print-%:
 	@echo $($(patsubst print-%,%,$@))
-
 
 .PHONY: all lib clean fclean re print-%
