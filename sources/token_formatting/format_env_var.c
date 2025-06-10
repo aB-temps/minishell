@@ -1,25 +1,26 @@
 #include "token_formatting.h"
 
-char	*trim_env_var(char *s, size_t *start, size_t *end)
+char	*trim_env_var(char *s, size_t *start)
 {
+	size_t	end;
+
+	end = 0;
 	while (s[*start] != '$')
 		(*start)++;
-	*end = *start + 1;
-	while (s[*end] && !is_whitespace(s[*end]))
-		(*end)++;
-	return (ft_strndup(s + *start, *end - *start));
+	end = *start + 1;
+	while (s[end] && !is_whitespace(s[end]))
+		(end)++;
+	return (ft_strndup(s + *start, end - *start));
 }
 
 void	format_env_var(t_input *input, t_token *array, ssize_t *i)
 {
 	char	*var;
 	size_t	start;
-	size_t	end;
 	char	*env_var;
 
 	start = 0;
-	end = 0;
-	var = trim_env_var(array[*i].raw_content, &start, &end);
+	var = trim_env_var(array[*i].raw_content, &start);
 	if (!var)
 		exit_minishell(input, EXIT_FAILURE);
 	env_var = getenv(var + 1);
