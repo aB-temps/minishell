@@ -1,5 +1,5 @@
-#include "libft.h"
 #include "checking.h"
+#include "libft.h"
 #include <stdio.h>
 
 size_t	count_occurence(char *s, char *to_find)
@@ -34,7 +34,8 @@ char	*str_replace(char *s, char *old, char *new)
 		return ((void *)0);
 	while (s[i])
 	{
-		if (!ft_strncmp(&s[i], old, ft_strlen(old)) && is_whitespace(s[i + ft_strlen(old)]))
+		if (!ft_strncmp(&s[i], old, ft_strlen(old)) && (is_whitespace(s[i
+					+ ft_strlen(old)]) || !s[i + ft_strlen(old)]))
 		{
 			i += ft_strlen(old);
 			j += ft_strlen(new);
