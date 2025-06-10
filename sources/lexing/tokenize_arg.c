@@ -2,11 +2,12 @@
 
 void	tokenize_arg(t_input *input, size_t *i, int token_type, char *line)
 {
-	char	*raw_content;
-	size_t	j;
+	char *raw_content;
+
+	size_t j;
 
 	j = *i;
-	while (line[*i] && is_valid_arg_char(line[*i]))
+	while (line[*i] && (is_valid_arg_char(line[*i]) || is_quote(line[*i])))
 		(*i)++;
 	raw_content = ft_strndup(&line[j], *i - j);
 	if (!raw_content)
