@@ -28,5 +28,6 @@ void	format_env_var(t_input *input, t_token *array, ssize_t *i)
 			env_var);
 	if (!array[*i].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
+	array[*i].type = ENV_VAR;
 	(*i)++;
 }

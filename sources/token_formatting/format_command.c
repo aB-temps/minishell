@@ -11,41 +11,41 @@ ssize_t	count_args(t_input *input, t_token *array, ssize_t *i)
 	return (j - *i + 1);
 }
 
-char	**join_args(t_input *input, t_token *array, ssize_t *i, size_t arg_qty)
+char	**args_to_array(t_input *input, t_token *array, ssize_t *i,
+		size_t arg_qty)
 {
-	char	*joined_args;
+	char	**args_array;
 	size_t	j;
+	size_t	k;
 
-	j = 1;
-	joined_args = ft_strdup(array[*i].raw_content);
-	if (!joined_args)
+	j = 0;
+	k = *i;
+	args_array = malloc(sizeof(char *) * arg_qty + 1);
+	if (!args_array)
 		exit_minishell(input, EXIT_FAILURE);
 	while (j < arg_qty - 1)
 	{
-		joined_args = str_free_to_join(joined_args, " ");
-		if (!joined_args)
-			exit_minishell(input, EXIT_FAILURE);
-		if (array[*i + j].type == ENV_VAR)
-			joined_args = str_free_to_join(joined_args, array[*i
-					+ j].formatted_content);
+		if (array[k].type == ENV_VAR)
+			args_array[j] = ft_strdup(array[k].formatted_content);
 		else
-			joined_args = str_free_to_join(joined_args, array[*i
-					+ j].raw_content);
-		if (!joined_args)
+			args_array[j] = ft_strdup(array[k].raw_content);
+		if (!args_array[j])
 			exit_minishell(input, EXIT_FAILURE);
 		j++;
+		k++;
 	}
-	return (ft_split(joined_args, ' '));
+	args_array[arg_qty - 1] = (void *)0;
+	return (args_array);
 }
 
 void	format_command(t_input *input, t_token *array, ssize_t *i)
 {
-	ssize_t	args;
+	ssize_t	arg_qty;
 
-	args = count_args(input, array, i);
+	arg_qty = count_args(input, array, i);
 	array[*i].type = COMMAND;
-	array[*i].formatted_content = join_args(input, array, i, args);
+	array[*i].formatted_content = args_to_array(input, array, i, arg_qty);
 	if (!array[*i].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
-	(*i) += args;
+	(*i) += arg_qty;
 }
