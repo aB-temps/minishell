@@ -1,3 +1,4 @@
+#include "exec.h"
 #include "libft.h"
 #include "parsing.h"
 #include "style.h"
@@ -11,11 +12,11 @@ void	get_input(char **env)
 	char	*prompt;
 
 	(void)env;
-	line = (void *)0;
+	line = NULL;
 	while (1)
 	{
-		input = (void *)0;
-		prompt = (void *)0;
+		input = NULL;
+		prompt = NULL;
 		build_prompt(&prompt);
 		line = readline(prompt);
 		if (!line)
@@ -28,13 +29,13 @@ void	get_input(char **env)
 			add_history(line);
 			input = parse_input(line, prompt);
 		}
-		// exec(input)
-		free(prompt);
-		free(line);
 		if (input)
 		{
+			exec_cmd(input, env);
 			clear_vector(input->v_tokens);
 			free(input);
 		}
+		free(prompt);
+		free(line);
 	}
 }
