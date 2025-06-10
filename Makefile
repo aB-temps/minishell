@@ -125,6 +125,7 @@ F_UTILS :=		init_struct.c		\
 
 F_DEBUG :=		print_input.c	\
 				print_tab.c		\
+				debug.c			\
 
 
 # VARS GENERATION =====================================================================
