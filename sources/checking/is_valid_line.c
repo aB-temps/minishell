@@ -1,7 +1,7 @@
 #include "checking.h"
 #include <unistd.h>
 
-bool	are_quotes_paired(char *s)
+static bool	are_quotes_paired(char *s)
 {
 	size_t	i;
 	size_t	s_quotes;

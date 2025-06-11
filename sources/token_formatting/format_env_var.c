@@ -1,6 +1,6 @@
 #include "token_formatting.h"
 
-char	*substitute_env_var_occurences(char *s, size_t *start)
+static char	*substitute_env_var_occurences(char *s, size_t *start)
 {
 	char	*ns;
 	char	*var_name;
