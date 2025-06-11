@@ -43,9 +43,9 @@ void	format_command(t_input *input, t_token *array, ssize_t *i)
 	ssize_t	arg_qty;
 
 	arg_qty = count_args(input, array, i);
-	array[*i].type = COMMAND;
 	array[*i].formatted_content = args_to_array(input, array, i, arg_qty);
 	if (!array[*i].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
+	array[*i].type = COMMAND;
 	(*i) += arg_qty;
 }

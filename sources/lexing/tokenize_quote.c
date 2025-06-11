@@ -2,8 +2,8 @@
 
 void	*tokenize_quote(t_input *input, size_t *i, int token_type, char *line)
 {
-	ssize_t j;
-	char *content;
+	ssize_t	j;
+	char	*content;
 
 	j = *i + 1;
 	if (line[*i] == '\'')
@@ -14,10 +14,13 @@ void	*tokenize_quote(t_input *input, size_t *i, int token_type, char *line)
 	{
 		if ((token_type == S_QUOTES && line[*i] == '\'')
 				|| (token_type == D_QUOTES && line[*i] == '"'))
-			break ;
+		{
+			if (is_whitespace(line[*i + 1]))
+				break ;
+		}
 	}
-	if (!line[*i])
-		return ((void *)0);
+	// if (!line[*i])
+	// 	return ((void *)0);
 	content = ft_strndup(&line[j], (*i)++ - j);
 	if (!content)
 		exit_minishell(input, EXIT_FAILURE);

@@ -1,39 +1,49 @@
 #include "token_formatting.h"
 
-char	*trim_env_var(char *s, size_t *start)
+char	*substitute_env_var_occurences(char *s, size_t *start)
 {
 	char	*ns;
+	char	*var_name;
+	char	*var_value;
 	size_t	end;
 
+	ns = (void *)0;
+	var_name = (void *)0;
+	var_value = (void *)0;
 	end = 0;
-	while (s[*start] != '$')
+	while (s[*start] && s[*start] != '$')
 		(*start)++;
 	end = *start + 1;
-	while (s[end] && !is_whitespace(s[end]))
+	while (s[end] && !is_whitespace(s[end]) && !is_quote(s[end]))
 		(end)++;
-	ns = ft_strndup(s + *start, end - *start);
+	var_name = ft_strndup(s + *start, end - *start);
+	if (!var_name)
+		return ((void *)0);
+	var_value = getenv(var_name + 1);
+	ns = str_replace(s, var_name, var_value);
+	free(var_name);
+	if (!ns)
+		return ((void *)0);
 	return (ns);
 }
 
 void	format_env_var(t_input *input, t_token *array, ssize_t *i)
 {
-	char	*var;
 	size_t	start;
-	char	*env_var;
+	char	*content;
 
 	start = 0;
-	var = trim_env_var(array[*i].raw_content, &start);
-	if (!var)
-		exit_minishell(input, EXIT_FAILURE);
-	env_var = getenv(var + 1);
-	array[*i].formatted_content = str_replace(array[*i].raw_content, var,
-			env_var);
-	if (!array[*i].formatted_content)
+	content = substitute_env_var_occurences(array[*i].raw_content, &start);
+	while (content && is_in_string(content, '$'))
 	{
-		free(var);
-		exit_minishell(input, EXIT_FAILURE);
+		start = 0;
+		content = substitute_env_var_occurences(content, &start);
+		if (!content)
+			break ;
 	}
-	free(var);
+	array[*i].formatted_content = content;
+	if (!array[*i].formatted_content)
+		exit_minishell(input, EXIT_FAILURE);
 	array[*i].type = ENV_VAR;
 	(*i)++;
 }
