@@ -2,6 +2,7 @@
 
 char	*trim_env_var(char *s, size_t *start)
 {
+	char	*ns;
 	size_t	end;
 
 	end = 0;
@@ -10,7 +11,8 @@ char	*trim_env_var(char *s, size_t *start)
 	end = *start + 1;
 	while (s[end] && !is_whitespace(s[end]))
 		(end)++;
-	return (ft_strndup(s + *start, end - *start));
+	ns = ft_strndup(s + *start, end - *start);
+	return (ns);
 }
 
 void	format_env_var(t_input *input, t_token *array, ssize_t *i)
@@ -27,7 +29,11 @@ void	format_env_var(t_input *input, t_token *array, ssize_t *i)
 	array[*i].formatted_content = str_replace(array[*i].raw_content, var,
 			env_var);
 	if (!array[*i].formatted_content)
+	{
+		free(var);
 		exit_minishell(input, EXIT_FAILURE);
+	}
+	free(var);
 	array[*i].type = ENV_VAR;
 	(*i)++;
 }

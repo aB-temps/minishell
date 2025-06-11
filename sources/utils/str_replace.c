@@ -1,6 +1,5 @@
 #include "checking.h"
 #include "libft.h"
-#include <stdio.h>
 
 size_t	count_occurence(char *s, char *to_find)
 {
