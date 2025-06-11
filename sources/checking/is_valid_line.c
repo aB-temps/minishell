@@ -12,13 +12,13 @@ bool	are_quotes_paired(char *s)
 	d_quotes = 0;
 	while (s[i])
 	{
-		if (s[i] == '\'')
+		if (d_quotes % 2 == 0 && s[i] == '\'')
 			s_quotes++;
-		else if (s[i] == '\"')
+		else if (s_quotes % 2 == 0 && s[i] == '\"')
 			d_quotes++;
 		i++;
 	}
-	return (s_quotes % 2 == 0 && d_quotes % 2 == 0); 
+	return (s_quotes % 2 == 0 && d_quotes % 2 == 0);
 }
 
 bool	is_valid_line(char *line)
