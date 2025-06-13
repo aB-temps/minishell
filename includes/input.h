@@ -22,12 +22,6 @@ enum					token_type
 typedef struct s_input	t_input;
 typedef struct s_token	t_token;
 
-// struct					s_input
-// {
-// 	ssize_t				token_qty;
-// 	t_token				*token;
-// };
-
 struct					s_token
 {
 	ssize_t				type;
