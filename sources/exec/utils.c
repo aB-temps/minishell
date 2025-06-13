@@ -31,7 +31,7 @@ int	count_cmd(t_input *input)
 	{
 		if (tokens_array[i].type == COMMAND)
 			cmd_count++;
-		ft_printf("[%d] %s\n", i, get_type(tokens_array[i].type));
+		// ft_printf("[%d] %s\n", i, get_type(tokens_array[i].type));
 		i++;
 	}
 	return (cmd_count);

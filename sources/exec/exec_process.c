@@ -23,19 +23,21 @@ static int	handle_command_not_found(char **args, char *cmd_path)
 {
 	if (!cmd_path)
 	{
-		dprintf(STDERR_FILENO, "Command not found: %s\n", args[0]);
-			// FAIRE NOUS MEME LE DPRINTF ?
+		ft_putstr_fd("command not found : ", 2);
+		ft_putendl_fd(*args, 2);
 		return (-1);
 	}
 	return (0);
 }
 
-int	execute_command(t_input *input, t_token *current_token, char **env)
+int	execute_command(t_input *input, t_token *current_token, char **env, int i)
 {
 	char	*cmd_path;
 	char	**args;
 	int		pid;
 
+	(void)i;
+	(void)input;
 	args = (char **)(current_token->formatted_content);
 	cmd_path = find_full_command_path(*args, env);
 	if (handle_command_not_found(args, cmd_path) == -1)

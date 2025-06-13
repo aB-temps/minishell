@@ -14,7 +14,7 @@ void	launch_all_commands(t_input *input, char **env, int *pids)
 	{
 		current_token = &tokens_array[i];
 		if (current_token->type == COMMAND)
-			pids[y++] = execute_command(current_token, env);
+			pids[y++] = execute_command(input, current_token, env, i);
 		i++;
 	}
 }

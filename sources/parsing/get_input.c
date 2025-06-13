@@ -11,14 +11,13 @@ void	get_input(char **env)
 	char	*line;
 	char	*prompt;
 
-	(void)env;
 	line = NULL;
 	while (1)
 	{
 		input = NULL;
-		prompt = NULL;
-		build_prompt(&prompt);
-		line = readline(prompt);
+		prompt = "NULL";
+		// build_prompt(&prompt);
+		line = readline("CACA > ");
 		if (!line)
 		{
 			free(prompt);
@@ -35,7 +34,7 @@ void	get_input(char **env)
 			clear_vector(input->v_tokens);
 			free(input);
 		}
-		free(prompt);
+		// free(prompt);
 		free(line);
 	}
 }
