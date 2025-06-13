@@ -15,12 +15,10 @@ void	*tokenize_quote(t_input *input, size_t *i, int token_type, char *line)
 		if ((token_type == S_QUOTES && line[*i] == '\'')
 				|| (token_type == D_QUOTES && line[*i] == '"'))
 		{
-			if (is_whitespace(line[*i + 1]))
+			if (!line[*i + 1] || is_whitespace(line[*i + 1]))
 				break ;
 		}
 	}
-	// if (!line[*i])
-	// 	return ((void *)0);
 	content = ft_strndup(&line[j], (*i)++ - j);
 	if (!content)
 		exit_minishell(input, EXIT_FAILURE);
