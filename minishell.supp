@@ -18,3 +18,10 @@
 	...
 	fun:*/bin/*
 }
+
+{
+	<add_history-leaks>
+	Memcheck:Leak
+	...
+	fun:add_history
+}

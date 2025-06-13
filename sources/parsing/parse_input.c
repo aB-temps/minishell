@@ -7,7 +7,7 @@ t_input	*parse_input(char *line, char*prompt)
 {
 	t_input	*input;
 
-	input = malloc(sizeof(t_input));
+	input = ft_calloc(1, sizeof(t_input));
 	if (!input)
 		return ((void *)0);
 	init_input(input, line, prompt);
