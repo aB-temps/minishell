@@ -5,8 +5,8 @@ ssize_t	count_args(t_input *input, t_token *array, ssize_t *i)
 	ssize_t	j;
 
 	j = *i;
-	while (j + 1 <= input->token_qty && !(array[j + 1].type >= PIPE && array[j
-			+ 1].type <= APPEND))
+	while (j + 1 <= input->token_qty && !(array[j].type >= PIPE
+			&& array[j].type <= APPEND))
 		j++;
 	return (j - *i + 1);
 }
@@ -43,9 +43,9 @@ void	format_command(t_input *input, t_token *array, ssize_t *i)
 	ssize_t	arg_qty;
 
 	arg_qty = count_args(input, array, i);
-	array[*i].type = COMMAND;
 	array[*i].formatted_content = args_to_array(input, array, i, arg_qty);
 	if (!array[*i].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
+	array[*i].type = COMMAND;
 	(*i) += arg_qty;
 }

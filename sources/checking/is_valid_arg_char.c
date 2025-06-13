@@ -8,10 +8,20 @@ static bool	is_path_char(char c)
 static bool	is_nonalnum_valid_char(char c)
 {
 	return (c == '-' || c == '_' || c == '$' || c == '%' || c == '#' || c == '^'
-		|| c == '+' || c == '='|| c == ','|| c == '{' || c == '}');
+		|| c == '+' || c == '=' || c == ',' || c == '{' || c == '}');
 }
 
-bool is_quote(char c)
+bool	is_d_quote(char c)
+{
+	return (c == '"');
+}
+
+bool	is_s_quote(char c)
+{
+	return (c == '\'');
+}
+
+bool	is_quote(char c)
 {
 	return (c == '\'' || c == '"');
 }

@@ -2,7 +2,7 @@
 #include "libft.h"
 #include <stdio.h>
 
-size_t	count_occurence(char *s, char *to_find)
+static size_t	count_occurence(char *s, char *to_find)
 {
 	size_t	count;
 	char	*cursor;
@@ -30,12 +30,13 @@ char	*str_replace(char *s, char *old, char *new)
 	i = 0;
 	j = 0;
 	ns = ft_calloc(sizeof(char), new_total_len + 1);
-	if (!ns || !old || !new || !s)
+	if (!ns)
 		return ((void *)0);
 	while (s[i])
 	{
 		if (!ft_strncmp(&s[i], old, ft_strlen(old)) && (is_whitespace(s[i
-					+ ft_strlen(old)]) || !s[i + ft_strlen(old)]))
+					+ ft_strlen(old)]) || is_quote(s[i + ft_strlen(old)])
+				|| !s[i + ft_strlen(old)]))
 		{
 			i += ft_strlen(old);
 			j += ft_strlen(new);

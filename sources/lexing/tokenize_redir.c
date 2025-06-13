@@ -15,7 +15,15 @@ void	tokenize_redir(t_input *input, size_t *i, char *line, size_t line_len)
 			create_token(input, REDIR_OUT, ">");
 	}
 	else if (line[*i] == '<')
-		create_token(input, REDIR_IN, "<");
+	{
+		if (*i < line_len - 1 && line[*i + 1] == '<')
+		{
+			create_token(input, HEREDOC, "<<");
+			(*i)++;
+		}
+		else
+			create_token(input, REDIR_IN, "<");
+	}
 	(*i)++;
 	input->token_qty++;
 }
