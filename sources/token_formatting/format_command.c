@@ -5,8 +5,8 @@ ssize_t	count_args(t_input *input, t_token *array, ssize_t *i)
 	ssize_t	j;
 
 	j = *i;
-	while (j + 1 <= input->token_qty && !(array[j + 1].type >= PIPE && array[j
-			+ 1].type <= APPEND))
+	while (j + 1 <= input->token_qty && !(array[j].type >= PIPE
+			&& array[j].type <= APPEND))
 		j++;
 	return (j - *i + 1);
 }

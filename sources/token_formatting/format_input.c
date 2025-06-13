@@ -9,8 +9,7 @@ void	replace_env_var(t_input *input)
 	i = 0;
 	while (i < input->token_qty)
 	{
-		if ((array[i].type == D_QUOTES && is_in_string(array[i].raw_content,
-					'$')) || array[i].type == ENV_VAR)
+		if (is_in_string(array[i].raw_content, '$') || array[i].type == ENV_VAR)
 			format_env_var(input, array, &i);
 		else
 			i++;
@@ -29,7 +28,8 @@ void	format_input(t_input *input)
 	{
 		if (array[i].type >= REDIR_IN && array[i].type <= APPEND)
 			format_redir(input, &i);
-		else if (array[i].type == ARG || array[i].type == ENV_VAR || array[i].type == D_QUOTES)
+		else if (array[i].type == ARG || array[i].type == ENV_VAR
+			|| array[i].type == D_QUOTES)
 			format_command(input, array, &i);
 		else
 			i++;

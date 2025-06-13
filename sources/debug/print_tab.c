@@ -8,7 +8,7 @@ void	print_tab(char **tab)
 	printf("Formatted Content :\n");
 	while (tab[i])
 	{
-		printf("[%i]: %s\n", i, tab[i]);
+		printf("[%i]: '%s'\n", i, tab[i]);
 		i++;
 	}
 	printf("\n");
