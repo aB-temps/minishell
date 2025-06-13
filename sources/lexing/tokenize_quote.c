@@ -5,7 +5,8 @@ void	*tokenize_quote(t_input *input, size_t *i, int token_type, char *line)
 	ssize_t	j;
 	char	*content;
 
-	j = *i + 1;
+	// j = *i + 1;
+	j = *i;
 	if (line[*i] == '\'')
 		token_type = S_QUOTES;
 	else
@@ -19,7 +20,7 @@ void	*tokenize_quote(t_input *input, size_t *i, int token_type, char *line)
 				break ;
 		}
 	}
-	content = ft_strndup(&line[j], (*i)++ - j);
+	content = ft_strndup(&line[j], (*i)++ - j + 1);
 	if (!content)
 		exit_minishell(input, EXIT_FAILURE);
 	create_token(input, token_type, content);

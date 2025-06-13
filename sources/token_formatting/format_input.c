@@ -34,4 +34,5 @@ void	format_input(t_input *input)
 		else
 			i++;
 	}
+	// input->v_tokens = 
 }
