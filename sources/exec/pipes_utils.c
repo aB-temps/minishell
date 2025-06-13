@@ -13,7 +13,7 @@ void	close_all(t_fd *fd)
 		close(fd->fd2[1]);
 }
 
-void	close_and_swap_pipes(t_fd *fd, int mod)
+void	close_and_swap_pipes(t_fd *fd)
 {
 	close_all(fd);
 	fd->fd1[0] = fd->fd2[0];

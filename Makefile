@@ -123,6 +123,8 @@ F_EXEC :=	exec_cmd.c		\
 			exec_launcher.c	\
 			exec_process.c	\
 			path_utils.c	\
+			utils.c			\
+			pipes_utils.c	\
 
 F_UTILS :=	init_struct.c		\
 			clear_token.c		\

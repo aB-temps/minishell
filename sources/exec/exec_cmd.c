@@ -24,25 +24,27 @@ void	cleanup_command_resources(char **args, char *cmd_path)
 		free(cmd_path);
 }
 
-static void	execute_all_commands(t_input *input, char **env)
+static int	execute_all_commands(t_input *input, char **env)
 {
 	int	*pids;
 	int	cmd_count;
 
-	cmd_count = input->token_qty;
-	if (cmd_count == 0)
-		return ;
+	// cmd_count = input->token_qty;
+	cmd_count = count_cmd(input);
 	pids = ft_calloc(cmd_count, sizeof(int));
 	if (!pids)
-		return ;
-	//debug_print_all_arrays(input, pids, input->token_qty);
+		return (1);
+	// debug_print_all_arrays(input, pids, input->token_qty); //debug
 	launch_all_commands(input, env, pids);
 	wait_for_processes(pids, cmd_count);
 	free(pids);
 	// printf("All cmd executed\n\n"); //debug
+	return (0);
 }
 
-void	exec_cmd(t_input *input, char **env)
+int	exec_cmd(t_input *input, char **env)
 {
-	execute_all_commands(input, env);
+	if (execute_all_commands(input, env) == 1)
+		return (1);
+	return (0);
 }
