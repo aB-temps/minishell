@@ -2,10 +2,10 @@
 
 void	format_redir(t_input *input, ssize_t *i)
 {
-	t_token	*array;
+	t_token *array;
 
 	array = (t_token *)input->v_tokens->array;
-	if (array[(*i)].type >= REDIR_IN && array[(*i)].type <= APPEND)
+	if (array[(*i)].type >= REDIR_IN && array[(*i)].type <= APPEND) // HEREDOC ???
 	{
 		if ((*i) + 1 < input->token_qty && array[(*i) + 1].type == ARG)
 		{
