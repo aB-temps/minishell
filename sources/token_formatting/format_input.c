@@ -16,6 +16,39 @@ void	replace_env_var(t_input *input)
 	}
 }
 
+void	del_quote(char **str)
+{
+	char	quote;
+	char	*temp;
+
+	quote = 0;
+	temp = *str;
+	if (is_in_string(*str, '\''))
+		*str = str_patdel(*str, "'");
+	else if (is_in_string(*str, '"'))
+		*str = str_patdel(*str, "\"");
+	else
+		return ;
+	free(temp);
+}
+
+void	remove_extra_quote(t_input *input)
+{
+	t_token	*array;
+	ssize_t	i;
+
+	array = (t_token *)input->v_tokens->array;
+	i = 0;
+	while (i < input->token_qty)
+	{
+		if (array[i].type == ENV_VAR)
+			del_quote((char **)&array[i].formatted_content);
+		else
+			del_quote(&array[i].raw_content);
+		i++;
+	}
+}
+
 void	format_input(t_input *input)
 {
 	t_token	*array;
@@ -24,6 +57,7 @@ void	format_input(t_input *input)
 	i = 0;
 	array = (t_token *)input->v_tokens->array;
 	replace_env_var(input);
+	remove_extra_quote(input);
 	while (i < input->token_qty)
 	{
 		if (array[i].type >= REDIR_IN && array[i].type <= APPEND)
@@ -34,5 +68,5 @@ void	format_input(t_input *input)
 		else
 			i++;
 	}
-	// input->v_tokens = 
+	// input->v_tokens =
 }

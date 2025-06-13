@@ -128,7 +128,7 @@ F_UTILS :=				init_struct.c		\
 						clear_token.c		\
 						create_token.c		\
 						exit_minishell.c	\
-						count_occurence.c		\
+						count_occurence.c	\
 						str_patdel.c		\
 						str_replace.c		\
 
