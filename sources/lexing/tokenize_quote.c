@@ -13,7 +13,7 @@ void	*tokenize_quote(t_input *input, size_t *i, int token_type, char *line)
 	while (line[++(*i)])
 	{
 		if ((token_type == S_QUOTES && line[*i] == '\'')
-				|| (token_type == D_QUOTES && line[*i] == '"'))
+			|| (token_type == D_QUOTES && line[*i] == '"'))
 		{
 			while (line[*i] && !is_whitespace(line[*i]))
 				(*i)++;
