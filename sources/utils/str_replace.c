@@ -17,7 +17,7 @@ char	*str_replace(char *s, char *old, char *new)
 	{
 		if (!ft_strncmp(&s[i], old, ft_strlen(old)) && (is_whitespace(s[i
 					+ ft_strlen(old)]) || is_quote(s[i + ft_strlen(old)])
-				|| !s[i + ft_strlen(old)]))
+				|| s[i] == '$' || !s[i + ft_strlen(old)]))
 		{
 			i += ft_strlen(old);
 			j += ft_strlen(new);
