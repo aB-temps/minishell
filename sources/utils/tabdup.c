@@ -1,4 +1,5 @@
 #include "libft.h"
+#include <stdio.h>
 
 size_t	ft_tablen(char **tab)
 {
@@ -12,9 +13,9 @@ size_t	ft_tablen(char **tab)
 
 char	**tabdup(char **tab)
 {
-	char **new_tab;
-	size_t i;
-	size_t j;
+	char	**new_tab;
+	size_t	i;
+	size_t	j;
 
 	i = 0;
 	new_tab = ft_calloc(ft_tablen(tab) + 1, sizeof(char *));
@@ -34,6 +35,6 @@ char	**tabdup(char **tab)
 		new_tab[i][j] = '\0';
 		i++;
 	}
-	new_tab[i][0] = '\0';
+	new_tab[i] = (void*)0;
 	return (new_tab);
 }
