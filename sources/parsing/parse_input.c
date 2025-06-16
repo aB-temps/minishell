@@ -17,7 +17,8 @@ t_input	*parse_input(char *line, char*prompt)
 	if (!tokenize_input(input, line))
 		return ((void *)0);
 	print_input(input);
-	format_input(input);
+	format_tokens(input);
 	print_input(input);
+	// input
 	return (input);
 }

@@ -50,7 +50,7 @@ void	remove_extra_quote(t_input *input)
 	}
 }
 
-void	format_input(t_input *input)
+void	format_tokens(t_input *input)
 {
 	t_token	*array;
 	ssize_t	i;

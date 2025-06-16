@@ -132,7 +132,7 @@ F_UTILS :=				init_struct.c		\
 						str_patdel.c		\
 						str_replace.c		\
 
-F_TOKEN_FORMATTING :=	format_input.c		\
+F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\
 						format_redir.c		\
 						format_env_var.c	\
