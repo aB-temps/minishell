@@ -1,7 +1,7 @@
 #include "debug.h"
 #include "parsing.h"
 
-size_t	compute_valid_tokens(size_t qty, const t_token *array)
+size_t	count_valid_tokens(size_t qty, const t_token *array)
 {
 	size_t	i;
 	size_t	valid_tokens;
@@ -10,7 +10,7 @@ size_t	compute_valid_tokens(size_t qty, const t_token *array)
 	valid_tokens = 0;
 	while (i < qty)
 	{
-		if (array[i].type != ARG && array[i].type != ENV_VAR)
+		if (array[i].type >= COMMAND && array[i].type <= HEREDOC)
 			valid_tokens++;
 		i++;
 	}
@@ -26,13 +26,13 @@ void	format_input(t_input *input)
 
 	array = (t_token *)input->v_tokens->array;
 	i = 0;
-	new_vec = create_vector(compute_valid_tokens(input->token_qty, array),
+	new_vec = create_vector(count_valid_tokens(input->token_qty, array),
 			sizeof(t_token), clear_token);
 	if (!new_vec)
 		exit_minishell(input, EXIT_FAILURE);
 	while (i < input->token_qty)
 	{
-		if (array[i].type != ARG && array[i].type != ENV_VAR)
+		if (array[i].type >= COMMAND && array[i].type <= HEREDOC)
 		{
 			init_token(&token);
 			token = dup_token(array[i]);
@@ -44,9 +44,7 @@ void	format_input(t_input *input)
 		}
 		i++;
 	}
-	print_input(input);
 	clear_vector(input->v_tokens);
 	input->v_tokens = new_vec;
 	input->token_qty = input->v_tokens->capacity;
-	print_input(input);
 }

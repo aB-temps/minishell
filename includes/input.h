@@ -6,8 +6,8 @@
 
 enum					token_type
 {
-	COMMAND,
 	ARG,
+	COMMAND,
 	PIPE,
 	REDIR_IN,
 	REDIR_OUT,

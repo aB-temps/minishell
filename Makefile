@@ -92,17 +92,17 @@ RESET		:=	\033[0m
 BOLD		:=	\033[1m
 
 # COMPONENTS ==========================================================================
-COMPONENTS :=	PARSING 			\
-				LEXING 				\
-				CHECKING 			\
-				TOKEN_FORMATTING	\
-				STYLE				\
-				UTILS				\
-				EXEC				\
-				DEBUG				\
+COMPONENTS :=			PARSING 			\
+						LEXING 				\
+						CHECKING 			\
+						TOKEN_FORMATTING	\
+						STYLE				\
+						UTILS				\
+						EXEC				\
+						DEBUG				\
 
 # FILES ===============================================================================
-F_MAIN :=				main.c	\
+F_MAIN :=				main.c				\
 
 F_LEXING :=				tokenize_input.c	\
 						tokenize_arg.c		\
@@ -116,36 +116,36 @@ F_CHECKING :=			is_valid_line.c		\
 						is_operator.c		\
 						is_valid_arg_char.c \
 
-F_PARSING :=			get_input.c		\
-						parse_input.c	\
-						format_input.c \
+F_PARSING :=			get_input.c			\
+						parse_input.c		\
+						format_input.c		\
 
-F_EXEC :=				exec_cmd.c		\
-						exec_launcher.c	\
-						exec_process.c	\
-						path_utils.c	\
+F_EXEC :=				exec_cmd.c			\
+						exec_launcher.c		\
+						exec_process.c		\
+						path_utils.c		\
 
 F_UTILS :=				init_struct.c		\
 						clear_token.c		\
-						dup_token.c		\
+						dup_token.c			\
 						create_token.c		\
 						exit_minishell.c	\
 						count_occurence.c	\
 						str_patdel.c		\
 						str_replace.c		\
-						tabdup.c
+						tabdup.c			\
 
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\
 						format_redir.c		\
 						format_env_var.c	\
 
-F_STYLE :=				welcome.c 		\
-						build_prompt.c	\
+F_STYLE :=				welcome.c 			\
+						build_prompt.c		\
 
-F_DEBUG :=				print_input.c	\
-						print_tab.c		\
-						debug.c			\
+F_DEBUG :=				print_input.c		\
+						print_tab.c			\
+						debug.c				\
 
 
 # VARS GENERATION =====================================================================

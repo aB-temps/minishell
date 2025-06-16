@@ -1,6 +1,6 @@
 #include "token_formatting.h"
 
-void	replace_env_var(t_input *input)
+static void	replace_env_var(t_input *input)
 {
 	t_token	*array;
 	ssize_t	i;

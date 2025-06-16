@@ -25,9 +25,9 @@ char	**args_to_array(t_input *input, t_token *array, ssize_t *i,
 		exit_minishell(input, EXIT_FAILURE);
 	while (j < arg_qty - 1)
 	{
-		if (array[k].type == ENV_VAR)
+		if (array[k].type == ENV_VAR && array[k].formatted_content)
 			args_array[j] = ft_strdup(array[k].formatted_content);
-		else
+		else if (array[k].raw_content)
 			args_array[j] = ft_strdup(array[k].raw_content);
 		if (!args_array[j])
 			exit_minishell(input, EXIT_FAILURE);
