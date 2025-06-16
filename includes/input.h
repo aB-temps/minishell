@@ -42,6 +42,10 @@ void					init_token(t_token *token);
 void					create_token(t_input *input, int type,
 							char *raw_content);
 void					clear_token(t_vector *tokens);
+t_token					dup_token(t_token token);
 void					exit_minishell(t_input *input, int exit_code);
+// lib
+char					**tabdup(char **tab);
+size_t					ft_tablen(char **tab);
 
 #endif

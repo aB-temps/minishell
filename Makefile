@@ -118,6 +118,7 @@ F_CHECKING :=			is_valid_line.c		\
 
 F_PARSING :=			get_input.c		\
 						parse_input.c	\
+						format_input.c \
 
 F_EXEC :=				exec_cmd.c		\
 						exec_launcher.c	\
@@ -126,11 +127,13 @@ F_EXEC :=				exec_cmd.c		\
 
 F_UTILS :=				init_struct.c		\
 						clear_token.c		\
+						dup_token.c		\
 						create_token.c		\
 						exit_minishell.c	\
 						count_occurence.c	\
 						str_patdel.c		\
 						str_replace.c		\
+						tabdup.c
 
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\
