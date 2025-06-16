@@ -2,6 +2,9 @@
 *.o
 *.a
 *.out
+*.txt
 .vscode
 minishell
 test
+infile
+outfile

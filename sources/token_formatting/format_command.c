@@ -6,7 +6,7 @@ ssize_t	count_args(t_input *input, t_token *array, ssize_t *i)
 
 	j = *i;
 	while (j + 1 <= input->token_qty && !(array[j].type >= PIPE
-			&& array[j].type <= APPEND))
+			&& array[j].type <= HEREDOC))
 		j++;
 	return (j - *i + 1);
 }

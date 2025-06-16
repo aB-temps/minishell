@@ -6,7 +6,7 @@ void	create_token(t_input *input, int type, char *raw_content)
 
 	init_token(&temp_token);
 	temp_token.type = type;
-	if (!(type >= PIPE && type <= APPEND))
+	if (!(type >= PIPE && type <= HEREDOC))
 		temp_token.raw_content = raw_content;
 	else
 	{
@@ -16,7 +16,7 @@ void	create_token(t_input *input, int type, char *raw_content)
 	}
 	if (!add_element(input->v_tokens, &temp_token))
 	{
-		if (!(type >= PIPE && type <= APPEND) && raw_content)
+		if (!(type >= PIPE && type <= HEREDOC) && raw_content)
 			free(raw_content);
 		exit_minishell(input, EXIT_FAILURE);
 	}
