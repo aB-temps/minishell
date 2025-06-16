@@ -23,11 +23,15 @@ char	**tabdup(char **tab)
 	while (tab[i])
 	{
 		j = 0;
+		new_tab[i] = ft_calloc(ft_strlen(tab[i]) + 1, sizeof(char));
+		if (!new_tab[i])
+			return (free_tab_return_null(new_tab));
 		while (j < ft_strlen(tab[i]))
 		{
 			new_tab[i][j] = tab[i][j];
 			j++;
 		}
+		new_tab[i][j] = '\0';
 		i++;
 	}
 	new_tab[i][0] = '\0';
