@@ -1,6 +1,6 @@
 #include <parsing.h>
 
-static bool	is_path_char(char c)
+bool	is_path_char(char c)
 {
 	return (c == '.' || c == '/' || c == '~');
 }
