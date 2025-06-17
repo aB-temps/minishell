@@ -16,8 +16,8 @@ static char	*substitute_env_var_occurences(char *s, size_t *start)
 	while (s[*start] && s[*start] != '$')
 		(*start)++;
 	end = *start + 1;
-	while (s[end] && (!is_whitespace(s[end]) && !is_quote(s[end])
-			&& s[end] != '$' && ft_isalpha(s[end])))
+	while (s[end] && (s[end] != '$' && (ft_isalnum(s[end]) || s[end] == '-'
+				|| s[end] == '_')))
 		(end)++;
 	var_name = ft_strndup(s + *start, end - *start);
 	if (!var_name)
