@@ -6,8 +6,8 @@
 
 enum					token_type
 {
-	COMMAND,
 	ARG,
+	COMMAND,
 	PIPE,
 	REDIR_IN,
 	REDIR_OUT,
@@ -21,12 +21,6 @@ enum					token_type
 
 typedef struct s_input	t_input;
 typedef struct s_token	t_token;
-
-// struct					s_input
-// {
-// 	ssize_t				token_qty;
-// 	t_token				*token;
-// };
 
 struct					s_token
 {
@@ -48,6 +42,10 @@ void					init_token(t_token *token);
 void					create_token(t_input *input, int type,
 							char *raw_content);
 void					clear_token(t_vector *tokens);
+t_token					dup_token(t_token token);
 void					exit_minishell(t_input *input, int exit_code);
+// lib
+char					**tabdup(char **tab);
+size_t					ft_tablen(char **tab);
 
 #endif

@@ -1,4 +1,5 @@
 #include "lexing.h"
+#include "token_formatting.h"
 
 void	*tokenize_input(t_input *input, char *line)
 {

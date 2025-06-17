@@ -3,7 +3,7 @@
 #include "parsing.h"
 #include "token_formatting.h"
 
-t_input	*parse_input(char *line, char*prompt)
+t_input	*parse_input(char *line, char *prompt)
 {
 	t_input	*input;
 
@@ -16,8 +16,10 @@ t_input	*parse_input(char *line, char*prompt)
 		return ((void *)0);
 	if (!tokenize_input(input, line))
 		return ((void *)0);
-	// print_input(input);
+	print_input(input, "TOKENIZED");
+	format_tokens(input);
+	print_input(input, "FORMATTED TOKENS");
 	format_input(input);
-	// print_input(input);
+	print_input(input, "FORMATTED INPUT");
 	return (input);
 }

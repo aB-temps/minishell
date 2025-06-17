@@ -1,10 +1,10 @@
 #include "debug.h"
 
-void	print_input(t_input *input)
+void	print_input(t_input *input, char *part)
 {
 	const char *type[11] = {
-		"COMMAND",
 		"ARG",
+		"COMMAND",
 		"PIPE",
 		"REDIR_IN",
 		"REDIR_OUT",
@@ -20,6 +20,7 @@ void	print_input(t_input *input)
 
 	i = 0;
 	printf("================ [DEBUG] ================\n");
+	printf("%s => ", part);
 	printf("%s%zu tokens%s\n\n", UNDL, input->token_qty, R_ALL);
 	while (i < input->token_qty)
 	{
@@ -33,5 +34,5 @@ void	print_input(t_input *input)
 				(char *)array[i].formatted_content, R_ALL);
 		i++;
 	}
-	printf("=========================================\n");
+	printf("=========================================\n\n");
 }

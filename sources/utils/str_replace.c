@@ -1,50 +1,31 @@
-#include "checking.h"
-#include "libft.h"
-#include <stdio.h>
-
-static size_t	count_occurence(char *s, char *to_find)
-{
-	size_t	count;
-	char	*cursor;
-
-	count = 0;
-	cursor = s;
-	while (to_find && cursor)
-	{
-		cursor = ft_strnstr(s, to_find, ft_strlen(s));
-		if (cursor)
-			count++;
-		s = cursor + ft_strlen(to_find);
-	}
-	return (count);
-}
+#include "token_formatting.h"
 
 char	*str_replace(char *s, char *old, char *new)
 {
-	const size_t	new_total_len = ft_strlen(s) - (count_occurence(s, old)
-				* ft_strlen(old)) + (count_occurence(s, old) * ft_strlen(new));
+	const size_t	old_len = ft_strlen(old);
+	const size_t	total_len = ft_strlen(s) - (count_occurence(s, old)
+				* old_len) + (count_occurence(s, old) * ft_strlen(new));
 	char			*ns;
 	size_t			i;
 	size_t			j;
 
 	i = 0;
 	j = 0;
-	ns = ft_calloc(sizeof(char), new_total_len + 1);
+	ns = ft_calloc(sizeof(char), total_len + 1);
 	if (!ns)
 		return ((void *)0);
 	while (s[i])
 	{
-		if (!ft_strncmp(&s[i], old, ft_strlen(old)) && (is_whitespace(s[i
-					+ ft_strlen(old)]) || is_quote(s[i + ft_strlen(old)])
-				|| !s[i + ft_strlen(old)]))
+		if (!ft_strncmp(&s[i], old, old_len) && (is_whitespace(s[i + old_len])
+				|| is_quote(s[i + old_len]) || s[i] == '$' || !s[i + old_len]))
 		{
-			i += ft_strlen(old);
+			i += old_len;
 			j += ft_strlen(new);
 			ft_strlcat(ns, new, j + 1);
 		}
 		else
 			ns[j++] = s[i++];
 	}
-	ns[new_total_len] = '\0';
+	ns[total_len] = '\0';
 	return (ns);
 }

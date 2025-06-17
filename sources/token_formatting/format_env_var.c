@@ -9,14 +9,15 @@ static char	*substitute_env_var_occurences(char *s, size_t *start)
 	char	*var_value;
 	size_t	end;
 
-	ns = (void *)0; // UGLY TO REFACTOR
-	var_name = (void *)0; // UGLY TO REFACTOR
+	ns = (void *)0;        // UGLY TO REFACTOR
+	var_name = (void *)0;  // UGLY TO REFACTOR
 	var_value = (void *)0; // UGLY TO REFACTOR
 	end = 0;
 	while (s[*start] && s[*start] != '$')
 		(*start)++;
 	end = *start + 1;
-	while (s[end] && !is_whitespace(s[end]) && !is_quote(s[end]))
+	while (s[end] && (s[end] != '$' && (ft_isalnum(s[end]) || s[end] == '-'
+				|| s[end] == '_')))
 		(end)++;
 	var_name = ft_strndup(s + *start, end - *start);
 	if (!var_name)
@@ -33,15 +34,16 @@ void	format_env_var(t_input *input, t_token *array, ssize_t *i)
 {
 	size_t	start;
 	char	*content;
+	char	*new_content;
 
-	start = 0;// UGLY TO REFACTOR
-	content = substitute_env_var_occurences(array[*i].raw_content, &start);// UGLY TO REFACTOR
-	while (content && is_in_string(content, '$'))// UGLY TO REFACTOR
+	start = 0;
+	content = substitute_env_var_occurences(array[*i].raw_content, &start);
+	while (content && is_in_string(content, '$'))
 	{
-		start = 0;// UGLY TO REFACTOR
-		content = substitute_env_var_occurences(content, &start);// UGLY TO REFACTOR
-		if (!content)// UGLY TO REFACTOR
-			break ;// UGLY TO REFACTOR
+		start = 0;
+		new_content = substitute_env_var_occurences(content, &start);
+		free(content);
+		content = new_content;
 	}
 	array[*i].formatted_content = content;
 	if (!array[*i].formatted_content)
