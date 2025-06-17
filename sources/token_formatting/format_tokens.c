@@ -19,21 +19,21 @@ static void	replace_env_var(t_input *input)
 
 static void	handle_extra_quote(char **str)
 {
-	char	quote;
 	char	*temp;
 
-	quote = 0;
 	temp = *str;
-	if (is_in_string(*str, '\''))
+	if (is_in_string(*str, '\'') && (ft_strchr(*str, '\'') < ft_strchr(*str,
+			'"') || !is_in_string(*str, '\"')))
 		*str = str_patdel(*str, "'");
-	else if (is_in_string(*str, '"'))
+	else if (is_in_string(*str, '"') && (ft_strchr(*str, '\'') > ft_strchr(*str,
+				'"') || !is_in_string(*str, '\'')))
 		*str = str_patdel(*str, "\"");
 	else
 		return ;
 	free(temp);
 }
 
-void	remove_extra_quote(t_input *input)
+static void	remove_extra_quote(t_input *input)
 {
 	t_token	*array;
 	ssize_t	i;
@@ -64,10 +64,9 @@ void	format_tokens(t_input *input)
 		if (array[i].type >= REDIR_IN && array[i].type <= HEREDOC)
 			format_redir(input, &i);
 		else if (array[i].type == ARG || array[i].type == ENV_VAR
-			|| array[i].type == D_QUOTES)
+			|| array[i].type == D_QUOTES || array[i].type == S_QUOTES)
 			format_command(input, array, &i);
 		else
 			i++;
 	}
-	// input->v_tokens =
 }

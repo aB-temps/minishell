@@ -1,6 +1,6 @@
 #include "token_formatting.h"
 
-ssize_t	count_args(t_input *input, t_token *array, ssize_t *i)
+static ssize_t	count_command_args(t_input *input, t_token *array, ssize_t *i)
 {
 	ssize_t	j;
 
@@ -11,7 +11,7 @@ ssize_t	count_args(t_input *input, t_token *array, ssize_t *i)
 	return (j - *i + 1);
 }
 
-char	**args_to_array(t_input *input, t_token *array, ssize_t *i,
+static char	**command_args_to_array(t_input *input, t_token *array, ssize_t *i,
 		size_t arg_qty)
 {
 	char	**args_array;
@@ -42,8 +42,9 @@ void	format_command(t_input *input, t_token *array, ssize_t *i)
 {
 	ssize_t	arg_qty;
 
-	arg_qty = count_args(input, array, i);
-	array[*i].formatted_content = args_to_array(input, array, i, arg_qty);
+	arg_qty = count_command_args(input, array, i);
+	array[*i].formatted_content = command_args_to_array(input, array, i,
+			arg_qty);
 	if (!array[*i].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
 	array[*i].type = COMMAND;
