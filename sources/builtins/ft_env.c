@@ -6,5 +6,5 @@ void	ft_env(char **env)
 
 	i = 0;
 	while (env[i])
-		printf("%s", env[i++]);
+		printf("%s\n", env[i++]);
 }

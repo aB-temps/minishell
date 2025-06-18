@@ -13,7 +13,7 @@ t_token	dup_token(t_token token)
 		return (new_token);
 	}
 	if (token.type == COMMAND)
-		new_token.formatted_content = tabdup(token.formatted_content);
+		new_token.formatted_content = ft_tabdup(token.formatted_content);
 	else
 		new_token.formatted_content = ft_strdup(token.formatted_content);
 	if (!new_token.formatted_content)

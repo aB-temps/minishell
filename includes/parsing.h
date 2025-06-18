@@ -3,6 +3,7 @@
 
 # include "input.h"
 # include "lexing.h"
+# include "utils.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdlib.h>

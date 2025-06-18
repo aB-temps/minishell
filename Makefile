@@ -134,7 +134,8 @@ F_UTILS :=				init_struct.c		\
 						count_occurence.c	\
 						str_patdel.c		\
 						str_replace.c		\
-						tabdup.c			\
+						ft_tabdup.c			\
+						ft_tablen.c			\
 
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\
