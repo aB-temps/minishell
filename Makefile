@@ -145,7 +145,8 @@ F_STYLE :=				welcome.c 			\
 						build_prompt.c		\
 
 F_BUILTINS :=			ft_echo.c 			\
-						ft_cd.c			\
+						ft_cd.c				\
+						ft_pwd.c			\
 
 F_DEBUG :=				print_input.c		\
 						print_tab.c			\
