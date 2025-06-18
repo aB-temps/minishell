@@ -19,18 +19,27 @@ static void	replace_env_var(t_input *input)
 
 static void	handle_extra_quote(char **str)
 {
-	char	*temp;
+	const char	*s_quote = ft_strchr(*str, '\'');
+	const char	*d_quote = ft_strchr(*str, '"');
+	char		*temp;
 
-	temp = *str;
-	if (is_in_string(*str, '\'') && (ft_strchr(*str, '\'') < ft_strchr(*str,
-			'"') || !is_in_string(*str, '\"')))
-		*str = str_patdel(*str, "'");
-	else if (is_in_string(*str, '"') && (ft_strchr(*str, '\'') > ft_strchr(*str,
-				'"') || !is_in_string(*str, '\'')))
-		*str = str_patdel(*str, "\"");
-	else
+	temp = (void *)0;
+	if (!s_quote && !d_quote)
 		return ;
-	free(temp);
+	if (s_quote && (s_quote < d_quote || !d_quote || *(s_quote + 1) == '\''))
+	{
+		temp = *str;
+		*str = str_patdel(*str, "'");
+	}
+	if (d_quote && (s_quote > d_quote || !s_quote || *(d_quote + 1) == '"'))
+	{
+		if (temp)
+			free(temp);
+		temp = *str;
+		*str = str_patdel(*str, "\"");
+	}
+	if (temp)
+		free(temp);
 }
 
 static void	remove_extra_quote(t_input *input)
