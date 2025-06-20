@@ -2,18 +2,18 @@
 
 void	ft_echo(char **arguments)
 {
-	const size_t	len = tablen(arguments);
+	const size_t	len = ft_tablen(arguments);
 	bool			n_param;
 	size_t			i;
 
 	i = 0;
-	while (i < ft_tablen)
+	while (i < len)
 	{
 		if (arguments[i] == "-n")
 			n_param = true;
 		else
 			printf("%s", arguments[i]);
-		if (i < tablen - 1)
+		if (i < len - 1)
 			printf(" ");
 		i++;
 	}
