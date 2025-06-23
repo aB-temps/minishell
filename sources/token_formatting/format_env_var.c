@@ -38,7 +38,7 @@ void	format_env_var(t_input *input, t_token *array, ssize_t *i)
 
 	start = 0;
 	content = substitute_env_var_occurences(array[*i].raw_content, &start);
-	while (content && is_in_string(content, '$'))
+	while (content && ft_strchr(content, '$'))
 	{
 		start = 0;
 		new_content = substitute_env_var_occurences(content, &start);

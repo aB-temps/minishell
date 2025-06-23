@@ -106,16 +106,14 @@ COMPONENTS :=			PARSING 			\
 F_MAIN :=				main.c				\
 
 F_LEXING :=				tokenize_input.c	\
-						tokenize_arg.c		\
+						tokenize_word.c		\
 						tokenize_operator.c	\
 						tokenize_quote.c	\
-						tokenize_redir.c	\
 			
-
 F_CHECKING :=			is_valid_line.c		\
+						is_quote.c	\
 						is_whitespace.c		\
 						is_operator.c		\
-						is_valid_arg_char.c \
 
 F_PARSING :=			get_input.c			\
 						parse_input.c		\
