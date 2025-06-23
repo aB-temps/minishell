@@ -1,8 +1,9 @@
 #include "lexing.h"
 
-static void	tokenize_redir(t_input *input, size_t *i, char *line, size_t line_len)
+static void	tokenize_redir(t_input *input, size_t *i, char *line,
+		size_t line_len)
 {
-	 if (line[*i] == '>')
+	if (line[*i] == '>')
 	{
 		if (*i < line_len - 1 && line[*i + 1] == '>')
 		{
@@ -30,7 +31,11 @@ void	tokenize_operator(t_input *input, size_t *i, char *line,
 		size_t line_len)
 {
 	if (line[*i] == '|')
+	{
 		create_token(input, PIPE, "|");
+		(*i)++;
+		input->token_qty++;
+	}
 	else
 		tokenize_redir(input, i, line, line_len);
 }
