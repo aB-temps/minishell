@@ -7,11 +7,13 @@
 
 void	get_input(char **env)
 {
+	int		exit_status;
 	t_input	*input;
 	char	*line;
 	char	*prompt;
 
 	(void)env;
+	exit_status = 0;
 	line = NULL;
 	while (1)
 	{
@@ -27,11 +29,11 @@ void	get_input(char **env)
 		add_history(line);
 		if (is_valid_line(line))
 		{
-			input = parse_input(line, prompt);
+			input = parse_input(line, prompt, exit_status);
 		}
 		if (input)
 		{
-			// exec_cmd(input, env);
+			//exit_status = ???? exec_cmd(input, env);
 			clear_vector(input->v_tokens);
 			free(input);
 		}

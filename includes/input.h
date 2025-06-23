@@ -30,13 +30,14 @@ struct					s_token
 
 struct					s_input
 {
+	int					last_exit_status;
 	ssize_t				token_qty;
 	t_vector			*v_tokens;
 	char				*line;
 	char				*prompt;
 };
 
-void					init_input(t_input *input, char *line, char *prompt);
+void					init_input(t_input *input, char *line, char *prompt, int exit_status);
 void					init_token(t_token *token);
 void					create_token(t_input *input, int type,
 							char *raw_content);
