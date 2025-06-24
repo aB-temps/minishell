@@ -35,23 +35,44 @@ void	launch_all_commands(t_input *input, char **env, int *pids)
 	}
 }
 
-void	wait_for_processes(int *pids, int cmd_count)
+int	wait_for_processes(int *pids, int cmd_count)
 {
 	int	j;
 	int	status;
+	int	last_pid;
+	int	wait_ret;
 
+	last_pid = -1;
 	j = 0;
 	while (j < cmd_count)
 	{
 		if (pids[j] > 0)
 		{
-			waitpid(pids[j], &status, 0);
-			if (WIFEXITED(status))
-				printf("Processus %d terminé avec le statut: %d\n", pids[j],
-					WEXITSTATUS(status));
+			wait_ret = waitpid(pids[j], &status, 0);
+			if (wait_ret > 0)
+			{
+				if (WIFEXITED(status))
+				{
+					printf("Command %d (PID %d) exited with status %d\n",
+						j, pids[j], WEXITSTATUS(status));
+				}
+				else if (WIFSIGNALED(status))
+				{
+					printf("Command %d was killed by signal %d\n",
+						j, WTERMSIG(status));
+				}
+				else
+				{
+					printf("Command %d terminated abnormally\n", j);
+				}
+				last_pid = pids[j];
+			}
 			else
-				printf("Processus %d terminé anormalement\n", pids[j]); // debug
+			{
+				perror("waitpid failed");
+			}
 		}
 		j++;
 	}
+	return (last_pid);
 }

@@ -21,7 +21,7 @@ void	get_input(char **env)
 		line = readline("CACA > ");
 		if (!line)
 		{
-			free(prompt);
+			// free(prompt);
 			break ;
 		}
 		add_history(line);

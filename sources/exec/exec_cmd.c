@@ -34,7 +34,7 @@ static int	execute_all_commands(t_input *input, char **env)
 	pids = ft_calloc(cmd_count, sizeof(int));
 	if (!pids)
 		return (1);
-	// debug_print_all_arrays(input, pids, input->token_qty); //debug
+	debug_print_all_arrays(input, pids, input->token_qty); //debug
 	launch_all_commands(input, env, pids);
 	wait_for_processes(pids, cmd_count);
 	free(pids);
