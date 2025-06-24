@@ -30,14 +30,14 @@ static char	*substitute_env_var_occurences(char *s, size_t *start,
 	var_name = get_var_name(s, start);
 	if (!var_name)
 		return ((void *)0);
-	if (ft_strlen(var_name) == 2 && var_name[1] == '?')
+	if (!ft_strncmp(var_name, "$?", ft_strlen("$?")))
 		var_value = ft_itoa(exit_status);
 	else
 		var_value = getenv(var_name + 1);
 	if (!var_value)
 		return ((void *)0);
 	ns = str_replace(s, var_name, var_value);
-	if (var_name[0] == '?')
+	if (!ft_strncmp(var_name, "$?", ft_strlen("$?")))
 		free(var_value);
 	free(var_name);
 	if (!ns)
