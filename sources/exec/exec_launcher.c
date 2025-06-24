@@ -19,8 +19,6 @@ static int	has_pipes(t_input *input)
 void	launch_all_commands(t_input *input, char **env, int *pids)
 {
 	int		as_pipes;
-	int		i;
-	int		y;
 	t_token	*current_token;
 	t_token	*tokens_array;
 
@@ -31,16 +29,9 @@ void	launch_all_commands(t_input *input, char **env, int *pids)
 	}
 	else
 	{
-		i = 0;
-		y = 0;
 		tokens_array = (t_token *)input->v_tokens->array;
-		while (i <= input->token_qty - 1)
-		{
-			current_token = &tokens_array[i];
-			if (current_token->type == COMMAND)
-				pids[y++] = execute_command(current_token, env);
-			i++;
-		}
+		current_token = &tokens_array[0];
+		pids[0] = execute_command(current_token, env);
 	}
 }
 
