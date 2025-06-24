@@ -2,8 +2,9 @@
 
 void	ft_pwd(void)
 {
-	char *cwd;
+	char	*cwd;
 
+	cwd = NULL;
 	cwd = getcwd(cwd, PATH_MAX);
 	if (!cwd)
 		return ; // WHAT TO DO

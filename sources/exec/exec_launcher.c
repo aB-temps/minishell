@@ -1,21 +1,46 @@
 #include "exec.h"
 
+static int	has_pipes(t_input *input)
+{
+	int		i;
+	t_token	*tokens_array;
+
+	i = 0;
+	tokens_array = (t_token *)input->v_tokens->array;
+	while (i < input->token_qty)
+	{
+		if (tokens_array[i].type == PIPE)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	launch_all_commands(t_input *input, char **env, int *pids)
 {
+	int		as_pipes;
 	int		i;
 	int		y;
 	t_token	*current_token;
 	t_token	*tokens_array;
 
-	y = 0;
-	i = 0;
-	tokens_array = (t_token *)input->v_tokens->array;
-	while (i <= input->token_qty - 1)
+	as_pipes = has_pipes(input);
+	if (as_pipes)
 	{
-		current_token = &tokens_array[i];
-		if (current_token->type == COMMAND)
-			pids[y++] = execute_command(input, current_token, env, i);
-		i++;
+		printf("Pipes détectés - pas encore implémenté\n");
+	}
+	else
+	{
+		i = 0;
+		y = 0;
+		tokens_array = (t_token *)input->v_tokens->array;
+		while (i <= input->token_qty - 1)
+		{
+			current_token = &tokens_array[i];
+			if (current_token->type == COMMAND)
+				pids[y++] = execute_command(current_token, env);
+			i++;
+		}
 	}
 }
 

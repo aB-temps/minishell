@@ -9,7 +9,7 @@ void	ft_echo(char **arguments)
 	i = 0;
 	while (i < len)
 	{
-		if (arguments[i] == "-n")
+		if (ft_strncmp(arguments[i], "-n", 1))
 			n_param = true;
 		else
 			printf("%s", arguments[i]);

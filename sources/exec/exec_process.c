@@ -30,14 +30,12 @@ static int	handle_command_not_found(char **args, char *cmd_path)
 	return (0);
 }
 
-int	execute_command(t_input *input, t_token *current_token, char **env, int i)
+int	execute_command( t_token *current_token, char **env)
 {
 	char	*cmd_path;
 	char	**args;
 	int		pid;
 
-	(void)i;
-	(void)input;
 	args = (char **)(current_token->formatted_content);
 	cmd_path = find_full_command_path(*args, env);
 	if (handle_command_not_found(args, cmd_path) == -1)
