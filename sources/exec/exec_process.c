@@ -5,11 +5,10 @@ static int	execute_child(t_exec *exec, t_fd *fd, int i)
 {
 	pid_t	pid;
 
-
-	printf("exec->args[%d] = %s\n", 0, exec->args[0]);
 	pid = fork();
 	if (pid == -1)
 	{
+		free(exec->cmd_path);
 		perror("fork");
 		return (-1);
 	}
@@ -20,6 +19,7 @@ static int	execute_child(t_exec *exec, t_fd *fd, int i)
 		perror("execve");
 		exit(126);
 	}
+	free(exec->cmd_path);
 	return (pid);
 }
 

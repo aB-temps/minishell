@@ -15,7 +15,10 @@ void	first_cmd(t_fd *fd, char *file_name)
 
 	if (!file_name)
 	{
-		middle_cmd(fd);
+		// Pas de fichier d'entrée spécifique, utiliser stdin normal et rediriger stdout vers le pipe
+		if (dup2(fd->fd2[1], STDOUT_FILENO) == -1)
+			error_occured(fd, "dup2");
+		close_all(fd);
 		return ;
 	}
 	if (ft_strncmp(file_name, "/dev/stdin", 10) == 0)
@@ -54,7 +57,13 @@ void	last_cmd(t_fd *fd, char *file_name)
 	int	outfile;
 
 	if (!file_name)
+	{
+		// Pas de fichier de sortie spécifié, utiliser stdout
+		if (dup2(fd->fd1[0], STDIN_FILENO) == -1)
+			error_occured(fd, "dup2");
+		close_all(fd);
 		return ;
+	}
 	if (ft_strncmp(file_name, "/dev/stdout", 11) == 0)
 		outfile = STDOUT_FILENO;
 	else

@@ -41,7 +41,6 @@ typedef struct s_fd
 
 /*------------------------------- FUNCTIONS -------------------------------*/
 char		*get_path(char **env);
-void		cleanup_command_resources(char **args, char *cmd_path);
 char		*find_command_path(char *cmd, char **paths);
 char		*find_full_command_path(char *cmd, char **env);
 int			execute_command(t_token *current_token, t_exec *exec, t_fd *fd,

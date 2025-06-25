@@ -1,24 +1,12 @@
 #include "exec.h"
 
-// static int	has_pipes(t_input *input)
-// {
-// 	int		i;
-// 	t_token	*tokens_array;
-
-// 	i = 0;
-// 	tokens_array = (t_token *)input->v_tokens->array;
-// 	while (i < input->token_qty)
-// 	{
-// 		if (tokens_array[i].type == PIPE)
-// 			return (1);
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
 void	prepare_pipe(t_exec *exec, t_fd *fd, int i)
 {
-	if (i == 0)
+	if (exec->cmd_count == 1)
+	{
+		return ;
+	}
+	else if (i == 0)
 		first_cmd(fd, exec->infile);
 	else if (i == exec->cmd_count - 1)
 		last_cmd(fd, exec->outfile);
@@ -34,36 +22,39 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 	int		i;
 	int		y;
 
-	printf("%d\n", exec->cmd_count);
 	y = 0;
 	tokens_array = (t_token *)input->v_tokens->array;
 	i = 0;
 	init_fd(&fd);
-	if (pipe(fd.fd1) == -1)
-	{
-		close_all(&fd);
-		return (1);
-	}
 	while (i < count_cmd(input))
 	{
 		current_token = &tokens_array[y];
 		if (current_token->type == COMMAND)
 		{
-			if (pipe(fd.fd2) == -1)
+			if (i < exec->cmd_count - 1)
 			{
-				close_all(&fd);
-				return (1);
+				if (pipe(fd.fd2) == -1)
+				{
+					close_all(&fd);
+					return (1);
+				}
 			}
-			dprintf(1, "test\n");
-			exec->pid_children[y] = execute_command(current_token, exec, &fd,
+			exec->pid_children[i] = execute_command(current_token, exec, &fd,
 					i);
+			if (i > 0)
+				close(fd.fd1[0]);
+			if (i < exec->cmd_count - 1)
+				close(fd.fd2[1]);
+			if (i < exec->cmd_count - 1)
+			{
+				fd.fd1[0] = fd.fd2[0];
+				fd.fd1[1] = fd.fd2[1];
+			}
+			i++;
 		}
-		else
-			y++;
-		i++;
+		y++;
 	}
-	// current_token = &tokens_array[i];
-	// exec->pid_children[i] = execute_command(current_token, exec, &fd, i);
+	close_all(&fd);
 	return (0);
 }
 
@@ -86,11 +77,11 @@ int	wait_for_processes(int *pids, int cmd_count)
 				if (WIFEXITED(status))
 				{
 					printf("Command %d (PID %d) exited with status %d\n", j,
-						pids[j], WEXITSTATUS(status));
+						pids[j], WEXITSTATUS(status)); //debug
 				}
 				else if (WIFSIGNALED(status))
 				{
-					printf("Command %d was killed by signal %d\n", j,
+					printf("Command %d (PID %d) was killed by signal %d\n", j, pids[j],
 						WTERMSIG(status));
 				}
 				else
