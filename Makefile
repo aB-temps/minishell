@@ -121,12 +121,12 @@ F_PARSING :=			get_input.c			\
 						parse_input.c		\
 						format_input.c		\
 
-F_EXEC :=	exec_cmd.c		\
-			exec_launcher.c	\
-			exec_process.c	\
-			path_utils.c	\
-			utils.c			\
-			pipes_utils.c	\
+F_EXEC :=				exec_cmd.c			\
+						exec_launcher.c		\
+						exec_process.c		\
+						path_utils.c		\
+						utils.c				\
+						pipes_utils.c		\
 
 F_UTILS :=				init_struct.c		\
 						clear_token.c		\
