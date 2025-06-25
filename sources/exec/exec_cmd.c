@@ -16,35 +16,26 @@ char	*get_path(char **env)
 	return (NULL);
 }
 
-void	cleanup_command_resources(char **args, char *cmd_path)
+static int	execute_all_commands(t_input *input, t_exec *exec)
 {
-	if (args)
-		free(args);
-	if (cmd_path)
-		free(cmd_path);
-}
 
-static int	execute_all_commands(t_input *input, char **env)
-{
-	int	*pids;
-	int	cmd_count;
-
-	// cmd_count = input->token_qty;
-	cmd_count = count_cmd(input);
-	pids = ft_calloc(cmd_count, sizeof(int));
-	if (!pids)
+	exec->cmd_count = count_cmd(input);
+	exec->pid_children = ft_calloc(exec->cmd_count, sizeof(pid_t));
+	if (!exec->pid_children)
 		return (1);
-	debug_print_all_arrays(input, pids, input->token_qty); //debug
-	launch_all_commands(input, env, pids);
-	wait_for_processes(pids, cmd_count);
-	free(pids);
-	// printf("All cmd executed\n\n"); //debug
+	debug_print_all_arrays(input, exec->pid_children, input->token_qty); //debug
+	launch_all_commands(input, exec);
+	wait_for_processes(exec->pid_children, exec->cmd_count);
+	free(exec->pid_children);
 	return (0);
 }
 
 int	exec_cmd(t_input *input, char **env)
 {
-	if (execute_all_commands(input, env) == 1)
+	t_exec exec;
+
+	exec.env = env;
+	if (execute_all_commands(input, &exec) == 1)
 		return (1);
 	return (0);
 }

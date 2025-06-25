@@ -1,9 +1,12 @@
 #include "exec.h"
+#include <stdio.h>
 
-static int	execute_child(char *cmd_path, char **args, char **env)
+static int	execute_child(t_exec *exec, t_fd *fd, int i)
 {
 	pid_t	pid;
 
+
+	printf("exec->args[%d] = %s\n", 0, exec->args[0]);
 	pid = fork();
 	if (pid == -1)
 	{
@@ -12,7 +15,8 @@ static int	execute_child(char *cmd_path, char **args, char **env)
 	}
 	if (pid == 0)
 	{
-		execve(cmd_path, args, env);
+		prepare_pipe(exec, fd, i);
+		execve(exec->cmd_path, exec->args, exec->env);
 		perror("execve");
 		exit(126);
 	}
@@ -30,16 +34,15 @@ static int	handle_command_not_found(char **args, char *cmd_path)
 	return (0);
 }
 
-int	execute_command( t_token *current_token, char **env)
+int	execute_command(t_token *current_token, t_exec *exec, t_fd *fd, int i)
 {
-	char	*cmd_path;
-	char	**args;
+
 	int		pid;
 
-	args = (char **)(current_token->formatted_content);
-	cmd_path = find_full_command_path(*args, env);
-	if (handle_command_not_found(args, cmd_path) == -1)
+	exec->args = (char **)(current_token->formatted_content);
+	exec->cmd_path = find_full_command_path(exec->args[0], exec->env);
+	if (handle_command_not_found(exec->args, exec->cmd_path) == -1)
 		return (-1);
-	pid = execute_child(cmd_path, args, env);
+	pid = execute_child(exec, fd, i);
 	return (pid);
 }
