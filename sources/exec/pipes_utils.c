@@ -113,7 +113,9 @@ void	close_and_swap_pipes(t_fd *fd)
 
 void	prepare_pipe(t_exec *exec, t_fd *fd, int i)
 {
-	if (i == 0)
+	if (exec->cmd_count == 1)
+		return ;
+	else if (i == 0)
 		first_cmd(fd, exec->infile);
 	else if (i == exec->cmd_count - 1)
 		last_cmd(fd, exec->outfile);
