@@ -1,19 +1,5 @@
 #include "exec.h"
 
-void	prepare_pipe(t_exec *exec, t_fd *fd, int i)
-{
-	if (exec->cmd_count == 1)
-	{
-		return ;
-	}
-	else if (i == 0)
-		first_cmd(fd, exec->infile);
-	else if (i == exec->cmd_count - 1)
-		last_cmd(fd, exec->outfile);
-	else
-		middle_cmd(fd);
-}
-
 int	launch_all_commands(t_input *input, t_exec *exec)
 {
 	t_token	*current_token;
@@ -41,12 +27,10 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 			}
 			exec->pid_children[i] = execute_command(current_token, exec, &fd,
 					i);
-			if (i > 0)
-				close(fd.fd1[0]);
-			if (i < exec->cmd_count - 1)
-				close(fd.fd2[1]);
+			close(fd.fd1[0]);
 			if (i < exec->cmd_count - 1)
 			{
+				close(fd.fd2[1]);
 				fd.fd1[0] = fd.fd2[0];
 				fd.fd1[1] = fd.fd2[1];
 			}
@@ -60,42 +44,38 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 
 int	wait_for_processes(int *pids, int cmd_count)
 {
-	int	j;
+	int	i;
 	int	status;
 	int	last_pid;
 	int	wait_ret;
 
 	last_pid = -1;
-	j = 0;
-	while (j < cmd_count)
+	i = 0;
+	while (i < cmd_count)
 	{
-		if (pids[j] > 0)
+		if (pids[i] > 0)
 		{
-			wait_ret = waitpid(pids[j], &status, 0);
+			wait_ret = waitpid(pids[i], &status, 0);
 			if (wait_ret > 0)
 			{
 				if (WIFEXITED(status))
 				{
-					printf("Command %d (PID %d) exited with status %d\n", j,
-						pids[j], WEXITSTATUS(status)); //debug
+					printf("Command %d (PID %d) exited with status %d\n", i,
+						pids[i], WEXITSTATUS(status)); //debug
 				}
 				else if (WIFSIGNALED(status))
 				{
-					printf("Command %d (PID %d) was killed by signal %d\n", j, pids[j],
+					printf("Command %d (PID %d) was killed by signal %d\n", i, pids[i],
 						WTERMSIG(status));
 				}
 				else
-				{
-					printf("Command %d terminated abnormally\n", j);
-				}
-				last_pid = pids[j];
+					printf("Command %d (PID %d) terminated abnormally\n", i, pids[i]);
+				last_pid = pids[i];
 			}
 			else
-			{
 				perror("waitpid failed");
-			}
 		}
-		j++;
+		i++;
 	}
 	return (last_pid);
 }
