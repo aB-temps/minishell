@@ -43,10 +43,7 @@ DEPS_$(1) = $(patsubst $(DIR_SRC)%.c,$(DIR_BUILD)%.d,$(SRC_$(1)))
 endef
 
 # FUNCTIONS ===========================================================================
-TOTAL_FILES		:=	$(shell find $(OBJS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
-ifeq ($(TOTAL_FILES),0)
-	TOTAL_FILES =	$(words $(OBJS))
-endif
+TOTAL_FILES =	$(words $(OBJS))
 CURRENT_FILE	:=	0
 BAR_LENGTH		:=	50
 
@@ -123,6 +120,8 @@ F_EXEC :=				exec_cmd.c			\
 						exec_launcher.c		\
 						exec_process.c		\
 						path_utils.c		\
+						utils.c				\
+						pipes_utils.c		\
 
 F_UTILS :=				init_struct.c		\
 						clear_token.c		\

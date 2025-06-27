@@ -2,7 +2,7 @@
 
 void	ft_pwd(void)
 {
-	char *cwd;
+	char	*cwd;
 
 	cwd = (void *)0;
 	cwd = getcwd(cwd, PATH_MAX);

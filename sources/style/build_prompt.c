@@ -40,6 +40,6 @@ void	build_prompt(char **prompt)
 	ft_strlcat(*prompt, hostname, plen);
 	ft_strlcat(*prompt, R_ALL "  👻  ", plen);
 	ft_strlcat(*prompt, cwd, plen);
-	ft_strlcat(*prompt, FG_MAGENTA "\n➤  " R_ALL "\0", plen);
+	ft_strlcat(*prompt, FG_MAGENTA "➤  " R_ALL "\0", plen);
 	free(cwd);
 }

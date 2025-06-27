@@ -1,41 +1,81 @@
 #include "exec.h"
 
-void	launch_all_commands(t_input *input, char **env, int *pids)
+int	launch_all_commands(t_input *input, t_exec *exec)
 {
-	int		i;
 	t_token	*current_token;
 	t_token	*tokens_array;
+	t_fd	fd;
+	int		i;
+	int		y;
 
-	i = 0;
+	y = 0;
 	tokens_array = (t_token *)input->v_tokens->array;
-	while (i <= input->token_qty - 1)
+	i = 0;
+	init_fd(&fd);
+	while (i < count_cmd(input))
 	{
-		current_token = &tokens_array[i];
+		current_token = &tokens_array[y];
 		if (current_token->type == COMMAND)
-			pids[i] = execute_command(current_token, env);
-		else
-			pids[i] = 0;
-		i++;
+		{
+			if (i < exec->cmd_count - 1)
+			{
+				if (pipe(fd.fd2) == -1)
+				{
+					close_all(&fd);
+					return (1);
+				}
+			}
+			exec->pid_children[i] = execute_command(current_token, exec, &fd,
+					i);
+			close(fd.fd1[0]);
+			if (i < exec->cmd_count - 1)
+			{
+				close(fd.fd2[1]);
+				fd.fd1[0] = fd.fd2[0];
+				fd.fd1[1] = fd.fd2[1];
+			}
+			i++;
+		}
+		y++;
 	}
+	close_all(&fd);
+	return (0);
 }
 
-void	wait_for_processes(int *pids, int cmd_count)
+int	wait_for_processes(int *pids, int cmd_count)
 {
-	int	j;
+	int	i;
 	int	status;
+	int	last_pid;
+	int	wait_ret;
 
-	j = 0;
-	while (j < cmd_count)
+	last_pid = -1;
+	i = 0;
+	while (i < cmd_count)
 	{
-		if (pids[j] > 0)
+		if (pids[i] > 0)
 		{
-			waitpid(pids[j], &status, 0);
-			// if (WIFEXITED(status))
-			// 	printf("Processus %d terminé avec le statut: %d\n", pids[j],
-			// 		WEXITSTATUS(status));
-			// else
-			// 	printf("Processus %d terminé anormalement\n", pids[j]); // debug
+			wait_ret = waitpid(pids[i], &status, 0);
+			if (wait_ret > 0)
+			{
+				if (WIFEXITED(status))
+				{
+					printf("Command %d (PID %d) exited with status %d\n", i,
+						pids[i], WEXITSTATUS(status)); //debug
+				}
+				else if (WIFSIGNALED(status))
+				{
+					printf("Command %d (PID %d) was killed by signal %d\n", i, pids[i],
+						WTERMSIG(status));
+				}
+				else
+					printf("Command %d (PID %d) terminated abnormally\n", i, pids[i]);
+				last_pid = pids[i];
+			}
+			else
+				perror("waitpid failed");
 		}
-		j++;
+		i++;
 	}
+	return (last_pid);
 }

@@ -1,21 +1,25 @@
 #include "exec.h"
+#include <stdio.h>
 
-static int	execute_child(char *cmd_path, char **args, char **env)
+static int	execute_child(t_exec *exec, t_fd *fd, int i)
 {
 	pid_t	pid;
 
 	pid = fork();
 	if (pid == -1)
 	{
+		free(exec->cmd_path);
 		perror("fork");
 		return (-1);
 	}
 	if (pid == 0)
 	{
-		execve(cmd_path, args, env);
+		prepare_pipe(exec, fd, i);
+		execve(exec->cmd_path, exec->args, exec->env);
 		perror("execve");
 		exit(126);
 	}
+	free(exec->cmd_path);
 	return (pid);
 }
 
@@ -23,24 +27,22 @@ static int	handle_command_not_found(char **args, char *cmd_path)
 {
 	if (!cmd_path)
 	{
-		dprintf(STDERR_FILENO, "Command not found: %s\n", args[0]);
-			// FAIRE NOUS MEME LE DPRINTF ?
+		ft_putstr_fd("command not found : ", 2);
+		ft_putendl_fd(*args, 2);
 		return (-1);
 	}
 	return (0);
 }
 
-int	execute_command(t_token *current_token, char **env)
+int	execute_command(t_token *current_token, t_exec *exec, t_fd *fd, int i)
 {
-	char	*cmd_path;
-	char	**args;
+
 	int		pid;
 
-	args = (char **)(current_token->formatted_content);
-	cmd_path = find_full_command_path(*args, env);
-	// dprintf(2,"Command path = '%s'\n", cmd_path); // debug
-	if (handle_command_not_found(args, cmd_path) == -1)
+	exec->args = (char **)(current_token->formatted_content);
+	exec->cmd_path = find_full_command_path(exec->args[0], exec->env);
+	if (handle_command_not_found(exec->args, exec->cmd_path) == -1)
 		return (-1);
-	pid = execute_child(cmd_path, args, env);
+	pid = execute_child(exec, fd, i);
 	return (pid);
 }
