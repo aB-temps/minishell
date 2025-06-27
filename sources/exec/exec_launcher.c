@@ -27,7 +27,10 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 			}
 			exec->pid_children[i] = execute_command(current_token, exec, &fd,
 					i);
-			close(fd.fd1[0]);
+			if (i > 0)
+				close(fd.fd1[0]);
+			if (i < exec->cmd_count - 1)
+				close(fd.fd2[1]);
 			if (i < exec->cmd_count - 1)
 			{
 				close(fd.fd2[1]);
