@@ -43,7 +43,7 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 					i);
 			if (i > 0)
 				close(fd.fd1[0]);
-			if (i < exec->cmd_count - 1)
+			if (i < exec->cmd_count - 1)//test
 				close(fd.fd2[1]);
 			if (i < exec->cmd_count - 1)
 			{
