@@ -71,7 +71,7 @@ OBJS			=	$(patsubst %.c,$(BUILD_DIR)%.o,$(SRCS))
 DEPENDENCIES	=	$(OBJS:.o=.d)
 
 #-------------------------------- PROGRESS BAR -------------------------------#
-TOTAL_FILES = $(words $(OBJS))
+TOTAL_FILES		= $(words $(OBJS))
 CURRENT_FILE	:= 0
 BAR_LENGTH		:= 50
 

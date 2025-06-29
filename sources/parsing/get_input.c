@@ -19,11 +19,11 @@ void	get_input(char **env)
 	{
 		input = NULL;
 		prompt = "NULL";
-		// build_prompt(&prompt);
-		line = readline("CACA > ");
+		build_prompt(&prompt);
+		line = readline(prompt);
 		if (!line)
 		{
-			// free(prompt);
+			free(prompt);
 			break ;
 		}
 		add_history(line);
@@ -37,7 +37,7 @@ void	get_input(char **env)
 			clear_vector(input->v_tokens);
 			free(input);
 		}
-		// free(prompt);
+		free(prompt);
 		free(line);
 	}
 }

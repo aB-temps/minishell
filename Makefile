@@ -43,7 +43,7 @@ DEPS_$(1) = $(patsubst $(DIR_SRC)%.c,$(DIR_BUILD)%.d,$(SRC_$(1)))
 endef
 
 # FUNCTIONS ===========================================================================
-TOTAL_FILES =	$(words $(OBJS))
+TOTAL_FILES		=	$(words $(OBJS))
 CURRENT_FILE	:=	0
 BAR_LENGTH		:=	50
 

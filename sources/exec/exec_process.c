@@ -42,7 +42,7 @@ int	execute_command(t_token *current_token, t_exec *exec, t_fd *fd, int i)
 	exec->args = (char **)(current_token->formatted_content);
 	exec->cmd_path = find_full_command_path(exec->args[0], exec->env);
 	if (handle_command_not_found(exec->args, exec->cmd_path) == -1)
-		return (-1);
+		return (127);
 	pid = execute_child(exec, fd, i);
 	return (pid);
 }
