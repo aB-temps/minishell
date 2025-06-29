@@ -6,13 +6,13 @@ void	print_input(t_input *input, char *part)
 	ssize_t			i;
 
 	const char *type[11] = {
+		"COMMAND",
 		"PIPE",
 		"REDIR_IN",
 		"REDIR_OUT",
 		"APPEND",
 		"HEREDOC",
 		"ARG",
-		"COMMAND",
 		"S_QUOTES",
 		"D_QUOTES",
 		"ENV_VAR",

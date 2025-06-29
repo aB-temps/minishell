@@ -11,10 +11,10 @@ static char	*get_var_name(char *s, size_t *start)
 	while (s[*start] && s[*start] != '$')
 		(*start)++;
 	end = *start + 1;
-	while (s[end] && (s[end] != '$' && (ft_isalnum(s[end]) || s[end] == '-'
-				|| s[end] == '_' || s[end] == '?')))
+	while (s[end] && s[end] != '$')
 		(end)++;
 	var_name = ft_strndup(s + *start, end - *start);
+	printf("var_name => %s\n", var_name);
 	return (var_name);
 }
 
@@ -31,11 +31,13 @@ static char	*substitute_env_var_occurences(char *s, size_t *start,
 	if (!var_name)
 		return ((void *)0);
 	if (!ft_strncmp(var_name, "$?", ft_strlen("$?")))
+	{
 		var_value = ft_itoa(exit_status);
+		if (!var_value)
+			return ((void *)0);
+	}
 	else
 		var_value = getenv(var_name + 1);
-	if (!var_value)
-		return ((void *)0);
 	ns = str_replace(s, var_name, var_value);
 	if (!ft_strncmp(var_name, "$?", ft_strlen("$?")))
 		free(var_value);

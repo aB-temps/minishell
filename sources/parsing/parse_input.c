@@ -19,8 +19,7 @@ t_input	*parse_input(char *line, char *prompt, int exit_status)
 	print_input(input, "TOKENIZED");
 	format_tokens(input);
 	print_input(input, "FORMATTED TOKENS");
-	// format_input(input);
-	// print_input(input, "FORMATTED INPUT");
-
+	format_input(input);
+	print_input(input, "FORMATTED INPUT");
 	return (input);
 }
