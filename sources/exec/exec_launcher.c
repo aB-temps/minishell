@@ -63,20 +63,22 @@ int	wait_for_processes(int *pids, int cmd_count)
 			{
 				if (WIFEXITED(status))
 				{
-					printf("Command %d (PID %d) exited with status %d\n", i,
-						pids[i], WEXITSTATUS(status)); //debug
+					// printf("Command %d (PID %d) exited with status %d\n", i,
+						// pids[i], WEXITSTATUS(status)); //debug
 				}
 				else if (WIFSIGNALED(status))
 				{
-					printf("Command %d (PID %d) was killed by signal %d\n", i, pids[i],
-						WTERMSIG(status));
+					// printf("Command %d (PID %d) was killed by signal %d\n", i, pids[i],
+						// WTERMSIG(status));
 				}
 				else
-					printf("Command %d (PID %d) terminated abnormally\n", i, pids[i]);
+					// printf("Command %d (PID %d) terminated abnormally\n", i, pids[i]);
 				last_pid = pids[i];
 			}
 			else
-				perror("waitpid failed");
+			{
+				// perror("waitpid failed");
+			}
 		}
 		i++;
 	}
