@@ -55,6 +55,8 @@ static char	*get_var_value(char *var_name, int exit_status)
 	}
 	else
 		var_value = getenv(var_name);
+	if (!var_value)
+		return ("");
 	printf("var_value => '%s'\n\n", var_value);
 	return (var_value);
 }
