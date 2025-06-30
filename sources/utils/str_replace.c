@@ -2,30 +2,30 @@
 
 char	*str_replace(char *s, char *old, char *new)
 {
-	const size_t	old_len = ft_strlen(old);
-	const size_t	total_len = ft_strlen(s) - (count_occurence(s, old)
-				* old_len) + (count_occurence(s, old) * ft_strlen(new));
+	const size_t	olen = ft_strlen(old);
+	const size_t	ttlen = ft_strlen(s) - (countocc(s, old) * olen)
+			+ (countocc(s, old) * ft_strlen(new));
 	char			*ns;
 	size_t			i;
 	size_t			j;
 
 	i = 0;
 	j = 0;
-	ns = ft_calloc(sizeof(char), total_len + 1);
+	ns = ft_calloc(sizeof(char), ttlen + 1);
 	if (!ns)
 		return ((void *)0);
 	while (s[i])
 	{
-		if (!ft_strncmp(&s[i], old, old_len) && (is_whitespace(s[i + old_len])
-				|| is_quote(s[i + old_len]) || s[i] == '$' || !s[i + old_len]))
+		if (!ft_strncmp(&s[i], old, olen) && (is_whitespace(s[i + olen])
+				|| is_quote(s[i + olen]) || s[i] == '$' || !s[i + olen]))
 		{
-			i += old_len;
+			i += olen;
 			j += ft_strlen(new);
 			ft_strlcat(ns, new, j + 1);
 		}
 		else
 			ns[j++] = s[i++];
 	}
-	ns[total_len] = '\0';
+	ns[ttlen] = '\0';
 	return (ns);
 }

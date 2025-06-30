@@ -2,19 +2,29 @@
 
 // UGLY TO REFACTOR
 
-static char	*get_var_name(char *s, size_t *start)
+static char	*get_var_name(char **s, size_t *start)
 {
 	size_t	end;
 	char	*var_name;
+	char	*temp;
 
 	end = 0;
-	while (s[*start] && s[*start] != '$')
+	while ((*s)[*start] && (*s)[*start] != '$')
 		(*start)++;
-	end = *start + 1;
-	while (s[end] && s[end] != '$')
+	end = *start + 1 + is_quote((*s)[*start + 1]);
+	while ((*s)[end] && (*s)[end] != '$' && !is_whitespace((*s)[end])
+		&& !is_quote((*s)[end]))
 		(end)++;
-	var_name = ft_strndup(s + *start, end - *start);
-	printf("var_name => %s\n", var_name);
+	var_name = ft_strndup(*s + *start, end - *start);
+	if (!var_name)
+		return ((void *)0);
+	printf("var_name => '%s'\n", var_name);
+	if (ft_strchr(var_name, '"'))
+	{
+		temp = str_patdel(var_name, "\"");
+		*s = str_replace(*s, var_name, temp);
+		free(temp);
+	}
 	return (var_name);
 }
 
@@ -27,9 +37,10 @@ static char	*substitute_env_var_occurences(char *s, size_t *start,
 
 	ns = (void *)0;        // UGLY TO REFACTOR
 	var_value = (void *)0; // UGLY TO REFACTOR
-	var_name = get_var_name(s, start);
+	var_name = get_var_name(&s, start);
 	if (!var_name)
 		return ((void *)0);
+	printf("var_name(patdel) => %s\n", var_name);
 	if (!ft_strncmp(var_name, "$?", ft_strlen("$?")))
 	{
 		var_value = ft_itoa(exit_status);
@@ -38,6 +49,8 @@ static char	*substitute_env_var_occurences(char *s, size_t *start,
 	}
 	else
 		var_value = getenv(var_name + 1);
+	printf("var_name + 1 => '%s'\n", var_name + 1);
+	printf("var_value => '%s'\n", var_value);
 	ns = str_replace(s, var_name, var_value);
 	if (!ft_strncmp(var_name, "$?", ft_strlen("$?")))
 		free(var_value);
