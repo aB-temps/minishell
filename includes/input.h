@@ -24,6 +24,7 @@ typedef struct s_token	t_token;
 struct					s_token
 {
 	ssize_t				type;
+	bool				link_to_next;
 	char				*raw_content;
 	void				*formatted_content;
 };
