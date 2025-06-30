@@ -9,7 +9,8 @@ static void	replace_env_var(t_input *input)
 	i = 0;
 	while (i < input->token_qty)
 	{
-		if (array[i].type != S_QUOTES && ft_strchr(array[i].raw_content, '$'))
+		if (array[i].type != S_QUOTES && ft_strchr(array[i].raw_content, '$')
+			&& ft_strlen(array[i].raw_content) != 1)
 			format_env_var(input, array, &i);
 		else
 			i++;

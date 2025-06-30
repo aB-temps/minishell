@@ -128,7 +128,7 @@ F_UTILS :=				init_struct.c		\
 						dup_token.c			\
 						create_token.c		\
 						exit_minishell.c	\
-						count_occurence.c	\
+						countocc.c	\
 						str_patdel.c		\
 						str_replace.c		\
 						ft_tabdup.c			\

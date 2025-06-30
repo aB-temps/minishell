@@ -13,7 +13,7 @@ void	*tokenize_input(t_input *input, char *line)
 			i++;
 		else if (is_operator(line[i]))
 			tokenize_operator(input, &i, line, line_len);
-		else if (is_quoted_arg(&line[i]))
+		else if (is_quote(line[i]))
 			tokenize_quote(input, &i, line);
 		else
 			tokenize_word(input, &i, line);
