@@ -16,8 +16,8 @@ char	*str_replace(char *s, char *old, char *new)
 		return ((void *)0);
 	while (s[i])
 	{
-		if (!ft_strncmp(&s[i], old, olen) && (is_whitespace(s[i + olen])
-				|| is_quote(s[i + olen]) || s[i] == '$' || !s[i + olen]))
+		if (!ft_strncmp(&s[i], old, olen)/*  && (is_whitespace(s[i + olen])
+				|| is_quote(s[i + olen]) || s[i] == '$' || !s[i + olen]) */)
 		{
 			i += olen;
 			j += ft_strlen(new);

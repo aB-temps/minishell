@@ -1,46 +1,52 @@
 #include "token_formatting.h"
 
 // UGLY TO REFACTOR
-
-static char	*get_var_name(char **s, size_t *start)
+static char	*get_raw_var_name(char *s)
 {
+	char	*raw_var_name;
+	size_t	start;
+	size_t	end;
+
+	start = 0;
+	while (s[start] && s[start] != '$')
+		start++;
+	printf("raw\nstart => %zu / %c\n", start, s[start]);
+	end = start + 1 + is_quote(s[start + 1]);
+	while (s[end] && s[end] != '$' && !is_whitespace(s[end])
+		&& !is_quote(s[end]))
+		end++;
+	end += is_quote(s[end]);
+	printf("end => %zu / %c\n", end, s[end]);
+	raw_var_name = ft_strndup(s + start, end - start);
+	if (!raw_var_name)
+		return ((void *)0);
+	printf("raw_var_name => '%s'\n\n", raw_var_name);
+	return (raw_var_name);
+}
+
+static char	*get_var_name(char *s)
+{
+	size_t	start;
 	size_t	end;
 	char	*var_name;
-	char	*temp;
 
-	end = 0;
-	while ((*s)[*start] && (*s)[*start] != '$')
-		(*start)++;
-	end = *start + 1 + is_quote((*s)[*start + 1]);
-	while ((*s)[end] && (*s)[end] != '$' && !is_whitespace((*s)[end])
-		&& !is_quote((*s)[end]))
-		(end)++;
-	var_name = ft_strndup(*s + *start, end - *start);
+	start = 1 + is_quote(s[1]);
+	end = start;
+	printf("var\nstart => %zu / %c\n", start, s[start]);
+	while (s[end] && !is_quote(s[end]))
+		end++;
+	printf("end => %zu / %c\n", end, s[end]);
+	var_name = ft_strndup(s + start, end - start);
 	if (!var_name)
 		return ((void *)0);
-	printf("var_name => '%s'\n", var_name);
-	if (ft_strchr(var_name, '"'))
-	{
-		temp = str_patdel(var_name, "\"");
-		*s = str_replace(*s, var_name, temp);
-		free(temp);
-	}
+	printf("var_name => '%s'\n\n", var_name);
 	return (var_name);
 }
 
-static char	*substitute_env_var_occurences(char *s, size_t *start,
-		int exit_status)
+static char	*get_var_value(char *var_name, int exit_status)
 {
-	char	*ns;
-	char	*var_name;
 	char	*var_value;
 
-	ns = (void *)0;        // UGLY TO REFACTOR
-	var_value = (void *)0; // UGLY TO REFACTOR
-	var_name = get_var_name(&s, start);
-	if (!var_name)
-		return ((void *)0);
-	printf("var_name(patdel) => %s\n", var_name);
 	if (!ft_strncmp(var_name, "$?", ft_strlen("$?")))
 	{
 		var_value = ft_itoa(exit_status);
@@ -48,12 +54,33 @@ static char	*substitute_env_var_occurences(char *s, size_t *start,
 			return ((void *)0);
 	}
 	else
-		var_value = getenv(var_name + 1);
-	printf("var_name + 1 => '%s'\n", var_name + 1);
-	printf("var_value => '%s'\n", var_value);
-	ns = str_replace(s, var_name, var_value);
+		var_value = getenv(var_name);
+	printf("var_value => '%s'\n\n", var_value);
+	return (var_value);
+}
+
+static char	*substitute_env_var_occurences(char *s, int exit_status)
+{
+	char	*ns;
+	char	*var_name;
+	char	*raw_var_name;
+	char	*var_value;
+
+	printf("S => '%s'\n\n", s);
+	ns = (void *)0; // UGLY TO REFACTOR
+	raw_var_name = get_raw_var_name(s);
+	if (!raw_var_name)
+		return ((void *)0);
+	var_name = get_var_name(raw_var_name);
+	if (!var_name)
+		return ((void *)0);
+	var_value = get_var_value(var_name, exit_status);
+	if (!var_value)
+		return ((void *)0);
+	ns = str_replace(s, raw_var_name, var_value);
 	if (!ft_strncmp(var_name, "$?", ft_strlen("$?")))
 		free(var_value);
+	free(raw_var_name);
 	free(var_name);
 	if (!ns)
 		return ((void *)0);
@@ -62,17 +89,14 @@ static char	*substitute_env_var_occurences(char *s, size_t *start,
 
 void	format_env_var(t_input *input, t_token *array, ssize_t *i)
 {
-	size_t	start;
 	char	*content;
 	char	*new_content;
 
-	start = 0;
-	content = substitute_env_var_occurences(array[*i].raw_content, &start,
+	content = substitute_env_var_occurences(array[*i].raw_content,
 			input->last_exit_status);
 	while (content && ft_strchr(content, '$'))
 	{
-		start = 0;
-		new_content = substitute_env_var_occurences(content, &start,
+		new_content = substitute_env_var_occurences(content,
 				input->last_exit_status);
 		free(content);
 		content = new_content;
