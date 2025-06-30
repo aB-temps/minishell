@@ -33,7 +33,7 @@ void	get_input(char **env)
 		}
 		if (input)
 		{
-			// exec_cmd(input, env); // exit status ??
+			//exec_cmd(input, env); // exit status ??
 			clear_vector(input->v_tokens);
 			free(input);
 		}
