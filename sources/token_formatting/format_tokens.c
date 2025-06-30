@@ -26,20 +26,35 @@ static void	handle_extra_quote(char **str)
 	temp = (void *)0;
 	if (!s_quote && !d_quote)
 		return ;
-	if (s_quote && (s_quote < d_quote || !d_quote || *(s_quote + 1) == '\''))
+	/*
+	if (s_quote && (s_quote < d_quote || !d_quote || *(s_quote
+					+ 1) == '\''))
+		{
+			temp = *str;
+			*str = str_patdel(*str, "'");
+			}
+			if (d_quote && (s_quote > d_quote || !s_quote || *(d_quote
+						+ 1) == '"'))
+			{
+				if (temp)
+				free(temp);
+				temp = *str;
+				*str = str_patdel(*str, "\"");
+				}
+	*/
+	temp = *str;
+	if (s_quote)
 	{
-		temp = *str;
 		*str = str_patdel(*str, "'");
-	}
-	if (d_quote && (s_quote > d_quote || !s_quote || *(d_quote + 1) == '"'))
-	{
-		if (temp)
-			free(temp);
-		temp = *str;
-		*str = str_patdel(*str, "\"");
-	}
-	if (temp)
 		free(temp);
+		temp = (void*)0;
+	}
+	temp = *str;
+	if (d_quote)
+	{
+		*str = str_patdel(*str, "\"");
+		free(temp);
+	}
 }
 
 static void	remove_extra_quote(t_input *input)

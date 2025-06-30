@@ -30,7 +30,8 @@ void	build_prompt(char **prompt)
 	cwd = getcwd(cwd, PATH_MAX);
 	if (!cwd)
 		return ; // protect
-	plen = ft_strlen(username) + ft_strlen(hostname) + ft_strlen(cwd) + 5 + 59;
+	plen = ft_strlen(username) + ft_strlen(hostname) + ft_strlen(cwd)
+		+ ft_strlen(FG_CYAN BOLD FG_MAGENTA "@" FG_CYAN R_ALL "  👻  " FG_MAGENTA "\n ➤  " R_ALL "\0") + 2;
 	*prompt = calloc(plen, sizeof(char));
 	if (!(*prompt))
 		return ; // protect
@@ -40,6 +41,6 @@ void	build_prompt(char **prompt)
 	ft_strlcat(*prompt, hostname, plen);
 	ft_strlcat(*prompt, R_ALL "  👻  ", plen);
 	ft_strlcat(*prompt, cwd, plen);
-	ft_strlcat(*prompt, FG_MAGENTA "➤  " R_ALL "\0", plen);
+	ft_strlcat(*prompt, FG_MAGENTA "\n ➤  " R_ALL "\0", plen);
 	free(cwd);
 }

@@ -50,7 +50,6 @@ void	ft_echo(char **args)
 	size_t			i;
 	size_t			j;
 
-	printf("tablen = %zu\n", args_qty);
 	i = 1;
 	n_param = false;
 	while (ft_strchr(args[i], '-'))
