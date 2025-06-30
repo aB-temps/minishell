@@ -1,7 +1,8 @@
 #include "input.h"
 
-void	init_input(t_input *input, char *line, char *prompt)
+void	init_input(t_input *input, char *line, char *prompt, int exit_status)
 {
+	input->last_exit_status = exit_status;
 	input->token_qty = 0;
 	input->v_tokens = (void *)0;
 	input->line = line;

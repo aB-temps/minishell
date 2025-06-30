@@ -2,22 +2,21 @@
 
 void	print_input(t_input *input, char *part)
 {
+	const t_token	*array = (t_token *)input->v_tokens->array;
+	ssize_t			i;
+
 	const char *type[11] = {
-		"ARG",
 		"COMMAND",
 		"PIPE",
 		"REDIR_IN",
 		"REDIR_OUT",
 		"APPEND",
 		"HEREDOC",
-		"ASSIGN",
+		"ARG",
 		"S_QUOTES",
 		"D_QUOTES",
 		"ENV_VAR",
 	};
-	const t_token *array = (t_token *)input->v_tokens->array;
-	ssize_t i;
-
 	i = 0;
 	printf("================ [DEBUG] ================\n");
 	printf("%s => ", part);

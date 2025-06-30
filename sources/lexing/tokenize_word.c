@@ -1,16 +1,16 @@
 #include "lexing.h"
 
-void	tokenize_arg(t_input *input, size_t *i, int token_type, char *line)
+void	tokenize_word(t_input *input, size_t *i, char *line)
 {
 	char	*raw_content;
 	size_t	j;
 
 	j = *i;
-	while (line[*i] && (is_valid_arg_char(line[*i]) || is_quote(line[*i])))
+	while (line[*i] && !is_whitespace(line[*i]) && !is_operator(line[*i]))
 		(*i)++;
 	raw_content = ft_strndup(&line[j], *i - j);
 	if (!raw_content)
 		exit_minishell(input, EXIT_FAILURE);
-	create_token(input, token_type, raw_content);
+	create_token(input, ARG, raw_content);
 	input->token_qty++;
 }
