@@ -45,7 +45,7 @@ static char	*get_var_value(char *var_name, int exit_status, int *cursor)
 {
 	char	*var_value;
 
-	if (!ft_strncmp(var_name, "$?", ft_strlen("$?")))
+	if (!ft_strncmp(var_name, "?", ft_strlen("?")))
 	{
 		var_value = ft_itoa(exit_status);
 		if (!var_value)
