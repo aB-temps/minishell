@@ -33,7 +33,6 @@ static ssize_t count_command_args(t_input *input, t_token *array, ssize_t *i)
 	count = 0;
 	while (j + 1 <= input->token_qty && !(array[j].type >= PIPE && array[j].type <= HEREDOC))
 	{
-		// if (!array[j].link_to_next)
 		count++;
 		j++;
 	}
@@ -57,17 +56,11 @@ static char **command_args_to_array(t_input *input, t_token *array, ssize_t *i,
 	while (j < arg_qty - 1)
 	{
 		if (array[k].link_to_next)
-		{
 			content = joinback_args(array, &k, &arg_qty);
-		}
 		else if (array[k].type == ENV_VAR && array[k].formatted_content)
-		{
 			content = ft_strdup(array[k].formatted_content);
-		}
 		else if (array[k].raw_content)
-		{
 			content = ft_strdup(array[k].raw_content);
-		}
 		if (!content)
 			exit_minishell(input, EXIT_FAILURE);
 		args_array[j] = content;

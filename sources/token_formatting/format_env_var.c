@@ -12,7 +12,7 @@ static char	*get_raw_var_name(char *s)
 	printf("raw\nstart => %zu / %c\n", start, s[start]);
 	end = start + 1;
 	while (s[end] && s[end] != '$' && !is_whitespace(s[end])
-		&& !is_quote(s[end]))
+		&& !is_quote(s[end])&& !is_operator(s[end]))
 		end++;
 	printf("end => %zu / %c\n", end, s[end]);
 	raw_var_name = ft_strndup(s + start, end - start);
