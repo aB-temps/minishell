@@ -5,12 +5,12 @@
 #include <linux/limits.h>
 #include <unistd.h>
 
-void	get_input(char **env)
+void get_input(char **env)
 {
-	int		exit_status;
-	t_input	*input;
-	char	*line;
-	char	*prompt;
+	int exit_status;
+	t_input *input;
+	char *line;
+	char *prompt;
 
 	(void)env;
 	exit_status = 0;
@@ -18,13 +18,13 @@ void	get_input(char **env)
 	while (1)
 	{
 		input = NULL;
-		prompt = "NULL";
-		build_prompt(&prompt);
+		if (!build_prompt(&prompt))
+			prompt = ft_strdup("minishell $ ");
 		line = readline(prompt);
 		if (!line)
 		{
 			free(prompt);
-			break ;
+			break;
 		}
 		add_history(line);
 		if (is_valid_line(line))
