@@ -46,7 +46,7 @@ void *tokenize_quote(t_input *input, size_t *i, char *line)
 	content = ft_strndup(&line[j], (*i) - j);
 	if (!content)
 		exit_minishell(input, EXIT_FAILURE);
-	create_token(input, token_type, content, false);
+	create_token(input, token_type, content, (line[*i] && !is_operator(line[*i]) && !is_whitespace(line[*i])));
 	input->token_qty++;
 	return (input);
 }

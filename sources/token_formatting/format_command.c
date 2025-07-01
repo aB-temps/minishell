@@ -1,24 +1,25 @@
 #include "token_formatting.h"
 
-static void *joinback_args(t_token *array, size_t k)
+static void *joinback_args(t_token *array, size_t *k,size_t *arg_qty)
 {
 	char *content;
 
-	if (array[k].type == ENV_VAR)
-		content = ft_strdup(array[k].formatted_content);
+	if (array[*k].type == ENV_VAR)
+		content = ft_strdup(array[*k].formatted_content);
 	else
-		content = ft_strdup(array[k].raw_content);
+		content = ft_strdup(array[*k].raw_content);
 	if (!content)
 		return ((void *)0);
-	while (array[k].link_to_next)
+	while (array[*k].link_to_next)
 	{
-		if (array[k + 1].type == ENV_VAR)
-			content = str_free_to_join(content, array[k + 1].formatted_content);
+		if (array[*k + 1].type == ENV_VAR)
+			content = str_free_to_join(content, array[*k + 1].formatted_content);
 		else
-			content = str_free_to_join(content, array[k + 1].raw_content);
+			content = str_free_to_join(content, array[*k + 1].raw_content);
 		if (!content)
 			return ((void *)0);
-		k++;
+		(*k)++;
+		(*arg_qty)--;
 	}
 	return (content);
 }
@@ -57,9 +58,7 @@ static char **command_args_to_array(t_input *input, t_token *array, ssize_t *i,
 	{
 		if (array[k].link_to_next)
 		{
-			content = joinback_args(array, k);
-			k++;
-			arg_qty--;
+			content = joinback_args(array, &k, &arg_qty);
 		}
 		else if (array[k].type == ENV_VAR && array[k].formatted_content)
 		{
