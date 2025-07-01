@@ -1,6 +1,6 @@
 #include "parsing.h"
 
-void	create_token(t_input *input, int type, char *raw_content)
+void	create_token(t_input *input, int type, char *raw_content, bool to_link)
 {
 	t_token	temp_token;
 
@@ -14,6 +14,7 @@ void	create_token(t_input *input, int type, char *raw_content)
 		if (!temp_token.raw_content)
 			exit_minishell(input, EXIT_FAILURE);
 	}
+	temp_token.link_to_next = to_link;
 	if (!add_element(input->v_tokens, &temp_token))
 	{
 		if (!(type >= PIPE && type <= HEREDOC) && raw_content)

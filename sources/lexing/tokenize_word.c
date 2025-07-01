@@ -13,6 +13,6 @@ void	tokenize_word(t_input *input, size_t *i, char *line)
 	raw_content = ft_strndup(&line[j], *i - j);
 	if (!raw_content)
 		exit_minishell(input, EXIT_FAILURE);
-	create_token(input, ARG, raw_content);
+	create_token(input, ARG, raw_content, is_quote(line[*i]));
 	input->token_qty++;
 }

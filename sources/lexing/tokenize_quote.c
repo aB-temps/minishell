@@ -1,9 +1,10 @@
 #include "lexing.h"
+
 #include <stdio.h>
 
-void	quoted_arg_len(char quote, size_t *i, char *line)
+void quoted_arg_len(char quote, size_t *i, char *line)
 {
-	size_t	count;
+	size_t count;
 
 	count = 0;
 	while (line[++(*i)])
@@ -11,22 +12,21 @@ void	quoted_arg_len(char quote, size_t *i, char *line)
 		if (line[*i] == quote)
 		{
 			count++;
-			while (line[*i] && (count < 2 && (!is_whitespace(line[*i])
-						&& !is_operator(line[*i]))))
+			while (line[*i] && (count < 2 && !is_whitespace(line[*i])))
 			{
 				count += (line[*i] == quote);
 				(*i)++;
 			}
-			break ;
+			break;
 		}
 	}
 }
 
-void	*tokenize_quote(t_input *input, size_t *i, char *line)
+void *tokenize_quote(t_input *input, size_t *i, char *line)
 {
-	ssize_t	j;
-	int		token_type;
-	char	*content;
+	ssize_t j;
+	int token_type;
+	char *content;
 
 	j = *i;
 	while (!is_quote(line[*i]))
@@ -46,7 +46,7 @@ void	*tokenize_quote(t_input *input, size_t *i, char *line)
 	content = ft_strndup(&line[j], (*i) - j);
 	if (!content)
 		exit_minishell(input, EXIT_FAILURE);
-	create_token(input, token_type, content);
+	create_token(input, token_type, content, false);
 	input->token_qty++;
 	return (input);
 }

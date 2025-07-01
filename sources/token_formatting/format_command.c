@@ -1,36 +1,77 @@
 #include "token_formatting.h"
 
-static ssize_t	count_command_args(t_input *input, t_token *array, ssize_t *i)
+static void *joinback_args(t_token *array, size_t k)
 {
-	ssize_t	j;
+	char *content;
 
-	j = *i;
-	while (j + 1 <= input->token_qty && !(array[j].type >= PIPE
-			&& array[j].type <= HEREDOC))
-		j++;
-	return (j - *i + 1);
+	if (array[k].type == ENV_VAR)
+		content = ft_strdup(array[k].formatted_content);
+	else
+		content = ft_strdup(array[k].raw_content);
+	if (!content)
+		return ((void *)0);
+	while (array[k].link_to_next)
+	{
+		if (array[k + 1].type == ENV_VAR)
+			content = str_free_to_join(content, array[k + 1].formatted_content);
+		else
+			content = str_free_to_join(content, array[k + 1].raw_content);
+		if (!content)
+			return ((void *)0);
+		k++;
+	}
+	return (content);
 }
 
-static char	**command_args_to_array(t_input *input, t_token *array, ssize_t *i,
-		size_t arg_qty)
+static ssize_t count_command_args(t_input *input, t_token *array, ssize_t *i)
 {
-	char	**args_array;
-	size_t	j;
-	size_t	k;
+	ssize_t j;
+	ssize_t count;
+
+	j = *i;
+	count = 0;
+	while (j + 1 <= input->token_qty && !(array[j].type >= PIPE && array[j].type <= HEREDOC))
+	{
+		// if (!array[j].link_to_next)
+		count++;
+		j++;
+	}
+	return (count + 1);
+}
+
+static char **command_args_to_array(t_input *input, t_token *array, ssize_t *i,
+									size_t arg_qty)
+{
+	char **args_array;
+	char *content;
+	size_t j;
+	size_t k;
 
 	j = 0;
 	k = *i;
+	content = (void *)0;
 	args_array = malloc(sizeof(char *) * arg_qty + 1);
 	if (!args_array)
 		exit_minishell(input, EXIT_FAILURE);
 	while (j < arg_qty - 1)
 	{
-		if (array[k].type == ENV_VAR && array[k].formatted_content)
-			args_array[j] = ft_strdup(array[k].formatted_content);
+		if (array[k].link_to_next)
+		{
+			content = joinback_args(array, k);
+			k++;
+			arg_qty--;
+		}
+		else if (array[k].type == ENV_VAR && array[k].formatted_content)
+		{
+			content = ft_strdup(array[k].formatted_content);
+		}
 		else if (array[k].raw_content)
-			args_array[j] = ft_strdup(array[k].raw_content);
-		if (!args_array[j])
+		{
+			content = ft_strdup(array[k].raw_content);
+		}
+		if (!content)
 			exit_minishell(input, EXIT_FAILURE);
+		args_array[j] = content;
 		j++;
 		k++;
 	}
@@ -38,13 +79,13 @@ static char	**command_args_to_array(t_input *input, t_token *array, ssize_t *i,
 	return (args_array);
 }
 
-void	format_command(t_input *input, t_token *array, ssize_t *i)
+void format_command(t_input *input, t_token *array, ssize_t *i)
 {
-	ssize_t	arg_qty;
+	ssize_t arg_qty;
 
 	arg_qty = count_command_args(input, array, i);
 	array[*i].formatted_content = command_args_to_array(input, array, i,
-			arg_qty);
+														arg_qty);
 	if (!array[*i].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
 	array[*i].type = COMMAND;
