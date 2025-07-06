@@ -45,40 +45,63 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 	return (0);
 }
 
-int	wait_for_processes(int *pids, int cmd_count)
+static void	check_cmd(t_token current_token)
 {
-	int	i;
-	int	status;
-	int	last_pid;
-	int	wait_ret;
+	char	*cmd;
 
-	last_pid = -1;
-	i = 0;
-	while (i < cmd_count)
+	if (current_token.formatted_content == NULL)
 	{
-		if (pids[i] > 0)
-		{
-			wait_ret = waitpid(pids[i], &status, 0);
-			if (wait_ret > 0)
-			{
-				if (WIFEXITED(status))
-				{
-					printf("Command %d (PID %d) exited with status %d\n", i,
-						pids[i], WEXITSTATUS(status)); //debug
-				}
-				else if (WIFSIGNALED(status))
-				{
-					printf("Command %d (PID %d) was killed by signal %d\n", i, pids[i],
-						WTERMSIG(status));
-				}
-				else
-					printf("Command %d (PID %d) terminated abnormally\n", i, pids[i]);
-				last_pid = pids[i];
-			}
-			else
-				perror("waitpid failed");
-		}
-		i++;
+		ft_putendl_fd(": command not found", 2);
+		return;
 	}
-	return (last_pid);
+	cmd = (char *)current_token.formatted_content;
+	if (ft_strchr(cmd, '/') != NULL)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putendl_fd(": No such file or directory", 2);
+	}
+	else
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putendl_fd(": command not found", 2);
+	}
+}
+
+static void	check_sig(t_exec *exec, int *exit_code, int i,
+		t_token *tokens_array)
+{
+	int		sig;
+	int		status;
+	t_token	*current_token;
+
+	status = 0;
+	current_token = &tokens_array[i];
+	waitpid(exec->pid_children[i], &status, 0);
+	if (WIFEXITED(status))
+	{
+		*exit_code = WEXITSTATUS(status);
+		if (*exit_code == 127)
+			check_cmd(*current_token);
+		else if (*exit_code == 126)
+			if (errno != 0)
+				perror(((char **)current_token->formatted_content)[0]);
+	}
+	else if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		*exit_code = 128 + sig;
+		if (sig == SIGTERM)
+			ft_putendl_fd("Terminated", 2);
+	}
+}
+
+void	wait_childs(t_exec *exec, t_input *input, int *exit_code)
+{
+	int		i;
+	t_token	*tokens_array;
+
+	tokens_array = (t_token *)input->v_tokens->array;
+	i = 0;
+	while (i < exec->cmd_count)
+		check_sig(exec, exit_code, i++, tokens_array);
 }

@@ -15,6 +15,8 @@ static int	execute_child(t_exec *exec, t_fd *fd, int i)
 	if (pid == 0)
 	{
 		prepare_pipe(exec, fd, i);
+		if (!exec->cmd_path)
+			exit(127);
 		execve(exec->cmd_path, exec->args, exec->env);
 		perror("execve");
 		exit(126);
@@ -23,26 +25,13 @@ static int	execute_child(t_exec *exec, t_fd *fd, int i)
 	return (pid);
 }
 
-static int	handle_command_not_found(char **args, char *cmd_path)
-{
-	if (!cmd_path)
-	{
-		ft_putstr_fd("command not found : ", 2);
-		ft_putendl_fd(*args, 2);
-		return (-1);
-	}
-	return (0);
-}
-
 int	execute_command(t_token *current_token, t_exec *exec, t_fd *fd, int i)
 {
+	int	pid;
 
-	int		pid;
-
+	pid = 0;
 	exec->args = (char **)(current_token->formatted_content);
 	exec->cmd_path = find_full_command_path(exec->args[0], exec->env);
-	if (handle_command_not_found(exec->args, exec->cmd_path) == -1)
-		return (127);
 	pid = execute_child(exec, fd, i);
 	return (pid);
 }

@@ -33,7 +33,9 @@ void	get_input(char **env)
 		}
 		if (input)
 		{
-			//exec_cmd(input, env); // exit status ??
+			input->last_exit_status = 0;
+			exec_cmd(input, env, &input->last_exit_status); // exit status ??
+			printf("After %d\n", input->last_exit_status);
 			clear_vector(input->v_tokens);
 			free(input);
 		}
