@@ -71,10 +71,7 @@ OBJS			=	$(patsubst %.c,$(BUILD_DIR)%.o,$(SRCS))
 DEPENDENCIES	=	$(OBJS:.o=.d)
 
 #-------------------------------- PROGRESS BAR -------------------------------#
-TOTAL_FILES		:= $(shell find $(SRCS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
-ifeq ($(TOTAL_FILES),0)
-	TOTAL_FILES = $(words $(OBJS))
-endif
+TOTAL_FILES		= $(words $(OBJS))
 CURRENT_FILE	:= 0
 BAR_LENGTH		:= 50
 

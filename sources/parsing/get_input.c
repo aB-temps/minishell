@@ -7,35 +7,39 @@
 
 void	get_input(char **env)
 {
+	int		exit_status;
 	t_input	*input;
 	char	*line;
 	char	*prompt;
 
-
+	(void)env;
+	exit_status = 0;
 	line = NULL;
 	while (1)
 	{
 		input = NULL;
 		prompt = "NULL";
-		// build_prompt(&prompt);
-		line = readline("CACA > ");
+		build_prompt(&prompt);
+		line = readline(prompt);
 		if (!line)
 		{
-			// free(prompt);
+			free(prompt);
 			break ;
 		}
 		add_history(line);
 		if (is_valid_line(line))
 		{
-			input = parse_input(line, prompt);
+			input = parse_input(line, prompt, exit_status);
 		}
 		if (input)
 		{
-			exec_cmd(input, env);
+			input->last_exit_status = 0;
+			exec_cmd(input, env, &input->last_exit_status); // exit status ??
+			printf("After %d\n", input->last_exit_status);
 			clear_vector(input->v_tokens);
 			free(input);
 		}
-		// free(prompt);
+		free(prompt);
 		free(line);
 	}
 }

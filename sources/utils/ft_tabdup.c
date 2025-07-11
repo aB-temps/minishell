@@ -1,17 +1,6 @@
-#include "libft.h"
-#include <stdio.h>
+#include "utils.h"
 
-size_t	ft_tablen(char **tab)
-{
-	size_t	i;
-
-	i = 0;
-	while (tab[i])
-		i++;
-	return (i);
-}
-
-char	**tabdup(char **tab)
+char	**ft_tabdup(char **tab)
 {
 	char	**new_tab;
 	size_t	i;

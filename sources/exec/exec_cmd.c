@@ -21,22 +21,28 @@ static int	execute_all_commands(t_input *input, char **env)
 	int	*pids;
 	int	cmd_count;
 
-	// cmd_count = input->token_qty;
-	cmd_count = count_cmd(input);
-	pids = ft_calloc(cmd_count, sizeof(int));
-	if (!pids)
+	exec->cmd_count = count_cmd(input);
+	exec->pid_children = ft_calloc(exec->cmd_count, sizeof(pid_t));
+	if (!exec->pid_children)
 		return (1);
-	debug_print_all_arrays(input, pids, input->token_qty); //debug
-	launch_all_commands(input, env, pids);
-	wait_for_processes(pids, cmd_count);
-	free(pids);
-	// printf("All cmd executed\n\n"); //debug
+	// debug_print_all_arrays(input, exec->pid_children, input->token_qty);
+	// debug
+	launch_all_commands(input, exec);
+	wait_childs(exec, input, exit_code);
+	free(exec->pid_children);
 	return (0);
 }
 
-int	exec_cmd(t_input *input, char **env)
+int	exec_cmd(t_input *input, char **env, int *exit_code)
 {
-	if (execute_all_commands(input, env) == 1)
+	t_exec	exec;
+
+	exec.env = env;
+	exec.infile = NULL;
+	exec.outfile = NULL;
+	exec.cmd_path = NULL;
+	exec.args = NULL;
+	if (execute_all_commands(input, &exec, exit_code) == 1)
 		return (1);
 	return (0);
 }

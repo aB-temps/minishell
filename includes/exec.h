@@ -22,11 +22,22 @@
 
 /*-------------------------------- STRUCTS --------------------------------*/
 
+typedef struct s_exec
+{
+	char	*infile;
+	char	*outfile;
+	pid_t	*pid_children;
+	char	**env;
+	int		cmd_count;
+	char	*cmd_path;
+	char	**args;
+}			t_exec;
+
 typedef struct s_fd
 {
-	int	fd1[2];
-	int	fd2[2];
-}		t_fd;
+	int		fd1[2];
+	int		fd2[2];
+}			t_fd;
 
 /*------------------------------- FUNCTIONS -------------------------------*/
 char	*get_path(char **env);

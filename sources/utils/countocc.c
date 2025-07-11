@@ -1,6 +1,6 @@
 #include "token_formatting.h"
 
-size_t	count_occurence(char *s, char *to_find)
+size_t	countocc(char *s, char *to_find)
 {
 	size_t	count;
 	char	*cursor;

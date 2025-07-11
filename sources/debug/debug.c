@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/10 15:55:02 by enchevri          #+#    #+#             */
-/*   Updated: 2025/06/10 15:55:03 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/06/25 22:43:52 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,7 @@ void	print_string_array(char **array, const char *array_name)
 	printf("  Total elements: %d\n\n", i);
 }
 
-/**
- * Affiche tous les tokens et leurs formatted_content
- */
+
 void	print_all_tokens(t_input *input)
 {
 	int		i;
@@ -73,12 +71,10 @@ void	print_all_tokens(t_input *input)
 			   current_token->raw_content ? current_token->raw_content : "NULL",
 			   (void *)current_token->raw_content);
 		
-		// Afficher formatted_content selon le type
 		if (current_token->formatted_content)
 		{
 			if (current_token->type == COMMAND || current_token->type == ARG)
 			{
-				// C'est probablement un char **
 				char **args = (char **)current_token->formatted_content;
 				char array_name[64];
 				snprintf(array_name, sizeof(array_name), "Token[%d].formatted_content", i);
@@ -99,17 +95,13 @@ void	print_all_tokens(t_input *input)
 	printf("=== END DEBUG TOKENS ===\n\n");
 }
 
-/**
- * Affiche les variables d'environnement
- */
+
 void	print_env_array(char **env)
 {
 	print_string_array(env, "Environment variables");
 }
 
-/**
- * Affiche un tableau d'entiers (comme les PIDs)
- */
+
 void	print_int_array(int *array, int size, const char *array_name)
 {
 	int	i;
@@ -128,23 +120,18 @@ void	print_int_array(int *array, int size, const char *array_name)
 	printf("  Total elements: %d\n\n", size);
 }
 
-/**
- * Fonction principale de debug - affiche tout
- */
+
 void	debug_print_all_arrays(t_input *input, int *pids, int pid_count)
 {
 	printf("\n========================================\n");
 	printf("         DEBUG: ALL ARRAYS\n");
 	printf("========================================\n\n");
 	
-	// Afficher tous les tokens
 	print_all_tokens(input);
 	
-	// Afficher les PIDs si fournis
 	if (pids && pid_count > 0)
 		print_int_array(pids, pid_count, "Process PIDs");
 	
-	// Afficher l'environnement (optionnel, peut être très long)
 	printf("Environment variables available (use print_env_array(env) to see them)\n\n");
 	
 	printf("========================================\n");
@@ -152,9 +139,7 @@ void	debug_print_all_arrays(t_input *input, int *pids, int pid_count)
 	printf("========================================\n\n");
 }
 
-/**
- * Version simplifiée pour débugger rapidement un token spécifique
- */
+
 void	debug_single_token(t_input *input, int token_index)
 {
 	t_token	*tokens_array;

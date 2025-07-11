@@ -5,6 +5,7 @@
 *.txt
 .vscode
 minishell
+minishell_tester
 test
 infile
 outfile

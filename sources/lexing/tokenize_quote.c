@@ -1,6 +1,6 @@
 #include "lexing.h"
 
-void	slice_quotes(char quote, size_t *i, char *line)
+void	quoted_arg_len(char quote, size_t *i, char *line)
 {
 	size_t	count;
 
@@ -10,7 +10,7 @@ void	slice_quotes(char quote, size_t *i, char *line)
 		if (line[*i] == quote)
 		{
 			count++;
-			while (count < 2 && /* line[*i] &&  */ !is_whitespace(line[*i]))
+			while (line[*i] && (count < 2 || (!is_whitespace(line[*i]) && !is_operator(line[*i]))))
 			{
 				count += (line[*i] == quote);
 				(*i)++;
@@ -20,21 +20,24 @@ void	slice_quotes(char quote, size_t *i, char *line)
 	}
 }
 
-void	*tokenize_quote(t_input *input, size_t *i, int token_type, char *line)
+void	*tokenize_quote(t_input *input, size_t *i, char *line)
 {
 	ssize_t	j;
+	int		token_type;
 	char	*content;
 
 	j = *i;
+	while(!is_quote(line[*i]))
+		(*i)++;
 	if (line[*i] == '\'')
 	{
-		slice_quotes('\'', i, line);
+		quoted_arg_len('\'', i, line);
 		token_type = S_QUOTES;
 	}
 	else
 	{
 		token_type = D_QUOTES;
-		slice_quotes('\"', i, line);
+		quoted_arg_len('\"', i, line);
 	}
 	content = ft_strndup(&line[j], (*i) - j);
 	if (!content)

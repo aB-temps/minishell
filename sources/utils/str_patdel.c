@@ -2,7 +2,7 @@
 
 char	*str_patdel(char *s, char *pat)
 {
-	const size_t new_total_len = ft_strlen(s) - (count_occurence(s, pat)
+	const size_t new_total_len = ft_strlen(s) - (countocc(s, pat)
 			* ft_strlen(pat));
 	char *ns;
 	size_t i;

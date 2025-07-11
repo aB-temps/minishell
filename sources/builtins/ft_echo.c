@@ -1,19 +1,33 @@
 #include "builtins.h"
 
-void	ft_echo(char **arguments)
+bool	is_valid_echo_param(char c)
 {
-	const size_t	len = ft_tablen(arguments);
+	const char	valid_params[3] = {'e', 'E', 'n'};
+	size_t		i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (c == valid_params[i])
+			return (true);
+		else
+			i++;
+	}
+	return (false);
+}
+
+void	ft_echo(char **args)
+{
+	const size_t	args_qty = ft_tablen(args);
 	bool			n_param;
 	size_t			i;
 
-	i = 0;
-	while (i < len)
+	i = 1;
+	n_param = false;
+	while (i < args_qty)
 	{
-		if (ft_strncmp(arguments[i], "-n", 1))
-			n_param = true;
-		else
-			printf("%s", arguments[i]);
-		if (i < len - 1)
+		printf("%s", args[i]);
+		if (i < args_qty - 1)
 			printf(" ");
 		i++;
 	}

@@ -43,10 +43,7 @@ DEPS_$(1) = $(patsubst $(DIR_SRC)%.c,$(DIR_BUILD)%.d,$(SRC_$(1)))
 endef
 
 # FUNCTIONS ===========================================================================
-TOTAL_FILES		:=	$(shell find $(OBJS) -type f -name "*.c" -newer $(NAME) 2>/dev/null | wc -l)
-ifeq ($(TOTAL_FILES),0)
-	TOTAL_FILES =	$(words $(OBJS))
-endif
+TOTAL_FILES		=	$(words $(OBJS))
 CURRENT_FILE	:=	0
 BAR_LENGTH		:=	50
 
@@ -106,37 +103,36 @@ COMPONENTS :=			PARSING 			\
 F_MAIN :=				main.c				\
 
 F_LEXING :=				tokenize_input.c	\
-						tokenize_arg.c		\
+						tokenize_word.c		\
 						tokenize_operator.c	\
 						tokenize_quote.c	\
-						tokenize_redir.c	\
 			
-
 F_CHECKING :=			is_valid_line.c		\
+						is_quote.c	\
 						is_whitespace.c		\
 						is_operator.c		\
-						is_valid_arg_char.c \
 
 F_PARSING :=			get_input.c			\
 						parse_input.c		\
 						format_input.c		\
 
-F_EXEC :=	exec_cmd.c		\
-			exec_launcher.c	\
-			exec_process.c	\
-			path_utils.c	\
-			utils.c			\
-			pipes_utils.c	\
+F_EXEC :=				exec_cmd.c			\
+						exec_launcher.c		\
+						exec_process.c		\
+						path_utils.c		\
+						utils.c				\
+						pipes_utils.c		\
 
 F_UTILS :=				init_struct.c		\
 						clear_token.c		\
 						dup_token.c			\
 						create_token.c		\
 						exit_minishell.c	\
-						count_occurence.c	\
+						countocc.c	\
 						str_patdel.c		\
 						str_replace.c		\
-						tabdup.c			\
+						ft_tabdup.c			\
+						ft_tablen.c			\
 
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\
