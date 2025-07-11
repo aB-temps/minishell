@@ -35,7 +35,7 @@ char	*find_command_path(char *cmd, char **paths);
 char	*find_full_command_path(char *cmd, char **env);
 int		execute_command(t_token *current_token, char **env);
 void	launch_all_commands(t_input *input, char **env, int *pids);
-int	wait_for_processes(int *pids, int cmd_count);
+int		wait_for_processes(int *pids, int cmd_count);
 int		exec_cmd(t_input *input, char **env);
 int		count_cmd(t_input *input);
 

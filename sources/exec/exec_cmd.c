@@ -16,14 +16,6 @@ char	*get_path(char **env)
 	return (NULL);
 }
 
-void	cleanup_command_resources(char **args, char *cmd_path)
-{
-	if (args)
-		free(args);
-	if (cmd_path)
-		free(cmd_path);
-}
-
 static int	execute_all_commands(t_input *input, char **env)
 {
 	int	*pids;
