@@ -47,9 +47,8 @@ static void	handle_extra_quote(char **str)
 	{
 		*str = str_patdel(*str, "'");
 		free(temp);
-		temp = (void*)0;
+		temp = *str;
 	}
-	temp = *str;
 	if (d_quote)
 	{
 		*str = str_patdel(*str, "\"");
