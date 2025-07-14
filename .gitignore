@@ -9,5 +9,5 @@ minishell_tester
 test
 infile
 outfile
-.swp
+*.swp
 vgcore*

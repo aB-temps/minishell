@@ -73,7 +73,6 @@ static void	check_sig(t_exec *exec, int *exit_code, int i,
 
 	status = 0;
 	current_token = &tokens_array[i];
-	printf("i = %d\n", i);
 	waitpid(exec->pid_children[i], &status, 0);
 	if (WIFEXITED(status))
 	{

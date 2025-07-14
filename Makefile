@@ -131,6 +131,7 @@ F_UTILS :=				init_struct.c		\
 						exit_minishell.c	\
 						countocc.c			\
 						str_patdel.c		\
+						str_chardel.c		\
 						str_replace.c		\
 						ft_tabdup.c			\
 						ft_tablen.c			\

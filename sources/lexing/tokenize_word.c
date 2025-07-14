@@ -15,7 +15,7 @@ void	tokenize_word(t_input *input, size_t *i, char *line)
 	raw_content = ft_strndup(&line[j], *i - j);
 	if (!raw_content)
 		exit_minishell(input, EXIT_FAILURE);
-	if (is_quote(line[*i]) && !is_quote(line[*i + 1]))
+	if (is_quote(line[*i]))
 		to_link = true;
 	create_token(input, ARG, raw_content, to_link);
 	input->token_qty++;
