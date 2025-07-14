@@ -45,7 +45,7 @@ void					create_token(t_input *input, int type,
 							char *raw_content, bool to_link);
 void					clear_token(t_vector *tokens);
 t_token					dup_token(t_token token);
-void					syntax_error(t_input *input, char *s);
+void					syntax_error(t_input *input);
 void					exit_minishell(t_input *input, int exit_code);
 // lib
 /* char					**tabdup(char **tab);

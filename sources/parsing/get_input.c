@@ -28,11 +28,10 @@ void get_input(char **env)
 			break;
 		}
 		add_history(line);
-		if (is_valid_line(line))
+		if (is_valid_input(line))
 		{
 			input = parse_input(line, prompt, exit_status);
 		}
-		// print_input(input, "BEFORE EXEC");
 		if (input)
 		{
 			// exit_status = exec_cmd(input, env);

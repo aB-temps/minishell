@@ -107,7 +107,7 @@ F_LEXING :=				tokenize_input.c	\
 						tokenize_operator.c	\
 						tokenize_quote.c	\
 			
-F_CHECKING :=			is_valid_line.c		\
+F_CHECKING :=			is_valid_input.c		\
 						is_quote.c	\
 						is_whitespace.c		\
 						is_operator.c		\
