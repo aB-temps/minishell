@@ -40,14 +40,17 @@ typedef struct s_fd
 }			t_fd;
 
 /*------------------------------- FUNCTIONS -------------------------------*/
-char	*get_path(char **env);
-void	cleanup_command_resources(char **args, char *cmd_path);
-char	*find_command_path(char *cmd, char **paths);
-char	*find_full_command_path(char *cmd, char **env);
-int		execute_command(t_token *current_token, char **env);
-void	launch_all_commands(t_input *input, char **env, int *pids);
-int		wait_for_processes(int *pids, int cmd_count);
-int		exec_cmd(t_input *input, char **env);
-int		count_cmd(t_input *input);
+char		*get_path(char **env);
+char		*find_command_path(char *cmd, char **paths);
+char		*find_full_command_path(char *cmd, char **env);
+int			execute_command(t_token *current_token, t_exec *exec, t_fd *fd,
+				int i);
+int			launch_all_commands(t_input *input, t_exec *exec);
+int			exec_cmd(t_input *input, char **env);
+int			count_cmd(t_input *input);
+void		wait_childs(t_exec *exec, t_input *input, int *exit_code);
+void		close_all(t_fd *fd);
+void		init_fd(t_fd *fd);
+void		prepare_pipe(t_exec *exec, t_fd *fd, int i);
 
 #endif
