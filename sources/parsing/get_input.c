@@ -1,5 +1,5 @@
-#include "exec.h"
 #include "debug.h"
+#include "exec.h"
 #include "libft.h"
 #include "parsing.h"
 #include "style.h"
@@ -8,13 +8,13 @@
 
 void	get_input(char **env)
 {
-	int		exit_status;
 	t_input	*input;
+	int		exit_status;
 	char	*line;
 	char	*prompt;
 
-	(void)env;
 	exit_status = 0;
+	(void)env;
 	line = NULL;
 	while (1)
 	{
@@ -32,10 +32,9 @@ void	get_input(char **env)
 		{
 			input = parse_input(line, prompt, exit_status);
 		}
-		// print_input(input, "BEFORE EXEC");
 		if (input)
 		{
-			exit_status = exec_cmd(input, env);
+			exit_status = exec_cmd(input, env, &input->last_exit_status);
 			clear_vector(input->v_tokens);
 			free(input);
 		}

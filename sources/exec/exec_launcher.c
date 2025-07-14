@@ -25,8 +25,11 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 					return (1);
 				}
 			}
-			exec->pid_children[i] = execute_command(current_token, exec, &fd,
-					i);
+			if (!is_builtin(*current_token))
+			{
+				exec->pid_children[i] = execute_command(current_token, exec,
+						&fd, i);
+			}
 			if (i > 0)
 				close(fd.fd1[0]);
 			if (i < exec->cmd_count - 1)
@@ -73,7 +76,6 @@ static void	check_sig(t_exec *exec, int *exit_code, int i,
 
 	status = 0;
 	current_token = &tokens_array[i];
-	printf("i = %d\n", i);
 	waitpid(exec->pid_children[i], &status, 0);
 	if (WIFEXITED(status))
 	{

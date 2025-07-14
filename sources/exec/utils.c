@@ -1,4 +1,5 @@
 #include "input.h"
+#include "builtins.h"
 
 char	*get_type(ssize_t type)
 {
@@ -16,6 +17,21 @@ char	*get_type(ssize_t type)
 		"ENV_VAR",
 	};
 	return ((char *)types[type]);
+}
+
+int	is_builtin(t_token current_token)
+{
+	char	**cmd;
+
+	cmd = ((char **)current_token.formatted_content);
+	ft_printf("%s\n", cmd[0]);
+	if (!ft_strncmp(cmd[0],"echo", ft_strlen(cmd[0])))
+	{
+		printf("Je lance echo du pauvre\n");
+		ft_echo(cmd);
+		return (1);
+	}
+	return (0);
 }
 
 char	*get_cmd_by_index(t_input *input, t_token *tokens_array, int index)

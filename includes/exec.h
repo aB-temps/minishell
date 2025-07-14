@@ -46,11 +46,12 @@ char		*find_full_command_path(char *cmd, char **env);
 int			execute_command(t_token *current_token, t_exec *exec, t_fd *fd,
 				int i);
 int			launch_all_commands(t_input *input, t_exec *exec);
-int			exec_cmd(t_input *input, char **env);
+int			exec_cmd(t_input *input, char **env, int *last_exit_status);
 int			count_cmd(t_input *input);
 void		wait_childs(t_exec *exec, t_input *input, int *exit_code);
 void		close_all(t_fd *fd);
 void		init_fd(t_fd *fd);
 void		prepare_pipe(t_exec *exec, t_fd *fd, int i);
 char		*get_cmd_by_index(t_input *input, t_token *tokens_array, int index);
+int			is_builtin(t_token current_token);
 #endif
