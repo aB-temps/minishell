@@ -14,7 +14,6 @@ void	get_input(char **env)
 	char	*prompt;
 
 	exit_status = 0;
-	(void)env;
 	line = NULL;
 	while (1)
 	{

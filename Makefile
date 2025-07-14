@@ -128,7 +128,7 @@ F_UTILS :=				init_struct.c		\
 						dup_token.c			\
 						create_token.c		\
 						exit_minishell.c	\
-						countocc.c	\
+						countocc.c			\
 						str_patdel.c		\
 						str_replace.c		\
 						ft_tabdup.c			\
@@ -145,6 +145,10 @@ F_STYLE :=				welcome.c 			\
 F_BUILTINS :=			ft_echo.c 			\
 						ft_cd.c				\
 						ft_pwd.c			\
+						ft_export.c			\
+						ft_unset.c			\
+						ft_exit.c			\
+						ft_env.c			\
 
 F_DEBUG :=				print_input.c		\
 						print_tab.c			\
