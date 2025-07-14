@@ -128,11 +128,12 @@ F_UTILS :=				init_struct.c		\
 						dup_token.c			\
 						create_token.c		\
 						exit_minishell.c	\
-						countocc.c	\
+						countocc.c			\
 						str_patdel.c		\
 						str_replace.c		\
 						ft_tabdup.c			\
 						ft_tablen.c			\
+						syntax_error.c		\
 
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\

@@ -29,9 +29,9 @@ static ssize_t count_command_args(t_input *input, t_token *array, ssize_t *i)
 	ssize_t j;
 	ssize_t count;
 
-	j = *i;
+	j = *i + 1;
 	count = 0;
-	while (j + 1 <= input->token_qty && !(array[j].type >= PIPE && array[j].type <= HEREDOC))
+	while (j <= input->token_qty && !(array[j].type >= PIPE && array[j].type <= HEREDOC))
 	{
 		count++;
 		j++;

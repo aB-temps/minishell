@@ -35,7 +35,7 @@ void get_input(char **env)
 		// print_input(input, "BEFORE EXEC");
 		if (input)
 		{
-			exit_status = exec_cmd(input, env);
+			// exit_status = exec_cmd(input, env);
 			clear_vector(input->v_tokens);
 			free(input);
 		}
