@@ -1,21 +1,5 @@
 #include "checking.h"
-#include "input.h"
 #include <unistd.h>
-
-static bool	is_syntax_valid(char *s)
-{
-	bool validity;
-	size_t	i;
-
-	validity = true;
-	i = 0;
-	while (s[i])
-	{
-		if (is_operator(s[i]))
-			check
-	}
-	return (validity);
-}
 
 static bool	are_quotes_paired(char *s)
 {
@@ -42,7 +26,7 @@ bool	is_valid_input(char *line)
 	size_t	i;
 
 	i = 0;
-	if (!are_quotes_paired(line) || !is_syntax_valid(line))
+	if (!are_quotes_paired(line))
 		return (false);
 	while (line[i])
 	{

@@ -107,10 +107,11 @@ F_LEXING :=				tokenize_input.c	\
 						tokenize_operator.c	\
 						tokenize_quote.c	\
 			
-F_CHECKING :=			is_valid_input.c		\
-						is_quote.c	\
+F_CHECKING :=			is_valid_input.c	\
+						is_quote.c			\
 						is_whitespace.c		\
 						is_operator.c		\
+						check_syntax_error.c	\
 
 F_PARSING :=			get_input.c			\
 						parse_input.c		\
@@ -133,7 +134,6 @@ F_UTILS :=				init_struct.c		\
 						str_replace.c		\
 						ft_tabdup.c			\
 						ft_tablen.c			\
-						syntax_error.c		\
 
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\
