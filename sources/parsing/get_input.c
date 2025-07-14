@@ -1,4 +1,5 @@
 #include "exec.h"
+#include "debug.h"
 #include "libft.h"
 #include "parsing.h"
 #include "style.h"
@@ -31,6 +32,7 @@ void	get_input(char **env)
 		{
 			input = parse_input(line, prompt, exit_status);
 		}
+		// print_input(input, "BEFORE EXEC");
 		if (input)
 		{
 			exit_status = exec_cmd(input, env);

@@ -52,5 +52,5 @@ void		wait_childs(t_exec *exec, t_input *input, int *exit_code);
 void		close_all(t_fd *fd);
 void		init_fd(t_fd *fd);
 void		prepare_pipe(t_exec *exec, t_fd *fd, int i);
-
+char		*get_cmd_by_index(t_input *input, t_token *tokens_array, int index);
 #endif
