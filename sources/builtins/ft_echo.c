@@ -52,7 +52,7 @@ void	ft_echo(char **args)
 
 	i = 1;
 	n_param = false;
-	while (ft_strchr(args[i], '-'))
+	while (args[i] && ft_strchr(args[i], '-'))
 	{
 		j = i;
 		parse_param(args[i], &n_param, &i);
