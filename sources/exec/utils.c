@@ -15,7 +15,25 @@ char	*get_type(ssize_t type)
 		"D_QUOTES",
 		"ENV_VAR",
 	};
-	return((char*)types[type]);
+	return ((char *)types[type]);
+}
+
+char	*get_cmd_by_index(t_input *input, t_token *tokens_array, int index)
+{
+	int	i;
+	int	cmd_count;
+
+	i = 0;
+	cmd_count = 0;
+	while (i < input->token_qty)
+	{
+		if (tokens_array[i].type == COMMAND)
+			cmd_count++;
+		if (cmd_count - 1 == index)
+			return (((char **)tokens_array[i].formatted_content)[0]);
+		i++;
+	}
+	return (NULL);
 }
 
 int	count_cmd(t_input *input)

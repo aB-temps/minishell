@@ -12,7 +12,7 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 	tokens_array = (t_token *)input->v_tokens->array;
 	i = 0;
 	init_fd(&fd);
-	while (i < count_cmd(input))
+	while (i < exec->cmd_count)
 	{
 		current_token = &tokens_array[y];
 		if (current_token->type == COMMAND)
@@ -45,17 +45,14 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 	return (0);
 }
 
-static void	check_cmd(t_token current_token)
+static void	check_cmd(t_input *input, t_token *tokens_array, int i)
 {
 	char	*cmd;
 
-	if (current_token.formatted_content == NULL)
-	{
+	cmd = get_cmd_by_index(input, tokens_array, i);
+	if (!cmd)
 		ft_putendl_fd(": command not found", 2);
-		return;
-	}
-	cmd = (char *)current_token.formatted_content;
-	if (ft_strchr(cmd, '/') != NULL)
+	else if (ft_strchr(cmd, '/') != NULL)
 	{
 		ft_putstr_fd(cmd, 2);
 		ft_putendl_fd(": No such file or directory", 2);
@@ -68,7 +65,7 @@ static void	check_cmd(t_token current_token)
 }
 
 static void	check_sig(t_exec *exec, int *exit_code, int i,
-		t_token *tokens_array)
+		t_token *tokens_array, t_input *input)
 {
 	int		sig;
 	int		status;
@@ -76,12 +73,13 @@ static void	check_sig(t_exec *exec, int *exit_code, int i,
 
 	status = 0;
 	current_token = &tokens_array[i];
+	printf("i = %d\n", i);
 	waitpid(exec->pid_children[i], &status, 0);
 	if (WIFEXITED(status))
 	{
 		*exit_code = WEXITSTATUS(status);
 		if (*exit_code == 127)
-			check_cmd(*current_token);
+			check_cmd(input, tokens_array, i);
 		else if (*exit_code == 126)
 			if (errno != 0)
 				perror(((char **)current_token->formatted_content)[0]);
@@ -103,5 +101,5 @@ void	wait_childs(t_exec *exec, t_input *input, int *exit_code)
 	tokens_array = (t_token *)input->v_tokens->array;
 	i = 0;
 	while (i < exec->cmd_count)
-		check_sig(exec, exit_code, i++, tokens_array);
+		check_sig(exec, exit_code, i++, tokens_array, input);
 }

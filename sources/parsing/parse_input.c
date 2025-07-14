@@ -21,5 +21,6 @@ t_input	*parse_input(char *line, char *prompt, int exit_status)
 	print_input(input, "FORMATTED TOKENS");
 	format_input(input);
 	print_input(input, "FORMATTED INPUT");
+	// print_input(input, "FORMATTED INPUT");
 	return (input);
 }
