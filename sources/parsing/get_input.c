@@ -15,23 +15,19 @@ void	get_input(char **env)
 
 	exit_status = 0;
 	line = NULL;
-	// (void)env;
 	while (1)
 	{
 		input = NULL;
 		if (!build_prompt(&prompt))
 			prompt = ft_strdup("minishell $ ");
 		line = readline(prompt);
+		free(prompt);
 		if (!line)
-		{
-			free(prompt);
 			break ;
-		}
 		add_history(line);
 		if (is_valid_input(line))
 		{
 			input = parse_input(line, prompt, exit_status);
-			free(prompt);
 			free(line);
 		}
 		if (input)

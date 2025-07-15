@@ -16,9 +16,9 @@ t_input	*parse_input(char *line, char *prompt, int exit_status)
 		return ((void *)0);
 	if (!tokenize_input(input, line))
 		return ((void *)0);
-	print_input(input, "TOKENIZED");
+	// print_input(input, "TOKENIZED");
 	format_tokens(input);
-	print_input(input, "FORMATTED TOKENS");
+	// print_input(input, "FORMATTED TOKENS");
 	if (!check_syntax_error(input))
 	{
 		ft_putstr_fd("minishell: syntax error\n", STDERR_FILENO);
@@ -27,6 +27,6 @@ t_input	*parse_input(char *line, char *prompt, int exit_status)
 		return ((void *)0);
 	}
 	format_input(input);
-	print_input(input, "FORMATTED INPUT");
+	// print_input(input, "FORMATTED INPUT");
 	return (input);
 }
