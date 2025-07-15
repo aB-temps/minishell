@@ -7,21 +7,21 @@ static void	tokenize_redir(t_input *input, size_t *i, char *line,
 	{
 		if (*i < line_len - 1 && line[*i + 1] == '>')
 		{
-			create_token(input, APPEND, ">>");
+			create_token(input, APPEND, ">>", false);
 			(*i)++;
 		}
 		else
-			create_token(input, REDIR_OUT, ">");
+			create_token(input, REDIR_OUT, ">", false);
 	}
 	else if (line[*i] == '<')
 	{
 		if (*i < line_len - 1 && line[*i + 1] == '<')
 		{
-			create_token(input, HEREDOC, "<<");
+			create_token(input, HEREDOC, "<<", false);
 			(*i)++;
 		}
 		else
-			create_token(input, REDIR_IN, "<");
+			create_token(input, REDIR_IN, "<", false);
 	}
 	(*i)++;
 	input->token_qty++;
@@ -32,7 +32,7 @@ void	tokenize_operator(t_input *input, size_t *i, char *line,
 {
 	if (line[*i] == '|')
 	{
-		create_token(input, PIPE, "|");
+		create_token(input, PIPE, "|", false);
 		(*i)++;
 		input->token_qty++;
 	}

@@ -8,8 +8,8 @@
 
 void	get_input(char **env)
 {
-	t_input	*input;
 	int		exit_status;
+	t_input	*input;
 	char	*line;
 	char	*prompt;
 
@@ -18,18 +18,17 @@ void	get_input(char **env)
 	while (1)
 	{
 		input = NULL;
-		prompt = "NULL";
-		build_prompt(&prompt);
+		if (!build_prompt(&prompt))
+			prompt = ft_strdup("minishell $ ");
 		line = readline(prompt);
+		free(prompt);
 		if (!line)
-		{
-			free(prompt);
 			break ;
-		}
 		add_history(line);
-		if (is_valid_line(line))
+		if (is_valid_input(line))
 		{
 			input = parse_input(line, prompt, exit_status);
+			free(line);
 		}
 		if (input)
 		{
@@ -37,7 +36,5 @@ void	get_input(char **env)
 			clear_vector(input->v_tokens);
 			free(input);
 		}
-		free(prompt);
-		free(line);
 	}
 }

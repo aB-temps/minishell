@@ -3,9 +3,9 @@
 #include <linux/limits.h>
 #include <unistd.h>
 
-static char	*get_hostname(char *env_session)
+static char *get_hostname(char *env_session)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	if (!env_session)
@@ -17,29 +17,33 @@ static char	*get_hostname(char *env_session)
 	return (env_session);
 }
 
-void	build_prompt(char **prompt)
+void *build_prompt(char **prompt)
 {
-	const char	*username = getenv("USER");
-	const char	*hostname = get_hostname(getenv("SESSION_MANAGER"));
-	char		*cwd;
-	size_t		plen;
+	const char *username = getenv("USER");
+	const char *hostname = get_hostname(getenv("SESSION_MANAGER"));
+	char *cwd;
+	size_t plen;
 
 	cwd = (void *)0;
 	if (!username || !hostname)
-		return ; // protect
+		return ((void *)0);
 	cwd = getcwd(cwd, PATH_MAX);
 	if (!cwd)
-		return ; // protect
-	plen = ft_strlen(username) + ft_strlen(hostname) + ft_strlen(cwd) + 5 + 59;
+		return ((void *)0);
+	plen = ft_strlen(username) + ft_strlen(hostname) + ft_strlen(cwd) + ft_strlen(FG_CYAN BOLD FG_MAGENTA "@" FG_CYAN R_ALL "  👻  " FG_MAGENTA "\n ➤  " R_ALL "\0") + 2;
 	*prompt = calloc(plen, sizeof(char));
 	if (!(*prompt))
-		return ; // protect
+	{
+		free(cwd);
+		return ((void *)0);
+	}
 	ft_strlcat(*prompt, FG_CYAN BOLD, plen);
 	ft_strlcat(*prompt, username, plen);
 	ft_strlcat(*prompt, FG_MAGENTA "@" FG_CYAN, plen);
 	ft_strlcat(*prompt, hostname, plen);
 	ft_strlcat(*prompt, R_ALL "  👻  ", plen);
 	ft_strlcat(*prompt, cwd, plen);
-	ft_strlcat(*prompt, FG_MAGENTA "➤  " R_ALL "\0", plen);
+	ft_strlcat(*prompt, FG_MAGENTA "\n ➤  " R_ALL "\0", plen);
 	free(cwd);
+	return (*prompt);
 }

@@ -8,6 +8,6 @@
 # include <unistd.h>
 
 void	welcome(void);
-void	build_prompt(char **prompt);
+void	*build_prompt(char **prompt);
 
 #endif
