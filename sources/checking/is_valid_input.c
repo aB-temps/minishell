@@ -21,7 +21,7 @@ static bool	are_quotes_paired(char *s)
 	return (s_quotes % 2 == 0 && d_quotes % 2 == 0);
 }
 
-bool	is_valid_line(char *line)
+bool	is_valid_input(char *line)
 {
 	size_t	i;
 
