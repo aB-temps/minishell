@@ -9,16 +9,13 @@ static char	*get_raw_var_name(char *s)
 	start = 0;
 	while (s[start] && s[start] != '$')
 		start++;
-	printf("raw\nstart => %zu / %c\n", start, s[start]);
 	end = start + 1;
 	while (s[end] && s[end] != '$' && !is_whitespace(s[end])
 		&& !is_quote(s[end]))
 		end++;
-	printf("end => %zu / %c\n", end, s[end]);
 	raw_var_name = ft_strndup(s + start, end - start);
 	if (!raw_var_name)
 		return ((void *)0);
-	printf("raw_var_name => '%s'\n\n", raw_var_name);
 	return (raw_var_name);
 }
 
@@ -30,14 +27,11 @@ static char	*get_var_name(char *s)
 
 	start = 1;
 	end = start;
-	printf("var\nstart => %zu / %c\n", start, s[start]);
 	while (s[end] && !is_quote(s[end]))
 		end++;
-	printf("end => %zu / %c\n", end, s[end]);
 	var_name = ft_strndup(s + start, end - start);
 	if (!var_name)
 		return ((void *)0);
-	printf("var_name => '%s'\n\n", var_name);
 	return (var_name);
 }
 
@@ -54,13 +48,12 @@ static char	*get_var_value(char *var_name, int exit_status, int *cursor)
 	else if (!ft_strlen(var_name))
 	{
 		(*cursor)++;
-		return("$");
+		return ("$");
 	}
 	else
 		var_value = getenv(var_name);
 	if (!var_value)
 		return ("");
-	printf("var_value => '%s'\n\n", var_value);
 	return (var_value);
 }
 
@@ -72,7 +65,6 @@ static char	*substitute_env_var_occurences(char *s, int exit_status,
 	char	*raw_var_name;
 	char	*var_value;
 
-	printf("S => '%s'\n\n", s);
 	ns = (void *)0;
 	raw_var_name = get_raw_var_name(s);
 	if (!raw_var_name)

@@ -12,7 +12,7 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 	tokens_array = (t_token *)input->v_tokens->array;
 	i = 0;
 	init_fd(&fd);
-	while (i < count_cmd(input))
+	while (i < exec->cmd_count)
 	{
 		current_token = &tokens_array[y];
 		if (current_token->type == COMMAND)
@@ -25,8 +25,11 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 					return (1);
 				}
 			}
-			exec->pid_children[i] = execute_command(current_token, exec, &fd,
-					i);
+			if (!is_builtin(*current_token))
+			{
+				exec->pid_children[i] = execute_command(current_token, exec,
+						&fd, i);
+			}
 			if (i > 0)
 				close(fd.fd1[0]);
 			if (i < exec->cmd_count - 1)
@@ -45,40 +48,60 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 	return (0);
 }
 
-int	wait_for_processes(int *pids, int cmd_count)
+static void	check_cmd(t_input *input, t_token *tokens_array, int i)
 {
-	int	i;
-	int	status;
-	int	last_pid;
-	int	wait_ret;
+	char	*cmd;
 
-	last_pid = -1;
-	i = 0;
-	while (i < cmd_count)
+	cmd = get_cmd_by_index(input, tokens_array, i);
+	if (!cmd)
+		ft_putendl_fd(": command not found", 2);
+	else if (ft_strchr(cmd, '/') != NULL)
 	{
-		if (pids[i] > 0)
-		{
-			wait_ret = waitpid(pids[i], &status, 0);
-			if (wait_ret > 0)
-			{
-				if (WIFEXITED(status))
-				{
-					printf("Command %d (PID %d) exited with status %d\n", i,
-						pids[i], WEXITSTATUS(status)); //debug
-				}
-				else if (WIFSIGNALED(status))
-				{
-					printf("Command %d (PID %d) was killed by signal %d\n", i, pids[i],
-						WTERMSIG(status));
-				}
-				else
-					printf("Command %d (PID %d) terminated abnormally\n", i, pids[i]);
-				last_pid = pids[i];
-			}
-			else
-				perror("waitpid failed");
-		}
-		i++;
+		ft_putstr_fd(cmd, 2);
+		ft_putendl_fd(": No such file or directory", 2);
 	}
-	return (last_pid);
+	else
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putendl_fd(": command not found", 2);
+	}
+}
+
+static void	check_sig(t_exec *exec, int *exit_code, int i,
+		t_token *tokens_array, t_input *input)
+{
+	int		sig;
+	int		status;
+	t_token	*current_token;
+
+	status = 0;
+	current_token = &tokens_array[i];
+	waitpid(exec->pid_children[i], &status, 0);
+	if (WIFEXITED(status))
+	{
+		*exit_code = WEXITSTATUS(status);
+		if (*exit_code == 127)
+			check_cmd(input, tokens_array, i);
+		else if (*exit_code == 126)
+			if (errno != 0)
+				perror(((char **)current_token->formatted_content)[0]);
+	}
+	else if (WIFSIGNALED(status))
+	{
+		sig = WTERMSIG(status);
+		*exit_code = 128 + sig;
+		if (sig == SIGTERM)
+			ft_putendl_fd("Terminated", 2);
+	}
+}
+
+void	wait_childs(t_exec *exec, t_input *input, int *exit_code)
+{
+	int		i;
+	t_token	*tokens_array;
+
+	tokens_array = (t_token *)input->v_tokens->array;
+	i = 0;
+	while (i < exec->cmd_count)
+		check_sig(exec, exit_code, i++, tokens_array, input);
 }
