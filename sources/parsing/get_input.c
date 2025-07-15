@@ -6,7 +6,7 @@
 #include <linux/limits.h>
 #include <unistd.h>
 
-void get_input(char **env)
+void	get_input(char **env)
 {
 	t_input	*input;
 	int		exit_status;
@@ -24,12 +24,14 @@ void get_input(char **env)
 		if (!line)
 		{
 			free(prompt);
-			break;
+			break ;
 		}
 		add_history(line);
 		if (is_valid_input(line))
 		{
 			input = parse_input(line, prompt, exit_status);
+			free(prompt);
+			free(line);
 		}
 		if (input)
 		{
@@ -37,7 +39,5 @@ void get_input(char **env)
 			clear_vector(input->v_tokens);
 			free(input);
 		}
-		free(prompt);
-		free(line);
 	}
 }

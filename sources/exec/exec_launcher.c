@@ -25,10 +25,10 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 					return (1);
 				}
 			}
-			if (!is_builtin(*current_token))
+			if (!is_builtin(*current_token, exec->env, input))
 			{
 				exec->pid_children[i] = execute_command(current_token, exec,
-						&fd, i);
+						&fd, i, input);
 			}
 			if (i > 0)
 				close(fd.fd1[0]);

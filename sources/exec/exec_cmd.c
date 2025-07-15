@@ -23,7 +23,7 @@ static int	execute_all_commands(t_input *input, t_exec *exec, int *exit_code)
 	if (!exec->pid_children)
 		return (1);
 	// debug_print_all_arrays(input, exec->pid_children, input->token_qty);
-	// debug
+	print_input(input, "EXEC");
 	launch_all_commands(input, exec);
 	wait_childs(exec, input, exit_code);
 	free(exec->pid_children);

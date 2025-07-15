@@ -1,5 +1,6 @@
 #include "builtins.h"
 #include "input.h"
+#include "exec.h"
 
 char	*get_type(ssize_t type)
 {
@@ -17,6 +18,12 @@ char	*get_type(ssize_t type)
 		"ENV_VAR",
 	};
 	return ((char *)types[type]);
+}
+
+void	exit_exec(int exit_code, t_exec *exec, t_input *input)
+{
+	free(exec->pid_children);
+	exit_minishell(input, exit_code);
 }
 
 int	is_builtin(t_token current_token, char **env, t_input *input)
