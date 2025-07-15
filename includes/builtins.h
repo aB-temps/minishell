@@ -14,6 +14,5 @@ void	ft_env(char **env);
 void	ft_exit(t_input *input, int exit_code);
 char	**ft_export(char **env);
 void	ft_unset(char **env);
-void	ft_exit(t_input *input, int exit_code);
 
 #endif

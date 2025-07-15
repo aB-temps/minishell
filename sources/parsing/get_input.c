@@ -15,6 +15,7 @@ void	get_input(char **env)
 
 	exit_status = 0;
 	line = NULL;
+	// (void)env;
 	while (1)
 	{
 		input = NULL;
