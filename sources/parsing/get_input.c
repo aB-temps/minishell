@@ -28,7 +28,6 @@ void	get_input(char **env)
 		if (is_valid_input(line))
 		{
 			input = parse_input(line, prompt, exit_status);
-			free(line);
 		}
 		if (input)
 		{
@@ -36,5 +35,6 @@ void	get_input(char **env)
 			clear_vector(input->v_tokens);
 			free(input);
 		}
+		free(line);
 	}
 }
