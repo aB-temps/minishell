@@ -8,13 +8,14 @@
 
 void	get_input(char **env)
 {
-	t_input	*input;
 	int		exit_status;
+	t_input	*input;
 	char	*line;
 	char	*prompt;
 
 	exit_status = 0;
 	line = NULL;
+	// (void)env;
 	while (1)
 	{
 		input = NULL;

@@ -20,8 +20,8 @@ static void	replace_env_var(t_input *input)
 static void	handle_quotes(t_input *input)
 {
 	t_token	*array;
-	ssize_t	i;
 	char	*temp;
+	ssize_t	i;
 
 	array = (t_token *)input->v_tokens->array;
 	i = 0;
@@ -35,7 +35,6 @@ static void	handle_quotes(t_input *input)
 		}
 		else if (array[i].type == D_QUOTES)
 		{
-			printf("I AM HERE : %s\n", array[i].raw_content);
 			array[i].raw_content = str_patdel(array[i].raw_content, "\"");
 			free(temp);
 		}
