@@ -1,19 +1,18 @@
-#include "exec.h"
 #include "debug.h"
+#include "exec.h"
 #include "libft.h"
 #include "parsing.h"
 #include "style.h"
 #include <linux/limits.h>
 #include <unistd.h>
 
-void get_input(char **env)
+void	get_input(char **env)
 {
-	int exit_status;
-	t_input *input;
-	char *line;
-	char *prompt;
+	int		exit_status;
+	t_input	*input;
+	char	*line;
+	char	*prompt;
 
-	(void)env;
 	exit_status = 0;
 	line = NULL;
 	while (1)
@@ -25,7 +24,7 @@ void get_input(char **env)
 		if (!line)
 		{
 			free(prompt);
-			break;
+			break ;
 		}
 		add_history(line);
 		if (is_valid_input(line))
@@ -34,7 +33,7 @@ void get_input(char **env)
 		}
 		if (input)
 		{
-			exit_status = exec_cmd(input, env);
+			exit_status = exec_cmd(input, env, &input->last_exit_status);
 			clear_vector(input->v_tokens);
 			free(input);
 		}

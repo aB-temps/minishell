@@ -30,18 +30,16 @@ static int	execute_all_commands(t_input *input, t_exec *exec, int *exit_code)
 	return (0);
 }
 
-int	exec_cmd(t_input *input, char **env)
+int	exec_cmd(t_input *input, char **env, int *last_exit_status)
 {
 	t_exec	exec;
-	int		exit_code;
 
-	exit_code = 0;
 	exec.env = env;
 	exec.infile = NULL;
 	exec.outfile = NULL;
 	exec.cmd_path = NULL;
 	exec.args = NULL;
-	if (execute_all_commands(input, &exec, &exit_code) == 1)
-		return (1);
-	return (0);
+	if (execute_all_commands(input, &exec, last_exit_status) == 1)
+		exit_minishell(input, *last_exit_status);
+	return (*last_exit_status);
 }

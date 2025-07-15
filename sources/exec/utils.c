@@ -1,3 +1,4 @@
+#include "builtins.h"
 #include "input.h"
 
 char	*get_type(ssize_t type)
@@ -16,6 +17,49 @@ char	*get_type(ssize_t type)
 		"ENV_VAR",
 	};
 	return ((char *)types[type]);
+}
+
+int	is_builtin(t_token current_token, char **env, t_input *input)
+{
+	char	**cmd;
+
+	cmd = ((char **)current_token.formatted_content);
+	if (!ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])))
+	{
+		ft_echo(cmd);
+		return (1);
+	}
+	else if (!ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])))
+	{
+		ft_pwd();
+		return (1);
+	}
+	else if (!ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])))
+	{
+		ft_cd(cmd[1]);
+		return (1);
+	}
+	else if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
+	{
+		ft_export(env);
+		return (1);
+	}
+	else if (!ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])))
+	{
+		ft_unset(env);
+		return (1);
+	}
+	else if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])))
+	{
+		ft_env(env);
+		return (1);
+	}
+	else if (!ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])))
+	{
+		exit_minishell(input, input->last_exit_status);
+		// ft_exit(input, input->last_exit_status);
+	}
+	return (0);
 }
 
 char	*get_cmd_by_index(t_input *input, t_token *tokens_array, int index)
