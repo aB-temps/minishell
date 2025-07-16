@@ -36,24 +36,18 @@ void	get_input(char **env)
 		if (!build_prompt(&input->prompt))
 			input->prompt = ft_strdup("$ ");
 		if (!input->prompt)
-		{
-			free(input);
-			exit(EXIT_FAILURE);
-		}
+			exit_minishell(input, input->last_exit_status);
 		input->line = readline(input->prompt);
 		if (!input->line)
-		{
-			free(input->prompt);
-			free(input);
-			exit(EXIT_FAILURE);
-		}
+			exit_minishell(input, input->last_exit_status);
 		if (is_valid_input(input->line))
-			parse_input(input);
-		if (input)
 		{
-			input->last_exit_status = exec_cmd(input,
-					env_list_to_array(input->env), &input->last_exit_status);
+			if (parse_input(input))
+				input->last_exit_status = exec_cmd(input,
+						env_list_to_array(input->env),
+						&input->last_exit_status);
 			clear_vector(input->v_tokens);
+			input->token_qty = 0;
 		}
 		free(input->line);
 		input->line = (void *)0;

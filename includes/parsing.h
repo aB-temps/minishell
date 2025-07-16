@@ -9,7 +9,7 @@
 # include <stdlib.h>
 
 void	get_input(char **env);
-t_input	*parse_input(t_input *input);
+void	*parse_input(t_input *input);
 void	format_input(t_input *input);
 
 #endif

@@ -1,6 +1,6 @@
 #include "lexing.h"
 
-void	*tokenize_input(t_input *input, char *line)
+void	tokenize_input(t_input *input, char *line)
 {
 	size_t i;
 	size_t line_len;
@@ -18,5 +18,4 @@ void	*tokenize_input(t_input *input, char *line)
 		else
 			tokenize_word(input, &i, line);
 	}
-	return (input);
 }

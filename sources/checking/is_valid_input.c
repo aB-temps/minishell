@@ -26,6 +26,8 @@ bool	is_valid_input(char *line)
 	size_t	i;
 
 	i = 0;
+	if (!ft_strlen(line))
+		return (false);
 	if (!are_quotes_paired(line))
 		return (false);
 	while (line[i])

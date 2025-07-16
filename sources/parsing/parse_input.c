@@ -3,22 +3,21 @@
 #include "parsing.h"
 #include "token_formatting.h"
 
-t_input	*parse_input(t_input *input)
+void	*parse_input(t_input *input)
 {
 	input->v_tokens = create_vector(4, sizeof(t_token), clear_token);
 	if (!input->v_tokens)
-		return ((void *)0);
-	if (!tokenize_input(input, input->line))
-		return ((void *)0);
-	// print_input(input, "TOKENIZED");
+		exit_minishell(input, EXIT_FAILURE);
+	tokenize_input(input, input->line);
+	print_input(input, "TOKENIZED");
 	format_tokens(input);
-	// print_input(input, "FORMATTED TOKENS");
+	print_input(input, "FORMATTED TOKENS");
 	if (!check_syntax_error(input))
 	{
 		ft_putstr_fd("minishell: syntax error\n", STDERR_FILENO);
 		return ((void *)0);
 	}
 	format_input(input);
-	// print_input(input, "FORMATTED INPUT");
+	print_input(input, "FORMATTED INPUT");
 	return (input);
 }
