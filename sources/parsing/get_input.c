@@ -48,13 +48,13 @@ void	get_input(char **env)
 		input->line = prompt_user(&input->prompt);
 		if (!input->line)
 			exit_minishell(input, input->last_exit_status);
+		add_history(input->line);
 		if (is_valid_input(input->line))
 		{
 			if (parse_input(input))
 				input->last_exit_status = exec_cmd(input, input->env->array,
 						&input->last_exit_status);
 			clear_vector(&input->v_tokens);
-			// input->v_tokens = NULL;
 		}
 		reset_input(input);
 	}
