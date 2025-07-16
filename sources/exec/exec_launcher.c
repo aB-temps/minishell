@@ -25,7 +25,7 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 					return (1);
 				}
 			}
-			if (!is_builtin(*current_token, input, exec, &fd))
+			if (!is_builtin(*current_token, input, exec, &fd, i))
 			{
 				exec->pid_child[i] = execute_command(current_token, exec,
 						&fd, i, input);

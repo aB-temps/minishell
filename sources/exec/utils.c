@@ -27,47 +27,63 @@ void	exit_exec(t_input *input, t_exec *exec, t_fd *fd)
 	exit_minishell(input, input->last_exit_status);
 }
 
-int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd)
+static void	execute_builtin(char **cmd, t_input *input, t_exec *exec, t_fd *fd)
+{
+	if (ft_strcmp(cmd[0], "echo") == 0)
+		ft_echo(cmd);
+	else if (ft_strcmp(cmd[0], "pwd") == 0)
+		ft_pwd();
+	else if (ft_strcmp(cmd[0], "cd") == 0)
+		ft_cd(cmd[1]);
+	else if (ft_strcmp(cmd[0], "export") == 0)
+		ft_export(input->env->array);
+	else if (ft_strcmp(cmd[0], "unset") == 0)
+		ft_unset(input->env->array);
+	else if (ft_strcmp(cmd[0], "env") == 0)
+		ft_env(input->env->array);
+	else if (ft_strcmp(cmd[0], "exit") == 0)
+		ft_exit(input, exec, fd);
+}
+
+int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd, int i)
 {
 	char	**cmd;
+	int		pid;
 
 	cmd = ((char **)current_token.formatted_content);
-	if (!ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])))
+	if (!cmd || !cmd[0])
+		return (0);
+
+	if (ft_strcmp(cmd[0], "echo") && ft_strcmp(cmd[0], "pwd") && 
+		ft_strcmp(cmd[0], "cd") && ft_strcmp(cmd[0], "export") && 
+		ft_strcmp(cmd[0], "unset") && ft_strcmp(cmd[0], "env") && 
+		ft_strcmp(cmd[0], "exit"))
+		return (0);  // Pas un builtin
+
+	if (exec->cmd_count > 1)
 	{
-		ft_echo(cmd);
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("fork");
+			return (-1);
+		}
+		if (pid == 0)
+		{
+			prepare_pipe(exec, fd, i);
+			execute_builtin(cmd, input, exec, fd);
+			exit(0);
+		}
+		return (pid);
+	}
+	else
+	{
+		execute_builtin(cmd, input, exec, fd);
 		return (1);
 	}
-	else if (!ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])))
-	{
-		ft_pwd();
-		return (1);
-	}
-	else if (!ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])))
-	{
-		ft_cd(cmd[1]);
-		return (1);
-	}
-	else if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
-	{
-		ft_export(input->env->array);
-		return (1);
-	}
-	else if (!ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])))
-	{
-		ft_unset(input->env->array);
-		return (1);
-	}
-	else if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])))
-	{
-		ft_env(input->env->array);
-		return (1);
-	}
-	else if (!ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])))
-	{
-		ft_exit(input, exec, fd);
-	}
-	return (0);
 }
+
+
 
 char	*get_cmd_by_index(t_input *input, t_token *tokens_array, int index)
 {

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:45:04 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/16 22:47:55 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/17 00:37:20 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void						*ft_memset(void *s, int c, size_t n);
 void						ft_bzero(void *s, size_t n);
 void						*ft_memcpy(void *dest, const void *src, size_t n);
 char						*ft_strchr(const char *str, int srch_char);
+int							ft_strcmp(const char *s1, const char *s2);
 char						*ft_strrchr(const char *str, int srch_char);
 void						*ft_memchr(const void *mem_block, int srch_char,
 								size_t size);
