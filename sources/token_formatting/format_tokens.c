@@ -28,12 +28,14 @@ static void	handle_quotes(t_input *input)
 	while (i < input->token_qty)
 	{
 		temp = array[i].raw_content;
-		if (array[i].type == S_QUOTES)
+		if (array[i].type == S_QUOTES && !(i - 1 >= 0 && array[i
+				- 1].type == HEREDOC))
 		{
 			array[i].raw_content = str_patdel(array[i].raw_content, "'");
 			free(temp);
 		}
-		else if (array[i].type == D_QUOTES)
+		else if (array[i].type == D_QUOTES && !(i - 1 >= 0 && array[i
+				- 1].type == HEREDOC))
 		{
 			array[i].raw_content = str_patdel(array[i].raw_content, "\"");
 			free(temp);
