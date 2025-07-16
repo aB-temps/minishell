@@ -8,10 +8,16 @@
 
 void	reset_input(t_input *input)
 {
-	free(input->prompt);
-	free(input->line);
-	input->prompt = (void *)0;
-	input->line = (void *)0;
+	if (input->prompt)
+	{
+		free(input->prompt);
+		input->prompt = (void *)0;
+	}
+	if (input->line)
+	{
+		free(input->line);
+		input->line = (void *)0;
+	}
 	input->token_qty = 0;
 }
 
@@ -47,7 +53,8 @@ void	get_input(char **env)
 			if (parse_input(input))
 				input->last_exit_status = exec_cmd(input, input->env->array,
 						&input->last_exit_status);
-			clear_vector(input->v_tokens);
+			clear_vector(&input->v_tokens);
+			// input->v_tokens = NULL;
 		}
 		reset_input(input);
 	}

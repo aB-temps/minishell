@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:45:04 by enchevri          #+#    #+#             */
-/*   Updated: 2025/06/06 13:41:28 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/16 18:48:46 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ t_vector					*create_vector(size_t capacity,
 								void (*clear_array)(t_vector *));
 bool						grow_vector(t_vector *vec, size_t new_elements);
 bool						add_element(t_vector *vec, void *element);
-void						clear_vector(t_vector *vec);
+void						clear_vector(t_vector **vec);
 
 /*************************************************************/
 

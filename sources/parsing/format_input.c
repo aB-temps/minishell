@@ -38,13 +38,13 @@ void	format_input(t_input *input)
 			token = dup_token(array[i]);
 			if (token.type == -1 || !add_element(new_vec, &token))
 			{
-				clear_vector(new_vec);
+				clear_vector(&new_vec);
 				exit_minishell(input, EXIT_FAILURE);
 			}
 		}
 		i++;
 	}
-	clear_vector(input->v_tokens);
+	clear_vector(&input->v_tokens);
 	input->v_tokens = new_vec;
 	input->token_qty = input->v_tokens->capacity;
 }
