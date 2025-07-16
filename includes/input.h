@@ -2,6 +2,7 @@
 # define INPUT_H
 
 # include "libft.h"
+# include "utils.h"
 # include <sys/types.h>
 
 enum						token_type
@@ -20,6 +21,7 @@ enum						token_type
 
 typedef struct s_input		t_input;
 typedef struct s_token		t_token;
+typedef struct s_env		t_env;
 typedef struct s_env_var	t_env_var;
 
 struct						s_token
@@ -29,6 +31,7 @@ struct						s_token
 	char					*raw_content;
 	void					*formatted_content;
 };
+
 struct						s_env_var
 
 {
@@ -36,11 +39,18 @@ struct						s_env_var
 	char					*value;
 };
 
+struct						s_env
+
+{
+	t_list					*list;
+	char					**array;
+};
+
 struct						s_input
 {
 	char					*prompt;
 	char					*line;
-	t_list					*env;
+	t_env					*env;
 	t_vector				*v_tokens;
 	ssize_t					token_qty;
 	int						last_exit_status;
@@ -48,6 +58,8 @@ struct						s_input
 
 // void						init_input(t_input *input, char *line, char *prompt,
 // 								int exit_status);
+t_env						*init_env(char **env);
+
 void						init_token(t_token *token);
 void						create_token(t_input *input, int type,
 								char *raw_content, bool to_link);

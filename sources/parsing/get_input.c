@@ -25,12 +25,9 @@ void	get_input(char **env)
 	input = ft_calloc(1, sizeof(t_input));
 	if (!input)
 		exit(EXIT_FAILURE);
-	input->env = env_array_to_list(env);
+	input->env = init_env(env);
 	if (!input->env)
-	{
-		free(input);
-		exit(EXIT_FAILURE);
-	}
+		exit_minishell(input, EXIT_FAILURE);
 	while (1)
 	{
 		if (!build_prompt(&input->prompt))
@@ -44,8 +41,8 @@ void	get_input(char **env)
 		{
 			if (parse_input(input))
 				input->last_exit_status = exec_cmd(input,
-						env_list_to_array(input->env),
-						&input->last_exit_status);
+													/* env_list_to_array(input->env) */ env,
+													&input->last_exit_status);
 			clear_vector(input->v_tokens);
 			input->token_qty = 0;
 		}
