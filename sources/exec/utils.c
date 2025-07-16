@@ -1,6 +1,6 @@
 #include "builtins.h"
-#include "input.h"
 #include "exec.h"
+#include "input.h"
 
 char	*get_type(ssize_t type)
 {
@@ -20,13 +20,13 @@ char	*get_type(ssize_t type)
 	return ((char *)types[type]);
 }
 
-void	exit_exec(int exit_code, t_exec *exec, t_input *input)
+void	exit_exec(t_input *input, t_exec *exec)
 {
-	free(exec->pid_children);
-	exit_minishell(input, exit_code);
+	free(exec->pid_child);
+	exit_minishell(input, input->last_exit_status);
 }
 
-int	is_builtin(t_token current_token, char **env, t_input *input)
+int	is_builtin(t_token current_token, t_input *input, t_exec *exec)
 {
 	char	**cmd;
 
@@ -48,23 +48,22 @@ int	is_builtin(t_token current_token, char **env, t_input *input)
 	}
 	else if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
 	{
-		ft_export(env);
+		ft_export(input->env->array);
 		return (1);
 	}
 	else if (!ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])))
 	{
-		ft_unset(env);
+		ft_unset(input->env->array);
 		return (1);
 	}
 	else if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])))
 	{
-		ft_env(env);
+		ft_env(input->env->array);
 		return (1);
 	}
 	else if (!ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])))
 	{
-		exit_minishell(input, input->last_exit_status);
-		// ft_exit(input, input->last_exit_status);
+		ft_exit(input, exec);
 	}
 	return (0);
 }

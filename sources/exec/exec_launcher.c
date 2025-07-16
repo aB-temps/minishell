@@ -25,9 +25,9 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 					return (1);
 				}
 			}
-			if (!is_builtin(*current_token, exec->env, input))
+			if (!is_builtin(*current_token, input, exec))
 			{
-				exec->pid_children[i] = execute_command(current_token, exec,
+				exec->pid_child[i] = execute_command(current_token, exec,
 						&fd, i, input);
 			}
 			if (i > 0)
@@ -67,8 +67,8 @@ static void	check_cmd(t_input *input, t_token *tokens_array, int i)
 	}
 }
 
-static void	check_sig(t_exec *exec, int *exit_code, int i,
-		t_token *tokens_array, t_input *input)
+static void	check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
+		int i)
 {
 	int		sig;
 	int		status;
@@ -76,26 +76,26 @@ static void	check_sig(t_exec *exec, int *exit_code, int i,
 
 	status = 0;
 	current_token = &tokens_array[i];
-	waitpid(exec->pid_children[i], &status, 0);
+	waitpid(exec->pid_child[i], &status, 0);
 	if (WIFEXITED(status))
 	{
-		*exit_code = WEXITSTATUS(status);
-		if (*exit_code == 127)
+		input->last_exit_status = WEXITSTATUS(status);
+		if (input->last_exit_status == 127)
 			check_cmd(input, tokens_array, i);
-		else if (*exit_code == 126)
+		else if (input->last_exit_status == 126)
 			if (errno != 0)
 				perror(((char **)current_token->formatted_content)[0]);
 	}
 	else if (WIFSIGNALED(status))
 	{
 		sig = WTERMSIG(status);
-		*exit_code = 128 + sig;
+		input->last_exit_status = 128 + sig;
 		if (sig == SIGTERM)
 			ft_putendl_fd("Terminated", 2);
 	}
 }
 
-void	wait_childs(t_exec *exec, t_input *input, int *exit_code)
+void	wait_childs(t_exec *exec, t_input *input)
 {
 	int		i;
 	t_token	*tokens_array;
@@ -103,5 +103,5 @@ void	wait_childs(t_exec *exec, t_input *input, int *exit_code)
 	tokens_array = (t_token *)input->v_tokens->array;
 	i = 0;
 	while (i < exec->cmd_count)
-		check_sig(exec, exit_code, i++, tokens_array, input);
+		check_sig(exec, tokens_array, input, i++);
 }

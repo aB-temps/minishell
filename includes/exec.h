@@ -24,8 +24,7 @@ typedef struct s_exec
 {
 	char	*infile;
 	char	*outfile;
-	pid_t	*pid_children;
-	char	**env;
+	pid_t	*pid_child;
 	int		cmd_count;
 	char	*cmd_path;
 	char	**args;
@@ -44,14 +43,14 @@ char		*find_full_command_path(char *cmd, char **env);
 int			execute_command(t_token *current_token, t_exec *exec, t_fd *fd,
 				int i, t_input *input);
 int			launch_all_commands(t_input *input, t_exec *exec);
-int			exec_cmd(t_input *input, char **env, int *last_exit_status);
+void		start_exec(t_input *input);
 int			count_cmd(t_input *input);
-void		wait_childs(t_exec *exec, t_input *input, int *exit_code);
+void		wait_childs(t_exec *exec, t_input *input);
 void		close_all(t_fd *fd);
 void		init_fd(t_fd *fd);
 void		prepare_pipe(t_exec *exec, t_fd *fd, int i);
 char		*get_cmd_by_index(t_input *input, t_token *tokens_array, int index);
-int			is_builtin(t_token current_token, char **env, t_input *input);
-void		exit_exec(int exit_code, t_exec *exec, t_input *input);
+int			is_builtin(t_token current_token, t_input *input, t_exec *exec);
 void		create_all_files(t_token *token_array, int token_qty);
+void		exit_exec(t_input *input, t_exec *exec);
 #endif
