@@ -5,7 +5,7 @@
 int	free_child(t_exec *exec, t_input *input)
 {
 	free(exec->cmd_path);
-	clear_vector(input->v_tokens);
+	clear_vector(&input->v_tokens);
 	free(input);
 	free(exec->pid_children);
 	return (127);

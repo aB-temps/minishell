@@ -96,6 +96,7 @@ COMPONENTS :=			PARSING 			\
 						STYLE				\
 						UTILS				\
 						EXEC				\
+						ENV					\
 						BUILTINS			\
 						DEBUG				\
 
@@ -124,8 +125,12 @@ F_EXEC :=				exec_cmd.c			\
 						utils.c				\
 						pipes_utils.c		\
 
+F_ENV 	:=				env_array_to_list.c	\
+						env_list_to_array.c \
+
 F_UTILS :=				init_struct.c		\
 						clear_token.c		\
+						clear_env_list.c	\
 						dup_token.c			\
 						create_token.c		\
 						exit_minishell.c	\
