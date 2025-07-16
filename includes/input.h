@@ -4,7 +4,7 @@
 # include "libft.h"
 # include <sys/types.h>
 
-enum					token_type
+enum						token_type
 {
 	COMMAND,
 	PIPE,
@@ -18,34 +18,44 @@ enum					token_type
 	ENV_VAR,
 };
 
-typedef struct s_input	t_input;
-typedef struct s_token	t_token;
+typedef struct s_input		t_input;
+typedef struct s_token		t_token;
+typedef struct s_env_var	t_env_var;
 
-struct					s_token
+struct						s_token
 {
-	ssize_t				type;
-	bool				link_to_next;
-	char				*raw_content;
-	void				*formatted_content;
+	ssize_t					type;
+	bool					link_to_next;
+	char					*raw_content;
+	void					*formatted_content;
+};
+struct						s_env_var
+
+{
+	char					*key;
+	char					*value;
 };
 
-struct					s_input
+struct						s_input
 {
-	int					last_exit_status;
-	ssize_t				token_qty;
-	t_vector			*v_tokens;
-	char				*line;
-	char				*prompt;
+	char					*prompt;
+	char					*line;
+	t_list					*env;
+	t_vector				*v_tokens;
+	ssize_t					token_qty;
+	int						last_exit_status;
 };
 
-void					init_input(t_input *input, char *line, char *prompt,
-							int exit_status);
-void					init_token(t_token *token);
-void					create_token(t_input *input, int type,
-							char *raw_content, bool to_link);
-void					clear_token(t_vector *tokens);
-t_token					dup_token(t_token token);
-void					exit_minishell(t_input *input, int exit_code);
+// void						init_input(t_input *input, char *line, char *prompt,
+// 								int exit_status);
+void						init_token(t_token *token);
+void						create_token(t_input *input, int type,
+								char *raw_content, bool to_link);
+void						clear_token(t_vector *tokens);
+t_token						dup_token(t_token token);
+t_list						*env_array_to_list(char **env);
+char						**env_list_to_array(t_list *env);
+void						exit_minishell(t_input *input, int exit_code);
 // lib
 /* char					**tabdup(char **tab);
 size_t	ft_tablen(char **tab); */

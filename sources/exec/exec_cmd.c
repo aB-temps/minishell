@@ -22,7 +22,7 @@ static int	execute_all_commands(t_input *input, t_exec *exec, int *exit_code)
 	exec->pid_children = ft_calloc(exec->cmd_count, sizeof(pid_t));
 	if (!exec->pid_children)
 		return (1);
-	debug_print_all_arrays(input, exec->pid_children, input->token_qty);
+	// debug_print_all_arrays(input, exec->pid_children, input->token_qty);
 	launch_all_commands(input, exec);
 	wait_childs(exec, input, exit_code);
 	free(exec->pid_children);
