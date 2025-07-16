@@ -112,7 +112,7 @@ F_CHECKING :=			is_valid_input.c	\
 						is_quote.c			\
 						is_whitespace.c		\
 						is_operator.c		\
-						check_syntax_error.c	\
+						check_syntax_error.c\
 
 F_PARSING :=			get_input.c			\
 						parse_input.c		\
@@ -127,6 +127,7 @@ F_EXEC :=				exec_cmd.c			\
 
 F_ENV 	:=				env_array_to_list.c	\
 						env_list_to_array.c \
+						get_env_var.c		\
 
 F_UTILS :=				init_struct.c		\
 						clear_token.c		\
