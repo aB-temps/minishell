@@ -20,13 +20,14 @@ char	*get_type(ssize_t type)
 	return ((char *)types[type]);
 }
 
-void	exit_exec(t_input *input, t_exec *exec)
+void	exit_exec(t_input *input, t_exec *exec, t_fd *fd)
 {
+	close_all(fd);
 	free(exec->pid_child);
 	exit_minishell(input, input->last_exit_status);
 }
 
-int	is_builtin(t_token current_token, t_input *input, t_exec *exec)
+int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd)
 {
 	char	**cmd;
 
@@ -63,7 +64,7 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec)
 	}
 	else if (!ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])))
 	{
-		ft_exit(input, exec);
+		ft_exit(input, exec, fd);
 	}
 	return (0);
 }
