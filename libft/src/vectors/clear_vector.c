@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/29 18:22:10 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/16 18:48:29 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/16 18:54:00 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	clear_vector(t_vector **vec)
 		free((*vec)->array);
 		(*vec)->array = (void *)0;
 	}
-	if ((*vec))
+	if (*vec)
 	{
 		free((*vec));
-		(*vec) = (void *)0;
+		*vec = (void *)0;
 	}
 }
