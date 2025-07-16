@@ -28,14 +28,40 @@ static int	execute_all_commands(t_input *input, t_exec *exec, int *exit_code)
 	free(exec->pid_children);
 	return (0);
 }
+void	create_all_files(t_token *token_array, int token_qty)
+{
+	int	i;
+	int	fd_temp;
+	int	flags;
+
+	i = 0;
+	while (i < token_qty)
+	{
+		if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
+		{
+			if (i + 1 < token_qty && token_array[i].formatted_content)
+			{
+				if (token_array[i].type == APPEND)
+					flags = O_WRONLY | O_CREAT | O_APPEND;
+				else if (token_array[i].type == REDIR_OUT)
+					flags = O_WRONLY | O_CREAT | O_TRUNC;
+				fd_temp = open(token_array[i + 1].formatted_content, flags,
+						0644);
+				if (fd_temp == -1)
+					perror(token_array[i + 1].formatted_content);
+				else
+					close(fd_temp);
+			}
+		}
+		i++;
+	}
+}
 
 int	exec_cmd(t_input *input, char **env, int *last_exit_status)
 {
 	t_exec	exec;
 
 	exec.env = env;
-	exec.infile = NULL;
-	exec.outfile = NULL;
 	exec.cmd_path = NULL;
 	exec.args = NULL;
 	if (execute_all_commands(input, &exec, last_exit_status) == 1)

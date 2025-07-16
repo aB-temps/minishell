@@ -11,3 +11,4 @@ infile
 outfile
 *.swp
 vgcore*
+*.test
