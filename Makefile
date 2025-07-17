@@ -145,7 +145,8 @@ F_UTILS :=				init_struct.c		\
 						ft_tabdup.c			\
 						ft_tablen.c			\
 						gen_random_num_sequence.c \
-
+						clear_hd_filename_elem.c \
+						
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\
 						format_redir.c		\

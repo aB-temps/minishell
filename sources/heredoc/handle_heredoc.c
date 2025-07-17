@@ -1,6 +1,6 @@
 #include "debug.h"
-#include "input.h"
 #include "token_formatting.h"
+#include "utils.h"
 #include <fcntl.h>
 
 char	*search_temp_dir(t_input *input)
@@ -30,26 +30,21 @@ char	*gen_heredoc_filename(t_input *input)
 {
 	const char	*temp_dir = search_temp_dir(input);
 	const char	*filename_base = "sh-thd-";
-	const char	*fileid = gen_random_num_sequence(10);
+	char		*fileid;
 	char		*full_path;
 
 	full_path = (void *)0;
+	fileid = gen_random_num_sequence(10);
 	if (!fileid)
-	{
-		free((char *)temp_dir);
-		exit_minishell(input, EXIT_FAILURE);
-	}
+		clear_hd_filename_elem(input, temp_dir, fileid, full_path);
 	full_path = str_free_to_join((char *)temp_dir, (char *)filename_base);
 	if (!full_path)
-	{
-		free((char *)temp_dir);
-		free((char *)fileid);
-		exit_minishell(input, EXIT_FAILURE);
-	}
-	full_path = str_free_to_join(full_path, (char *)fileid);
-	free((char *)fileid);
+		clear_hd_filename_elem(input, (char *)temp_dir, fileid, full_path);
+	full_path = str_free_to_join(full_path, fileid);
+	free(fileid);
+	fileid = (void *)0;
 	if (!full_path)
-		exit_minishell(input, EXIT_FAILURE);
+		clear_hd_filename_elem(input, (char *)temp_dir, fileid, full_path);
 	if (access(full_path, F_OK) == 0)
 	{
 		free(full_path);
@@ -106,7 +101,7 @@ void	open_heredoc(t_token *token, t_input *input)
 		unlink(tmpfile);
 		exit_minishell(input, EXIT_FAILURE);
 	}
-	free(tmpfile);
+	free((char *)tmpfile);
 	unlink(tmpfile);
 	fill_heredoc(token, fds, input);
 }

@@ -1,4 +1,5 @@
 #include "input.h"
+#include <unistd.h>
 
 void	clear_token(t_vector *tokens)
 {

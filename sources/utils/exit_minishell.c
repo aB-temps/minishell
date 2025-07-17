@@ -1,5 +1,5 @@
-#include "exec.h"
 #include "input.h"
+#include "utils.h"
 
 void	exit_minishell(t_input *input, int exit_code)
 {

@@ -1,5 +1,6 @@
 #include "input.h"
 #include "parsing.h"
+#include "utils.h"
 
 // t_input	*init_input(char *prompt, char *line, char **env, int exit_status)
 // {

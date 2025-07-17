@@ -1,7 +1,7 @@
 #ifndef INPUT_H
 # define INPUT_H
 
-# include "utils.h"
+# include "libft.h"
 # include <sys/types.h>
 
 enum						token_type

@@ -1,10 +1,7 @@
 #include "debug.h"
 #include "exec.h"
-#include "libft.h"
 #include "parsing.h"
-#include "style.h"
 #include <linux/limits.h>
-#include <unistd.h>
 
 void	reset_input(t_input *input)
 {
