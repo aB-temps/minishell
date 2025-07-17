@@ -57,7 +57,9 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 {
 	char	*line;
 	char	*tmp;
+	int		cursor;
 
+	cursor = 0;
 	while (1)
 	{
 		line = readline("\e[34m\e[1mHEREDOC > \e[0m");
@@ -69,11 +71,17 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		if (!ft_strncmp(line, (char *)token->formatted_content,
 				ft_strlen((char *)token->formatted_content) + ft_strlen(line)))
 			break ;
+		tmp = line;
+		while (line && ft_strchr(line + cursor, '$'))
+		{
+			line = substitute_env_var_occurences(line, &cursor, input);
+			free(tmp);
+		}
 		ft_putendl_fd(line, fds[0]);
+		free(line);
 	}
 	// close(fds[0]);
 	// fds[0] = -1;
-	// free(token->formatted_content);
 	tmp = (char *)token->formatted_content;
 	token->raw_content = str_free_to_join(token->raw_content,
 			(char *)token->formatted_content);
@@ -91,8 +99,6 @@ void	open_heredoc(t_token *token, t_input *input)
 	fds = ft_calloc(2, sizeof(int));
 	if (!fds)
 		exit_minishell(input, EXIT_FAILURE);
-	fds[0] = -1;
-	fds[1] = -1;
 	fds[0] = open(tmpfile, O_WRONLY | O_CREAT, 0644);
 	if (fds[0] < 0)
 	{
@@ -110,7 +116,7 @@ void	open_heredoc(t_token *token, t_input *input)
 		unlink(tmpfile);
 		exit_minishell(input, EXIT_FAILURE);
 	}
-	unlink(tmpfile);
+	// unlink(tmpfile);
 	free((char *)tmpfile);
 	fill_heredoc(token, fds, input);
 }

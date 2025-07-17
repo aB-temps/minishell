@@ -10,7 +10,8 @@ char	*get_env_var(char *var_name, t_input *input)
 	while (tmp)
 	{
 		if (!ft_strncmp(var_name, ((t_env_var *)tmp->content)->key,
-				ft_strlen(var_name)))
+				ft_strlen(var_name)
+				+ ft_strlen(((t_env_var *)tmp->content)->key)))
 			return ((((t_env_var *)tmp->content)->value));
 		tmp = tmp->next;
 	}

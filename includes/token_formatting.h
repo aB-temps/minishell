@@ -11,5 +11,6 @@ size_t	countocc(char *s, char *to_find);
 char	*str_replace(char *s, char *old, char *new);
 char	*str_patdel(char *s, char *pat);
 char	*get_env_var(char *var_name, t_input *input);
+char	*substitute_env_var_occurences(char *s, int *cursor, t_input *input);
 
 #endif

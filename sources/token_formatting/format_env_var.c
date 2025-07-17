@@ -58,8 +58,7 @@ static char	*get_var_value(char *var_name, int exit_status, int *cursor,
 	return (var_value);
 }
 
-static char	*substitute_env_var_occurences(char *s, int exit_status,
-		int *cursor, t_input *input)
+char	*substitute_env_var_occurences(char *s, int *cursor, t_input *input)
 {
 	char	*ns;
 	char	*var_name;
@@ -73,7 +72,7 @@ static char	*substitute_env_var_occurences(char *s, int exit_status,
 	var_name = get_var_name(raw_var_name);
 	if (!var_name)
 		return ((void *)0);
-	var_value = get_var_value(var_name, exit_status, cursor, input);
+	var_value = get_var_value(var_name, input->last_exit_status, cursor, input);
 	if (!var_value)
 		return ((void *)0);
 	ns = str_replace(s, raw_var_name, var_value);
@@ -93,12 +92,11 @@ void	format_env_var(t_input *input, t_token *array, ssize_t *i)
 	int		cursor;
 
 	cursor = 0;
-	content = substitute_env_var_occurences(array[*i].raw_content,
-			input->last_exit_status, &cursor, input);
+	content = substitute_env_var_occurences(array[*i].raw_content, &cursor,
+			input);
 	while (content && ft_strchr(content + cursor, '$'))
 	{
-		new_content = substitute_env_var_occurences(content,
-				input->last_exit_status, &cursor, input);
+		new_content = substitute_env_var_occurences(content, &cursor, input);
 		free(content);
 		content = new_content;
 	}
