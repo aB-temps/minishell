@@ -3,16 +3,17 @@
 char	*get_env_var(char *var_name, t_input *input)
 {
 	char *var_value;
-	t_list *tmp;
+	t_list **tmp;
 
 	var_value = (void *)0;
-	tmp = input->env->list;
+	tmp = &input->env->list;
 	while (tmp)
 	{
+		printf("%s\n",((t_env_var *)input->env->list->content)->key);
 		if (!ft_strncmp(var_name, ((t_env_var *)input->env->list->content)->key,
 				ft_strlen(var_name)))
 			return ((((t_env_var *)input->env->list->content)->value));
-		tmp = tmp->next;
+		*tmp = (*tmp)->next;
 	}
 	return (var_value);
 }
