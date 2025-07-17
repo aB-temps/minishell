@@ -12,5 +12,6 @@ char	*str_replace(char *s, char *old, char *new);
 char	*str_patdel(char *s, char *pat);
 char	*str_chardel(char *s, char *c);
 void	clear_env_list(void *var);
+char	*gen_random_num_sequence(size_t len);
 
 #endif
