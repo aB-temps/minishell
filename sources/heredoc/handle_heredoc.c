@@ -61,6 +61,11 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	while (1)
 	{
 		line = readline("\e[34m\e[1mHEREDOC > \e[0m");
+		if (!line)
+		{
+			free(fds);
+			exit_minishell(input, EXIT_FAILURE);
+		}
 		if (!ft_strncmp(line, (char *)token->formatted_content,
 				ft_strlen((char *)token->formatted_content) + ft_strlen(line)))
 			break ;
