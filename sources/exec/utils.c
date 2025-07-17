@@ -58,7 +58,7 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd, in
 		ft_strcmp(cmd[0], "cd") && ft_strcmp(cmd[0], "export") && 
 		ft_strcmp(cmd[0], "unset") && ft_strcmp(cmd[0], "env") && 
 		ft_strcmp(cmd[0], "exit"))
-		return (0);  // Pas un builtin
+		return (0);
 
 	if (exec->cmd_count > 1)
 	{
