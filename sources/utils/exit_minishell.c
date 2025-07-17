@@ -9,8 +9,8 @@ void	exit_minishell(t_input *input, int exit_code)
 			clear_vector(&input->v_tokens);
 		if (input->env)
 		{
-			free_tab_return_null(input->env->array);
 			ft_lstclear(&input->env->list, &clear_env_list);
+			free_tab_return_null(input->env->array);
 			free(input->env);
 		}
 		if (input->line)
