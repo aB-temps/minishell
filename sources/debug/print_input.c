@@ -29,6 +29,12 @@ void	print_input(t_input *input, char *part)
 		printf("Raw Content : '%s%s%s'\n", BOLD, array[i].raw_content, R_ALL);
 		if (array[i].type == COMMAND)
 			print_tab((char **)array[i].formatted_content);
+		else if (array[i].type == HEREDOC
+			&& ft_strlen(array[i].raw_content) > 2)
+		{
+			printf("Formatted Content :\n");
+			print_token_heredoc(array[i]);
+		}
 		else
 			printf("Formatted Content : '%s%s%s'\n\n", BOLD,
 				(char *)array[i].formatted_content, R_ALL);

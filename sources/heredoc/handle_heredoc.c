@@ -1,5 +1,7 @@
+#include "debug.h"
 #include "input.h"
 #include "token_formatting.h"
+#include <fcntl.h>
 
 char	*search_temp_dir(t_input *input)
 {
@@ -51,6 +53,59 @@ char	*gen_heredoc_filename(t_input *input)
 	return (full_path);
 }
 
+void	fill_heredoc(t_token *token, int *fds, t_input *input)
+{
+	char	*line;
+
+	while (1)
+	{
+		line = readline("\e[31m\e[1mHEREDOC > \e[0m");
+		if (!ft_strncmp(line, (char *)token->formatted_content,
+				ft_strlen((char *)token->formatted_content) + ft_strlen(line)))
+			break ;
+		ft_putendl_fd(line, fds[0]);
+	}
+	// close(fds[0]);
+	// fds[0] = -1;
+	// free(token->formatted_content);
+	token->raw_content = ft_strjoin("<< ",
+			(char *)token->formatted_content);
+	if (!token->raw_content)
+		exit_minishell(input, EXIT_FAILURE);
+	token->formatted_content = fds;
+}
+
+void	open_heredoc(t_token *token, t_input *input)
+{
+	int			*fds;
+	const char	*tmpfile = gen_heredoc_filename(input);
+
+	fds = ft_calloc(2, sizeof(int));
+	if (!fds)
+		exit_minishell(input, EXIT_FAILURE);
+	fds[0] = -1;
+	fds[1] = -1;
+	fds[0] = open(tmpfile, O_WRONLY | O_CREAT, 0644);
+	if (fds[0] < 0)
+	{
+		free((char *)tmpfile);
+		free(fds);
+		unlink(tmpfile);
+		exit_minishell(input, EXIT_FAILURE);
+	}
+	fds[1] = open(tmpfile, O_RDONLY);
+	if (fds[1] < 0)
+	{
+		free((char *)tmpfile);
+		close(fds[0]);
+		free(fds);
+		unlink(tmpfile);
+		exit_minishell(input, EXIT_FAILURE);
+	}
+	unlink(tmpfile);
+	fill_heredoc(token, fds, input);
+}
+
 void	handle_heredoc(t_input *input)
 {
 	t_token	*array;
@@ -59,12 +114,12 @@ void	handle_heredoc(t_input *input)
 	array = (t_token *)input->v_tokens->array;
 	i = 0;
 	free(gen_heredoc_filename(input));
-	// while (i < input->token_qty)
-	// {
-	// 	if (array[i].type == HEREDOC)
-	// 	{
-	// 		read_heredoc(&array[i], input);
-	// 	}
-	// 	i++;
-	// }
+	while (i < input->token_qty)
+	{
+		if (array[i].type == HEREDOC)
+		{
+			open_heredoc(&array[i], input);
+		}
+		i++;
+	}
 }

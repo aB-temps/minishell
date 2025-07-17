@@ -2,17 +2,26 @@
 
 void	clear_token(t_vector *tokens)
 {
-	const t_token *array = (t_token *)tokens->array;
-	size_t i;
+	const t_token	*array = (t_token *)tokens->array;
+	size_t			i;
 
 	i = 0;
 	while (i < tokens->nb_elements)
 	{
-		free(array[i].raw_content);
 		if (array[i].type == COMMAND)
 			free_tab_return_null((char **)array[i].formatted_content);
+		else if (array[i].type == HEREDOC
+			&& ft_strlen(array[i].raw_content) > 2)
+		{
+			if (((int *)array[i].formatted_content)[0] != -1)
+				close(((int *)array[i].formatted_content)[0]);
+			if (((int *)array[i].formatted_content)[1] != -1)
+				close(((int *)array[i].formatted_content)[1]);
+			free(array[i].formatted_content);
+		}
 		else
 			free(array[i].formatted_content);
+		free(array[i].raw_content);
 		i++;
 	}
 }

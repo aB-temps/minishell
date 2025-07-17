@@ -1,7 +1,6 @@
 #ifndef INPUT_H
 # define INPUT_H
 
-# include "libft.h"
 # include "utils.h"
 # include <sys/types.h>
 
@@ -24,14 +23,6 @@ typedef struct s_token		t_token;
 typedef struct s_env		t_env;
 typedef struct s_env_var	t_env_var;
 
-struct						s_token
-{
-	ssize_t					type;
-	bool					link_to_next;
-	char					*raw_content;
-	void					*formatted_content;
-};
-
 struct						s_env_var
 
 {
@@ -44,6 +35,14 @@ struct						s_env
 {
 	t_list					*list;
 	char					**array;
+};
+
+struct						s_token
+{
+	ssize_t					type;
+	bool					link_to_next;
+	char					*raw_content;
+	void					*formatted_content;
 };
 
 struct						s_input

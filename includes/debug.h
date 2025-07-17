@@ -8,6 +8,7 @@
 // Existing functions
 void	print_tab(char **tab);
 void	print_input(t_input *input, char *part);
+void	print_token_heredoc(t_token token);
 
 // New debug functions
 void	print_string_array(char **array, const char *array_name);
