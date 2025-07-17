@@ -50,6 +50,11 @@ char	*gen_heredoc_filename(t_input *input)
 	free((char *)fileid);
 	if (!full_path)
 		exit_minishell(input, EXIT_FAILURE);
+	if (access(full_path, F_OK) == 0)
+	{
+		free(full_path);
+		gen_heredoc_filename(input);
+	}
 	return (full_path);
 }
 
@@ -68,8 +73,7 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	// close(fds[0]);
 	// fds[0] = -1;
 	// free(token->formatted_content);
-	token->raw_content = ft_strjoin("<< ",
-			(char *)token->formatted_content);
+	token->raw_content = ft_strjoin("<< ", (char *)token->formatted_content);
 	if (!token->raw_content)
 		exit_minishell(input, EXIT_FAILURE);
 	token->formatted_content = fds;
@@ -102,6 +106,7 @@ void	open_heredoc(t_token *token, t_input *input)
 		unlink(tmpfile);
 		exit_minishell(input, EXIT_FAILURE);
 	}
+	free(tmpfile);
 	unlink(tmpfile);
 	fill_heredoc(token, fds, input);
 }
