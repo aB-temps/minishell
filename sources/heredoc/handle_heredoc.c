@@ -56,10 +56,11 @@ char	*gen_heredoc_filename(t_input *input)
 void	fill_heredoc(t_token *token, int *fds, t_input *input)
 {
 	char	*line;
+	char	*tmp;
 
 	while (1)
 	{
-		line = readline("\e[31m\e[1mHEREDOC > \e[0m");
+		line = readline("\e[34m\e[1mHEREDOC > \e[0m");
 		if (!ft_strncmp(line, (char *)token->formatted_content,
 				ft_strlen((char *)token->formatted_content) + ft_strlen(line)))
 			break ;
@@ -68,9 +69,12 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	// close(fds[0]);
 	// fds[0] = -1;
 	// free(token->formatted_content);
-	token->raw_content = ft_strjoin("<< ", (char *)token->formatted_content);
+	tmp = (char *)token->formatted_content;
+	token->raw_content = str_free_to_join(token->raw_content,
+			(char *)token->formatted_content);
 	if (!token->raw_content)
 		exit_minishell(input, EXIT_FAILURE);
+	free(tmp);
 	token->formatted_content = fds;
 }
 
@@ -101,8 +105,8 @@ void	open_heredoc(t_token *token, t_input *input)
 		unlink(tmpfile);
 		exit_minishell(input, EXIT_FAILURE);
 	}
-	free((char *)tmpfile);
 	unlink(tmpfile);
+	free((char *)tmpfile);
 	fill_heredoc(token, fds, input);
 }
 

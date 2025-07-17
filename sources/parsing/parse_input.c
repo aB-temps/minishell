@@ -11,7 +11,7 @@ void	*parse_input(t_input *input)
 	tokenize_input(input, input->line);
 	// print_input(input, "TOKENIZED");
 	format_tokens(input);
-	// print_input(input, "FORMATTED TOKENS");
+	print_input(input, "FORMATTED TOKENS");
 	if (!check_syntax_error(input))
 	{
 		ft_putstr_fd("minishell: syntax error\n", STDERR_FILENO);
