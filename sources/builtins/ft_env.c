@@ -1,10 +1,8 @@
 #include "builtins.h"
+#include "debug.h"
 
-void	ft_env(char **env)
+void	ft_env(t_input *input)
 {
-	size_t i;
+	print_tab(input->env->array);
 
-	i = 0;
-	while (env[i])
-		printf("%s\n", env[i++]);
 }
