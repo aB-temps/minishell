@@ -76,7 +76,7 @@ char	*substitute_env_var_occurences(char *s, int *cursor, t_input *input)
 	if (!var_value)
 		return ((void *)0);
 	ns = str_replace(s, raw_var_name, var_value);
-	if (!ft_strncmp(var_name, "$?", ft_strlen("$?")))
+	if (!ft_strncmp(var_name, "?", ft_strlen("?")))
 		free(var_value);
 	free(raw_var_name);
 	free(var_name);

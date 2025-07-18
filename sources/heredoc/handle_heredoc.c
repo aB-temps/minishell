@@ -76,9 +76,11 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		{
 			line = substitute_env_var_occurences(line, &cursor, input);
 			free(tmp);
+			tmp = line;
 		}
-		ft_putendl_fd(line, fds[0]);
-		free(line);
+		ft_putstr_fd(line, fds[0]);
+		ft_putstr_fd("\n", fds[0]);
+		free(tmp);
 	}
 	// close(fds[0]);
 	// fds[0] = -1;
