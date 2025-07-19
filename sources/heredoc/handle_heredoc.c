@@ -119,7 +119,7 @@ void	open_heredoc(t_token *token, t_input *input)
 		unlink(tmpfile);
 		exit_minishell(input, EXIT_FAILURE);
 	}
-	// unlink(tmpfile);
+	unlink(tmpfile);
 	free((char *)tmpfile);
 	fill_heredoc(token, fds, input);
 }
