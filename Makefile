@@ -134,7 +134,7 @@ F_HEREDOC	:=			handle_heredoc.c	\
 						
 F_UTILS :=				init_struct.c		\
 						clear_token.c		\
-						clear_env_list.c	\
+						clear_env_list_elem.c	\
 						dup_token.c			\
 						create_token.c		\
 						exit_minishell.c	\

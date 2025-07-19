@@ -1,8 +1,31 @@
 #include "token_formatting.h"
 
-static char	*get_raw_var_name(char *s)
+static void	clear_var_array(t_vector *v_var_array)
 {
-	char	*raw_var_name;
+	t_env_var	*var_array;
+	size_t		i;
+
+	var_array = (t_env_var *)v_var_array->array;
+	i = 0;
+	while (i < v_var_array->nb_elements)
+	{
+		if (var_array[i].key)
+		{
+			free(var_array[i].key);
+			var_array[i].key = (void *)0;
+		}
+		if (var_array[i].value)
+		{
+			free(var_array[i].value);
+			var_array[i].value = (void *)0;
+		}
+		i++;
+	}
+}
+
+static char	*get_var_key(char *s)
+{
+	char	*var_key;
 	size_t	start;
 	size_t	end;
 
@@ -10,97 +33,139 @@ static char	*get_raw_var_name(char *s)
 	while (s[start] && s[start] != '$')
 		start++;
 	end = start + 1;
-	while (s[end] && s[end] != '$' && !is_whitespace(s[end])
-		&& !is_quote(s[end]) && !is_operator(s[end]))
+	while (s[end] && s[end] != '$' && ft_isalnum(s[end]))
 		end++;
-	raw_var_name = ft_strndup(s + start, end - start);
-	if (!raw_var_name)
+	var_key = ft_strndup(s + start, end - start);
+	if (!var_key)
 		return ((void *)0);
-	return (raw_var_name);
+	return (var_key);
 }
 
-static char	*get_var_name(char *s)
+t_vector	*parse_env_var(char *s, t_input *input)
 {
-	size_t	start;
-	size_t	end;
-	char	*var_name;
+	t_vector	*var_array;
+	t_env_var	var;
+	size_t		i;
 
-	start = 1;
-	end = start;
-	while (s[end] && !is_quote(s[end]))
-		end++;
-	var_name = ft_strndup(s + start, end - start);
-	if (!var_name)
-		return ((void *)0);
-	return (var_name);
-}
-
-static char	*get_var_value(char *var_name, int exit_status, int *cursor,
-		t_input *input)
-{
-	char	*var_value;
-
-	if (!ft_strncmp(var_name, "?", ft_strlen("?")))
+	i = 0;
+	var_array = create_vector(1, sizeof(t_env_var), clear_var_array);
+	if (!var_array)
+		exit_minishell(input, EXIT_FAILURE);
+	while (s[i])
 	{
-		var_value = ft_itoa(exit_status);
-		if (!var_value)
-			return ((void *)0);
+		if (s[i] == '$' && s[i + 1] && (ft_isalnum(s[i + 1]) || s[i
+				+ 1] == '?'))
+		{
+			if (s[i + 1] == '?')
+			{
+				var.key = ft_strdup("$?");
+				if (!var.key)
+					exit_minishell(input, EXIT_FAILURE);
+				var.value = ft_itoa(input->last_exit_status);
+				if (!var.value)
+					exit_minishell(input, EXIT_FAILURE);
+			}
+			else
+			{
+				var.key = get_var_key(&s[i]);
+				if (!var.key)
+					exit_minishell(input, EXIT_FAILURE);
+				var.value = get_env_var(var.key + 1, input);
+				if (!var.value)
+					exit_minishell(input, EXIT_FAILURE);
+			}
+			printf("var.key => %s\n", var.key);
+			printf("var.value => %s\n", var.value);
+			if (!add_element(var_array, &var))
+				exit_minishell(input, EXIT_FAILURE);
+			i += ft_strlen(var.key);
+		}
+		else
+			i++;
 	}
-	else if (!ft_strlen(var_name))
-	{
-		(*cursor)++;
-		return ("$");
-	}
-	else
-		var_value = get_env_var(var_name, input);
-	if (!var_value)
-		return ("");
-	return (var_value);
+	return (var_array);
 }
 
-char	*substitute_env_var_occurences(char *s, int *cursor, t_input *input)
+size_t	exp_var_strlen(char *s, t_vector *v_var_array)
 {
-	char	*ns;
-	char	*var_name;
-	char	*raw_var_name;
-	char	*var_value;
+	const t_env_var	*var_array = (t_env_var *)v_var_array->array;
+	size_t			i;
+	size_t			j;
+	size_t			len;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	while (s[i])
+	{
+		printf("=> %c\n", s[i]);
+		if (!ft_strncmp(var_array[j].key, &s[i], ft_strlen(var_array[j].key)))
+		{
+			i += ft_strlen(var_array[j].key);
+			len += ft_strlen(var_array[j++].value);
+		}
+		else
+		{
+			i++;
+			len++;
+		}
+	}
+	printf("init len = %zu\nnew len => %zu\n", ft_strlen(s), len);
+	return (len);
+}
+
+char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input)
+{
+	const t_env_var	*var_array = (t_env_var *)v_var_array->array;
+	const size_t	new_len = exp_var_strlen(s, v_var_array);
+	char			*ns;
+	size_t			i;
+	size_t			j;
+	size_t			k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	ns = ft_calloc(new_len + 1, sizeof(char));
+	if (!ns)
+		exit_minishell(input, EXIT_FAILURE);
+	while (s[i])
+	{
+		if (!ft_strncmp(var_array[j].key, &s[i], ft_strlen(var_array[j].key)))
+		{
+			ft_strlcat(&ns[k], var_array[j].value, new_len + 1);
+			k += ft_strlen(var_array[j].value);
+			i += ft_strlen(var_array[j++].key);
+		}
+		else
+			ns[k++] = s[i++];
+	}
+	ns[k] = '\0';
+	printf("NS ==>> '%s'\n", ns);
+	return (ns);
+}
+
+char	*substitute_env_var(char *s, t_input *input)
+{
+	t_vector	*var_array;
+	char		*ns;
 
 	ns = (void *)0;
-	raw_var_name = get_raw_var_name(s);
-	if (!raw_var_name)
-		return ((void *)0);
-	var_name = get_var_name(raw_var_name);
-	if (!var_name)
-		return ((void *)0);
-	var_value = get_var_value(var_name, input->last_exit_status, cursor, input);
-	if (!var_value)
-		return ((void *)0);
-	ns = str_replace(s, raw_var_name, var_value);
-	if (!ft_strncmp(var_name, "$?", ft_strlen("$?")))
-		free(var_value);
-	free(raw_var_name);
-	free(var_name);
+	var_array = parse_env_var(s, input);
+	if (!var_array)
+		exit_minishell(input, EXIT_FAILURE);
+	ns = replace_env_var(s, var_array, input);
+	printf("init_string = %s\nnew_string = %s\n", s, ns);
+	clear_vector(&var_array);
 	if (!ns)
-		return ((void *)0);
+		exit_minishell(input, EXIT_FAILURE);
 	return (ns);
 }
 
 void	format_env_var(t_input *input, t_token *array, ssize_t *i)
 {
-	char	*content;
-	char	*new_content;
-	int		cursor;
-
-	cursor = 0;
-	content = substitute_env_var_occurences(array[*i].raw_content, &cursor,
+	array[*i].formatted_content = substitute_env_var(array[*i].raw_content,
 			input);
-	while (content && ft_strchr(content + cursor, '$'))
-	{
-		new_content = substitute_env_var_occurences(content, &cursor, input);
-		free(content);
-		content = new_content;
-	}
-	array[*i].formatted_content = content;
 	if (!array[*i].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
 	array[*i].type = ENV_VAR;

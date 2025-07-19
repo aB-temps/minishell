@@ -9,7 +9,7 @@ void	*parse_input(t_input *input)
 	if (!input->v_tokens)
 		exit_minishell(input, EXIT_FAILURE);
 	tokenize_input(input, input->line);
-	// print_input(input, "TOKENIZED");
+	print_input(input, "TOKENIZED");
 	format_tokens(input);
 	print_input(input, "FORMATTED TOKENS");
 	if (!check_syntax_error(input))

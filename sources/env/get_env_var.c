@@ -12,8 +12,16 @@ char	*get_env_var(char *var_name, t_input *input)
 		if (!ft_strncmp(var_name, ((t_env_var *)tmp->content)->key,
 				ft_strlen(var_name)
 				+ ft_strlen(((t_env_var *)tmp->content)->key)))
-			return ((((t_env_var *)tmp->content)->value));
+		{
+			var_value = ft_strdup(((t_env_var *)tmp->content)->value);
+			if (!var_value)
+				exit_minishell(input, EXIT_FAILURE);
+			return (var_value);
+		}
 		tmp = tmp->next;
 	}
+	var_value = ft_strdup("");
+	if (!var_value)
+		exit_minishell(input, EXIT_FAILURE);
 	return (var_value);
 }

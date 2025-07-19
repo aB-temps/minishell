@@ -9,7 +9,7 @@ void	exit_minishell(t_input *input, int exit_code)
 			clear_vector(&input->v_tokens);
 		if (input->env)
 		{
-			ft_lstclear(&input->env->list, &clear_env_list);
+			ft_lstclear(&input->env->list, &clear_env_list_elem);
 			free_tab_return_null(input->env->array);
 			free(input->env);
 		}

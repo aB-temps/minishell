@@ -9,7 +9,10 @@ char	*search_temp_dir(t_input *input)
 
 	temp_dir = get_env_var("TMPDIR", input);
 	if (!temp_dir)
+		exit_minishell(input, EXIT_FAILURE);
+	if (!ft_strlen(temp_dir))
 	{
+		free(temp_dir);
 		if (access("/tmp", F_OK) == 0)
 			temp_dir = ft_strdup("/tmp/");
 		else if (access("/var/tmp", F_OK) == 0)
@@ -18,11 +21,9 @@ char	*search_temp_dir(t_input *input)
 			temp_dir = ft_strdup("/usr/tmp/");
 		else
 			temp_dir = ft_strdup("./");
+		if (!temp_dir)
+			exit_minishell(input, EXIT_FAILURE);
 	}
-	else
-		temp_dir = ft_strdup(temp_dir);
-	if (!temp_dir)
-		exit_minishell(input, EXIT_FAILURE);
 	return (temp_dir);
 }
 
@@ -74,11 +75,13 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		tmp = line;
 		while (line && ft_strchr(line + cursor, '$'))
 		{
-			line = substitute_env_var_occurences(line, &cursor, input);
+			line = substitute_env_var(line, input);
 			free(tmp);
+			tmp = line;
 		}
-		ft_putendl_fd(line, fds[0]);
-		free(line);
+		ft_putstr_fd(line, fds[0]);
+		ft_putstr_fd("\n", fds[0]);
+		free(tmp);
 	}
 	// close(fds[0]);
 	// fds[0] = -1;
@@ -116,7 +119,7 @@ void	open_heredoc(t_token *token, t_input *input)
 		unlink(tmpfile);
 		exit_minishell(input, EXIT_FAILURE);
 	}
-	// unlink(tmpfile);
+	unlink(tmpfile);
 	free((char *)tmpfile);
 	fill_heredoc(token, fds, input);
 }
