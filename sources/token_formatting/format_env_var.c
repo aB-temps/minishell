@@ -1,24 +1,6 @@
 #include "token_formatting.h"
 
-static char	*get_var_key(char *s)
-{
-	char	*raw_var_name;
-	size_t	start;
-	size_t	end;
-
-	start = 0;
-	while (s[start] && s[start] != '$')
-		start++;
-	end = start + 1;
-	while (s[end] && s[end] != '$' && ft_isalnum(s[end]))
-		end++;
-	raw_var_name = ft_strndup(s + start, end - start);
-	if (!raw_var_name)
-		return ((void *)0);
-	return (raw_var_name);
-}
-
-void	clear_var_array(t_vector *v_var_array)
+static void	clear_var_array(t_vector *v_var_array)
 {
 	t_env_var	*var_array;
 	size_t		i;
@@ -39,6 +21,24 @@ void	clear_var_array(t_vector *v_var_array)
 		}
 		i++;
 	}
+}
+
+static char	*get_var_key(char *s)
+{
+	char	*var_key;
+	size_t	start;
+	size_t	end;
+
+	start = 0;
+	while (s[start] && s[start] != '$')
+		start++;
+	end = start + 1;
+	while (s[end] && s[end] != '$' && ft_isalnum(s[end]))
+		end++;
+	var_key = ft_strndup(s + start, end - start);
+	if (!var_key)
+		return ((void *)0);
+	return (var_key);
 }
 
 t_vector	*parse_env_var(char *s, t_input *input)
@@ -98,6 +98,7 @@ size_t	exp_var_strlen(char *s, t_vector *v_var_array)
 	len = 0;
 	while (s[i])
 	{
+		printf("=> %c\n", s[i]);
 		if (!ft_strncmp(var_array[j].key, &s[i], ft_strlen(var_array[j].key)))
 		{
 			i += ft_strlen(var_array[j].key);
