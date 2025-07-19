@@ -15,5 +15,8 @@ char	*get_env_var(char *var_name, t_input *input)
 			return ((((t_env_var *)tmp->content)->value));
 		tmp = tmp->next;
 	}
+	var_value = ft_strdup("");
+	if (!var_value)
+		exit_minishell(input, EXIT_FAILURE);
 	return (var_value);
 }

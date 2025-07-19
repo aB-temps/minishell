@@ -74,7 +74,7 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		tmp = line;
 		while (line && ft_strchr(line + cursor, '$'))
 		{
-			line = substitute_env_var_occurences(line, &cursor, input);
+			line = substitute_env_var(line, input);
 			free(tmp);
 			tmp = line;
 		}

@@ -18,7 +18,7 @@ t_env	*init_env(char **env)
 	struct_env->array = ft_tabdup(env);
 	if (!struct_env->array)
 	{
-		ft_lstclear(&struct_env->list, &clear_env_list);
+		ft_lstclear(&struct_env->list, &clear_env_list_elem);
 		free(struct_env);
 		return ((void *)0);
 	}
