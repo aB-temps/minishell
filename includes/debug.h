@@ -7,5 +7,6 @@
 
 void	print_tab(char **tab);
 void	print_input(t_input *input, char *part);
+void	print_token_heredoc(t_token token);
 
 #endif

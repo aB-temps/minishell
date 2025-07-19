@@ -1,6 +1,7 @@
 #ifndef UTILS_H
 # define UTILS_H
 
+# include "input.h"
 # include "libft.h"
 # include <stdio.h>
 # include <unistd.h>
@@ -11,6 +12,9 @@ size_t	countocc(char *s, char *to_find);
 char	*str_replace(char *s, char *old, char *new);
 char	*str_patdel(char *s, char *pat);
 char	*str_chardel(char *s, char *c);
-void	clear_env_list(void *var);
+void	clear_env_list_elem(void *var);
+char	*gen_random_num_sequence(size_t len);
+void	clear_hd_filename_elem(t_input *input, const char *temp_dir,
+			char *fileid, char *full_path);
 
 #endif

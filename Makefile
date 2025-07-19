@@ -95,6 +95,7 @@ COMPONENTS :=			PARSING 			\
 						TOKEN_FORMATTING	\
 						STYLE				\
 						UTILS				\
+						HEREDOC				\
 						EXEC				\
 						ENV					\
 						BUILTINS			\
@@ -112,7 +113,7 @@ F_CHECKING :=			is_valid_input.c	\
 						is_quote.c			\
 						is_whitespace.c		\
 						is_operator.c		\
-						check_syntax_error.c	\
+						check_syntax_error.c\
 
 F_PARSING :=			get_input.c			\
 						parse_input.c		\
@@ -127,10 +128,13 @@ F_EXEC :=				exec_cmd.c			\
 
 F_ENV 	:=				env_array_to_list.c	\
 						env_list_to_array.c \
+						get_env_var.c		\
 
+F_HEREDOC	:=			handle_heredoc.c	\
+						
 F_UTILS :=				init_struct.c		\
 						clear_token.c		\
-						clear_env_list.c	\
+						clear_env_list_elem.c	\
 						dup_token.c			\
 						create_token.c		\
 						exit_minishell.c	\
@@ -140,7 +144,9 @@ F_UTILS :=				init_struct.c		\
 						str_replace.c		\
 						ft_tabdup.c			\
 						ft_tablen.c			\
-
+						gen_random_num_sequence.c \
+						clear_hd_filename_elem.c \
+						
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\
 						format_redir.c		\
@@ -159,6 +165,7 @@ F_BUILTINS :=			ft_echo.c 			\
 
 F_DEBUG :=				print_input.c		\
 						print_tab.c			\
+						print_heredoc.c 	\
 
 
 # VARS GENERATION =====================================================================

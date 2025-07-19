@@ -1,6 +1,6 @@
 #include "token_formatting.h"
 
-static void	replace_env_var(t_input *input)
+static void	handle_env_var_expansion(t_input *input)
 {
 	t_token	*array;
 	ssize_t	i;
@@ -28,12 +28,14 @@ static void	handle_quotes(t_input *input)
 	while (i < input->token_qty)
 	{
 		temp = array[i].raw_content;
-		if (array[i].type == S_QUOTES)
+		if (array[i].type == S_QUOTES && !(i - 1 >= 0 && array[i
+				- 1].type == HEREDOC))
 		{
 			array[i].raw_content = str_patdel(array[i].raw_content, "'");
 			free(temp);
 		}
-		else if (array[i].type == D_QUOTES)
+		else if (array[i].type == D_QUOTES && !(i - 1 >= 0 && array[i
+				- 1].type == HEREDOC))
 		{
 			array[i].raw_content = str_patdel(array[i].raw_content, "\"");
 			free(temp);
@@ -50,7 +52,7 @@ void	format_tokens(t_input *input)
 	i = 0;
 	array = (t_token *)input->v_tokens->array;
 	handle_quotes(input);
-	replace_env_var(input);
+	handle_env_var_expansion(input);
 	while (i < input->token_qty)
 	{
 		if (array[i].type >= REDIR_IN && array[i].type <= HEREDOC)

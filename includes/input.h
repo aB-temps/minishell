@@ -2,7 +2,6 @@
 # define INPUT_H
 
 # include "libft.h"
-# include "utils.h"
 # include <sys/types.h>
 
 enum						token_type
@@ -24,14 +23,6 @@ typedef struct s_token		t_token;
 typedef struct s_env		t_env;
 typedef struct s_env_var	t_env_var;
 
-struct						s_token
-{
-	ssize_t					type;
-	bool					link_to_next;
-	char					*raw_content;
-	void					*formatted_content;
-};
-
 struct						s_env_var
 
 {
@@ -44,6 +35,14 @@ struct						s_env
 {
 	t_list					*list;
 	char					**array;
+};
+
+struct						s_token
+{
+	ssize_t					type;
+	bool					link_to_next;
+	char					*raw_content;
+	void					*formatted_content;
 };
 
 struct						s_input
@@ -68,6 +67,7 @@ t_token						dup_token(t_token token);
 t_list						*env_array_to_list(char **env);
 char						**env_list_to_array(t_list *env);
 void						exit_minishell(t_input *input, int exit_code);
+void						clear_env_list_elem(void *var);
 // lib
 /* char					**tabdup(char **tab);
 size_t	ft_tablen(char **tab); */

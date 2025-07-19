@@ -1,5 +1,5 @@
-#include "exec.h"
 #include "input.h"
+#include "utils.h"
 
 void	exit_minishell(t_input *input, int exit_code)
 {
@@ -9,8 +9,8 @@ void	exit_minishell(t_input *input, int exit_code)
 			clear_vector(&input->v_tokens);
 		if (input->env)
 		{
+			ft_lstclear(&input->env->list, &clear_env_list_elem);
 			free_tab_return_null(input->env->array);
-			ft_lstclear(&input->env->list, &clear_env_list);
 			free(input->env);
 		}
 		if (input->line)
