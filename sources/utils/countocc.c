@@ -14,7 +14,6 @@ size_t	countocc(char *s, char *to_find)
 			count++;
 		s = cursor + ft_strlen(to_find);
 	}
-	printf("%s => count = %zu\n", to_find, count);
 	return (count);
 }
 
