@@ -9,9 +9,9 @@ void	*parse_input(t_input *input)
 	if (!input->v_tokens)
 		exit_minishell(input, EXIT_FAILURE);
 	tokenize_input(input, input->line);
-	print_input(input, "TOKENIZED");
+	// print_input(input, "TOKENIZED");
 	format_tokens(input);
-	print_input(input, "FORMATTED TOKENS");
+	// print_input(input, "FORMATTED TOKENS");
 	if (!check_syntax_error(input))
 	{
 		ft_putstr_fd("minishell: syntax error\n", STDERR_FILENO);
@@ -19,6 +19,6 @@ void	*parse_input(t_input *input)
 	}
 	format_input(input);
 	handle_heredoc(input);
-	print_input(input, "FORMATTED INPUT");
+	// print_input(input, "FORMATTED INPUT");
 	return (input);
 }

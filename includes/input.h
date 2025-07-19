@@ -67,6 +67,7 @@ t_token						dup_token(t_token token);
 t_list						*env_array_to_list(char **env);
 char						**env_list_to_array(t_list *env);
 void						exit_minishell(t_input *input, int exit_code);
+void						clear_env_list_elem(void *var);
 // lib
 /* char					**tabdup(char **tab);
 size_t	ft_tablen(char **tab); */
