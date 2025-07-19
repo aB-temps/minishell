@@ -21,14 +21,12 @@ static void	apply_redirections(t_input *input, int cmd_index)
 	tokens_array = (t_token *)input->v_tokens->array;
 	i = 0;
 	cmd_count = 0;
-	// Trouver le token de la commande correspondant à cmd_index
 	while (i < input->token_qty)
 	{
 		if (tokens_array[i].type == COMMAND)
 		{
 			if (cmd_count == cmd_index)
 			{
-				// Chercher les redirections après cette commande
 				i++;
 				while (i < input->token_qty && tokens_array[i].type != COMMAND)
 				{

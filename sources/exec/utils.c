@@ -14,14 +14,12 @@ static void	apply_redirections_builtin(t_input *input, int cmd_index, int *origi
 	i = 0;
 	cmd_count = 0;
 	
-	// Trouver le token de la commande correspondant à cmd_index
 	while (i < input->token_qty)
 	{
 		if (tokens_array[i].type == COMMAND)
 		{
 			if (cmd_count == cmd_index)
 			{
-				// Chercher les redirections après cette commande
 				i++;
 				while (i < input->token_qty && tokens_array[i].type != COMMAND)
 				{
@@ -160,16 +158,13 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd, in
 	}
 	else
 	{
-		// Pour les builtins avec des redirections, on doit sauvegarder les fd originaux
 		int original_stdout = -1;
 		int original_stdin = -1;
 		
-		// Appliquer les redirections pour les builtins
 		apply_redirections_builtin(input, i, &original_stdout, &original_stdin);
 		
 		execute_builtin(cmd, input, exec, fd);
 		
-		// Restaurer les fd originaux
 		restore_redirections_builtin(original_stdout, original_stdin);
 		
 		return (1);
