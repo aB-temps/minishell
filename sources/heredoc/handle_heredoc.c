@@ -9,7 +9,10 @@ char	*search_temp_dir(t_input *input)
 
 	temp_dir = get_env_var("TMPDIR", input);
 	if (!temp_dir)
+		exit_minishell(input, EXIT_FAILURE);
+	if (!ft_strlen(temp_dir))
 	{
+		free(temp_dir);
 		if (access("/tmp", F_OK) == 0)
 			temp_dir = ft_strdup("/tmp/");
 		else if (access("/var/tmp", F_OK) == 0)
@@ -18,11 +21,9 @@ char	*search_temp_dir(t_input *input)
 			temp_dir = ft_strdup("/usr/tmp/");
 		else
 			temp_dir = ft_strdup("./");
+		if (!temp_dir)
+			exit_minishell(input, EXIT_FAILURE);
 	}
-	else
-		temp_dir = ft_strdup(temp_dir);
-	if (!temp_dir)
-		exit_minishell(input, EXIT_FAILURE);
 	return (temp_dir);
 }
 

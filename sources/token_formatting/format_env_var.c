@@ -132,15 +132,15 @@ char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input)
 	{
 		if (!ft_strncmp(var_array[j].key, &s[i], ft_strlen(var_array[j].key)))
 		{
-			ft_strlcat(&ns[k], var_array[j].value, new_len);
+			ft_strlcat(&ns[k], var_array[j].value, new_len + 1);
 			k += ft_strlen(var_array[j].value);
 			i += ft_strlen(var_array[j++].key);
 		}
 		else
 			ns[k++] = s[i++];
-		printf("NS ==>> '%s'\n", ns);
 	}
 	ns[k] = '\0';
+	printf("NS ==>> '%s'\n", ns);
 	return (ns);
 }
 
