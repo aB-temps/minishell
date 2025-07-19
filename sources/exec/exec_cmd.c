@@ -22,7 +22,7 @@ static int	execute_all_commands(t_input *input, t_exec *exec)
 	exec->pid_child = ft_calloc(exec->cmd_count, sizeof(pid_t));
 	if (!exec->pid_child)
 		return (1);
-	// debug_print_all_arrays(input, exec->pid_child, input->token_qty);
+	// print_input(input, "EXECUTION START");
 	launch_all_commands(input, exec);
 	wait_childs(exec, input);
 	free(exec->pid_child);
@@ -63,6 +63,8 @@ void	start_exec(t_input *input)
 
 	exec.cmd_path = NULL;
 	exec.args = NULL;
+	exec.infile = NULL;
+	exec.outfile = NULL;
 	if (execute_all_commands(input, &exec) == 1)
 		exit_minishell(input, input->last_exit_status);
 }

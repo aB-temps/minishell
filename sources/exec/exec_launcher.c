@@ -2,49 +2,49 @@
 
 int	launch_all_commands(t_input *input, t_exec *exec)
 {
-    t_token	*current_token;
-    t_token	*tokens_array;
-    t_fd	fd;
-    int		i;
-    int		y;
+	t_token	*current_token;
+	t_token	*tokens_array;
+	t_fd	fd;
+	int		i;
+	int		y;
 
-    y = 0;
-    tokens_array = (t_token *)input->v_tokens->array;
-    i = 0;
-    init_fd(&fd);
-    while (i < exec->cmd_count)
-    {
-        current_token = &tokens_array[y];
-        if (current_token->type == COMMAND)
-        {
-            if (i < exec->cmd_count - 1)
-            {
-                if (pipe(fd.fd2) == -1)
-                {
-                    close_all(&fd);
-                    return (1);
-                }
-            }
-            if (!is_builtin(*current_token, input, exec, &fd, i))
-            {
-                exec->pid_child[i] = execute_command(current_token, exec, &fd,
-                        i, input);
-            }
-            if (i > 0)
-                close(fd.fd1[0]);
-            if (i < exec->cmd_count - 1)
-                close(fd.fd2[1]);
-            if (i < exec->cmd_count - 1)
-            {
-                fd.fd1[0] = fd.fd2[0];
-                fd.fd1[1] = fd.fd2[1];
-            }
-            i++;
-        }
-        y++;
-    }
-    close_all(&fd);
-    return (0);
+	y = 0;
+	tokens_array = (t_token *)input->v_tokens->array;
+	i = 0;
+	init_fd(&fd);
+	while (y < input->token_qty && i < exec->cmd_count)
+	{
+		current_token = &tokens_array[y];
+		if (current_token->type == COMMAND)
+		{
+			if (i < exec->cmd_count - 1)
+			{
+				if (pipe(fd.fd2) == -1)
+				{
+					close_all(&fd);
+					return (1);
+				}
+			}
+			if (!is_builtin(*current_token, input, exec, &fd, i))
+			{
+				exec->pid_child[i] = execute_command(current_token, exec, &fd,
+						i, input);
+			}
+			if (i > 0)
+				close(fd.fd1[0]);
+			if (i < exec->cmd_count - 1)
+				close(fd.fd2[1]);
+			if (i < exec->cmd_count - 1)
+			{
+				fd.fd1[0] = fd.fd2[0];
+				fd.fd1[1] = fd.fd2[1];
+			}
+			i++;
+		}
+		y++;
+	}
+	close_all(&fd);
+	return (0);
 }
 
 static void	check_cmd(t_input *input, t_token *tokens_array, int i)
