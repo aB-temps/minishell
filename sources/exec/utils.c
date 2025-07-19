@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 15:51:57 by enzo              #+#    #+#             */
+/*   Updated: 2025/07/19 15:51:58 by enzo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "builtins.h"
 #include "exec.h"
 #include "input.h"
 #include <fcntl.h>
 
-static void	apply_redirections_builtin(t_input *input, int cmd_index, int *original_stdout, int *original_stdin)
+static void	apply_redirections_builtin(t_input *input, int cmd_index,
+		int *original_stdout, int *original_stdin)
 {
 	t_token	*tokens_array;
 	int		i;
@@ -13,7 +26,6 @@ static void	apply_redirections_builtin(t_input *input, int cmd_index, int *origi
 	tokens_array = (t_token *)input->v_tokens->array;
 	i = 0;
 	cmd_count = 0;
-	
 	while (i < input->token_qty)
 	{
 		if (tokens_array[i].type == COMMAND)
@@ -68,7 +80,8 @@ static void	apply_redirections_builtin(t_input *input, int cmd_index, int *origi
 	}
 }
 
-static void	restore_redirections_builtin(int original_stdout, int original_stdin)
+static void	restore_redirections_builtin(int original_stdout,
+		int original_stdin)
 {
 	if (original_stdout != -1)
 	{
@@ -125,21 +138,22 @@ static void	execute_builtin(char **cmd, t_input *input, t_exec *exec, t_fd *fd)
 		ft_exit(input, exec, fd);
 }
 
-int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd, int i)
+int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd,
+		int i)
 {
 	char	**cmd;
 	int		pid;
+	int		original_stdout;
+	int		original_stdin;
 
 	cmd = ((char **)current_token.formatted_content);
 	if (!cmd || !cmd[0])
 		return (0);
-
-	if (ft_strcmp(cmd[0], "echo") && ft_strcmp(cmd[0], "pwd") && 
-		ft_strcmp(cmd[0], "cd") && ft_strcmp(cmd[0], "export") && 
-		ft_strcmp(cmd[0], "unset") && ft_strcmp(cmd[0], "env") && 
-		ft_strcmp(cmd[0], "exit"))
+	if (ft_strcmp(cmd[0], "echo") && ft_strcmp(cmd[0], "pwd")
+		&& ft_strcmp(cmd[0], "cd") && ft_strcmp(cmd[0], "export")
+		&& ft_strcmp(cmd[0], "unset") && ft_strcmp(cmd[0], "env")
+		&& ft_strcmp(cmd[0], "exit"))
 		return (0);
-
 	if (exec->cmd_count > 1)
 	{
 		pid = fork();
@@ -158,20 +172,14 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd, in
 	}
 	else
 	{
-		int original_stdout = -1;
-		int original_stdin = -1;
-		
+		original_stdout = -1;
+		original_stdin = -1;
 		apply_redirections_builtin(input, i, &original_stdout, &original_stdin);
-		
 		execute_builtin(cmd, input, exec, fd);
-		
 		restore_redirections_builtin(original_stdout, original_stdin);
-		
 		return (1);
 	}
 }
-
-
 
 char	*get_cmd_by_index(t_input *input, t_token *tokens_array, int index)
 {
