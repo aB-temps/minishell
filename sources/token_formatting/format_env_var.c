@@ -86,20 +86,79 @@ t_vector	*parse_env_var(char *s, t_input *input)
 	return (var_array);
 }
 
+size_t	exp_var_strlen(char *s, t_vector *v_var_array)
+{
+	const t_env_var	*var_array = (t_env_var *)v_var_array->array;
+	size_t			i;
+	size_t			j;
+	size_t			len;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	while (s[i])
+	{
+		if (!ft_strncmp(var_array[j].key, &s[i], ft_strlen(var_array[j].key)))
+		{
+			i += ft_strlen(var_array[j].key);
+			len += ft_strlen(var_array[j++].value);
+		}
+		else
+		{
+			i++;
+			len++;
+		}
+	}
+	printf("init len = %zu\nnew len => %zu\n", ft_strlen(s), len);
+	return (len);
+}
+
+char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input)
+{
+	const t_env_var	*var_array = (t_env_var *)v_var_array->array;
+	const size_t	new_len = exp_var_strlen(s, v_var_array);
+	char			*ns;
+	size_t			i;
+	size_t			j;
+	size_t			k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	ns = ft_calloc(new_len + 1, sizeof(char));
+	if (!ns)
+		exit_minishell(input, EXIT_FAILURE);
+	while (s[i])
+	{
+		if (!ft_strncmp(var_array[j].key, &s[i], ft_strlen(var_array[j].key)))
+		{
+			ft_strlcat(&ns[k], var_array[j].value, new_len);
+			k += ft_strlen(var_array[j].value);
+			i += ft_strlen(var_array[j++].key);
+		}
+		else
+			ns[k++] = s[i++];
+		printf("NS ==>> '%s'\n", ns);
+	}
+	ns[k] = '\0';
+	return (ns);
+}
+
 char	*substitute_env_var(char *s, t_input *input)
 {
 	t_vector	*var_array;
+	char		*ns;
 
-	// char		*ns;
-	// ns = (void *)0;
+	ns = (void *)0;
 	var_array = parse_env_var(s, input);
 	if (!var_array)
 		exit_minishell(input, EXIT_FAILURE);
-	// ns = replace_env_var(var_array, input);
+	ns = replace_env_var(s, var_array, input);
+	printf("init_string = %s\nnew_string = %s\n", s, ns);
 	clear_vector(&var_array);
-	// if (!ns)
-	// 	exit_minishell(input, EXIT_FAILURE);
-	return (NULL);
+	if (!ns)
+		exit_minishell(input, EXIT_FAILURE);
+	return (ns);
 }
 
 void	format_env_var(t_input *input, t_token *array, ssize_t *i)
