@@ -1,6 +1,88 @@
 #include "builtins.h"
 #include "exec.h"
 #include "input.h"
+#include <fcntl.h>
+
+static void	apply_redirections_builtin(t_input *input, int cmd_index, int *original_stdout, int *original_stdin)
+{
+	t_token	*tokens_array;
+	int		i;
+	int		fd;
+	int		cmd_count;
+
+	tokens_array = (t_token *)input->v_tokens->array;
+	i = 0;
+	cmd_count = 0;
+	
+	// Trouver le token de la commande correspondant à cmd_index
+	while (i < input->token_qty)
+	{
+		if (tokens_array[i].type == COMMAND)
+		{
+			if (cmd_count == cmd_index)
+			{
+				// Chercher les redirections après cette commande
+				i++;
+				while (i < input->token_qty && tokens_array[i].type != COMMAND)
+				{
+					if (tokens_array[i].type == REDIR_OUT)
+					{
+						if (*original_stdout == -1)
+							*original_stdout = dup(STDOUT_FILENO);
+						fd = open(tokens_array[i].formatted_content,
+								O_WRONLY | O_CREAT | O_TRUNC, 0644);
+						if (fd != -1)
+						{
+							dup2(fd, STDOUT_FILENO);
+							close(fd);
+						}
+					}
+					else if (tokens_array[i].type == APPEND)
+					{
+						if (*original_stdout == -1)
+							*original_stdout = dup(STDOUT_FILENO);
+						fd = open(tokens_array[i].formatted_content,
+								O_WRONLY | O_CREAT | O_APPEND, 0644);
+						if (fd != -1)
+						{
+							dup2(fd, STDOUT_FILENO);
+							close(fd);
+						}
+					}
+					else if (tokens_array[i].type == REDIR_IN)
+					{
+						if (*original_stdin == -1)
+							*original_stdin = dup(STDIN_FILENO);
+						fd = open(tokens_array[i].formatted_content, O_RDONLY);
+						if (fd != -1)
+						{
+							dup2(fd, STDIN_FILENO);
+							close(fd);
+						}
+					}
+					i++;
+				}
+				break ;
+			}
+			cmd_count++;
+		}
+		i++;
+	}
+}
+
+static void	restore_redirections_builtin(int original_stdout, int original_stdin)
+{
+	if (original_stdout != -1)
+	{
+		dup2(original_stdout, STDOUT_FILENO);
+		close(original_stdout);
+	}
+	if (original_stdin != -1)
+	{
+		dup2(original_stdin, STDIN_FILENO);
+		close(original_stdin);
+	}
+}
 
 char	*get_type(ssize_t type)
 {
@@ -78,7 +160,18 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd, in
 	}
 	else
 	{
+		// Pour les builtins avec des redirections, on doit sauvegarder les fd originaux
+		int original_stdout = -1;
+		int original_stdin = -1;
+		
+		// Appliquer les redirections pour les builtins
+		apply_redirections_builtin(input, i, &original_stdout, &original_stdin);
+		
 		execute_builtin(cmd, input, exec, fd);
+		
+		// Restaurer les fd originaux
+		restore_redirections_builtin(original_stdout, original_stdin);
+		
 		return (1);
 	}
 }

@@ -11,6 +11,66 @@ int	free_child(t_exec *exec, t_input *input)
 	return (127);
 }
 
+static void	apply_redirections(t_input *input, int cmd_index)
+{
+	t_token	*tokens_array;
+	int		i;
+	int		fd;
+	int		cmd_count;
+
+	tokens_array = (t_token *)input->v_tokens->array;
+	i = 0;
+	cmd_count = 0;
+	// Trouver le token de la commande correspondant à cmd_index
+	while (i < input->token_qty)
+	{
+		if (tokens_array[i].type == COMMAND)
+		{
+			if (cmd_count == cmd_index)
+			{
+				// Chercher les redirections après cette commande
+				i++;
+				while (i < input->token_qty && tokens_array[i].type != COMMAND)
+				{
+					if (tokens_array[i].type == REDIR_OUT)
+					{
+						fd = open(tokens_array[i].formatted_content,
+								O_WRONLY | O_CREAT | O_TRUNC, 0644);
+						if (fd != -1)
+						{
+							dup2(fd, STDOUT_FILENO);
+							close(fd);
+						}
+					}
+					else if (tokens_array[i].type == APPEND)
+					{
+						fd = open(tokens_array[i].formatted_content,
+								O_WRONLY | O_CREAT | O_APPEND, 0644);
+						if (fd != -1)
+						{
+							dup2(fd, STDOUT_FILENO);
+							close(fd);
+						}
+					}
+					else if (tokens_array[i].type == REDIR_IN)
+					{
+						fd = open(tokens_array[i].formatted_content, O_RDONLY);
+						if (fd != -1)
+						{
+							dup2(fd, STDIN_FILENO);
+							close(fd);
+						}
+					}
+					i++;
+				}
+				break ;
+			}
+			cmd_count++;
+		}
+		i++;
+	}
+}
+
 static int	execute_child(t_exec *exec, t_fd *fd, int i, t_input *input)
 {
 	pid_t	pid;
@@ -25,6 +85,7 @@ static int	execute_child(t_exec *exec, t_fd *fd, int i, t_input *input)
 	if (pid == 0)
 	{
 		prepare_pipe(exec, fd, i);
+		apply_redirections(input, i);
 		if (!exec->cmd_path)
 			exit(free_child(exec, input));
 		execve(exec->cmd_path, exec->args, input->env->array);

@@ -18,16 +18,20 @@ char	*get_path(char **env)
 
 static int	execute_all_commands(t_input *input, t_exec *exec)
 {
+	t_token	*tokens_array;
+
 	exec->cmd_count = count_cmd(input);
 	exec->pid_child = ft_calloc(exec->cmd_count, sizeof(pid_t));
 	if (!exec->pid_child)
 		return (1);
-	// print_input(input, "EXECUTION START");
+	tokens_array = (t_token *)input->v_tokens->array;
+	create_all_files(tokens_array, input->token_qty);
 	launch_all_commands(input, exec);
 	wait_childs(exec, input);
 	free(exec->pid_child);
 	return (0);
 }
+
 void	create_all_files(t_token *token_array, int token_qty)
 {
 	int	i;
@@ -39,16 +43,15 @@ void	create_all_files(t_token *token_array, int token_qty)
 	{
 		if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
 		{
-			if (i + 1 < token_qty && token_array[i].formatted_content)
+			if (token_array[i].formatted_content)
 			{
 				if (token_array[i].type == APPEND)
 					flags = O_WRONLY | O_CREAT | O_APPEND;
 				else if (token_array[i].type == REDIR_OUT)
 					flags = O_WRONLY | O_CREAT | O_TRUNC;
-				fd_temp = open(token_array[i + 1].formatted_content, flags,
-						0644);
+				fd_temp = open(token_array[i].formatted_content, flags, 0644);
 				if (fd_temp == -1)
-					perror(token_array[i + 1].formatted_content);
+					perror(token_array[i].formatted_content);
 				else
 					close(fd_temp);
 			}
