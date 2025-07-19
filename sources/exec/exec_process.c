@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/19 15:51:51 by enzo             ###   ########.fr       */
+/*   Updated: 2025/07/19 16:24:55 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,12 @@
 int	free_child(t_exec *exec, t_input *input)
 {
 	free(exec->cmd_path);
-	clear_vector(&input->v_tokens);
-	free(input);
 	free(exec->pid_child);
+	clear_vector(&input->v_tokens);
+	free(input->env->array);
+	ft_lstclear(&input->env->list, free);
+	free(input->prompt);
+	free(input);
 	return (127);
 }
 
