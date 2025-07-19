@@ -105,18 +105,18 @@ void	open_heredoc(t_token *token, t_input *input)
 	fds[0] = open(tmpfile, O_WRONLY | O_CREAT, 0644);
 	if (fds[0] < 0)
 	{
-		free((char *)tmpfile);
 		free(fds);
 		unlink(tmpfile);
+		free((char *)tmpfile);
 		exit_minishell(input, EXIT_FAILURE);
 	}
 	fds[1] = open(tmpfile, O_RDONLY);
 	if (fds[1] < 0)
 	{
-		free((char *)tmpfile);
 		close(fds[0]);
 		free(fds);
 		unlink(tmpfile);
+		free((char *)tmpfile);
 		exit_minishell(input, EXIT_FAILURE);
 	}
 	unlink(tmpfile);
