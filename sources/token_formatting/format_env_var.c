@@ -98,8 +98,9 @@ size_t	exp_var_strlen(char *s, t_vector *v_var_array)
 	len = 0;
 	while (s[i])
 	{
-		printf("=> %c\n", s[i]);
-		if (!ft_strncmp(var_array[j].key, &s[i], ft_strlen(var_array[j].key)))
+		printf("=> %p\n", &s[i]);
+		if (j < v_var_array->nb_elements && !ft_strncmp(var_array[j].key, &s[i],
+				ft_strlen(var_array[j].key)))
 		{
 			i += ft_strlen(var_array[j].key);
 			len += ft_strlen(var_array[j++].value);
@@ -131,7 +132,8 @@ char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input)
 		exit_minishell(input, EXIT_FAILURE);
 	while (s[i])
 	{
-		if (!ft_strncmp(var_array[j].key, &s[i], ft_strlen(var_array[j].key)))
+		if (j < v_var_array->nb_elements && !ft_strncmp(var_array[j].key, &s[i],
+				ft_strlen(var_array[j].key)))
 		{
 			ft_strlcat(&ns[k], var_array[j].value, new_len + 1);
 			k += ft_strlen(var_array[j].value);
