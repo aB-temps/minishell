@@ -48,7 +48,7 @@ void	get_input(char **env)
 		if (is_valid_input(input->line))
 		{
 			if (parse_input(input))
-				; // start_exec(input);
+				start_exec(input);
 			clear_vector(&input->v_tokens);
 		}
 		add_history(input->line);

@@ -13,7 +13,7 @@ void	ft_cd(char *path);
 void	ft_pwd(void);
 void	ft_env(char **env);
 void	ft_exit(t_input *input, t_exec *exec, t_fd *fd);
-char	**ft_export(char **env);
+void	ft_export(char **cmd_args, t_input *input);
 void	ft_unset(char **env);
 
 #endif
