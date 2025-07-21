@@ -9,7 +9,7 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	tmp = (void *)0;
 	while (1)
 	{
-		line = readline("\e[34m\e[1mHEREDOC > \e[0m");
+		line = readline("\e[34m\e[1mheredoc > \e[0m");
 		if (!line)
 		{
 			free(fds);
@@ -25,9 +25,14 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 			line = substitute_env_var(line, input);
 			free(tmp);
 		}
+		line = str_free_to_join(line, "\n");
+		if (!line)
+			exit_minishell(input, EXIT_FAILURE);
 		ft_putstr_fd(line, fds[0]);
-		ft_putstr_fd("\n", fds[0]);
+		input->line = str_free_to_join(input->line, line);
 		free(line);
+		if (!input->line)
+			exit_minishell(input, EXIT_FAILURE);
 	}
 	// close(fds[0]); // CLOSE FD{W} ??
 	// fds[0] = -1; // CLOSE FD{W} ??
@@ -71,6 +76,9 @@ void	parse_heredoc(t_token *token, t_input *input)
 	if (!fds)
 		exit_minishell(input, EXIT_FAILURE);
 	open_heredoc(&fds, (char *)tmpfile, input);
+	input->line = str_free_to_join(input->line, "\n");
+	if (!input->line)
+		exit_minishell(input, EXIT_FAILURE);
 	fill_heredoc(token, fds, input);
 }
 
