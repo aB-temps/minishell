@@ -12,7 +12,7 @@ char	**env_list_to_array(t_list *env)
 
 	tmp = env;
 	i = 0;
-	a_env = ft_calloc(ft_lstsize(env), sizeof(char *) + 1);
+	a_env = ft_calloc(ft_lstsize(env) + 1, sizeof(char *));
 	if (!a_env)
 		return ((void *)0);
 	while (tmp)
@@ -23,8 +23,11 @@ char	**env_list_to_array(t_list *env)
 		if (!a_env[i])
 			return (free_tab_return_null(a_env));
 		ft_strlcpy(a_env[i], ((t_env_var *)tmp->content)->key, len);
-		ft_strlcat(a_env[i], "=", len);
-		ft_strlcat(a_env[i], ((t_env_var *)tmp->content)->value, len);
+		if (((t_env_var *)tmp->content)->value)
+		{
+			ft_strlcat(a_env[i], "=", len);
+			ft_strlcat(a_env[i], ((t_env_var *)tmp->content)->value, len);
+		}
 		tmp = tmp->next;
 		i++;
 	}
