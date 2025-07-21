@@ -74,8 +74,6 @@ t_vector	*parse_env_var(char *s, t_input *input)
 				if (!var.value)
 					exit_minishell(input, EXIT_FAILURE);
 			}
-			printf("var.key => %s\n", var.key);
-			printf("var.value => %s\n", var.value);
 			if (!add_element(var_array, &var))
 				exit_minishell(input, EXIT_FAILURE);
 			i += ft_strlen(var.key);
@@ -98,8 +96,8 @@ size_t	exp_var_strlen(char *s, t_vector *v_var_array)
 	len = 0;
 	while (s[i])
 	{
-		printf("=> %c\n", s[i]);
-		if (!ft_strncmp(var_array[j].key, &s[i], ft_strlen(var_array[j].key)))
+		if (j < v_var_array->nb_elements && !ft_strncmp(var_array[j].key, &s[i],
+				ft_strlen(var_array[j].key)))
 		{
 			i += ft_strlen(var_array[j].key);
 			len += ft_strlen(var_array[j++].value);
@@ -110,7 +108,6 @@ size_t	exp_var_strlen(char *s, t_vector *v_var_array)
 			len++;
 		}
 	}
-	printf("init len = %zu\nnew len => %zu\n", ft_strlen(s), len);
 	return (len);
 }
 
@@ -131,7 +128,8 @@ char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input)
 		exit_minishell(input, EXIT_FAILURE);
 	while (s[i])
 	{
-		if (!ft_strncmp(var_array[j].key, &s[i], ft_strlen(var_array[j].key)))
+		if (j < v_var_array->nb_elements && !ft_strncmp(var_array[j].key, &s[i],
+				ft_strlen(var_array[j].key)))
 		{
 			ft_strlcat(&ns[k], var_array[j].value, new_len + 1);
 			k += ft_strlen(var_array[j].value);
@@ -141,7 +139,6 @@ char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input)
 			ns[k++] = s[i++];
 	}
 	ns[k] = '\0';
-	printf("NS ==>> '%s'\n", ns);
 	return (ns);
 }
 
@@ -155,7 +152,6 @@ char	*substitute_env_var(char *s, t_input *input)
 	if (!var_array)
 		exit_minishell(input, EXIT_FAILURE);
 	ns = replace_env_var(s, var_array, input);
-	printf("init_string = %s\nnew_string = %s\n", s, ns);
 	clear_vector(&var_array);
 	if (!ns)
 		exit_minishell(input, EXIT_FAILURE);

@@ -1,6 +1,99 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/19 15:51:57 by enzo              #+#    #+#             */
+/*   Updated: 2025/07/19 15:51:58 by enzo             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "builtins.h"
-#include "input.h"
 #include "exec.h"
+#include "input.h"
+#include <fcntl.h>
+
+static void	apply_redirections_builtin(t_input *input, int cmd_index,
+		int *original_stdout, int *original_stdin)
+{
+	t_token	*tokens_array;
+	int		i;
+	int		fd;
+	int		cmd_count;
+
+	tokens_array = (t_token *)input->v_tokens->array;
+	i = 0;
+	cmd_count = 0;
+	while (i < input->token_qty)
+	{
+		if (tokens_array[i].type == COMMAND)
+		{
+			if (cmd_count == cmd_index)
+			{
+				i++;
+				while (i < input->token_qty && tokens_array[i].type != COMMAND)
+				{
+					if (tokens_array[i].type == REDIR_OUT)
+					{
+						if (*original_stdout == -1)
+							*original_stdout = dup(STDOUT_FILENO);
+						fd = open(tokens_array[i].formatted_content,
+								O_WRONLY | O_CREAT | O_TRUNC, 0644);
+						if (fd != -1)
+						{
+							dup2(fd, STDOUT_FILENO);
+							close(fd);
+						}
+					}
+					else if (tokens_array[i].type == APPEND)
+					{
+						if (*original_stdout == -1)
+							*original_stdout = dup(STDOUT_FILENO);
+						fd = open(tokens_array[i].formatted_content,
+								O_WRONLY | O_CREAT | O_APPEND, 0644);
+						if (fd != -1)
+						{
+							dup2(fd, STDOUT_FILENO);
+							close(fd);
+						}
+					}
+					else if (tokens_array[i].type == REDIR_IN)
+					{
+						if (*original_stdin == -1)
+							*original_stdin = dup(STDIN_FILENO);
+						fd = open(tokens_array[i].formatted_content, O_RDONLY);
+						if (fd != -1)
+						{
+							dup2(fd, STDIN_FILENO);
+							close(fd);
+						}
+					}
+					i++;
+				}
+				break ;
+			}
+			cmd_count++;
+		}
+		i++;
+	}
+}
+
+static void	restore_redirections_builtin(int original_stdout,
+		int original_stdin)
+{
+	if (original_stdout != -1)
+	{
+		dup2(original_stdout, STDOUT_FILENO);
+		close(original_stdout);
+	}
+	if (original_stdin != -1)
+	{
+		dup2(original_stdin, STDIN_FILENO);
+		close(original_stdin);
+	}
+}
 
 char	*get_type(ssize_t type)
 {
@@ -20,53 +113,72 @@ char	*get_type(ssize_t type)
 	return ((char *)types[type]);
 }
 
-void	exit_exec(int exit_code, t_exec *exec, t_input *input)
+void	exit_exec(t_input *input, t_exec *exec, t_fd *fd)
 {
-	free(exec->pid_children);
-	exit_minishell(input, exit_code);
+	close_all(fd);
+	free(exec->pid_child);
+	exit_minishell(input, input->last_exit_status);
 }
 
-int	is_builtin(t_token current_token, char **env, t_input *input)
+static void	execute_builtin(char **cmd, t_input *input, t_exec *exec, t_fd *fd)
+{
+	if (ft_strcmp(cmd[0], "echo") == 0)
+		ft_echo(cmd);
+	else if (ft_strcmp(cmd[0], "pwd") == 0)
+		ft_pwd();
+	else if (ft_strcmp(cmd[0], "cd") == 0)
+		ft_cd(cmd[1]);
+	else if (ft_strcmp(cmd[0], "export") == 0)
+		ft_export(input->env->array);
+	else if (ft_strcmp(cmd[0], "unset") == 0)
+		ft_unset(input->env->array);
+	else if (ft_strcmp(cmd[0], "env") == 0)
+		ft_env(input->env->array);
+	else if (ft_strcmp(cmd[0], "exit") == 0)
+		ft_exit(input, exec, fd);
+}
+
+int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd,
+		int i)
 {
 	char	**cmd;
+	int		pid;
+	int		original_stdout;
+	int		original_stdin;
 
 	cmd = ((char **)current_token.formatted_content);
-	if (!ft_strncmp(cmd[0], "echo", ft_strlen(cmd[0])))
+	if (!cmd || !cmd[0])
+		return (0);
+	if (ft_strcmp(cmd[0], "echo") && ft_strcmp(cmd[0], "pwd")
+		&& ft_strcmp(cmd[0], "cd") && ft_strcmp(cmd[0], "export")
+		&& ft_strcmp(cmd[0], "unset") && ft_strcmp(cmd[0], "env")
+		&& ft_strcmp(cmd[0], "exit"))
+		return (0);
+	if (exec->cmd_count > 1)
 	{
-		ft_echo(cmd);
+		pid = fork();
+		if (pid == -1)
+		{
+			perror("fork");
+			return (-1);
+		}
+		if (pid == 0)
+		{
+			prepare_pipe(exec, fd, i);
+			execute_builtin(cmd, input, exec, fd);
+			exit(0);
+		}
+		return (pid);
+	}
+	else
+	{
+		original_stdout = -1;
+		original_stdin = -1;
+		apply_redirections_builtin(input, i, &original_stdout, &original_stdin);
+		execute_builtin(cmd, input, exec, fd);
+		restore_redirections_builtin(original_stdout, original_stdin);
 		return (1);
 	}
-	else if (!ft_strncmp(cmd[0], "pwd", ft_strlen(cmd[0])))
-	{
-		ft_pwd();
-		return (1);
-	}
-	else if (!ft_strncmp(cmd[0], "cd", ft_strlen(cmd[0])))
-	{
-		ft_cd(cmd[1]);
-		return (1);
-	}
-	else if (!ft_strncmp(cmd[0], "export", ft_strlen(cmd[0])))
-	{
-		ft_export(env);
-		return (1);
-	}
-	else if (!ft_strncmp(cmd[0], "unset", ft_strlen(cmd[0])))
-	{
-		ft_unset(env);
-		return (1);
-	}
-	else if (!ft_strncmp(cmd[0], "env", ft_strlen(cmd[0])))
-	{
-		ft_env(env);
-		return (1);
-	}
-	else if (!ft_strncmp(cmd[0], "exit", ft_strlen(cmd[0])))
-	{
-		exit_minishell(input, input->last_exit_status);
-		// ft_exit(input, input->last_exit_status);
-	}
-	return (0);
 }
 
 char	*get_cmd_by_index(t_input *input, t_token *tokens_array, int index)

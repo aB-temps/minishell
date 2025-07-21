@@ -49,11 +49,8 @@ void	get_input(char **env)
 		if (is_valid_input(input->line))
 		{
 			if (parse_input(input))
-			{
-				// input->last_exit_status = exec_cmd(input, input->env->array,
-				// 		&input->last_exit_status);
-				clear_vector(&input->v_tokens);
-			}
+				start_exec(input);
+			clear_vector(&input->v_tokens);
 		}
 		reset_input(input);
 	}
