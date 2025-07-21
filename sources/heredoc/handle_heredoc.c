@@ -1,58 +1,5 @@
+#include "heredoc.h"
 #include "debug.h"
-#include "token_formatting.h"
-#include "utils.h"
-#include <fcntl.h>
-
-char	*search_temp_dir(t_input *input)
-{
-	char	*temp_dir;
-
-	temp_dir = get_env_var("TMPDIR", input);
-	if (!temp_dir)
-		exit_minishell(input, EXIT_FAILURE);
-	if (!ft_strlen(temp_dir))
-	{
-		free(temp_dir);
-		if (access("/tmp", F_OK) == 0)
-			temp_dir = ft_strdup("/tmp/");
-		else if (access("/var/tmp", F_OK) == 0)
-			temp_dir = ft_strdup("/var/tmp/");
-		else if (access("/usr/tmp", F_OK) == 0)
-			temp_dir = ft_strdup("/usr/tmp/");
-		else
-			temp_dir = ft_strdup("./");
-		if (!temp_dir)
-			exit_minishell(input, EXIT_FAILURE);
-	}
-	return (temp_dir);
-}
-
-char	*gen_heredoc_filename(t_input *input)
-{
-	const char	*temp_dir = search_temp_dir(input);
-	const char	*filename_base = "sh-thd-";
-	char		*fileid;
-	char		*full_path;
-
-	full_path = (void *)0;
-	fileid = gen_random_num_sequence(10);
-	if (!fileid)
-		clear_hd_filename_elem(input, temp_dir, fileid, full_path);
-	full_path = str_free_to_join((char *)temp_dir, (char *)filename_base);
-	if (!full_path)
-		clear_hd_filename_elem(input, (char *)temp_dir, fileid, full_path);
-	full_path = str_free_to_join(full_path, fileid);
-	free(fileid);
-	fileid = (void *)0;
-	if (!full_path)
-		clear_hd_filename_elem(input, (char *)temp_dir, fileid, full_path);
-	if (access(full_path, F_OK) == 0)
-	{
-		free(full_path);
-		gen_heredoc_filename(input);
-	}
-	return (full_path);
-}
 
 void	fill_heredoc(t_token *token, int *fds, t_input *input)
 {
@@ -83,8 +30,8 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		ft_putstr_fd("\n", fds[0]);
 		free(tmp);
 	}
-	// close(fds[0]);
-	// fds[0] = -1;
+	// close(fds[0]); // CLOSE FD{W} ??
+	// fds[0] = -1; // CLOSE FD{W} ??
 	tmp = (char *)token->formatted_content;
 	token->raw_content = str_free_to_join(token->raw_content,
 			(char *)token->formatted_content);
@@ -94,7 +41,30 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	token->formatted_content = fds;
 }
 
-void	open_heredoc(t_token *token, t_input *input)
+void	open_heredoc(int **fds, char *tmpfile, t_input *input)
+{
+	(*fds)[0] = open(tmpfile, O_WRONLY | O_CREAT, 0644);
+	if ((*fds)[0] < 0)
+	{
+		free(*fds);
+		unlink(tmpfile);
+		free(tmpfile);
+		exit_minishell(input, EXIT_FAILURE);
+	}
+	(*fds)[1] = open(tmpfile, O_RDONLY);
+	if ((*fds)[1] < 0)
+	{
+		close((*fds)[0]);
+		free(*fds);
+		unlink(tmpfile);
+		free(tmpfile);
+		exit_minishell(input, EXIT_FAILURE);
+	}
+	unlink(tmpfile);
+	free(tmpfile);
+}
+
+void	parse_heredoc(t_token *token, t_input *input)
 {
 	int			*fds;
 	const char	*tmpfile = gen_heredoc_filename(input);
@@ -102,25 +72,7 @@ void	open_heredoc(t_token *token, t_input *input)
 	fds = ft_calloc(2, sizeof(int));
 	if (!fds)
 		exit_minishell(input, EXIT_FAILURE);
-	fds[0] = open(tmpfile, O_WRONLY | O_CREAT, 0644);
-	if (fds[0] < 0)
-	{
-		free(fds);
-		unlink(tmpfile);
-		free((char *)tmpfile);
-		exit_minishell(input, EXIT_FAILURE);
-	}
-	fds[1] = open(tmpfile, O_RDONLY);
-	if (fds[1] < 0)
-	{
-		close(fds[0]);
-		free(fds);
-		unlink(tmpfile);
-		free((char *)tmpfile);
-		exit_minishell(input, EXIT_FAILURE);
-	}
-	unlink(tmpfile);
-	free((char *)tmpfile);
+	open_heredoc(&fds, (char *)tmpfile, input);
 	fill_heredoc(token, fds, input);
 }
 
@@ -131,12 +83,11 @@ void	handle_heredoc(t_input *input)
 
 	array = (t_token *)input->v_tokens->array;
 	i = 0;
-	free(gen_heredoc_filename(input));
 	while (i < input->token_qty)
 	{
 		if (array[i].type == HEREDOC)
 		{
-			open_heredoc(&array[i], input);
+			parse_heredoc(&array[i], input);
 		}
 		i++;
 	}
