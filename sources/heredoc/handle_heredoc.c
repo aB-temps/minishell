@@ -1,13 +1,12 @@
-#include "heredoc.h"
 #include "debug.h"
+#include "heredoc.h"
 
 void	fill_heredoc(t_token *token, int *fds, t_input *input)
 {
 	char	*line;
 	char	*tmp;
-	int		cursor;
 
-	cursor = 0;
+	tmp = (void *)0;
 	while (1)
 	{
 		line = readline("\e[34m\e[1mHEREDOC > \e[0m");
@@ -19,25 +18,24 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		if (!ft_strncmp(line, (char *)token->formatted_content,
 				ft_strlen((char *)token->formatted_content) + ft_strlen(line)))
 			break ;
-		tmp = line;
-		while (line && ft_strchr(line + cursor, '$'))
+		if (!ft_strchr((char *)token->formatted_content, '\'')
+				&& !ft_strchr((char *)token->formatted_content, '"'))
 		{
+			tmp = line;
 			line = substitute_env_var(line, input);
 			free(tmp);
-			tmp = line;
 		}
 		ft_putstr_fd(line, fds[0]);
 		ft_putstr_fd("\n", fds[0]);
-		free(tmp);
+		free(line);
 	}
 	// close(fds[0]); // CLOSE FD{W} ??
 	// fds[0] = -1; // CLOSE FD{W} ??
-	tmp = (char *)token->formatted_content;
 	token->raw_content = str_free_to_join(token->raw_content,
 			(char *)token->formatted_content);
 	if (!token->raw_content)
 		exit_minishell(input, EXIT_FAILURE);
-	free(tmp);
+	free(token->formatted_content);
 	token->formatted_content = fds;
 }
 
