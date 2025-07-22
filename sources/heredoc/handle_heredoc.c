@@ -92,9 +92,7 @@ void	handle_heredoc(t_input *input)
 	while (i < input->token_qty)
 	{
 		if (array[i].type == HEREDOC)
-		{
 			parse_heredoc(&array[i], input);
-		}
 		i++;
 	}
 }
