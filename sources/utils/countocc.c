@@ -2,8 +2,8 @@
 
 size_t	countocc(char *s, char *to_find)
 {
-	size_t	count;
-	char	*cursor;
+	size_t count;
+	char *cursor;
 
 	count = 0;
 	cursor = s;
@@ -16,3 +16,4 @@ size_t	countocc(char *s, char *to_find)
 	}
 	return (count);
 }
+

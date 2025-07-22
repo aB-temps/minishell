@@ -8,7 +8,7 @@ char	*str_replace(char *s, char *old, char *new)
 	char			*ns;
 	size_t			i;
 	size_t			j;
-
+	
 	i = 0;
 	j = 0;
 	ns = ft_calloc(sizeof(char), ttlen + 1);

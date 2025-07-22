@@ -16,5 +16,5 @@
 	<bin-leaks>
 	Memcheck:Leak
 	...
-	fun:*/bin/*
+	fun:bin/*
 }

@@ -131,6 +131,7 @@ F_ENV 	:=				env_array_to_list.c	\
 						get_env_var.c		\
 
 F_HEREDOC	:=			handle_heredoc.c	\
+						gen_heredoc_filename.c \
 						
 F_UTILS :=				init_struct.c		\
 						clear_token.c		\

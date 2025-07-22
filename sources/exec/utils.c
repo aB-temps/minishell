@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:57 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/19 15:51:58 by enzo             ###   ########.fr       */
+/*   Updated: 2025/07/21 17:30:11 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ static void	execute_builtin(char **cmd, t_input *input, t_exec *exec, t_fd *fd)
 	else if (ft_strcmp(cmd[0], "cd") == 0)
 		ft_cd(cmd[1]);
 	else if (ft_strcmp(cmd[0], "export") == 0)
-		ft_export(input->env->array);
+		ft_export(cmd, input);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		ft_unset(input->env->array);
 	else if (ft_strcmp(cmd[0], "env") == 0)
