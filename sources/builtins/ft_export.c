@@ -1,7 +1,7 @@
 #include "builtins.h"
 #include "debug.h"
 
-void	print_env_empty_export(char **env)
+static void	print_env_empty_export(char **env)
 {
 	const size_t	size = ft_tablen(env);
 	size_t			i;
