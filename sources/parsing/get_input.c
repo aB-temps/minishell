@@ -32,7 +32,7 @@ char	*prompt_user(char **prompt)
 
 void	get_input(char **env)
 {
-	t_input *input;
+	t_input	*input;
 
 	input = ft_calloc(1, sizeof(t_input));
 	if (!input)

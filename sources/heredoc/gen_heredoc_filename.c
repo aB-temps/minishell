@@ -4,7 +4,7 @@ static char	*search_temp_dir(t_input *input)
 {
 	char	*temp_dir;
 
-	temp_dir = get_env_var("TMPDIR", input);
+	temp_dir = get_env_value("TMPDIR", input);
 	if (!temp_dir)
 		exit_minishell(input, EXIT_FAILURE);
 	if (!ft_strlen(temp_dir))

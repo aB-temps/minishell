@@ -1,6 +1,6 @@
 #include "input.h"
 
-char	*get_env_var(char *var_name, t_input *input)
+char	*get_env_value(char *var_name, t_input *input)
 {
 	char *var_value;
 	t_list *tmp;

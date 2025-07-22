@@ -1,6 +1,7 @@
 #include "builtins.h"
 #include "debug.h"
 
+// DEBUGGGGG
 void	print_env_list(t_list *l_env)
 {
 	while (l_env)
@@ -10,6 +11,7 @@ void	print_env_list(t_list *l_env)
 		l_env = l_env->next;
 	}
 }
+// DEBUGGGGG
 
 void	print_env_empty_export(char **env)
 {
@@ -20,6 +22,8 @@ void	print_env_empty_export(char **env)
 	while (i < size)
 		printf("export %s\n", env[i++]);
 }
+
+
 
 void	ft_export(char **cmd_args, t_input *input)
 {
@@ -39,6 +43,7 @@ void	ft_export(char **cmd_args, t_input *input)
 			exit_minishell(input, EXIT_FAILURE);
 		if (!ft_strchr(cmd_args[i], '='))
 		{
+			printf("no =\n");
 			var->key = ft_strdup(cmd_args[i]);
 			if (!var->key)
 				exit_minishell(input, EXIT_FAILURE);
@@ -46,18 +51,27 @@ void	ft_export(char **cmd_args, t_input *input)
 		}
 		else
 		{
+			printf("=\n");
 			var->key = ft_strndup(cmd_args[i], ft_strchr(cmd_args[i], '=')
-					- cmd_args[i] - 1);
+					- cmd_args[i]);
 			if (!var->key)
 				exit_minishell(input, EXIT_FAILURE);
 			var->value = ft_strdup(ft_strchr(cmd_args[i], '=') + 1);
 			if (!var->value)
 				exit_minishell(input, EXIT_FAILURE);
 		}
-		varlist_node = ft_lstnew(var);
-		if (!varlist_node)
-			exit_minishell(input, EXIT_FAILURE);
-		ft_lstadd_back(&input->env->list, varlist_node);
+		if (find_env_var(var->key, input->env->list))
+		{
+			((t_env_var *)find_env_var(var->key,
+						input->env->list)->content)->value = var->value;
+		}
+		else
+		{
+			varlist_node = ft_lstnew(var);
+			if (!varlist_node)
+				exit_minishell(input, EXIT_FAILURE);
+			ft_lstadd_back(&input->env->list, varlist_node);
+		}
 		i++;
 	}
 	free_tab_return_null(input->env->array);

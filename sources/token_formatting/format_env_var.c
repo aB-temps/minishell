@@ -70,7 +70,7 @@ t_vector	*parse_env_var(char *s, t_input *input)
 				var.key = get_var_key(&s[i]);
 				if (!var.key)
 					exit_minishell(input, EXIT_FAILURE);
-				var.value = get_env_var(var.key + 1, input);
+				var.value = get_env_value(var.key + 1, input);
 				if (!var.value)
 					exit_minishell(input, EXIT_FAILURE);
 			}
