@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/19 16:50:17 by enzo             ###   ########.fr       */
+/*   Updated: 2025/07/22 18:06:56 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,15 @@ static void	apply_redirections(t_input *input, int cmd_index)
 							close(fd);
 						}
 					}
+					else if (tokens_array[i].type == HEREDOC)
+					{
+						fd = open(tokens_array[i].formatted_content, O_RDONLY);
+						if (fd != -1)
+						{
+							dup2(fd, STDIN_FILENO);
+							close(fd);
+						}
+					}
 					i++;
 				}
 				break ;
@@ -103,8 +112,7 @@ static int	execute_child(t_exec *exec, t_fd *fd, int i, t_input *input)
 		if (!exec->cmd_path)
 			exit(free_child(exec, input));
 		execve(exec->cmd_path, exec->args, input->env->array);
-		perror("execve");
-		exit(126);
+		exit(free_child(exec, input));
 	}
 	free(exec->cmd_path);
 	return (pid);
