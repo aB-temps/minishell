@@ -16,5 +16,6 @@ void	clear_env_list_elem(void *var);
 char	*gen_random_num_sequence(size_t len);
 void	clear_hd_filename_elem(t_input *input, const char *temp_dir,
 			char *fileid, char *full_path);
+t_list	*lstgetprev(t_list *lst, t_list *elem);
 
 #endif

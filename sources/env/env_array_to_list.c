@@ -2,6 +2,14 @@
 #include "libft.h"
 #include "utils.h"
 
+void	update_env_list(t_input *input)
+{
+	ft_lstclear(&input->env->list, &clear_env_list_elem);
+	input->env->list = env_array_to_list(input->env->array);
+	if (!input->env->list)
+		exit_minishell(input, EXIT_FAILURE);
+}
+
 t_list	*env_array_to_list(char **env)
 {
 	t_env_var	*env_var;

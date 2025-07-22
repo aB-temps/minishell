@@ -1,18 +1,6 @@
 #include "builtins.h"
 #include "debug.h"
 
-// DEBUGGGGG
-void	print_env_list(t_list *l_env)
-{
-	while (l_env)
-	{
-		printf("key -> %s\n", ((t_env_var *)l_env->content)->key);
-		printf("value -> %s\n", ((t_env_var *)l_env->content)->value);
-		l_env = l_env->next;
-	}
-}
-// DEBUGGGGG
-
 void	print_env_empty_export(char **env)
 {
 	const size_t	size = ft_tablen(env);
@@ -23,9 +11,46 @@ void	print_env_empty_export(char **env)
 		printf("export %s\n", env[i++]);
 }
 
+t_env_var	*parse_assignation(char *arg, t_input *input)
+{
+	t_env_var	*var;
+
+	var = ft_calloc(1, sizeof(t_env_var));
+	if (!var)
+		exit_minishell(input, EXIT_FAILURE);
+	if (!ft_strchr(arg, '='))
+	{
+		var->key = ft_strdup(arg);
+		if (!var->key)
+		{
+			free(var);
+			exit_minishell(input, EXIT_FAILURE);
+		}
+		var->value = (void *)0;
+	}
+	else
+	{
+		var->key = ft_strndup(arg, ft_strchr(arg, '=') - arg);
+		if (!var->key)
+		{
+			free(var);
+			exit_minishell(input, EXIT_FAILURE);
+		}
+		var->value = ft_strdup(ft_strchr(arg, '=') + 1);
+		if (!var->value)
+		{
+			free(var->key);
+			free(var);
+			exit_minishell(input, EXIT_FAILURE);
+		}
+	}
+	return (var);
+}
+
 void	ft_export(char **cmd_args, t_input *input)
 {
 	t_list		*varlist_node;
+	t_list		*existing_var;
 	t_env_var	*var;
 	size_t		i;
 	size_t		args;
@@ -36,30 +61,12 @@ void	ft_export(char **cmd_args, t_input *input)
 		return (print_env_empty_export(input->env->array));
 	while (i <= args)
 	{
-		var = ft_calloc(1, sizeof(t_env_var));
-		if (!var)
-			exit_minishell(input, EXIT_FAILURE);
-		if (!ft_strchr(cmd_args[i], '='))
+		var = parse_assignation(cmd_args[i], input);
+		existing_var = find_env_var(var->key, input->env->list);
+		if (existing_var)
 		{
-			var->key = ft_strdup(cmd_args[i]);
-			if (!var->key)
-				exit_minishell(input, EXIT_FAILURE);
-			var->value = (void *)0;
-		}
-		else
-		{
-			var->key = ft_strndup(cmd_args[i], ft_strchr(cmd_args[i], '=')
-					- cmd_args[i]);
-			if (!var->key)
-				exit_minishell(input, EXIT_FAILURE);
-			var->value = ft_strdup(ft_strchr(cmd_args[i], '=') + 1);
-			if (!var->value)
-				exit_minishell(input, EXIT_FAILURE);
-		}
-		if (find_env_var(var->key, input->env->list))
-		{
-			((t_env_var *)find_env_var(var->key,
-						input->env->list)->content)->value = var->value;
+			free(((t_env_var *)existing_var->content)->value);
+			((t_env_var *)existing_var->content)->value = var->value;
 		}
 		else
 		{
@@ -70,12 +77,5 @@ void	ft_export(char **cmd_args, t_input *input)
 		}
 		i++;
 	}
-	free_tab_return_null(input->env->array);
-	input->env->array = env_list_to_array(input->env->list);
-	if (!input->env->array)
-		exit_minishell(input, EXIT_FAILURE);
-	// DEBUGGGGG
-	// print_tab(cmd_args);
-	// print_env_list(input->env->list);
-	// DEBUGGGGG
+	update_env_array(input);
 }
