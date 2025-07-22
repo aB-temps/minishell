@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:57 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/21 17:30:11 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/22 18:36:10 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd,
 		{
 			prepare_pipe(exec, fd, i);
 			execute_builtin(cmd, input, exec, fd);
-			exit(0);
+			exit(free_child(exec, input));
 		}
 		return (pid);
 	}
