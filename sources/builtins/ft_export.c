@@ -23,8 +23,6 @@ void	print_env_empty_export(char **env)
 		printf("export %s\n", env[i++]);
 }
 
-
-
 void	ft_export(char **cmd_args, t_input *input)
 {
 	t_list		*varlist_node;
@@ -43,7 +41,6 @@ void	ft_export(char **cmd_args, t_input *input)
 			exit_minishell(input, EXIT_FAILURE);
 		if (!ft_strchr(cmd_args[i], '='))
 		{
-			printf("no =\n");
 			var->key = ft_strdup(cmd_args[i]);
 			if (!var->key)
 				exit_minishell(input, EXIT_FAILURE);
@@ -51,7 +48,6 @@ void	ft_export(char **cmd_args, t_input *input)
 		}
 		else
 		{
-			printf("=\n");
 			var->key = ft_strndup(cmd_args[i], ft_strchr(cmd_args[i], '=')
 					- cmd_args[i]);
 			if (!var->key)
