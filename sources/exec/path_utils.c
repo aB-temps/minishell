@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:52 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/19 15:51:53 by enzo             ###   ########.fr       */
+/*   Updated: 2025/07/22 18:03:51 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	*check_direct_path(char *cmd)
 {
 	if (ft_strrchr(cmd, '/') != NULL)
 	{
-		if (access(cmd, F_OK) == 0)
+		if (access(cmd, X_OK) != 0)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
@@ -47,11 +47,11 @@ char	*find_command_path(char *cmd, char **paths)
 {
 	int		i;
 	char	*cmd_path;
-	char	*result;
+	char	*direct_path;
 
-	result = check_direct_path(cmd);
-	if (result)
-		return (result);
+	direct_path = check_direct_path(cmd);
+	if (direct_path)
+		return (direct_path);
 	i = 0;
 	while (paths[i])
 	{
