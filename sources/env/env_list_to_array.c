@@ -5,7 +5,8 @@
 
 void	update_env_array(t_input *input)
 {
-	free_tab_return_null(input->env->array);
+	if (input->env->array)
+		free_tab_return_null(input->env->array);
 	input->env->array = env_list_to_array(input->env->list);
 	if (!input->env->array)
 		exit_minishell(input, EXIT_FAILURE);

@@ -1,28 +1,49 @@
+#include "builtins.h"
 #include "input.h"
 #include "parsing.h"
 #include "utils.h"
+#include <linux/limits.h>
 
-t_env	*init_env(char **env)
+void	init_empty_env(t_input *input)
 {
-	t_env	*struct_env;
+	char	*cwd;
 
-	struct_env = ft_calloc(1, sizeof(t_env));
-	if (!struct_env)
-		return ((void *)0);
-	struct_env->list = env_array_to_list(env);
-	if (!struct_env->list)
+	cwd = (void *)0;
+	cwd = getcwd(cwd, PATH_MAX);
+	if (!cwd)
+		exit_minishell(input, EXIT_FAILURE);
+	input->env->array = ft_calloc(4, sizeof(char *));
+	if (!input->env->array)
+		exit_minishell(input, EXIT_FAILURE);
+	input->env->array[0] = ft_strjoin("PWD=", cwd);
+	if (!input->env->array[0])
+		exit_minishell(input, EXIT_FAILURE);
+	input->env->array[1] = ft_strdup("SHLVL=1");
+	if (!input->env->array[1])
+		exit_minishell(input, EXIT_FAILURE);
+	input->env->array[2] = ft_strdup("_=/usr/bin/env");
+	if (!input->env->array[2])
+		exit_minishell(input, EXIT_FAILURE);
+	input->env->array[3] = (void *)0;
+	update_env_list(input);
+}
+
+void	init_env(char **env, t_input *input)
+{
+	input->env = ft_calloc(1, sizeof(t_env));
+	if (!input->env)
+		exit_minishell(input, EXIT_FAILURE);
+	if (!env[0])
+		init_empty_env(input);
+	else
 	{
-		free(struct_env);
-		return ((void *)0);
+		input->env->list = env_array_to_list(env);
+		if (!input->env->list)
+			exit_minishell(input, EXIT_FAILURE);
+		input->env->array = ft_tabdup(env);
+		if (!input->env->array)
+			exit_minishell(input, EXIT_FAILURE);
 	}
-	struct_env->array = ft_tabdup(env);
-	if (!struct_env->array)
-	{
-		ft_lstclear(&struct_env->list, &clear_env_list_elem);
-		free(struct_env);
-		return ((void *)0);
-	}
-	return (struct_env);
 }
 
 void	init_token(t_token *token)

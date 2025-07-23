@@ -57,7 +57,7 @@ struct						s_input
 
 // void						init_input(t_input *input, char *line, char *prompt,
 // 								int exit_status);
-t_env						*init_env(char **env);
+void						init_env(char **env, t_input *input);
 
 void						init_token(t_token *token);
 void						create_token(t_input *input, int type,

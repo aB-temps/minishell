@@ -4,7 +4,8 @@
 
 void	update_env_list(t_input *input)
 {
-	ft_lstclear(&input->env->list, &clear_env_list_elem);
+	if (input->env->list)
+		ft_lstclear(&input->env->list, &clear_env_list_elem);
 	input->env->list = env_array_to_list(input->env->array);
 	if (!input->env->list)
 		exit_minishell(input, EXIT_FAILURE);

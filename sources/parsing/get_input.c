@@ -16,6 +16,7 @@ void	reset_input(t_input *input)
 		input->line = (void *)0;
 	}
 	input->token_qty = 0;
+	clear_vector(&input->v_tokens);
 }
 
 char	*prompt_user(char **prompt)
@@ -37,9 +38,7 @@ void	get_input(char **env)
 	input = ft_calloc(1, sizeof(t_input));
 	if (!input)
 		exit(EXIT_FAILURE);
-	input->env = init_env(env);
-	if (!input->env)
-		exit_minishell(input, EXIT_FAILURE);
+	init_env(env, input);
 	while (1)
 	{
 		input->line = prompt_user(&input->prompt);
@@ -47,9 +46,8 @@ void	get_input(char **env)
 			exit_minishell(input, input->last_exit_status);
 		if (is_valid_input(input->line))
 		{
-			if (parse_input(input))
-				start_exec(input);
-			clear_vector(&input->v_tokens);
+			parse_input(input);
+			start_exec(input);
 		}
 		add_history(input->line);
 		reset_input(input);
