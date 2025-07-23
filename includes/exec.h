@@ -19,22 +19,22 @@
 /*--------------------------------- ENUM ---------------------------------*/
 
 /*-------------------------------- STRUCTS --------------------------------*/
-
-typedef struct s_exec
-{
-	char	*infile;
-	char	*outfile;
-	pid_t	*pid_child;
-	int		cmd_count;
-	char	*cmd_path;
-	char	**args;
-}			t_exec;
-
 typedef struct s_fd
 {
 	int		fd1[2];
 	int		fd2[2];
 }			t_fd;
+
+typedef struct s_exec
+{
+	int		fd_infile;
+	int		fd_outfile;
+	pid_t	*pid_child;
+	int		cmd_count;
+	char	*cmd_path;
+	char	**args;
+	t_fd	*fd;
+}			t_exec;
 
 /*------------------------------- FUNCTIONS -------------------------------*/
 char		*get_path(char **env);
@@ -52,7 +52,8 @@ void		prepare_pipe(t_exec *exec, t_fd *fd, int i);
 char		*get_cmd_by_index(t_input *input, t_token *tokens_array, int index);
 int			is_builtin(t_token current_token, t_input *input, t_exec *exec,
 				t_fd *fd, int i);
-void		create_all_files(t_token *token_array, int token_qty);
+int			create_all_files(t_exec *exec, t_token *token_array, int token_qty);
 void		exit_exec(t_input *input, t_exec *exec, t_fd *fd);
 int			free_child(t_exec *exec, t_input *input);
+int			check_builtin(char *cmd);
 #endif

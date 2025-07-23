@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_launcher.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:48 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/19 15:51:49 by enzo             ###   ########.fr       */
+/*   Updated: 2025/07/22 21:05:09 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	launch_all_commands(t_input *input, t_exec *exec)
 {
-	t_token	*current_token;
+	t_token	*cur_token;
 	t_token	*tokens_array;
 	t_fd	fd;
 	int		i;
@@ -26,8 +26,8 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 	init_fd(&fd);
 	while (y < input->token_qty && i < exec->cmd_count)
 	{
-		current_token = &tokens_array[y];
-		if (current_token->type == COMMAND)
+		cur_token = &tokens_array[y];
+		if (cur_token->type == COMMAND)
 		{
 			if (i < exec->cmd_count - 1)
 			{
@@ -37,10 +37,11 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 					return (1);
 				}
 			}
-			if (!is_builtin(*current_token, input, exec, &fd, i))
+			exec->pid_child[i] = is_builtin(*cur_token, input, exec, &fd, i);
+			if (exec->pid_child[i] == 0)
 			{
-				exec->pid_child[i] = execute_command(current_token, exec, &fd,
-						i, input);
+				exec->pid_child[i] = execute_command(cur_token, exec, &fd, i,
+						input);
 			}
 			if (i > 0)
 				close(fd.fd1[0]);
@@ -64,6 +65,8 @@ static void	check_cmd(t_input *input, t_token *tokens_array, int i)
 	char	*cmd;
 
 	cmd = get_cmd_by_index(input, tokens_array, i);
+	if (check_builtin(cmd) == 1)
+		return ;
 	if (!cmd)
 		ft_putendl_fd(": command not found", 2);
 	else if (ft_strchr(cmd, '/') != NULL)
@@ -83,10 +86,10 @@ static void	check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
 {
 	int		sig;
 	int		status;
-	t_token	*current_token;
+	t_token	*cur_token;
 
 	status = 0;
-	current_token = &tokens_array[i];
+	cur_token = &tokens_array[i];
 	waitpid(exec->pid_child[i], &status, 0);
 	if (WIFEXITED(status))
 	{
@@ -96,7 +99,7 @@ static void	check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
 		else if (input->last_exit_status == 126)
 		{
 			if (errno != 0)
-				perror(((char **)current_token->formatted_content)[0]);
+				perror(((char **)cur_token->formatted_content)[0]);
 		}
 	}
 	else if (WIFSIGNALED(status))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:55 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/19 15:51:56 by enzo             ###   ########.fr       */
+/*   Updated: 2025/07/22 22:38:57 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,34 +21,17 @@ void	error_occured(t_fd *fd, char *error_msg)
 	exit(1);
 }
 
-void	first_cmd(t_fd *fd, char *file_name)
+void	first_cmd(t_fd *fd, int fd_infile)
 {
-	int	infile;
-
-	if (!file_name)
+	if (fd_infile == -1)
 	{
 		if (dup2(fd->fd2[1], STDOUT_FILENO) == -1)
 			error_occured(fd, "dup2");
 		close_all(fd);
 		return ;
 	}
-	if (ft_strncmp(file_name, "/dev/stdin", 10) == 0)
-		infile = STDIN_FILENO;
-	else
-	{
-		infile = open(file_name, O_RDONLY);
-		if (infile == -1)
-			error_occured(fd, file_name);
-	}
-	if (infile != STDIN_FILENO)
-	{
-		if (dup2(infile, STDIN_FILENO) == -1)
-		{
-			close(infile);
-			error_occured(fd, "dup2");
-		}
-		close(infile);
-	}
+	if (dup2(fd_infile, STDIN_FILENO) == -1)
+		error_occured(fd, "dup2");
 	if (dup2(fd->fd2[1], STDOUT_FILENO) == -1)
 		error_occured(fd, "dup2");
 	close_all(fd);
@@ -63,34 +46,17 @@ void	middle_cmd(t_fd *fd)
 	close_all(fd);
 }
 
-void	last_cmd(t_fd *fd, char *file_name)
+void	last_cmd(t_fd *fd, int fd_outfile)
 {
-	int	outfile;
-
-	if (!file_name)
+	if (fd_outfile == -1)
 	{
 		if (dup2(fd->fd1[0], STDIN_FILENO) == -1)
 			error_occured(fd, "dup2");
 		close_all(fd);
 		return ;
 	}
-	if (ft_strncmp(file_name, "/dev/stdout", 11) == 0)
-		outfile = STDOUT_FILENO;
-	else
-	{
-		outfile = open(file_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (outfile == -1)
-			error_occured(fd, file_name);
-	}
-	if (outfile != STDOUT_FILENO)
-	{
-		if (dup2(outfile, STDOUT_FILENO) == -1)
-		{
-			close(outfile);
-			error_occured(fd, "dup2");
-		}
-		close(outfile);
-	}
+	if (dup2(fd_outfile, STDOUT_FILENO) == -1)
+		error_occured(fd, "dup2");
 	if (dup2(fd->fd1[0], STDIN_FILENO) == -1)
 		error_occured(fd, "dup2");
 	close_all(fd);
@@ -126,11 +92,23 @@ void	close_and_swap_pipes(t_fd *fd)
 void	prepare_pipe(t_exec *exec, t_fd *fd, int i)
 {
 	if (exec->cmd_count == 1)
+	{
+		if (exec->fd_infile != -1)
+		{
+			if (dup2(exec->fd_infile, STDIN_FILENO) == -1)
+				error_occured(fd, "dup2");
+		}
+		if (exec->fd_outfile != -1)
+		{
+			if (dup2(exec->fd_outfile, STDOUT_FILENO) == -1)
+				error_occured(fd, "dup2");
+		}
 		return ;
+	}
 	if (i == 0)
-		first_cmd(fd, exec->infile);
+		first_cmd(fd, exec->fd_infile);
 	else if (i == exec->cmd_count - 1)
-		last_cmd(fd, exec->outfile);
+		last_cmd(fd, exec->fd_outfile);
 	else
 		middle_cmd(fd);
 }

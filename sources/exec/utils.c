@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:57 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/22 18:36:10 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/22 21:04:16 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,21 @@ static void	apply_redirections_builtin(t_input *input, int cmd_index,
 					{
 						if (*original_stdin == -1)
 							*original_stdin = dup(STDIN_FILENO);
-						fd = open(tokens_array[i].formatted_content, O_RDONLY);
+						fd = open((char *)tokens_array[i].formatted_content,
+								O_RDONLY);
 						if (fd != -1)
 						{
 							dup2(fd, STDIN_FILENO);
 							close(fd);
 						}
+					}
+					else if (tokens_array[i].type == HEREDOC)
+					{
+						if (*original_stdin == -1)
+							*original_stdin = dup(STDIN_FILENO);
+						dup2(STDIN_FILENO,
+							((int *)tokens_array[i].formatted_content)[1]);
+						close(STDIN_FILENO);
 					}
 					i++;
 				}
@@ -138,6 +147,16 @@ static void	execute_builtin(char **cmd, t_input *input, t_exec *exec, t_fd *fd)
 		ft_exit(input, exec, fd);
 }
 
+int	check_builtin(char *cmd)
+{
+	if (ft_strcmp(cmd, "echo") && ft_strcmp(cmd, "pwd")
+		&& ft_strcmp(cmd, "cd") && ft_strcmp(cmd, "export")
+		&& ft_strcmp(cmd, "unset") && ft_strcmp(cmd, "env")
+		&& ft_strcmp(cmd, "exit"))
+		return (0);
+	return (1);
+}
+
 int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd,
 		int i)
 {
@@ -147,12 +166,7 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd,
 	int		original_stdin;
 
 	cmd = ((char **)current_token.formatted_content);
-	if (!cmd || !cmd[0])
-		return (0);
-	if (ft_strcmp(cmd[0], "echo") && ft_strcmp(cmd[0], "pwd")
-		&& ft_strcmp(cmd[0], "cd") && ft_strcmp(cmd[0], "export")
-		&& ft_strcmp(cmd[0], "unset") && ft_strcmp(cmd[0], "env")
-		&& ft_strcmp(cmd[0], "exit"))
+	if (check_builtin(cmd[0]) == 0)
 		return (0);
 	if (exec->cmd_count > 1)
 	{
