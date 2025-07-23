@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/23 17:13:20 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/23 18:04:17 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ static void	apply_redirections(t_input *input, int cmd_index, int *fd_infile,
 					}
 					else if (tokens_array[i].type == HEREDOC)
 					{
-						fprintf(stderr,"heredoc reading fd = %d\n", ((int*)tokens_array[i].formatted_content)[1]);
-						*fd_infile = ((int*)tokens_array[i].formatted_content)[1];
+						*fd_infile = ((int *)tokens_array[i].formatted_content)[1];
 					}
 					i++;
 				}
@@ -78,9 +77,9 @@ static void	apply_redirections(t_input *input, int cmd_index, int *fd_infile,
 
 static int	execute_child(t_exec *exec, t_fd *fd, int i, t_input *input)
 {
-	(void)fd;
 	pid_t	pid;
 
+	(void)fd;
 	pid = fork();
 	if (pid == -1)
 	{
@@ -92,7 +91,6 @@ static int	execute_child(t_exec *exec, t_fd *fd, int i, t_input *input)
 	{
 		apply_redirections(input, i, &exec->fd_infile, &exec->fd_outfile);
 		prepare_pipe(exec, fd, i);
-		fprintf(stderr, "infile = %d\noutfile = %d\n", exec->fd_infile, exec->fd_outfile);
 		if (!exec->cmd_path)
 			exit(free_child(exec, input));
 		execve(exec->cmd_path, exec->args, input->env->array);

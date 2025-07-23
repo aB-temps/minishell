@@ -12,8 +12,8 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		line = readline("\e[34m\e[1mheredoc > \e[0m");
 		if (!line)
 		{
-			free(fds);
-			exit_minishell(input, EXIT_FAILURE);
+			// free(fds);
+			// exit_minishell(input, EXIT_FAILURE);
 		}
 		if (!ft_strncmp(line, (char *)token->formatted_content,
 				ft_strlen((char *)token->formatted_content) + ft_strlen(line)))
@@ -34,8 +34,8 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		if (!input->line)
 			exit_minishell(input, EXIT_FAILURE);
 	}
-	// close(fds[0]); // CLOSE FD{W} ??
-	// fds[0] = -1; // CLOSE FD{W} ??
+	close(fds[0]); // CLOSE FD{W} ??
+	fds[0] = -1; // CLOSE FD{W} ??
 	token->raw_content = str_free_to_join(token->raw_content,
 			(char *)token->formatted_content);
 	if (!token->raw_content)
