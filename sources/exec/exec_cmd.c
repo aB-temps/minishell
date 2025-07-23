@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/22 22:35:19 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/23 16:06:45 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,56 +46,57 @@ static int	execute_all_commands(t_input *input, t_exec *exec)
 
 int	create_all_files(t_exec *exec, t_token *token_array, int token_qty)
 {
-    int	i;
-    int	fd_temp;
-    int	flags;
+	int	i;
+	int	fd_temp;
+	int	flags;
 
-    i = 0;
-    exec->fd_infile = -1;
-    exec->fd_outfile = -1;
-    while (i < token_qty)
-    {
-        if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
-        {
-            if (token_array[i].formatted_content)
-            {
-                flags = (token_array[i].type == APPEND) ? 
-                    (O_WRONLY | O_CREAT | O_APPEND) : 
-                    (O_WRONLY | O_CREAT | O_TRUNC);
-                fd_temp = open(token_array[i].formatted_content, flags, 0644);
-                if (fd_temp == -1)
-                {
-                    perror(token_array[i].formatted_content);
+	i = 0;
+	exec->fd_infile = -1;
+	exec->fd_outfile = -1;
+	while (i < token_qty)
+	{
+		if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
+		{
+			if (token_array[i].formatted_content)
+			{
+				if (token_array[i].type == APPEND)
+					flags = O_WRONLY | O_CREAT | O_APPEND;
+				else
+					flags = O_WRONLY | O_CREAT | O_TRUNC;
+				fd_temp = open(token_array[i].formatted_content, flags, 0644);
+				if (fd_temp == -1)
+				{
+					perror(token_array[i].formatted_content);
 					return (1);
 				}
-                else
-                {
-                    if (exec->fd_outfile != -1)
-                        close(exec->fd_outfile);
-                    exec->fd_outfile = fd_temp;
-                }
-            }
-        }
-        else if (token_array[i].type == REDIR_IN)
-        {
-            if (token_array[i].formatted_content)
-            {
-                fd_temp = open(token_array[i].formatted_content, O_RDONLY);
-                if (fd_temp == -1)
-                {
-                    perror(token_array[i].formatted_content);
+				else
+				{
+					if (exec->fd_outfile != -1)
+						close(exec->fd_outfile);
+					exec->fd_outfile = fd_temp;
+				}
+			}
+		}
+		else if (token_array[i].type == REDIR_IN)
+		{
+			if (token_array[i].formatted_content)
+			{
+				fd_temp = open(token_array[i].formatted_content, O_RDONLY);
+				if (fd_temp == -1)
+				{
+					perror(token_array[i].formatted_content);
 					return (1);
 				}
-                else
-                {
-                    if (exec->fd_infile != -1)
-                        close(exec->fd_infile);
-                    exec->fd_infile = fd_temp;
-                }
-            }
-        }
-        i++;
-    }
+				else
+				{
+					if (exec->fd_infile != -1)
+						close(exec->fd_infile);
+					exec->fd_infile = fd_temp;
+				}
+			}
+		}
+		i++;
+	}
 	return (0);
 }
 
