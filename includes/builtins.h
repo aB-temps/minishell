@@ -9,7 +9,7 @@
 # include <stdio.h>
 
 void	ft_echo(char **arguments);
-void	ft_cd(char **path);
+void	ft_cd(char **cmd, t_input *input);
 void	ft_pwd(void);
 void	ft_env(char **env);
 void	ft_exit(t_input *input, t_exec *exec);
@@ -18,7 +18,5 @@ void	ft_unset(char **cmd_args, t_input *input);
 t_list	*find_env_var(char *key, t_list *env);
 void	update_env_array(t_input *input);
 void	update_env_list(t_input *input);
-
-
 
 #endif
