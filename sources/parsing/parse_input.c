@@ -17,6 +17,6 @@ void	*parse_input(t_input *input)
 	}
 	format_input(input);
 	handle_heredoc(input);
-	print_input(input, "FORMATTED INPUT");
+	// print_input(input, "FORMATTED INPUT");
 	return (input);
 }

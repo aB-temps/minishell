@@ -169,6 +169,7 @@ F_BUILTINS :=			ft_echo.c 			\
 F_DEBUG :=				print_input.c		\
 						print_tab.c			\
 						print_heredoc.c 	\
+						print_exec.c		\
 
 
 # VARS GENERATION =====================================================================

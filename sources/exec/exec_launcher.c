@@ -6,57 +6,56 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:48 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/22 21:05:09 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 13:33:25 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "debug.h"
 #include "exec.h"
 
 int	launch_all_commands(t_input *input, t_exec *exec)
 {
 	t_token	*cur_token;
 	t_token	*tokens_array;
-	t_fd	fd;
 	int		i;
 	int		y;
 
 	y = 0;
 	tokens_array = (t_token *)input->v_tokens->array;
 	i = 0;
-	init_fd(&fd);
 	while (y < input->token_qty && i < exec->cmd_count)
 	{
+		//print_exec(exec, "INSIDE_EXEC");
 		cur_token = &tokens_array[y];
 		if (cur_token->type == COMMAND)
 		{
 			if (i < exec->cmd_count - 1)
 			{
-				if (pipe(fd.fd2) == -1)
+				if (pipe(exec->fd->fd2) == -1)
 				{
-					close_all(&fd);
+					close_all(exec);
 					return (1);
 				}
 			}
-			exec->pid_child[i] = is_builtin(*cur_token, input, exec, &fd, i);
+			exec->pid_child[i] = is_builtin(*cur_token, input, exec, i);
 			if (exec->pid_child[i] == 0)
 			{
-				exec->pid_child[i] = execute_command(cur_token, exec, &fd, i,
-						input);
+				exec->pid_child[i] = execute_command(cur_token, exec, i, input);
 			}
 			if (i > 0)
-				close(fd.fd1[0]);
+				close(exec->fd->fd1[0]);
 			if (i < exec->cmd_count - 1)
-				close(fd.fd2[1]);
+				close(exec->fd->fd2[1]);
 			if (i < exec->cmd_count - 1)
 			{
-				fd.fd1[0] = fd.fd2[0];
-				fd.fd1[1] = fd.fd2[1];
+				exec->fd->fd1[0] = exec->fd->fd2[0];
+				exec->fd->fd1[1] = exec->fd->fd2[1];
 			}
 			i++;
 		}
 		y++;
 	}
-	close_all(&fd);
+	close_all(exec);
 	return (0);
 }
 
@@ -106,8 +105,6 @@ static void	check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
 	{
 		sig = WTERMSIG(status);
 		input->last_exit_status = 128 + sig;
-		if (sig == SIGTERM)
-			ft_putendl_fd("Terminated", 2);
 	}
 }
 

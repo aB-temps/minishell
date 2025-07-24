@@ -3,7 +3,7 @@
 #include "parsing.h"
 #include <linux/limits.h>
 
-void	reset_input(t_input *input)
+static void	reset_input(t_input *input)
 {
 	if (input->prompt)
 	{
@@ -19,7 +19,7 @@ void	reset_input(t_input *input)
 	// clear_vector(&input->v_tokens);
 }
 
-char	*prompt_user(char **prompt)
+static char	*prompt_user(char **prompt)
 {
 	char	*line;
 
@@ -46,9 +46,8 @@ void	get_input(char **env)
 			exit_minishell(input, input->last_exit_status);
 		if (is_valid_input(input->line))
 		{
-			parse_input(input);
-			start_exec(input);
-			clear_vector(&input->v_tokens);
+			if (parse_input(input))
+				start_exec(input);
 		}
 		add_history(input->line);
 		reset_input(input);

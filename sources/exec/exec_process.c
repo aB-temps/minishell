@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/23 18:04:17 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/24 12:56:41 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	free_child(t_exec *exec, t_input *input)
 	free(input->env);
 	free(input->prompt);
 	free(input);
+	close_all(exec);
 	return (127);
 }
 
@@ -75,11 +76,10 @@ static void	apply_redirections(t_input *input, int cmd_index, int *fd_infile,
 	}
 }
 
-static int	execute_child(t_exec *exec, t_fd *fd, int i, t_input *input)
+static int	execute_child(t_exec *exec, int i, t_input *input)
 {
 	pid_t	pid;
 
-	(void)fd;
 	pid = fork();
 	if (pid == -1)
 	{
@@ -90,7 +90,7 @@ static int	execute_child(t_exec *exec, t_fd *fd, int i, t_input *input)
 	if (pid == 0)
 	{
 		apply_redirections(input, i, &exec->fd_infile, &exec->fd_outfile);
-		prepare_pipe(exec, fd, i);
+		prepare_pipe(exec, i);
 		if (!exec->cmd_path)
 			exit(free_child(exec, input));
 		execve(exec->cmd_path, exec->args, input->env->array);
@@ -100,7 +100,7 @@ static int	execute_child(t_exec *exec, t_fd *fd, int i, t_input *input)
 	return (pid);
 }
 
-int	execute_command(t_token *current_token, t_exec *exec, t_fd *fd, int i,
+int	execute_command(t_token *current_token, t_exec *exec, int i,
 		t_input *input)
 {
 	int	pid;
@@ -108,6 +108,6 @@ int	execute_command(t_token *current_token, t_exec *exec, t_fd *fd, int i,
 	pid = 0;
 	exec->args = (char **)(current_token->formatted_content);
 	exec->cmd_path = find_full_command_path(exec->args[0], input->env->array);
-	pid = execute_child(exec, fd, i, input);
+	pid = execute_child(exec, i, input);
 	return (pid);
 }
