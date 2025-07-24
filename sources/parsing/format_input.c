@@ -1,6 +1,13 @@
 #include "debug.h"
 #include "parsing.h"
 
+void	update_token_vector(t_input *input, t_vector *new_vec)
+{
+	clear_vector(&input->v_tokens);
+	input->v_tokens = new_vec;
+	input->token_qty = input->v_tokens->capacity;
+}
+
 size_t	count_valid_tokens(size_t qty, const t_token *array)
 {
 	size_t	i;
@@ -17,14 +24,12 @@ size_t	count_valid_tokens(size_t qty, const t_token *array)
 	return (valid_tokens);
 }
 
-void	format_input(t_input *input)
+void	format_input(t_input *input, t_token *array)
 {
 	t_vector	*new_vec;
-	t_token		*array;
 	t_token		token;
 	ssize_t		i;
 
-	array = (t_token *)input->v_tokens->array;
 	i = 0;
 	new_vec = create_vector(count_valid_tokens(input->token_qty, array),
 			sizeof(t_token), clear_token);
@@ -44,7 +49,5 @@ void	format_input(t_input *input)
 		}
 		i++;
 	}
-	clear_vector(&input->v_tokens);
-	input->v_tokens = new_vec;
-	input->token_qty = input->v_tokens->capacity;
+	update_token_vector(input, new_vec);
 }

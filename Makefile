@@ -127,9 +127,9 @@ F_EXEC :=				exec_cmd.c			\
 						pipes_utils.c		\
 
 F_ENV 	:=				env_array_to_list.c	\
-						env_list_to_array.c \
 						get_env_value.c		\
 						find_env_var.c		\
+						env_list_to_array.c \
 
 F_HEREDOC	:=			handle_heredoc.c	\
 						gen_heredoc_filename.c \

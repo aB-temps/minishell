@@ -2,8 +2,8 @@
 
 char	*get_env_value(char *var_name, t_input *input)
 {
-	char *var_value;
-	t_list *tmp;
+	char	*var_value;
+	t_list	*tmp;
 
 	var_value = (void *)0;
 	tmp = input->env->list;
