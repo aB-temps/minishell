@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/24 22:46:33 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 22:54:45 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
 		{
 			prepare_pipe(exec, i);
 			execute_builtin(cmd, input, exec);
-			// exit(free_child(exec, input, 0));
+			exit(free_child(exec, input, 0));
 		}
 		return (pid);
 	}
