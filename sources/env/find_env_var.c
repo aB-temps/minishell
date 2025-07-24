@@ -8,15 +8,9 @@ t_list	*find_env_var(char *key, t_list *env)
 	i = 0;
 	while (env)
 	{
-		// printf("'%s' vs '%s' => ", key, ((t_env_var *)env->content)->key);
 		if (!ft_strcmp(key, ((t_env_var *)env->content)->key))
-		{
-			// printf("%smatch\n%s", FG_GREEN, R_ALL);
-			// printf("\n%sexists%s\n\n", FG_GREEN BOLD, R_ALL);
 			return (env);
-		}
-		env = env->next;
 	}
-	// printf("\n%sdo not exists%s\n\n", FG_RED BOLD, R_ALL);
+	env = env->next;
 	return ((void *)0);
 }

@@ -1,29 +1,6 @@
 #include "token_formatting.h"
 
-static void	clear_var_array(t_vector *v_var_array)
-{
-	t_env_var	*var_array;
-	size_t		i;
-
-	var_array = (t_env_var *)v_var_array->array;
-	i = 0;
-	while (i < v_var_array->nb_elements)
-	{
-		if (var_array[i].key)
-		{
-			free(var_array[i].key);
-			var_array[i].key = (void *)0;
-		}
-		if (var_array[i].value)
-		{
-			free(var_array[i].value);
-			var_array[i].value = (void *)0;
-		}
-		i++;
-	}
-}
-
-static char	*get_var_key(char *s)
+static char	*extract_var_key(char *s)
 {
 	char	*var_key;
 	size_t	start;
@@ -48,7 +25,7 @@ t_vector	*parse_env_var(char *s, t_input *input)
 	size_t		i;
 
 	i = 0;
-	var_array = create_vector(1, sizeof(t_env_var), clear_var_array);
+	var_array = create_vector(1, sizeof(t_env_var), clear_var_vector);
 	if (!var_array)
 		exit_minishell(input, EXIT_FAILURE);
 	while (s[i])
@@ -67,7 +44,7 @@ t_vector	*parse_env_var(char *s, t_input *input)
 			}
 			else
 			{
-				var.key = get_var_key(&s[i]);
+				var.key = extract_var_key(&s[i]);
 				if (!var.key)
 					exit_minishell(input, EXIT_FAILURE);
 				var.value = get_env_value(var.key + 1, input);
@@ -111,10 +88,10 @@ size_t	exp_var_strlen(char *s, t_vector *v_var_array)
 	return (len);
 }
 
-char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input)
+char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input,
+		size_t new_len)
 {
 	const t_env_var	*var_array = (t_env_var *)v_var_array->array;
-	const size_t	new_len = exp_var_strlen(s, v_var_array);
 	char			*ns;
 	size_t			i;
 	size_t			j;
@@ -138,7 +115,6 @@ char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input)
 		else
 			ns[k++] = s[i++];
 	}
-	ns[k] = '\0';
 	return (ns);
 }
 
@@ -151,7 +127,7 @@ char	*substitute_env_var(char *s, t_input *input)
 	var_array = parse_env_var(s, input);
 	if (!var_array)
 		exit_minishell(input, EXIT_FAILURE);
-	ns = replace_env_var(s, var_array, input);
+	ns = replace_env_var(s, var_array, input, exp_var_strlen(s, var_array));
 	clear_vector(&var_array);
 	if (!ns)
 		exit_minishell(input, EXIT_FAILURE);

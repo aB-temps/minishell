@@ -1,7 +1,5 @@
 #include "builtins.h"
 
-
-
 void	ft_unset(char **cmd_args, t_input *input)
 {
 	size_t	args;

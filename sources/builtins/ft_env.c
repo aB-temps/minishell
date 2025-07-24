@@ -3,8 +3,8 @@
 
 void	ft_env(char **env)
 {
-	const size_t size = ft_tablen(env);
-	size_t i;
+	const size_t	size = ft_tablen(env);
+	size_t			i;
 
 	i = 0;
 	while (i < size)

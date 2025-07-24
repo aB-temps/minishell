@@ -129,9 +129,9 @@ F_EXEC :=				exec_cmd.c			\
 						redir_builtin.c		\
 
 F_ENV 	:=				env_array_to_list.c	\
-						env_list_to_array.c \
 						get_env_value.c		\
 						find_env_var.c		\
+						env_list_to_array.c \
 
 F_HEREDOC	:=			handle_heredoc.c	\
 						gen_heredoc_filename.c \
@@ -150,6 +150,7 @@ F_UTILS :=				init_struct.c		\
 						ft_tablen.c			\
 						gen_random_num_sequence.c \
 						clear_hd_filename_elem.c \
+						clear_var_vector.c	\
 						lstgetprev.c		\
 						
 F_TOKEN_FORMATTING :=	format_tokens.c		\

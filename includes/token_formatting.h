@@ -2,6 +2,7 @@
 # define TOKEN_FOMATTING_H
 
 # include "parsing.h"
+# include "utils.h"
 
 void	format_tokens(t_input *input);
 void	format_command(t_input *input, t_token *array, ssize_t *i);

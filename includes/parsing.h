@@ -8,6 +8,6 @@
 
 void	get_input(char **env);
 void	*parse_input(t_input *input);
-void	format_input(t_input *input);
+void	format_input(t_input *input, t_token *array);
 
 #endif
