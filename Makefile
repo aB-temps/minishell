@@ -148,6 +148,7 @@ F_UTILS :=				init_struct.c		\
 						ft_tablen.c			\
 						gen_random_num_sequence.c \
 						clear_hd_filename_elem.c \
+						clear_var_vector.c	\
 						lstgetprev.c		\
 						
 F_TOKEN_FORMATTING :=	format_tokens.c		\
