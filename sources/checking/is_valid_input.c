@@ -29,7 +29,10 @@ bool	is_valid_input(char *line)
 	if (!ft_strlen(line))
 		return (false);
 	if (!are_quotes_paired(line))
+	{
+		ft_putstr_fd("minishell: syntax error", STDERR_FILENO);
 		return (false);
+	}
 	while (line[i])
 	{
 		if (!is_whitespace(line[i]))

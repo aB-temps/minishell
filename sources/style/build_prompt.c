@@ -1,51 +1,87 @@
-#include "libft.h"
 #include "style.h"
+#include "token_formatting.h"
 #include <linux/limits.h>
 #include <unistd.h>
 
-static char	*get_hostname(char *env_session)
+char	*build_ps1(t_input *input)
 {
-	int	i;
+	char	*ps1;
+	char	*username;
 
-	i = 0;
-	if (!env_session)
-		return ((void *)0);
-	while (env_session[i] != '.')
-		i++;
-	env_session[i] = '\0';
-	env_session = &env_session[ft_strlen("local/")];
-	return (env_session);
+	ps1 = (void *)0;
+	username = get_env_value("USER", input);
+	if (!ft_strlen(username))
+		return (username);
+	ps1 = ft_strjoin(FG_BLUE, username);
+	free(username);
+	if (!ps1)
+		exit_minishell(input, EXIT_FAILURE);
+	ps1 = str_free_to_join(ps1, FG_WHITE " → "DIM);
+	if (!ps1)
+		exit_minishell(input, EXIT_FAILURE);
+	return (ps1);
 }
 
-void	*build_prompt(char **prompt)
+char	*build_ps2(t_input *input)
 {
-	const char	*username = getenv("USER");
-	const char	*hostname = get_hostname(getenv("SESSION_MANAGER"));
-	char		*cwd;
-	size_t		plen;
+	char	*ps2;
+	char	*pwd;
 
-	cwd = (void *)0;
-	if (!username || !hostname)
-		return ((void *)0);
-	cwd = getcwd(cwd, PATH_MAX);
-	if (!cwd)
-		return ((void *)0);
-	plen = ft_strlen(username) + ft_strlen(hostname) + ft_strlen(cwd)
-		+ ft_strlen(FG_CYAN BOLD FG_MAGENTA "@" FG_CYAN R_ALL "  👻  " FG_MAGENTA "\n ➤  " R_ALL "\0")
-		+ 2;
-	*prompt = ft_calloc(plen, sizeof(char));
-	if (!(*prompt))
+	ps2 = (void *)0;
+	pwd = get_env_value("PWD", input);
+	ps2 = ft_strjoin(FG_GREEN, pwd);
+	free(pwd);
+	if (!ps2)
+		exit_minishell(input, EXIT_FAILURE);
+	ps2 = str_free_to_join(ps2, R_ALL);
+	if (!ps2)
+		exit_minishell(input, EXIT_FAILURE);
+	return (ps2);
+}
+char	*build_ps3(t_input *input)
+{
+	char	*ps3;
+	char	*exit_status;
+
+	exit_status = ft_itoa(input->last_exit_status);
+	if (!exit_status)
+		exit_minishell(input, EXIT_FAILURE);
+	if (input->last_exit_status > 0)
+		ps3 = ft_strjoin(FG_WHITE "	[" FG_RED, exit_status);
+	else
+		ps3 = ft_strjoin(FG_WHITE "	[" FG_GREEN, exit_status);
+	free(exit_status);
+	if (!ps3)
+		exit_minishell(input, EXIT_FAILURE);
+	ps3 = str_free_to_join(ps3, FG_WHITE "]" R_ALL);
+	if (!ps3)
+		exit_minishell(input, EXIT_FAILURE);
+	return (ps3);
+}
+
+void	build_prompt(t_input *input)
+{
+	char	*ps1;
+	char	*ps2;
+	char	*ps3;
+
+	ps3 = (void *)0;
+	ps1 = build_ps1(input);
+	ps2 = build_ps2(input);
+	input->prompt = ft_strjoin(ps1, ps2);
+	free(ps1);
+	free(ps2);
+	if (!input->prompt)
+		exit_minishell(input, EXIT_FAILURE);
+	if (input->last_exit_status != -1)
 	{
-		free(cwd);
-		return ((void *)0);
+		ps3 = build_ps3(input);
+		input->prompt = str_free_to_join(input->prompt, ps3);
+		free(ps3);
+		if (!input->prompt)
+			exit_minishell(input, EXIT_FAILURE);
 	}
-	ft_strlcat(*prompt, FG_CYAN BOLD, plen);
-	ft_strlcat(*prompt, username, plen);
-	ft_strlcat(*prompt, FG_MAGENTA "@" FG_CYAN, plen);
-	ft_strlcat(*prompt, hostname, plen);
-	ft_strlcat(*prompt, R_ALL "  👻  ", plen);
-	ft_strlcat(*prompt, cwd, plen);
-	ft_strlcat(*prompt, FG_MAGENTA "\n ➤  " R_ALL "\0", plen);
-	free(cwd);
-	return (*prompt);
+	input->prompt = str_free_to_join(input->prompt, FG_WHITE "\n⚡ " R_ALL);
+	if (!input->prompt)
+		exit_minishell(input, EXIT_FAILURE);
 }
