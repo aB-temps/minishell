@@ -50,6 +50,22 @@ t_env_var	*parse_assignation(char *arg, t_input *input)
 	return (var);
 }
 
+void	reassign_var(t_env_var *var, t_list *existing_var)
+{
+	free(var->key);
+	free(((t_env_var *)existing_var->content)->value);
+	((t_env_var *)existing_var->content)->value = var->value;
+	free(var);
+}
+
+void	assign_var(t_list **varlist_node, t_env_var *var, t_input *input)
+{
+	*varlist_node = ft_lstnew(var);
+	if (!(*varlist_node))
+		exit_minishell(input, EXIT_FAILURE);
+	ft_lstadd_back(&input->env->list, *varlist_node);
+}
+
 void	ft_export(char **cmd_args, t_input *input)
 {
 	t_list		*varlist_node;
@@ -67,19 +83,9 @@ void	ft_export(char **cmd_args, t_input *input)
 		var = parse_assignation(cmd_args[i], input);
 		existing_var = find_env_var(var->key, input->env->list);
 		if (existing_var)
-		{
-			free(var->key);
-			free(((t_env_var *)existing_var->content)->value);
-			((t_env_var *)existing_var->content)->value = var->value;
-			free(var);
-		}
+			reassign_var(var, existing_var);
 		else
-		{
-			varlist_node = ft_lstnew(var);
-			if (!varlist_node)
-				exit_minishell(input, EXIT_FAILURE);
-			ft_lstadd_back(&input->env->list, varlist_node);
-		}
+			assign_var(&varlist_node, var, input);
 		i++;
 	}
 	update_env_array(input);
