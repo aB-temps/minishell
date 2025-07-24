@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:57 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/23 23:12:14 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 12:58:15 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,14 +122,15 @@ char	*get_type(ssize_t type)
 	return ((char *)types[type]);
 }
 
-void	exit_exec(t_input *input, t_exec *exec, t_fd *fd)
+void	exit_exec(t_input *input, t_exec *exec)
 {
-	close_all(exec, fd);
+	close_all(exec);
 	free(exec->pid_child);
+	free(exec->fd);
 	exit_minishell(input, input->last_exit_status);
 }
 
-static void	execute_builtin(char **cmd, t_input *input, t_exec *exec, t_fd *fd)
+static void	execute_builtin(char **cmd, t_input *input, t_exec *exec)
 {
 	if (ft_strcmp(cmd[0], "echo") == 0)
 		ft_echo(cmd);
@@ -144,21 +145,19 @@ static void	execute_builtin(char **cmd, t_input *input, t_exec *exec, t_fd *fd)
 	else if (ft_strcmp(cmd[0], "env") == 0)
 		ft_env(input->env->array);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
-		ft_exit(input, exec, fd);
+		ft_exit(input, exec);
 }
 
 int	check_builtin(char *cmd)
 {
-	if (ft_strcmp(cmd, "echo") && ft_strcmp(cmd, "pwd")
-		&& ft_strcmp(cmd, "cd") && ft_strcmp(cmd, "export")
-		&& ft_strcmp(cmd, "unset") && ft_strcmp(cmd, "env")
-		&& ft_strcmp(cmd, "exit"))
+	if (ft_strcmp(cmd, "echo") && ft_strcmp(cmd, "pwd") && ft_strcmp(cmd, "cd")
+		&& ft_strcmp(cmd, "export") && ft_strcmp(cmd, "unset") && ft_strcmp(cmd,
+			"env") && ft_strcmp(cmd, "exit"))
 		return (0);
 	return (1);
 }
 
-int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd,
-		int i)
+int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
 {
 	char	**cmd;
 	int		pid;
@@ -178,9 +177,9 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd,
 		}
 		if (pid == 0)
 		{
-			prepare_pipe(exec, fd, i);
-			execute_builtin(cmd, input, exec, fd);
-			exit(free_child(exec, input, fd));
+			prepare_pipe(exec, i);
+			execute_builtin(cmd, input, exec);
+			exit(free_child(exec, input));
 		}
 		return (pid);
 	}
@@ -189,7 +188,7 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd,
 		original_stdout = -1;
 		original_stdin = -1;
 		apply_redirections_builtin(input, i, &original_stdout, &original_stdin);
-		execute_builtin(cmd, input, exec, fd);
+		execute_builtin(cmd, input, exec);
 		restore_redirections_builtin(original_stdout, original_stdin);
 		return (1);
 	}

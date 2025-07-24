@@ -6,12 +6,12 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:48 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 11:41:56 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 12:57:05 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "exec.h"
 #include "debug.h"
+#include "exec.h"
 
 int	launch_all_commands(t_input *input, t_exec *exec)
 {
@@ -33,16 +33,14 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 			{
 				if (pipe(exec->fd->fd2) == -1)
 				{
-					close_all(exec, exec->fd);
+					close_all(exec);
 					return (1);
 				}
 			}
-			exec->pid_child[i] = is_builtin(*cur_token, input, exec, exec->fd,
-					i);
+			exec->pid_child[i] = is_builtin(*cur_token, input, exec, i);
 			if (exec->pid_child[i] == 0)
 			{
-				exec->pid_child[i] = execute_command(cur_token, exec, exec->fd,
-						i, input);
+				exec->pid_child[i] = execute_command(cur_token, exec, i, input);
 			}
 			if (i > 0)
 				close(exec->fd->fd1[0]);
@@ -57,7 +55,7 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 		}
 		y++;
 	}
-	close_all(exec, exec->fd);
+	close_all(exec);
 	return (0);
 }
 
@@ -107,8 +105,6 @@ static void	check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
 	{
 		sig = WTERMSIG(status);
 		input->last_exit_status = 128 + sig;
-		if (sig == SIGTERM)
-			ft_putendl_fd("Terminated", 2);
 	}
 }
 

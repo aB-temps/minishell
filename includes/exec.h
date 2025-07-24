@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/24 11:19:40 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 12:57:21 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,19 +52,19 @@ typedef struct s_exec
 char		*get_path(char **env);
 char		*find_command_path(char *cmd, char **paths);
 char		*find_full_command_path(char *cmd, char **env);
-int			execute_command(t_token *current_token, t_exec *exec, t_fd *fd,
-				int i, t_input *input);
+int			execute_command(t_token *current_token, t_exec *exec, int i,
+				t_input *input);
 int			launch_all_commands(t_input *input, t_exec *exec);
 void		start_exec(t_input *input);
 int			count_cmd(t_input *input);
 void		wait_childs(t_exec *exec, t_input *input);
-void		close_all(t_exec *exec, t_fd *fd);
-void		prepare_pipe(t_exec *exec, t_fd *fd, int i);
+void		close_all(t_exec *exec);
+void		prepare_pipe(t_exec *exec, int i);
 char		*get_cmd_by_index(t_input *input, t_token *tokens_array, int index);
 int			is_builtin(t_token current_token, t_input *input, t_exec *exec,
-				t_fd *fd, int i);
+				int i);
 int			create_all_files(t_exec *exec, t_token *token_array, int token_qty);
-void		exit_exec(t_input *input, t_exec *exec, t_fd *fd);
-int			free_child(t_exec *exec, t_input *input, t_fd *fd);
+void		exit_exec(t_input *input, t_exec *exec);
+int			free_child(t_exec *exec, t_input *input);
 int			check_builtin(char *cmd);
 #endif
