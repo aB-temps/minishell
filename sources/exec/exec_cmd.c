@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 11:41:02 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 13:11:22 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	execute_all_commands(t_input *input, t_exec *exec)
 	if (!exec->pid_child)
 		return (1);
 	tokens_array = (t_token *)input->v_tokens->array;
-	if (create_all_files(exec, tokens_array, input->token_qty)
+	if (create_all_files(exec, tokens_array)
 		|| launch_all_commands(input, exec))
 		return (1);
 	print_exec(exec, "AFTER_EXEC");
@@ -92,12 +92,12 @@ int	handle_redir_out(t_exec *exec, t_token current_token)
 	return (0);
 }
 
-int	create_all_files(t_exec *exec, t_token *token_array, int token_qty)
+int	create_all_files(t_exec *exec, t_token *token_array)
 {
 	int	i;
 
 	i = 0;
-	while (i < token_qty)
+	while (i < exec->cmd_count)
 	{
 		if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
 		{

@@ -6,11 +6,12 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:57 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 12:58:15 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 13:05:33 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "debug.h"
 #include "exec.h"
 #include "input.h"
 #include <fcntl.h>
@@ -167,6 +168,7 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
 	cmd = ((char **)current_token.formatted_content);
 	if (check_builtin(cmd[0]) == 0)
 		return (0);
+	print_exec(exec, "INSIDE BUILTIN");
 	if (exec->cmd_count > 1)
 	{
 		pid = fork();
