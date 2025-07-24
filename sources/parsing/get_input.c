@@ -46,8 +46,8 @@ void	get_input(char **env)
 			exit_minishell(input, input->last_exit_status);
 		if (is_valid_input(input->line))
 		{
-			parse_input(input);
-			start_exec(input);
+			if (parse_input(input))
+				start_exec(input);
 		}
 		add_history(input->line);
 		reset_input(input);

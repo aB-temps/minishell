@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:57 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/23 17:55:50 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/23 23:12:14 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ char	*get_type(ssize_t type)
 
 void	exit_exec(t_input *input, t_exec *exec, t_fd *fd)
 {
-	close_all(fd);
+	close_all(exec, fd);
 	free(exec->pid_child);
 	exit_minishell(input, input->last_exit_status);
 }
@@ -180,7 +180,7 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, t_fd *fd,
 		{
 			prepare_pipe(exec, fd, i);
 			execute_builtin(cmd, input, exec, fd);
-			exit(free_child(exec, input));
+			exit(free_child(exec, input, fd));
 		}
 		return (pid);
 	}

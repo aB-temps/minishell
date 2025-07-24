@@ -33,7 +33,7 @@ void	print_input(t_input *input, char *part)
 			&& ft_strlen(array[i].raw_content) > 2)
 		{
 			printf("Formatted Content :\n");
-			print_token_heredoc(array[i]);
+			// print_token_heredoc(array[i]);
 		}
 		else
 			printf("Formatted Content : '%s%s%s'\n\n", BOLD,

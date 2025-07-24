@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/23 18:04:17 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/24 10:48:14 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "input.h"
 #include <stdio.h>
 
-int	free_child(t_exec *exec, t_input *input)
+int	free_child(t_exec *exec, t_input *input, t_fd *fd)
 {
 	free(exec->cmd_path);
 	free(exec->pid_child);
@@ -24,6 +24,7 @@ int	free_child(t_exec *exec, t_input *input)
 	free(input->env);
 	free(input->prompt);
 	free(input);
+	close_all(exec, fd);
 	return (127);
 }
 
@@ -79,7 +80,6 @@ static int	execute_child(t_exec *exec, t_fd *fd, int i, t_input *input)
 {
 	pid_t	pid;
 
-	(void)fd;
 	pid = fork();
 	if (pid == -1)
 	{
@@ -92,9 +92,9 @@ static int	execute_child(t_exec *exec, t_fd *fd, int i, t_input *input)
 		apply_redirections(input, i, &exec->fd_infile, &exec->fd_outfile);
 		prepare_pipe(exec, fd, i);
 		if (!exec->cmd_path)
-			exit(free_child(exec, input));
+			exit(free_child(exec, input, fd));
 		execve(exec->cmd_path, exec->args, input->env->array);
-		exit(free_child(exec, input));
+		exit(free_child(exec, input, fd));
 	}
 	free(exec->cmd_path);
 	return (pid);
