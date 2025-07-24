@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:48 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 13:33:25 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 17:09:57 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 	int		i;
 	int		y;
 
+	// print_exec(exec, "INSIDE_EXEC");
 	y = 0;
 	tokens_array = (t_token *)input->v_tokens->array;
 	i = 0;
 	while (y < input->token_qty && i < exec->cmd_count)
 	{
-		//print_exec(exec, "INSIDE_EXEC");
 		cur_token = &tokens_array[y];
 		if (cur_token->type == COMMAND)
 		{

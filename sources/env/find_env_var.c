@@ -15,8 +15,6 @@ t_list	*find_env_var(char *key, t_list *env)
 			// printf("\n%sexists%s\n\n", FG_GREEN BOLD, R_ALL);
 			return (env);
 		}
-		else
-			; // printf("%sdo not match%s\n", FG_RED, R_ALL);
 		env = env->next;
 	}
 	// printf("\n%sdo not exists%s\n\n", FG_RED BOLD, R_ALL);

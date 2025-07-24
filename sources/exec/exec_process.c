@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 12:56:41 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 15:57:42 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 
 int	free_child(t_exec *exec, t_input *input)
 {
+	close_all(exec);
+	free(exec->fd);
 	free(exec->cmd_path);
 	free(exec->pid_child);
 	clear_vector(&input->v_tokens);
@@ -24,56 +26,7 @@ int	free_child(t_exec *exec, t_input *input)
 	free(input->env);
 	free(input->prompt);
 	free(input);
-	close_all(exec);
 	return (127);
-}
-
-static void	apply_redirections(t_input *input, int cmd_index, int *fd_infile,
-		int *fd_outfile)
-{
-	t_token	*tokens_array;
-	int		i;
-	int		cmd_count;
-
-	tokens_array = (t_token *)input->v_tokens->array;
-	i = 0;
-	cmd_count = 0;
-	while (i < input->token_qty)
-	{
-		if (tokens_array[i].type == COMMAND)
-		{
-			if (cmd_count == cmd_index)
-			{
-				i++;
-				while (i < input->token_qty && tokens_array[i].type != COMMAND)
-				{
-					if (tokens_array[i].type == REDIR_OUT)
-					{
-						*fd_outfile = open(tokens_array[i].formatted_content,
-								O_WRONLY | O_CREAT | O_TRUNC, 0644);
-					}
-					else if (tokens_array[i].type == APPEND)
-					{
-						*fd_outfile = open(tokens_array[i].formatted_content,
-								O_WRONLY | O_CREAT | O_APPEND, 0644);
-					}
-					else if (tokens_array[i].type == REDIR_IN)
-					{
-						*fd_infile = open(tokens_array[i].formatted_content,
-								O_RDONLY);
-					}
-					else if (tokens_array[i].type == HEREDOC)
-					{
-						*fd_infile = ((int *)tokens_array[i].formatted_content)[1];
-					}
-					i++;
-				}
-				break ;
-			}
-			cmd_count++;
-		}
-		i++;
-	}
 }
 
 static int	execute_child(t_exec *exec, int i, t_input *input)
@@ -89,7 +42,6 @@ static int	execute_child(t_exec *exec, int i, t_input *input)
 	}
 	if (pid == 0)
 	{
-		apply_redirections(input, i, &exec->fd_infile, &exec->fd_outfile);
 		prepare_pipe(exec, i);
 		if (!exec->cmd_path)
 			exit(free_child(exec, input));
@@ -100,8 +52,7 @@ static int	execute_child(t_exec *exec, int i, t_input *input)
 	return (pid);
 }
 
-int	execute_command(t_token *current_token, t_exec *exec, int i,
-		t_input *input)
+int	execute_command(t_token *current_token, t_exec *exec, int i, t_input *input)
 {
 	int	pid;
 

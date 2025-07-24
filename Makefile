@@ -125,6 +125,8 @@ F_EXEC :=				exec_cmd.c			\
 						path_utils.c		\
 						utils.c				\
 						pipes_utils.c		\
+						exec_builtin.c		\
+						redir_builtin.c		\
 
 F_ENV 	:=				env_array_to_list.c	\
 						env_list_to_array.c \
