@@ -12,5 +12,5 @@ void	welcome(void)
 | $$ \\/  | $$| $$| $$  | $$| $$ /$$$$$$$/| $$  | $$|  $$$$$$$| $$| $$\n\
 |__/     |__/|__/|__/  |__/|__/|_______/ |__/  |__/ \\_______/|__/|__/\n\n";
 
-	printf("%s%s%s\n", FG_CYAN, banner, R_ALL);
+	printf("%s%s%s\n", FG_BLUE, banner, R_ALL);
 }

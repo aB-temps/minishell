@@ -18,18 +18,6 @@ static void	reset_input(t_input *input)
 	input->token_qty = 0;
 }
 
-static char	*prompt_user(char **prompt)
-{
-	char	*line;
-
-	if (!build_prompt(prompt))
-		*prompt = ft_strdup("minishell $ ");
-	if (!*prompt)
-		return ((void *)0);
-	line = readline(*prompt);
-	return (line);
-}
-
 void	get_input(char **env)
 {
 	t_input	*input;
@@ -40,7 +28,8 @@ void	get_input(char **env)
 	init_env(env, input);
 	while (1)
 	{
-		input->line = prompt_user(&input->prompt);
+		build_prompt(input);
+		input->line = readline(input->prompt);
 		if (!input->line)
 			exit_minishell(input, input->last_exit_status);
 		if (is_valid_input(input->line))
