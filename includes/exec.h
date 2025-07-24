@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/24 16:55:54 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 20:41:22 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ typedef struct s_exec
 
 /*------------------------------- FUNCTIONS -------------------------------*/
 char		*get_path(char **env);
-char		*find_command_path(char *cmd, char **paths);
-char		*find_full_command_path(char *cmd, char **env);
+char		*find_full_command_path(char *cmd, char **env, int *error);
 int			execute_command(t_token *current_token, t_exec *exec, int i,
 				t_input *input);
 int			launch_all_commands(t_input *input, t_exec *exec);
@@ -66,7 +65,6 @@ int			is_builtin(t_token current_token, t_input *input, t_exec *exec,
 int			create_all_files(t_exec *exec, t_input *input,
 				t_token *token_array);
 void		exit_exec(t_input *input, t_exec *exec);
-int			free_child(t_exec *exec, t_input *input);
 int			check_builtin(char *cmd);
 void		apply_redirections_builtin(t_input *input, int *old_stdout,
 				int *old_stdin);

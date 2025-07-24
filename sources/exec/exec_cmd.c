@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 17:09:56 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 17:32:46 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	create_all_files(t_exec *exec, t_input *input, t_token *token_array)
 	int	i;
 
 	i = 0;
-	while (i <= input->token_qty)
+	while (i < input->token_qty)
 	{
 		if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
 		{
