@@ -16,7 +16,6 @@ static void	reset_input(t_input *input)
 		input->line = (void *)0;
 	}
 	input->token_qty = 0;
-	// clear_vector(&input->v_tokens);
 }
 
 static char	*prompt_user(char **prompt)
@@ -48,6 +47,7 @@ void	get_input(char **env)
 		{
 			if (parse_input(input))
 				start_exec(input);
+			clear_vector(&input->v_tokens);
 		}
 		add_history(input->line);
 		reset_input(input);
