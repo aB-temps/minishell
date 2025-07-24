@@ -26,7 +26,7 @@ t_env_var	*parse_assignation(char *arg, t_input *input)
 			free(var);
 			exit_minishell(input, EXIT_FAILURE);
 		}
-		// var->value = (void *)0;
+		var->value = (void *)0;
 	}
 	else
 	{

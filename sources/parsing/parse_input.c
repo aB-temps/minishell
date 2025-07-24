@@ -15,7 +15,7 @@ void	*parse_input(t_input *input)
 		ft_putstr_fd("minishell: syntax error\n", STDERR_FILENO);
 		return ((void *)0);
 	}
-	format_input(input,(t_token *)input->v_tokens->array);
+	format_input(input, (t_token *)input->v_tokens->array);
 	handle_heredoc(input);
 	// print_input(input, "FORMATTED INPUT");
 	return (input);

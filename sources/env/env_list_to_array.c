@@ -12,6 +12,12 @@ void	update_env_array(t_input *input)
 		exit_minishell(input, EXIT_FAILURE);
 }
 
+static void	cpy_var_value(char *value, char **var, size_t line_len)
+{
+	ft_strlcat(*var, "=", line_len);
+	ft_strlcat(*var, value, line_len);
+}
+
 char	**env_list_to_array(t_list *env)
 {
 	char	**a_env;
@@ -31,10 +37,7 @@ char	**env_list_to_array(t_list *env)
 			return (free_tab_return_null(a_env));
 		ft_strlcpy(a_env[i], ((t_env_var *)env->content)->key, len);
 		if (((t_env_var *)env->content)->value)
-		{
-			ft_strlcat(a_env[i], "=", len);
-			ft_strlcat(a_env[i], ((t_env_var *)env->content)->value, len);
-		}
+			cpy_var_value(((t_env_var *)env->content)->value, &a_env[i], len);
 		env = env->next;
 		i++;
 	}
