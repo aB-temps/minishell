@@ -10,7 +10,7 @@ t_list	*find_env_var(char *key, t_list *env)
 	{
 		if (!ft_strcmp(key, ((t_env_var *)env->content)->key))
 			return (env);
+		env = env->next;
 	}
-	env = env->next;
 	return ((void *)0);
 }
