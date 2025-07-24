@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 13:11:22 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 13:34:16 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	execute_all_commands(t_input *input, t_exec *exec)
 	if (create_all_files(exec, tokens_array)
 		|| launch_all_commands(input, exec))
 		return (1);
-	print_exec(exec, "AFTER_EXEC");
+	//print_exec(exec, "AFTER_EXEC");
 	wait_childs(exec, input);
 	free(exec->pid_child);
 	return (0);
@@ -136,7 +136,7 @@ void	start_exec(t_input *input)
 	t_exec	exec;
 
 	init_t_exec(&exec);
-	print_exec(&exec, "START_EXEC");
+	// print_exec(&exec, "START_EXEC");
 	if (execute_all_commands(input, &exec) == 1)
 	{
 		free(exec.fd);
