@@ -6,11 +6,25 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:52 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 20:59:15 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/26 15:38:40 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+
+char	*get_path(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+			return (env[i] + 5);
+		i++;
+	}
+	return (NULL);
+}
 
 static char	*build_and_check_path(char *path, char *cmd)
 {
@@ -51,8 +65,11 @@ char	*find_command_path(char *cmd, char **paths, int *error)
 	int		i;
 	char	*cmd_path;
 
-	if (ft_strrchr(cmd, '/') != NULL)
+	if (paths == NULL || ft_strrchr(cmd, '/') != NULL)
+	{
+		printf("cc\n");
 		return (handle_direct_path(cmd, error));
+	}
 	i = 0;
 	while (paths[i])
 	{
@@ -77,12 +94,9 @@ char	*find_full_command_path(char *cmd, char **env, int *error)
 	if (!cmd || !env)
 		return (NULL);
 	path = get_path(env);
-	if (!path)
-		return (NULL);
 	split_path = ft_split(path, ':');
-	if (!split_path)
-		return (NULL);
 	cmd_path = find_command_path(cmd, split_path, error);
-	free_tab_return_null(split_path);
+	if (split_path)
+		free_tab_return_null(split_path);
 	return (cmd_path);
 }
