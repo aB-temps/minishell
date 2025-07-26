@@ -146,7 +146,7 @@ F_UTILS :=				init_struct.c		\
 						str_patdel.c		\
 						str_chardel.c		\
 						str_replace.c		\
-						extract_var_kay.c	\
+						extract_var_key.c	\
 						exp_var_strlen.c	\
 						ft_tabdup.c			\
 						ft_tablen.c			\

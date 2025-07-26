@@ -11,9 +11,14 @@ static void	handle_env_var_expansion(t_input *input)
 	{
 		if (array[i].type != S_QUOTES && ft_strchr(array[i].raw_content, '$')
 			&& ft_strlen(array[i].raw_content) != 1)
-			format_env_var(input, array, &i);
-		else
-			i++;
+		{
+			array[i].formatted_content = substitute_env_var(array[i].raw_content,
+					input);
+			if (!array[i].formatted_content)
+				exit_minishell(input, EXIT_FAILURE);
+			array[i].type = ENV_VAR;
+		}
+		i++;
 	}
 }
 
@@ -28,14 +33,14 @@ static void	handle_quotes(t_input *input)
 	while (i < input->token_qty)
 	{
 		temp = array[i].raw_content;
-		if (array[i].type == S_QUOTES
-			&& !(i - 1 >= 0 && array[i - 1].type == HEREDOC))
+		if (array[i].type == S_QUOTES && !(i - 1 >= 0 && array[i
+				- 1].type == HEREDOC))
 		{
 			array[i].raw_content = str_patdel(array[i].raw_content, "'");
 			free(temp);
 		}
-		else if (array[i].type == D_QUOTES
-			&& !(i - 1 >= 0 && array[i - 1].type == HEREDOC))
+		else if (array[i].type == D_QUOTES && !(i - 1 >= 0 && array[i
+				- 1].type == HEREDOC))
 		{
 			array[i].raw_content = str_patdel(array[i].raw_content, "\"");
 			free(temp);
