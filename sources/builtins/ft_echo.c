@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 22:07:06 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:07:39 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@ static void	parse_param(char *arg, bool *n_param, size_t *i)
 	if (!arg[j] || !arg[j + 1])
 		return ;
 	j++;
-	// if (!arg[j])
-	// 	return ;
 	while (arg[j])
 	{
 		if (is_valid_echo_param(arg[j]))
