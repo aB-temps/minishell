@@ -146,6 +146,8 @@ F_UTILS :=				init_struct.c		\
 						str_patdel.c		\
 						str_chardel.c		\
 						str_replace.c		\
+						extract_var_kay.c	\
+						exp_var_strlen.c	\
 						ft_tabdup.c			\
 						ft_tablen.c			\
 						gen_random_num_sequence.c \

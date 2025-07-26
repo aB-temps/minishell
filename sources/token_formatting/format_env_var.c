@@ -1,23 +1,5 @@
 #include "token_formatting.h"
 
-static char	*extract_var_key(char *s)
-{
-	char	*var_key;
-	size_t	start;
-	size_t	end;
-
-	start = 0;
-	while (s[start] && s[start] != '$')
-		start++;
-	end = start + 1;
-	while (s[end] && s[end] != '$' && ft_isalnum(s[end]))
-		end++;
-	var_key = ft_strndup(s + start, end - start);
-	if (!var_key)
-		return ((void *)0);
-	return (var_key);
-}
-
 t_vector	*parse_env_var(char *s, t_input *input)
 {
 	t_vector	*var_array;
@@ -59,33 +41,6 @@ t_vector	*parse_env_var(char *s, t_input *input)
 			i++;
 	}
 	return (var_array);
-}
-
-size_t	exp_var_strlen(char *s, t_vector *v_var_array)
-{
-	const t_env_var	*var_array = (t_env_var *)v_var_array->array;
-	size_t			i;
-	size_t			j;
-	size_t			len;
-
-	i = 0;
-	j = 0;
-	len = 0;
-	while (s[i])
-	{
-		if (j < v_var_array->nb_elements && !ft_strncmp(var_array[j].key, &s[i],
-				ft_strlen(var_array[j].key)))
-		{
-			i += ft_strlen(var_array[j].key);
-			len += ft_strlen(var_array[j++].value);
-		}
-		else
-		{
-			i++;
-			len++;
-		}
-	}
-	return (len);
 }
 
 char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input,

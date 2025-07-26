@@ -1,0 +1,19 @@
+#include "libft.h"
+
+char	*extract_var_key(char *s)
+{
+	char *var_key;
+	size_t start;
+	size_t end;
+
+	start = 0;
+	while (s[start] && s[start] != '$')
+		start++;
+	end = start + 1;
+	while (s[end] && s[end] != '$' && ft_isalnum(s[end]))
+		end++;
+	var_key = ft_strndup(s + start, end - start);
+	if (!var_key)
+		return ((void *)0);
+	return (var_key);
+}
