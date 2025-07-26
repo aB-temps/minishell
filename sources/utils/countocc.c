@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   countocc.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/26 17:47:26 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/26 17:47:27 by abetemps         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "token_formatting.h"
 
 size_t	countocc(char *s, char *to_find)
 {
-	size_t count;
-	char *cursor;
+	size_t	count;
+	char	*cursor;
 
 	count = 0;
 	cursor = s;
@@ -16,4 +28,3 @@ size_t	countocc(char *s, char *to_find)
 	}
 	return (count);
 }
-

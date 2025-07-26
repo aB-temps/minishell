@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extract_var_key.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/26 17:47:41 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/26 17:47:48 by abetemps         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 
 char	*extract_var_key(char *s)
 {
-	char *var_key;
-	size_t start;
-	size_t end;
+	char	*var_key;
+	size_t	start;
+	size_t	end;
 
 	start = 0;
 	while (s[start] && s[start] != '$')
