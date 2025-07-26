@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 13:34:16 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/26 15:18:16 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,19 @@ char	*get_path(char **env)
 static int	execute_all_commands(t_input *input, t_exec *exec)
 {
 	t_token	*tokens_array;
+	int		res;
 
 	exec->cmd_count = count_cmd(input);
 	exec->pid_child = ft_calloc(exec->cmd_count, sizeof(pid_t));
 	if (!exec->pid_child)
 		return (1);
 	tokens_array = (t_token *)input->v_tokens->array;
-	if (create_all_files(exec, tokens_array)
-		|| launch_all_commands(input, exec))
-		return (1);
-	//print_exec(exec, "AFTER_EXEC");
+	res = create_all_files(exec, input, tokens_array);
+	if (res != 0)
+		return (res);
+	res = launch_all_commands(input, exec);
+	if (res != 0)
+		return (res);
 	wait_childs(exec, input);
 	free(exec->pid_child);
 	return (0);
@@ -50,7 +53,7 @@ int	handle_redir_in(t_exec *exec, t_token current_token)
 {
 	int	fd_temp;
 
-	if (current_token.formatted_content)
+	if (current_token.type == REDIR_IN)
 	{
 		fd_temp = open(current_token.formatted_content, O_RDONLY);
 		if (fd_temp == -1)
@@ -64,6 +67,12 @@ int	handle_redir_in(t_exec *exec, t_token current_token)
 				close(exec->fd_infile);
 			exec->fd_infile = fd_temp;
 		}
+	}
+	else
+	{
+		if (exec->fd_infile != -1)
+			close(exec->fd_infile);
+		exec->fd_infile = ((int *)current_token.formatted_content)[1];
 	}
 	return (0);
 }
@@ -92,22 +101,23 @@ int	handle_redir_out(t_exec *exec, t_token current_token)
 	return (0);
 }
 
-int	create_all_files(t_exec *exec, t_token *token_array)
+int	create_all_files(t_exec *exec, t_input *input, t_token *token_array)
 {
 	int	i;
 
 	i = 0;
-	while (i < exec->cmd_count)
+	while (i < input->token_qty)
 	{
 		if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
 		{
 			if (handle_redir_out(exec, token_array[i]))
-				return (1);
+				return (2);
 		}
-		else if (token_array[i].type == REDIR_IN)
+		else if (token_array[i].type == REDIR_IN
+			|| token_array[i].type == HEREDOC)
 		{
 			if (handle_redir_in(exec, token_array[i]))
-				return (1);
+				return (2);
 		}
 		i++;
 	}
@@ -134,13 +144,11 @@ void	init_t_exec(t_exec *exec)
 void	start_exec(t_input *input)
 {
 	t_exec	exec;
+	int		res;
 
 	init_t_exec(&exec);
-	// print_exec(&exec, "START_EXEC");
-	if (execute_all_commands(input, &exec) == 1)
-	{
-		free(exec.fd);
-		exit_minishell(input, input->last_exit_status);
-	}
+	res = execute_all_commands(input, &exec);
 	free(exec.fd);
+	if (res == 1)
+		exit_minishell(input, input->last_exit_status);
 }

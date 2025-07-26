@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:55 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 12:59:06 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 15:56:23 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	first_cmd(t_exec *exec, int fd_infile)
 	if (fd_infile == -1)
 	{
 		if (dup2(exec->fd->fd2[1], STDOUT_FILENO) == -1)
-			error_occured(exec,"dup2");
+			error_occured(exec, "dup2");
 		close_all(exec);
 		return ;
 	}
@@ -46,7 +46,7 @@ void	middle_cmd(t_exec *exec)
 	close_all(exec);
 }
 
-void	last_cmd(t_exec *exec,int fd_outfile)
+void	last_cmd(t_exec *exec, int fd_outfile)
 {
 	if (fd_outfile == -1)
 	{

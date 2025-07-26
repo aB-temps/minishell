@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:57 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 13:33:25 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/24 16:39:50 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,184 +16,12 @@
 #include "input.h"
 #include <fcntl.h>
 
-static void	apply_redirections_builtin(t_input *input, int cmd_index,
-		int *original_stdout, int *original_stdin)
-{
-	t_token	*tokens_array;
-	int		i;
-	int		fd;
-	int		cmd_count;
-
-	tokens_array = (t_token *)input->v_tokens->array;
-	i = 0;
-	cmd_count = 0;
-	while (i < input->token_qty)
-	{
-		if (tokens_array[i].type == COMMAND)
-		{
-			if (cmd_count == cmd_index)
-			{
-				i++;
-				while (i < input->token_qty && tokens_array[i].type != COMMAND)
-				{
-					if (tokens_array[i].type == REDIR_OUT)
-					{
-						if (*original_stdout == -1)
-							*original_stdout = dup(STDOUT_FILENO);
-						fd = open(tokens_array[i].formatted_content,
-								O_WRONLY | O_CREAT | O_TRUNC, 0644);
-						if (fd != -1)
-						{
-							dup2(fd, STDOUT_FILENO);
-							close(fd);
-						}
-					}
-					else if (tokens_array[i].type == APPEND)
-					{
-						if (*original_stdout == -1)
-							*original_stdout = dup(STDOUT_FILENO);
-						fd = open(tokens_array[i].formatted_content,
-								O_WRONLY | O_CREAT | O_APPEND, 0644);
-						if (fd != -1)
-						{
-							dup2(fd, STDOUT_FILENO);
-							close(fd);
-						}
-					}
-					else if (tokens_array[i].type == REDIR_IN)
-					{
-						if (*original_stdin == -1)
-							*original_stdin = dup(STDIN_FILENO);
-						fd = open((char *)tokens_array[i].formatted_content,
-								O_RDONLY);
-						if (fd != -1)
-						{
-							dup2(fd, STDIN_FILENO);
-							close(fd);
-						}
-					}
-					else if (tokens_array[i].type == HEREDOC)
-					{
-						if (*original_stdin == -1)
-							*original_stdin = dup(STDIN_FILENO);
-						dup2(STDIN_FILENO,
-							((int *)tokens_array[i].formatted_content)[1]);
-						close(STDIN_FILENO);
-					}
-					i++;
-				}
-				break ;
-			}
-			cmd_count++;
-		}
-		i++;
-	}
-}
-
-static void	restore_redirections_builtin(int original_stdout,
-		int original_stdin)
-{
-	if (original_stdout != -1)
-	{
-		dup2(original_stdout, STDOUT_FILENO);
-		close(original_stdout);
-	}
-	if (original_stdin != -1)
-	{
-		dup2(original_stdin, STDIN_FILENO);
-		close(original_stdin);
-	}
-}
-
-char	*get_type(ssize_t type)
-{
-	const char *types[11] = {
-		"COMMAND",
-		"ARG",
-		"PIPE",
-		"REDIR_IN",
-		"REDIR_OUT",
-		"APPEND",
-		"HEREDOC",
-		"ASSIGN",
-		"S_QUOTES",
-		"D_QUOTES",
-		"ENV_VAR",
-	};
-	return ((char *)types[type]);
-}
-
 void	exit_exec(t_input *input, t_exec *exec)
 {
 	close_all(exec);
 	free(exec->pid_child);
 	free(exec->fd);
 	exit_minishell(input, input->last_exit_status);
-}
-
-static void	execute_builtin(char **cmd, t_input *input, t_exec *exec)
-{
-	if (ft_strcmp(cmd[0], "echo") == 0)
-		ft_echo(cmd);
-	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		ft_pwd();
-	else if (ft_strcmp(cmd[0], "cd") == 0)
-		ft_cd(cmd[1]);
-	else if (ft_strcmp(cmd[0], "export") == 0)
-		ft_export(cmd, input);
-	else if (ft_strcmp(cmd[0], "unset") == 0)
-		ft_unset(cmd, input);
-	else if (ft_strcmp(cmd[0], "env") == 0)
-		ft_env(input->env->array);
-	else if (ft_strcmp(cmd[0], "exit") == 0)
-		ft_exit(input, exec);
-}
-
-int	check_builtin(char *cmd)
-{
-	if (ft_strcmp(cmd, "echo") && ft_strcmp(cmd, "pwd") && ft_strcmp(cmd, "cd")
-		&& ft_strcmp(cmd, "export") && ft_strcmp(cmd, "unset") && ft_strcmp(cmd,
-			"env") && ft_strcmp(cmd, "exit"))
-		return (0);
-	return (1);
-}
-
-int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
-{
-	char	**cmd;
-	int		pid;
-	int		original_stdout;
-	int		original_stdin;
-
-	cmd = ((char **)current_token.formatted_content);
-	if (check_builtin(cmd[0]) == 0)
-		return (0);
-	//print_exec(exec, "INSIDE BUILTIN");
-	if (exec->cmd_count > 1)
-	{
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("fork");
-			return (-1);
-		}
-		if (pid == 0)
-		{
-			prepare_pipe(exec, i);
-			execute_builtin(cmd, input, exec);
-			exit(free_child(exec, input));
-		}
-		return (pid);
-	}
-	else
-	{
-		original_stdout = -1;
-		original_stdin = -1;
-		apply_redirections_builtin(input, i, &original_stdout, &original_stdin);
-		execute_builtin(cmd, input, exec);
-		restore_redirections_builtin(original_stdout, original_stdin);
-		return (1);
-	}
 }
 
 char	*get_cmd_by_index(t_input *input, t_token *tokens_array, int index)
