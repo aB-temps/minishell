@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   format_command.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/26 22:30:56 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/26 22:32:33 by abetemps         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "token_formatting.h"
 
 static void	*joinback_args(t_token *array, size_t *k, size_t *arg_qty)
