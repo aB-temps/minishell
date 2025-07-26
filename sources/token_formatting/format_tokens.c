@@ -11,9 +11,14 @@ static void	handle_env_var_expansion(t_input *input)
 	{
 		if (array[i].type != S_QUOTES && ft_strchr(array[i].raw_content, '$')
 			&& ft_strlen(array[i].raw_content) != 1)
-			format_env_var(input, array, &i);
-		else
-			i++;
+		{
+			array[i].formatted_content = substitute_env_var(array[i].raw_content,
+					input);
+			if (!array[i].formatted_content)
+				exit_minishell(input, EXIT_FAILURE);
+			array[i].type = ENV_VAR;
+		}
+		i++;
 	}
 }
 

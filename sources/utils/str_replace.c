@@ -1,14 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   str_replace.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/26 17:46:18 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/26 17:50:22 by abetemps         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "token_formatting.h"
 
 char	*str_replace(char *s, char *old, char *new)
 {
 	const size_t	olen = ft_strlen(old);
-	const size_t	ttlen = ft_strlen(s) - (countocc(s, old) * olen)
-			+ (countocc(s, old) * ft_strlen(new));
+	const size_t	ttlen = ft_strlen(s) -\
+	(countocc(s, old) * olen) + (countocc(s, old) * ft_strlen(new));
 	char			*ns;
 	size_t			i;
 	size_t			j;
-	
+
 	i = 0;
 	j = 0;
 	ns = ft_calloc(sizeof(char), ttlen + 1);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_struct.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/26 17:48:31 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/26 17:48:32 by abetemps         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "builtins.h"
 #include "input.h"
 #include "parsing.h"
@@ -12,7 +24,7 @@ void	init_empty_env(t_input *input)
 	cwd = getcwd(cwd, PATH_MAX);
 	if (!cwd)
 		exit_minishell(input, EXIT_FAILURE);
-	input->env->array = ft_calloc(4, sizeof(char *));
+	input->env->array = ft_calloc(3, sizeof(char *));
 	if (!input->env->array)
 		exit_minishell(input, EXIT_FAILURE);
 	input->env->array[0] = ft_strjoin("PWD=", cwd);
@@ -21,10 +33,7 @@ void	init_empty_env(t_input *input)
 	input->env->array[1] = ft_strdup("SHLVL=1");
 	if (!input->env->array[1])
 		exit_minishell(input, EXIT_FAILURE);
-	input->env->array[2] = ft_strdup("_=/usr/bin/env");
-	if (!input->env->array[2])
-		exit_minishell(input, EXIT_FAILURE);
-	input->env->array[3] = (void *)0;
+	input->env->array[2] = (void *)0;
 	update_env_list(input);
 }
 

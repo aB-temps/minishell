@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_heredoc.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/26 18:18:11 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/26 18:18:31 by abetemps         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "debug.h"
 #include "heredoc.h"
 
@@ -34,8 +46,8 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		if (!input->line)
 			exit_minishell(input, EXIT_FAILURE);
 	}
-	close(fds[0]); // CLOSE FD{W} ??
-	fds[0] = -1; // CLOSE FD{W} ??
+	close(fds[0]);
+	fds[0] = -1;
 	token->raw_content = str_free_to_join(token->raw_content,
 			(char *)token->formatted_content);
 	if (!token->raw_content)

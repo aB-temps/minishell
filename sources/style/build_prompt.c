@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   build_prompt.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/26 18:56:17 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/26 18:56:19 by abetemps         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "style.h"
 #include "token_formatting.h"
 #include <linux/limits.h>
@@ -16,7 +28,7 @@ char	*build_ps1(t_input *input)
 	free(username);
 	if (!ps1)
 		exit_minishell(input, EXIT_FAILURE);
-	ps1 = str_free_to_join(ps1, FG_WHITE " → "DIM);
+	ps1 = str_free_to_join(ps1, FG_WHITE " → " DIM);
 	if (!ps1)
 		exit_minishell(input, EXIT_FAILURE);
 	return (ps1);
@@ -38,6 +50,7 @@ char	*build_ps2(t_input *input)
 		exit_minishell(input, EXIT_FAILURE);
 	return (ps2);
 }
+
 char	*build_ps3(t_input *input)
 {
 	char	*ps3;

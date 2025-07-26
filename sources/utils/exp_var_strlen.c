@@ -1,35 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_minishell.c                                   :+:      :+:    :+:   */
+/*   exp_var_strlen.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/26 17:47:34 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:47:35 by abetemps         ###   ########.fr       */
+/*   Created: 2025/07/26 17:47:37 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/26 17:47:38 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "input.h"
 #include "utils.h"
 
-void	exit_minishell(t_input *input, int exit_code)
+size_t	exp_var_strlen(char *s, t_vector *v_var_array)
 {
-	if (input)
+	const t_env_var	*var_array = (t_env_var *)v_var_array->array;
+	size_t			i;
+	size_t			j;
+	size_t			len;
+
+	i = 0;
+	j = 0;
+	len = 0;
+	while (s[i])
 	{
-		if (input->v_tokens)
-			clear_vector(&input->v_tokens);
-		if (input->env)
+		if (j < v_var_array->nb_elements && !ft_strncmp(var_array[j].key, &s[i],
+				ft_strlen(var_array[j].key)))
 		{
-			ft_lstclear(&input->env->list, &clear_env_list_elem);
-			free_tab_return_null(input->env->array);
-			free(input->env);
+			i += ft_strlen(var_array[j].key);
+			len += ft_strlen(var_array[j++].value);
 		}
-		if (input->line)
-			free(input->line);
-		if (input->prompt)
-			free(input->prompt);
-		free(input);
+		else
+		{
+			i++;
+			len++;
+		}
 	}
-	exit(exit_code);
+	return (len);
 }

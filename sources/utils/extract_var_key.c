@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_hd_filename_elem.c                           :+:      :+:    :+:   */
+/*   extract_var_key.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/26 17:47:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:47:14 by abetemps         ###   ########.fr       */
+/*   Created: 2025/07/26 17:47:41 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/26 17:47:48 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "input.h"
+#include "libft.h"
 
-void	clear_hd_filename_elem(t_input *input, const char *temp_dir,
-		char *fileid, char *full_path)
+char	*extract_var_key(char *s)
 {
-	if (temp_dir)
-		free((char *)temp_dir);
-	if (fileid)
-		free((char *)fileid);
-	if (full_path)
-		free(full_path);
-	exit_minishell(input, EXIT_FAILURE);
+	char	*var_key;
+	size_t	start;
+	size_t	end;
+
+	start = 0;
+	while (s[start] && s[start] != '$')
+		start++;
+	end = start + 1;
+	while (s[end] && s[end] != '$' && ft_isalnum(s[end]))
+		end++;
+	var_key = ft_strndup(s + start, end - start);
+	if (!var_key)
+		return ((void *)0);
+	return (var_key);
 }

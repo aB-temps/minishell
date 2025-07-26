@@ -1,24 +1,38 @@
 #include "token_formatting.h"
 
-static char	*extract_var_key(char *s)
+static t_env_var	last_exit_status_to_var(t_input *input)
 {
-	char	*var_key;
-	size_t	start;
-	size_t	end;
+	t_env_var	var;
 
-	start = 0;
-	while (s[start] && s[start] != '$')
-		start++;
-	end = start + 1;
-	while (s[end] && s[end] != '$' && ft_isalnum(s[end]))
-		end++;
-	var_key = ft_strndup(s + start, end - start);
-	if (!var_key)
-		return ((void *)0);
-	return (var_key);
+	var.key = ft_strdup("$?");
+	if (!var.key)
+		exit_minishell(input, EXIT_FAILURE);
+	var.value = ft_itoa(input->last_exit_status);
+	if (!var.value)
+	{
+		free(var.key);
+		exit_minishell(input, EXIT_FAILURE);
+	}
+	return (var);
 }
 
-t_vector	*parse_env_var(char *s, t_input *input)
+static t_env_var	string_to_var(char *s, t_input *input)
+{
+	t_env_var	var;
+
+	var.key = extract_var_key(s);
+	if (!var.key)
+		exit_minishell(input, EXIT_FAILURE);
+	var.value = get_env_value(var.key + 1, input);
+	if (!var.value)
+	{
+		free(var.key);
+		exit_minishell(input, EXIT_FAILURE);
+	}
+	return (var);
+}
+
+static t_vector	*parse_env_var(char *s, t_input *input)
 {
 	t_vector	*var_array;
 	t_env_var	var;
@@ -34,23 +48,9 @@ t_vector	*parse_env_var(char *s, t_input *input)
 				+ 1] == '?'))
 		{
 			if (s[i + 1] == '?')
-			{
-				var.key = ft_strdup("$?");
-				if (!var.key)
-					exit_minishell(input, EXIT_FAILURE);
-				var.value = ft_itoa(input->last_exit_status);
-				if (!var.value)
-					exit_minishell(input, EXIT_FAILURE);
-			}
+				var = last_exit_status_to_var(input);
 			else
-			{
-				var.key = extract_var_key(&s[i]);
-				if (!var.key)
-					exit_minishell(input, EXIT_FAILURE);
-				var.value = get_env_value(var.key + 1, input);
-				if (!var.value)
-					exit_minishell(input, EXIT_FAILURE);
-			}
+				var = string_to_var(&s[i], input);
 			if (!add_element(var_array, &var))
 				exit_minishell(input, EXIT_FAILURE);
 			i += ft_strlen(var.key);
@@ -61,34 +61,7 @@ t_vector	*parse_env_var(char *s, t_input *input)
 	return (var_array);
 }
 
-size_t	exp_var_strlen(char *s, t_vector *v_var_array)
-{
-	const t_env_var	*var_array = (t_env_var *)v_var_array->array;
-	size_t			i;
-	size_t			j;
-	size_t			len;
-
-	i = 0;
-	j = 0;
-	len = 0;
-	while (s[i])
-	{
-		if (j < v_var_array->nb_elements && !ft_strncmp(var_array[j].key, &s[i],
-				ft_strlen(var_array[j].key)))
-		{
-			i += ft_strlen(var_array[j].key);
-			len += ft_strlen(var_array[j++].value);
-		}
-		else
-		{
-			i++;
-			len++;
-		}
-	}
-	return (len);
-}
-
-char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input,
+static char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input,
 		size_t new_len)
 {
 	const t_env_var	*var_array = (t_env_var *)v_var_array->array;
@@ -132,14 +105,4 @@ char	*substitute_env_var(char *s, t_input *input)
 	if (!ns)
 		exit_minishell(input, EXIT_FAILURE);
 	return (ns);
-}
-
-void	format_env_var(t_input *input, t_token *array, ssize_t *i)
-{
-	array[*i].formatted_content = substitute_env_var(array[*i].raw_content,
-			input);
-	if (!array[*i].formatted_content)
-		exit_minishell(input, EXIT_FAILURE);
-	array[*i].type = ENV_VAR;
-	(*i)++;
 }

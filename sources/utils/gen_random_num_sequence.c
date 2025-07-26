@@ -1,6 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   gen_random_num_sequence.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/26 17:48:02 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/26 17:48:57 by abetemps         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include <fcntl.h>
-#include <stdlib.h>
 #include <unistd.h>
 
 static void	*clean_exit(char *seq, int fd)
@@ -11,12 +22,13 @@ static void	*clean_exit(char *seq, int fd)
 		close(fd);
 	return (NULL);
 }
+
 char	*gen_random_num_sequence(size_t len)
 {
-	char *seq;
-	int fd;
-	unsigned int buf;
-	size_t i;
+	char			*seq;
+	int				fd;
+	unsigned int	buf;
+	size_t			i;
 
 	seq = NULL;
 	fd = open("/dev/urandom", O_RDONLY);
