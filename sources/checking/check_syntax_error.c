@@ -13,7 +13,7 @@ bool	check_syntax_error(t_input *input)
 	while (i < input->token_qty)
 	{
 		if (i + 1 < input->token_qty && (array[i].type > PIPE
-				&& array[i].type <= HEREDOC) && array[i + 1].type != ARG)
+				&& array[i].type <= HEREDOC) && array[i + 1].type < ARG)
 			return (false);
 		i++;
 	}
