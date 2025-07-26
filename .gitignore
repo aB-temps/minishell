@@ -12,6 +12,4 @@ outfile
 *.swp
 vgcore*
 *.test
-a
-b
-c
+42_minishell_tester
