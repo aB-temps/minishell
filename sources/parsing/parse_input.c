@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_input.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/26 17:54:13 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/26 17:55:18 by abetemps         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "debug.h"
 #include "heredoc.h"
 
@@ -10,7 +22,8 @@ void	*parse_input(t_input *input)
 	print_input(input, "TOKENIZED");
 	if (!check_syntax_error(input))
 	{
-		ft_putstr_fd(BOLD FG_RED"minishell: syntax error\n"R_ALL, STDERR_FILENO);
+		ft_putstr_fd(BOLD FG_RED "minishell: syntax error\n" R_ALL,
+			STDERR_FILENO);
 		return ((void *)0);
 	}
 	format_tokens(input);
