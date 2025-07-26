@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokenize_input.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/26 18:17:23 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/26 18:17:24 by abetemps         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "lexing.h"
 
 void	tokenize_input(t_input *input, char *line)
 {
-	size_t i;
-	size_t line_len;
+	size_t	i;
+	size_t	line_len;
 
 	i = 0;
 	line_len = ft_strlen(line);
