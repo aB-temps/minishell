@@ -6,13 +6,13 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 18:14:22 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/26 22:07:06 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-bool	is_valid_echo_param(char c)
+static bool	is_valid_echo_param(char c)
 {
 	const char	valid_params[3] = {'e', 'E', 'n'};
 	size_t		i;
@@ -28,23 +28,22 @@ bool	is_valid_echo_param(char c)
 	return (false);
 }
 
-void	parse_param(char *arg, bool *n_param, size_t *i)
+static void	parse_param(char *arg, bool *n_param, size_t *i)
 {
 	size_t	j;
 
 	j = 0;
 	while (arg[j] && arg[j] != '-')
 		j++;
-	if (!arg[j])
+	if (!arg[j] || !arg[j + 1])
 		return ;
 	j++;
+	// if (!arg[j])
+	// 	return ;
 	while (arg[j])
 	{
 		if (is_valid_echo_param(arg[j]))
-		{
-			if (arg[j] == 'n')
-				*n_param = true;
-		}
+			*n_param = (arg[j] == 'n');
 		else
 		{
 			*n_param = false;

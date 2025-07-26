@@ -6,14 +6,10 @@
 .vscode
 minishell
 minishell_tester
+42_minishell_tester
 test
 infile
 outfile
 *.swp
 vgcore*
 *.test
-a
-b
-c
-ls
-42_minishell_tester

@@ -1,0 +1,11 @@
+42_minishell_tester
+echo
+includes
+la
+libft
+Makefile
+minishell
+minishell.supp
+minishell_tester
+out
+sources
