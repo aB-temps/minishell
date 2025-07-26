@@ -7,16 +7,13 @@ bool	check_syntax_error(t_input *input)
 	ssize_t i;
 
 	i = 0;
-	if (array[0].type == PIPE)
+	if (array[0].type == PIPE || (array[input->token_qty - 1].type >= PIPE
+			&& array[input->token_qty - 1].type <= HEREDOC))
 		return (false);
 	while (i < input->token_qty)
 	{
-		if (i + 1 >= input->token_qty && (array[i].type >= PIPE
-				&& array[i].type <= HEREDOC))
-			return (false);
-		if ((i + 1 < input->token_qty) && (array[i].type >= PIPE
-				&& array[i].type <= HEREDOC) && (array[i + 1].type >= PIPE
-				&& array[i + 1].type <= HEREDOC))
+		if (i + 1 < input->token_qty && (array[i].type > PIPE
+				&& array[i].type <= HEREDOC) && array[i + 1].type != ARG)
 			return (false);
 		i++;
 	}
