@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:56:17 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 16:35:55 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 21:05:39 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ char	*build_ps3(t_input *input)
 	if (!exit_status)
 		exit_minishell(input, EXIT_FAILURE);
 	if (input->last_exit_status > 0)
-		ps3 = ft_strjoin(FG_WHITE "	[" FG_RED, exit_status);
+		ps3 = ft_strjoin(FG_WHITE " [" FG_RED, exit_status);
 	else
-		ps3 = ft_strjoin(FG_WHITE "	[" FG_GREEN, exit_status);
+		ps3 = ft_strjoin(FG_WHITE " [" FG_GREEN, exit_status);
 	free(exit_status);
 	if (!ps3)
 		exit_minishell(input, EXIT_FAILURE);
@@ -94,7 +94,7 @@ void	build_prompt(t_input *input)
 		if (!input->prompt)
 			exit_minishell(input, EXIT_FAILURE);
 	}
-	input->prompt = str_free_to_join(input->prompt, FG_WHITE " ⚡ " R_ALL);
+	input->prompt = str_free_to_join(input->prompt, FG_WHITE "	⚡ " R_ALL);
 	if (!input->prompt)
 		exit_minishell(input, EXIT_FAILURE);
 }
