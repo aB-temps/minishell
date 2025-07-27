@@ -1,20 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_replace.c                                      :+:      :+:    :+:   */
+/*   quoted_arg_len.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 17:52:19 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 17:52:31 by abetemps         ###   ########.fr       */
+/*   Created: 2025/07/27 15:01:07 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/27 15:01:26 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#include "checking.h"
 
-char	*str_replace(char **from, char *to)
+void	quoted_arg_len(char quote, size_t *i, char *line)
 {
-	free(*from);
-	*from = NULL;
-	return (to);
+	size_t	count;
+
+	count = 0;
+	while (line[++(*i)])
+	{
+		if (line[*i] == quote)
+		{
+			count++;
+			while (line[*i] && (count < 2 && !is_whitespace(line[*i])))
+			{
+				count += (line[*i] == quote);
+				(*i)++;
+			}
+			break ;
+		}
+	}
 }

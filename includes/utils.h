@@ -9,9 +9,10 @@
 char	**ft_tabdup(char **tab);
 size_t	ft_tablen(char **tab);
 size_t	countocc(char *s, char *to_find);
-char	*str_replace(char *s, char *old, char *new);
+char	*str_patreplace(char *s, char *old, char *new);
 char	*str_patdel(char *s, char *pat);
 char	*str_chardel(char *s, char *c);
+char	*str_replace(char **from, char *to);
 char	*extract_var_key(char *s);
 size_t	exp_var_strlen(char *s, t_vector *v_var_array);
 void	clear_env_list_elem(void *var);
@@ -22,5 +23,6 @@ void	clear_var_vector(t_vector *v_var_array);
 t_list	*lstgetprev(t_list *lst, t_list *elem);
 int		safe_close(int fd);
 void	unlink_free_tmpfile(char *tmpfile);
+void	quoted_arg_len(char quote, size_t *i, char *line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:19 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 14:15:17 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/27 17:00:06 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,35 +44,6 @@ static t_env_var	string_to_var(char *s, t_input *input)
 	return (var);
 }
 
-static t_vector	*parse_env_var(char *s, t_input *input)
-{
-	t_vector	*var_array;
-	t_env_var	var;
-	size_t		i;
-
-	i = 0;
-	var_array = create_vector(1, sizeof(t_env_var), clear_var_vector);
-	if (!var_array)
-		exit_minishell(input, EXIT_FAILURE);
-	while (s[i])
-	{
-		if (s[i] == '$' && s[i + 1] && (ft_isalnum(s[i + 1])
-				|| s[i + 1] == '?'))
-		{
-			if (s[i + 1] == '?')
-				var = last_exit_status_to_var(input);
-			else
-				var = string_to_var(&s[i], input);
-			if (!add_element(var_array, &var))
-				exit_minishell(input, EXIT_FAILURE);
-			i += ft_strlen(var.key);
-		}
-		else
-			i++;
-	}
-	return (var_array);
-}
-
 static char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input,
 		size_t new_len)
 {
@@ -101,6 +72,35 @@ static char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input,
 			ns[k++] = s[i++];
 	}
 	return (ns);
+}
+
+static t_vector	*parse_env_var(char *s, t_input *input)
+{
+	t_vector	*var_array;
+	t_env_var	var;
+	size_t		i;
+
+	i = 0;
+	var_array = create_vector(1, sizeof(t_env_var), clear_var_vector);
+	if (!var_array)
+		exit_minishell(input, EXIT_FAILURE);
+	while (s[i])
+	{
+		if (s[i] == '$' && s[i + 1] && (ft_isalnum(s[i + 1]) || s[i
+				+ 1] == '?'))
+		{
+			if (s[i + 1] == '?')
+				var = last_exit_status_to_var(input);
+			else
+				var = string_to_var(&s[i], input);
+			if (!add_element(var_array, &var))
+				exit_minishell(input, EXIT_FAILURE);
+			i += ft_strlen(var.key);
+		}
+		else
+			i++;
+	}
+	return (var_array);
 }
 
 char	*substitute_env_var(char *s, t_input *input)

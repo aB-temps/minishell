@@ -6,32 +6,13 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:17:14 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 18:17:15 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/27 15:03:47 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexing.h"
+#include "utils.h"
 #include <stdio.h>
-
-void	quoted_arg_len(char quote, size_t *i, char *line)
-{
-	size_t	count;
-
-	count = 0;
-	while (line[++(*i)])
-	{
-		if (line[*i] == quote)
-		{
-			count++;
-			while (line[*i] && (count < 2 && !is_whitespace(line[*i])))
-			{
-				count += (line[*i] == quote);
-				(*i)++;
-			}
-			break ;
-		}
-	}
-}
 
 void	*tokenize_quote(t_input *input, size_t *i, char *line)
 {

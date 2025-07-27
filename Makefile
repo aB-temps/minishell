@@ -145,6 +145,7 @@ F_UTILS :=				init_struct.c		\
 						countocc.c			\
 						str_patdel.c		\
 						str_chardel.c		\
+						str_patreplace.c	\
 						str_replace.c		\
 						extract_var_key.c	\
 						exp_var_strlen.c	\
@@ -156,6 +157,7 @@ F_UTILS :=				init_struct.c		\
 						lstgetprev.c		\
 						safe_close.c		\
 						unlink_free_tmpfile.c	\
+						quoted_arg_len.c	\
 						
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\

@@ -55,8 +55,6 @@ struct						s_input
 	int						last_exit_status;
 };
 
-// void						init_input(t_input *input, char *line, char *prompt,
-// 								int exit_status);
 void						init_env(char **env, t_input *input);
 
 void						init_token(t_token *token);
@@ -68,8 +66,5 @@ t_list						*env_array_to_list(char **env);
 char						**env_list_to_array(t_list *env);
 void						exit_minishell(t_input *input, int exit_code);
 void						clear_env_list_elem(void *var);
-// lib
-/* char					**tabdup(char **tab);
-size_t	ft_tablen(char **tab); */
 
 #endif

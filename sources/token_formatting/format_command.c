@@ -19,6 +19,7 @@ static void	*joinback_args(t_token *array, size_t *k, size_t *arg_qty)
 			content = str_free_to_join(content, array[*k + 1].raw_content);
 		if (!content)
 			return ((void *)0);
+		array[*k].link_to_next = 0;
 		(*k)++;
 		(*arg_qty)--;
 	}

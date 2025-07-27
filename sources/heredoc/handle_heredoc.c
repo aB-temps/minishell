@@ -10,16 +10,9 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	while (1)
 	{
 		line = readline("\e[34m\e[1mheredoc > \e[0m");
-		if (!line)
-		{
-			// free(fds);
-			// exit_minishell(input, EXIT_FAILURE);
-		}
-		if (!ft_strncmp(line, (char *)token->formatted_content,
-				ft_strlen((char *)token->formatted_content) + ft_strlen(line)))
+		if (!line || !ft_strcmp(line, (char *)token->formatted_content))
 			break ;
-		if (!ft_strchr((char *)token->formatted_content, '\'')
-				&& !ft_strchr((char *)token->formatted_content, '"'))
+		if (token->link_to_next)
 		{
 			tmp = line;
 			line = substitute_env_var(line, input);
@@ -32,10 +25,6 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		free(line);
 	}
 	safe_close(fds[0]);
-	token->raw_content = str_free_to_join(token->raw_content,
-			(char *)token->formatted_content);
-	if (!token->raw_content)
-		exit_minishell(input, EXIT_FAILURE);
 	free(token->formatted_content);
 	token->formatted_content = fds;
 }
@@ -62,7 +51,6 @@ static void	open_heredoc(int **fds, char *tmpfile, t_input *input)
 	}
 	unlink_free_tmpfile(tmpfile);
 }
-
 void	handle_heredoc(t_input *input)
 {
 	t_token	*array;
