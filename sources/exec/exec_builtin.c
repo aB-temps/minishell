@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 04:11:08 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 05:57:11 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
 	cmd = ((char **)current_token.formatted_content);
 	if (check_builtin(cmd[0]) == 0)
 		return (0);
-	// print_exec(exec, "INSIDE BUILTIN");
 	if (exec->cmd_count > 1)
 	{
 		pid = fork();

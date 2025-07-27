@@ -35,21 +35,22 @@ void	ft_exit(char **cmd, t_input *input, t_exec *exec)
 	int	nb;
 	int	error;
 
-	if (exec->cmd_count == 1)
+	error = 0;
+	if (exec->cmd_count == 1 && isatty(fileno(stdin)))
 		ft_putendl_fd("exit", STDERR_FILENO);
 	if (!cmd[1])
 	{
 		exit_exec(input, exec);
 		return ;
 	}
-	if (!is_valid_number(cmd[1]))
-		print_numeric_error(cmd[1], input, exec);
 	if (cmd[2])
 	{
 		input->last_exit_status = 1;
 		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
 		return ;
 	}
+	if (!is_valid_number(cmd[1]))
+		print_numeric_error(cmd[1], input, exec);
 	nb = ft_atoi(cmd[1], &error);
 	input->last_exit_status = nb % 256;
 	exit_exec(input, exec);
