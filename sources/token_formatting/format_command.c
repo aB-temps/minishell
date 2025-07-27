@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:30:56 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 22:32:33 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/27 10:50:02 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static char	**command_args_to_array(t_input *input, t_token *array, ssize_t *i,
 	j = 0;
 	k = *i;
 	content = (void *)0;
-	args_array = malloc(sizeof(char *) * arg_qty + 1);
+	args_array = ft_calloc(arg_qty + 1, sizeof(char *));
 	if (!args_array)
 		exit_minishell(input, EXIT_FAILURE);
 	while (j < arg_qty - 1)
