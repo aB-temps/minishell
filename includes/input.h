@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   input.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/27 19:43:35 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/27 19:46:15 by abetemps         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef INPUT_H
 # define INPUT_H
 
 # include "libft.h"
 # include <sys/types.h>
 
-enum						token_type
+enum						e_token_type
 {
 	COMMAND,
 	PIPE,
@@ -24,14 +36,12 @@ typedef struct s_env		t_env;
 typedef struct s_env_var	t_env_var;
 
 struct						s_env_var
-
 {
 	char					*key;
 	char					*value;
 };
 
 struct						s_env
-
 {
 	t_list					*list;
 	char					**array;
