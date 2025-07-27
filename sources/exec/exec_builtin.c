@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 18:19:22 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 18:34:57 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,25 @@ static void	restore_redirections_builtin(int old_stdout, int old_stdin)
 	}
 }
 
+int	handle_multiple_cmd(t_exec *exec, t_input *input, int i, char **cmd)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid == -1)
+	{
+		perror("fork");
+		return (-1);
+	}
+	if (pid == 0)
+	{
+		prepare_pipe(exec, i);
+		execute_builtin(cmd, input, exec);
+		exit(free_child(exec, input, 0));
+	}
+	return (pid);
+}
+
 int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
 {
 	char	**cmd;
@@ -69,21 +88,7 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
 	if (check_builtin(cmd[0]) == 0)
 		return (0);
 	if (exec->cmd_count > 1)
-	{
-		pid = fork();
-		if (pid == -1)
-		{
-			perror("fork");
-			return (-1);
-		}
-		if (pid == 0)
-		{
-			prepare_pipe(exec, i);
-			execute_builtin(cmd, input, exec);
-			exit(free_child(exec, input, 0));
-		}
-		return (pid);
-	}
+		pid = handle_multiple_cmd(exec, input, i, cmd);
 	else
 	{
 		old_stdout = -1;
