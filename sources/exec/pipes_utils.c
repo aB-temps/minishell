@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:55 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 15:56:23 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 03:16:58 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 
 void	error_occured(t_exec *exec, char *error_msg)
 {
-	if (error_msg != NULL)
-		perror(error_msg);
+	perror(error_msg);
 	close_all(exec);
 	exit(1);
 }
@@ -62,7 +61,7 @@ void	last_cmd(t_exec *exec, int fd_outfile)
 	close_all(exec);
 }
 
-void	close_all(t_exec *exec)
+int	close_all(t_exec *exec)
 {
 	if (exec->fd->fd1[0] != -1)
 		close(exec->fd->fd1[0]);
@@ -76,13 +75,7 @@ void	close_all(t_exec *exec)
 		close(exec->fd_infile);
 	if (exec->fd_outfile != -1)
 		close(exec->fd_outfile);
-}
-
-void	close_and_swap_pipes(t_exec *exec, t_fd *fd)
-{
-	close_all(exec);
-	fd->fd1[0] = fd->fd2[0];
-	fd->fd1[1] = fd->fd2[1];
+	return (1);
 }
 
 void	prepare_pipe(t_exec *exec, int i)
