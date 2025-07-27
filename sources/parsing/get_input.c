@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 16:49:35 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 18:48:33 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,7 @@ static void	reset_input(t_input *input)
 	}
 	input->token_qty = 0;
 }
-void	handle_sigint(t_input *input)
-{
-	input->last_exit_status = 130;
-	g_sig = 0;
-}
+
 void	get_input(char **env)
 {
 	t_input	*input;

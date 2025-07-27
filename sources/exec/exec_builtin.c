@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 18:34:57 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 18:46:00 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ int	handle_multiple_cmd(t_exec *exec, t_input *input, int i, char **cmd)
 int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
 {
 	char	**cmd;
-	int		pid;
 	int		old_stdout;
 	int		old_stdin;
 
@@ -88,7 +87,7 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
 	if (check_builtin(cmd[0]) == 0)
 		return (0);
 	if (exec->cmd_count > 1)
-		pid = handle_multiple_cmd(exec, input, i, cmd);
+		return (handle_multiple_cmd(exec, input, i, cmd));
 	else
 	{
 		old_stdout = -1;
