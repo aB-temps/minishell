@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/05 17:39:02 by enchevri          #+#    #+#             */
-/*   Updated: 2025/06/03 17:45:55 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2024/11/05 17:39:02 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/27 19:47:52 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	ft_bzero(void *s, size_t n)
 	{
 		while (count < n - sizeof(unsigned long long))
 		{
-			
 			*(s_bis + i++) = 0;
 			count += sizeof(unsigned long long);
 		}
