@@ -35,7 +35,7 @@ void	ft_exit(char **cmd, t_input *input, t_exec *exec)
 	int	nb;
 	int	error;
 
-	if (exec->cmd_count == 1 && isatty(fileno(stdin)))
+	if (exec->cmd_count == 1)
 		ft_putendl_fd("exit", STDERR_FILENO);
 	if (!cmd[1])
 	{
