@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 05:57:11 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 06:22:22 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 
 int	check_builtin(char *cmd)
 {
-	if (ft_strcmp(cmd, "echo") && ft_strcmp(cmd, "pwd") && ft_strcmp(cmd, "cd")
-		&& ft_strcmp(cmd, "export") && ft_strcmp(cmd, "unset") && ft_strcmp(cmd,
-			"env") && ft_strcmp(cmd, "exit"))
-		return (0);
-	return (1);
+	if (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "cd") == 0
+		|| ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd,
+			"env") == 0 || ft_strcmp(cmd, "exit") == 0)
+		return (1);
+	return (0);
 }
 
 static void	execute_builtin(char **cmd, t_input *input, t_exec *exec)

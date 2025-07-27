@@ -9,5 +9,6 @@
 
 void	welcome(void);
 void	build_prompt(t_input *input);
+void	setup_signals(void);
 
 #endif

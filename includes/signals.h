@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 06:53:15 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 06:53:16 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/07/27 06:42:12 by enchevri          #+#    #+#             */
+/*   Updated: 2025/07/27 16:28:55 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parsing.h"
-#include "signals.h"
-#include "style.h"
-#include <stdio.h>
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-int	main(int ac, char **av, char **env)
-{
-	(void)ac;
-	(void)av;
-	setup_signals();
-	welcome();
-	get_input(env);
-	return (0);
-}
+extern int	g_sig;
+
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdio.h>
+
+void		sigint_handler(int sig);
+void		setup_signals(void);
+
+#endif

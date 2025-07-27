@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 21:01:39 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 06:28:01 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ int	execute_command(t_token *current_token, t_exec *exec, int i, t_input *input)
 	error = 0;
 	pid = 0;
 	exec->args = (char **)(current_token->formatted_content);
-	exec->cmd_path = find_full_command_path(exec->args[0], input->env->array, &error);
+	exec->cmd_path = find_full_command_path(exec->args[0], input->env->array,
+			&error);
 	pid = execute_child(exec, i, input, error);
 	return (pid);
 }

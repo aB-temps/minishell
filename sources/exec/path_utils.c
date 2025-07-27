@@ -88,8 +88,11 @@ char	*find_full_command_path(char *cmd, char **env, int *error)
 	char	**split_path;
 	char	*cmd_path;
 
-	if (!cmd || !env)
+	if (!cmd || !env || cmd[0] == '\0')
+	{
+		*error = 127;
 		return (NULL);
+	}
 	path = get_path(env);
 	split_path = ft_split(path, ':');
 	cmd_path = find_command_path(cmd, split_path, error);

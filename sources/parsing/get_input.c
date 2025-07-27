@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:54:19 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/27 16:49:35 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "debug.h"
 #include "exec.h"
 #include "parsing.h"
+#include "signals.h"
 #include <linux/limits.h>
 
 static void	reset_input(t_input *input)
@@ -29,7 +30,11 @@ static void	reset_input(t_input *input)
 	}
 	input->token_qty = 0;
 }
-
+void	handle_sigint(t_input *input)
+{
+	input->last_exit_status = 130;
+	g_sig = 0;
+}
 void	get_input(char **env)
 {
 	t_input	*input;
@@ -40,17 +45,19 @@ void	get_input(char **env)
 	init_env(env, input);
 	while (1)
 	{
+		if (g_sig == SIGINT)
+			handle_sigint(input);
 		build_prompt(input);
 		input->line = readline(input->prompt);
 		if (!input->line)
 			exit_minishell(input, input->last_exit_status);
 		if (is_valid_input(input->line))
 		{
+			add_history(input->line);
 			if (parse_input(input))
 				start_exec(input);
 			clear_vector(&input->v_tokens);
 		}
-		add_history(input->line);
 		reset_input(input);
 	}
 }
