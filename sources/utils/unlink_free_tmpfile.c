@@ -1,24 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   safe_close.c                                       :+:      :+:    :+:   */
+/*   unlink_free_tmpfile.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 08:55:48 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 13:52:13 by abetemps         ###   ########.fr       */
+/*   Created: 2025/07/27 14:24:32 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/27 14:24:33 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+#include <stdlib.h>
 
-int	safe_close(int fd)
+void	unlink_free_tmpfile(char *tmpfile)
 {
-	if (fd > -1)
+	if (tmpfile)
 	{
-		if (close(fd) < 0)
-			return (-1);
-		fd = -1;
+		unlink(tmpfile);
+		free(tmpfile);
 	}
-	return (0);
 }

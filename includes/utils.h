@@ -21,5 +21,6 @@ void	clear_hd_filename_elem(t_input *input, const char *temp_dir,
 void	clear_var_vector(t_vector *v_var_array);
 t_list	*lstgetprev(t_list *lst, t_list *elem);
 int		safe_close(int fd);
+void	unlink_free_tmpfile(char *tmpfile);
 
 #endif

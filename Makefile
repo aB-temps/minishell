@@ -153,8 +153,9 @@ F_UTILS :=				init_struct.c		\
 						gen_random_num_sequence.c \
 						clear_hd_filename_elem.c \
 						clear_var_vector.c	\
-						safe_close.c		\
 						lstgetprev.c		\
+						safe_close.c		\
+						unlink_free_tmpfile.c	\
 						
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\
