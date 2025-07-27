@@ -6,19 +6,12 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:55 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/27 03:16:58 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 18:10:53 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "input.h"
-
-void	error_occured(t_exec *exec, char *error_msg)
-{
-	perror(error_msg);
-	close_all(exec);
-	exit(1);
-}
 
 void	first_cmd(t_exec *exec, int fd_infile)
 {
