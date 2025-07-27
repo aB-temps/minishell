@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_heredoc.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/27 18:47:16 by abetemps         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "debug.h"
 #include "heredoc.h"
 
@@ -51,6 +63,7 @@ static void	open_heredoc(int **fds, char *tmpfile, t_input *input)
 	}
 	unlink_free_tmpfile(tmpfile);
 }
+
 void	handle_heredoc(t_input *input)
 {
 	t_token	*array;
