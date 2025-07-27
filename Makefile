@@ -100,9 +100,12 @@ COMPONENTS :=			PARSING 			\
 						ENV					\
 						BUILTINS			\
 						DEBUG				\
+						SIGNALS				\
 
 # FILES ===============================================================================
 F_MAIN :=				main.c				\
+
+F_SIGNALS :=			signals.c			\
 
 F_LEXING :=				tokenize_input.c	\
 						tokenize_word.c		\
