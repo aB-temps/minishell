@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   str_patreplace.c                                      :+:      :+:    :+:   */
+/*   str_patreplace.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/26 17:46:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:50:22 by abetemps         ###   ########.fr       */
+/*   Created: 2025/07/27 19:36:22 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/27 19:36:48 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 char	*str_patreplace(char *s, char *old, char *new)
 {
 	const size_t	olen = ft_strlen(old);
-	const size_t	ttlen = ft_strlen(s) -\
-	(countocc(s, old) * olen) + (countocc(s, old) * ft_strlen(new));
+	const size_t	ttlen = ft_strlen(s) - (countocc(s, old) * olen)
+		+ (countocc(s, old) * ft_strlen(new));
 	char			*ns;
 	size_t			i;
 	size_t			j;
