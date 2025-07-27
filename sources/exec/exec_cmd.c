@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/26 15:30:31 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 05:58:46 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 #include "exec.h"
 #include <errno.h>
 
-
-
 static int	execute_all_commands(t_input *input, t_exec *exec)
 {
 	t_token	*tokens_array;
 	int		res;
+	int		saved_exit_status;
+	char	**cmd;
 
 	exec->cmd_count = count_cmd(input);
 	exec->pid_child = ft_calloc(exec->cmd_count, sizeof(pid_t));
@@ -32,7 +32,14 @@ static int	execute_all_commands(t_input *input, t_exec *exec)
 	res = launch_all_commands(input, exec);
 	if (res != 0)
 		return (res);
+	saved_exit_status = input->last_exit_status;
 	wait_childs(exec, input);
+	if (exec->cmd_count == 1 && tokens_array[0].type == COMMAND)
+	{
+		cmd = (char **)tokens_array[0].formatted_content;
+		if (cmd && check_builtin(cmd[0]) == 1)
+			input->last_exit_status = saved_exit_status;
+	}
 	free(exec->pid_child);
 	return (0);
 }

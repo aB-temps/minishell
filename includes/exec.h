@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/24 20:41:22 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 03:08:31 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int			launch_all_commands(t_input *input, t_exec *exec);
 void		start_exec(t_input *input);
 int			count_cmd(t_input *input);
 void		wait_childs(t_exec *exec, t_input *input);
-void		close_all(t_exec *exec);
+int			close_all(t_exec *exec);
 void		prepare_pipe(t_exec *exec, int i);
 char		*get_cmd_by_index(t_input *input, t_token *tokens_array, int index);
 int			is_builtin(t_token current_token, t_input *input, t_exec *exec,

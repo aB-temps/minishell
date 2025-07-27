@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 17:05:21 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/24 17:05:56 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 02:56:10 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "debug.h"
 #include "exec.h"
 #include "input.h"
-// #include <stdio.h>
+#include <stdio.h>
 
 void	apply_redirections_builtin(t_input *input, int *old_stdout,
 		int *old_stdint)

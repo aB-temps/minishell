@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/24 22:54:45 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 05:57:11 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,6 @@
 #include "exec.h"
 #include "input.h"
 #include <stdio.h>
-
-
 
 int	check_builtin(char *cmd)
 {
@@ -42,7 +40,7 @@ static void	execute_builtin(char **cmd, t_input *input, t_exec *exec)
 	else if (ft_strcmp(cmd[0], "env") == 0)
 		ft_env(input->env->array);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
-		ft_exit(input, exec);
+		ft_exit(cmd, input, exec);
 }
 
 static void	restore_redirections_builtin(int old_stdout, int old_stdint)
@@ -69,7 +67,6 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
 	cmd = ((char **)current_token.formatted_content);
 	if (check_builtin(cmd[0]) == 0)
 		return (0);
-	// print_exec(exec, "INSIDE BUILTIN");
 	if (exec->cmd_count > 1)
 	{
 		pid = fork();
