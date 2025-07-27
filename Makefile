@@ -100,9 +100,12 @@ COMPONENTS :=			PARSING 			\
 						ENV					\
 						BUILTINS			\
 						DEBUG				\
+						SIGNALS				\
 
 # FILES ===============================================================================
 F_MAIN :=				main.c				\
+
+F_SIGNALS :=			signals.c			\
 
 F_LEXING :=				tokenize_input.c	\
 						tokenize_word.c		\
@@ -127,6 +130,8 @@ F_EXEC :=				exec_cmd.c			\
 						pipes_utils.c		\
 						exec_builtin.c		\
 						redir_builtin.c		\
+						error_utils.c		\
+						redir_simple_cmd.c	\
 
 F_ENV 	:=				env_array_to_list.c	\
 						get_env_value.c		\

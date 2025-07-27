@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:48 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/27 03:07:09 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 18:10:23 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,32 +50,6 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 	}
 	close_all(exec);
 	return (0);
-}
-
-static void	check_cmd(t_input *input, t_token *tokens_array, int i)
-{
-	char	*cmd;
-
-	cmd = get_cmd_by_index(input, tokens_array, i);
-	if (check_builtin(cmd) == 1)
-		return ;
-	if (!cmd)
-		ft_putendl_fd(": command not found", 2);
-	else if (ft_strchr(cmd, '/') != NULL)
-	{
-		if (access(cmd, X_OK) != 0)
-		{
-			perror(cmd);
-			return ;
-		}
-		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": No such file or directory", 2);
-	}
-	else
-	{
-		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": command not found", 2);
-	}
 }
 
 static void	check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
