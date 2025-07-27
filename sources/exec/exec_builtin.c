@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 06:22:22 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 17:16:08 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@
 
 int	check_builtin(char *cmd)
 {
-	if (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "pwd") == 0 || ft_strcmp(cmd, "cd") == 0
-		|| ft_strcmp(cmd, "export") == 0 || ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd,
-			"env") == 0 || ft_strcmp(cmd, "exit") == 0)
+	if (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "pwd") == 0
+		|| ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "export") == 0
+		|| ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0
+		|| ft_strcmp(cmd, "exit") == 0)
 		return (1);
 	return (0);
 }
@@ -43,17 +44,17 @@ static void	execute_builtin(char **cmd, t_input *input, t_exec *exec)
 		ft_exit(cmd, input, exec);
 }
 
-static void	restore_redirections_builtin(int old_stdout, int old_stdint)
+static void	restore_redirections_builtin(int old_stdout, int old_stdin)
 {
 	if (old_stdout != -1)
 	{
 		dup2(old_stdout, STDOUT_FILENO);
 		close(old_stdout);
 	}
-	if (old_stdint != -1)
+	if (old_stdin != -1)
 	{
-		dup2(old_stdint, STDIN_FILENO);
-		close(old_stdint);
+		dup2(old_stdin, STDIN_FILENO);
+		close(old_stdin);
 	}
 }
 
@@ -62,7 +63,7 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
 	char	**cmd;
 	int		pid;
 	int		old_stdout;
-	int		old_stdint;
+	int		old_stdin;
 
 	cmd = ((char **)current_token.formatted_content);
 	if (check_builtin(cmd[0]) == 0)
@@ -86,10 +87,10 @@ int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
 	else
 	{
 		old_stdout = -1;
-		old_stdint = -1;
-		apply_redirections_builtin(input, &old_stdout, &old_stdint);
+		old_stdin = -1;
+		apply_redirections_builtin(input, &old_stdout, &old_stdin);
 		execute_builtin(cmd, input, exec);
-		restore_redirections_builtin(old_stdout, old_stdint);
+		restore_redirections_builtin(old_stdout, old_stdin);
 		return (1);
 	}
 }
