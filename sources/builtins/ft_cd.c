@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 04:02:43 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 18:27:51 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	ft_cd(char **cmd, t_input *input)
 		return (1);
 	}
 	new_wd = getcwd(new_wd, PATH_MAX);
-	// printf("new_wd =%s\n", new_wd);
 	to_exp[2] = ft_strjoin("PWD=", new_wd);
 	to_exp[3] = NULL;
 	ft_export(to_exp, input);
