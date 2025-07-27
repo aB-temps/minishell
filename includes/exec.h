@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 03:08:31 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 18:23:32 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,9 @@ void		exit_exec(t_input *input, t_exec *exec);
 int			check_builtin(char *cmd);
 void		apply_redirections_builtin(t_input *input, int *old_stdout,
 				int *old_stdin);
+void		check_cmd(t_input *input, t_token *tokens_array, int i);
+void		error_occured(t_exec *exec, char *error_msg);
+int			create_all_files(t_exec *exec, t_input *input,
+				t_token *token_array);
+int			execute_all_commands(t_input *input, t_exec *exec);
 #endif
