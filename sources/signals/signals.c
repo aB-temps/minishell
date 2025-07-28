@@ -6,23 +6,21 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 06:42:03 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 18:48:58 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 20:59:15 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 #include "signals.h"
 
-int		g_sig;
+volatile sig_atomic_t	g_sig;
 
 void	sigint_handler(int sig)
 {
-	(void)sig;
-	printf("\n");
 	rl_on_new_line();
-	rl_replace_line("", 0);
+	rl_replace_line("\n", 0);
 	rl_redisplay();
-	g_sig = SIGINT;
+	g_sig = sig;
 }
 
 void	setup_signals(void)
