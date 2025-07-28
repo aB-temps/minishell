@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 18:50:49 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/27 22:39:15 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	get_input(char **env)
 		if (g_sig == SIGINT)
 			handle_sigint(input);
 		build_prompt(input);
+		// checker TTY pour eviter de la merde avec cat/urandom notamment		
 		input->line = readline(input->prompt);
 		if (!input->line)
 			exit_minishell(input, input->last_exit_status);
