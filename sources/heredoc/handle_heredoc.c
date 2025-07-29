@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 18:34:04 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 19:11:27 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	tmp = (void *)0;
 	while (1)
 	{
-		line = readline(FG_BLUE BOLD "heredoc > " R_ALL);
+		line = readline(FG_BLUE"heredoc> "R_ALL);
 		if (g_sig == SIGINT || !line || !ft_strcmp(line,
 				(char *)token->formatted_content))
 			break ;
