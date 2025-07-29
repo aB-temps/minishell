@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/29 07:58:26 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 23:20:48 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	execute_all_commands(t_input *input, t_exec *exec)
 	return (0);
 }
 
-static void	init_t_exec(t_exec *exec, t_input *input)
+static int	init_t_exec(t_exec *exec, t_input *input)
 {
 	exec->cmd_path = NULL;
 	exec->args = NULL;
@@ -53,11 +53,12 @@ static void	init_t_exec(t_exec *exec, t_input *input)
 	exec->pid_child = NULL;
 	exec->fd = ft_calloc(1, sizeof(t_fd));
 	if (!exec->fd)
-		return ;
+		return (-1);
 	exec->fd->fd1[0] = -1;
 	exec->fd->fd1[1] = -1;
 	exec->fd->fd2[0] = -1;
 	exec->fd->fd2[1] = -1;
+	return (0);
 }
 
 void	start_exec(t_input *input)
@@ -65,7 +66,8 @@ void	start_exec(t_input *input)
 	t_exec	exec;
 	int		res;
 
-	init_t_exec(&exec, input);
+	if (init_t_exec(&exec, input) == -1)
+		return (1);
 	res = execute_all_commands(input, &exec);
 	free(exec.fd);
 	if (res == 1)
