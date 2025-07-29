@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 07:43:31 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 19:18:56 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	reset_input(t_input *input)
 	input->token_qty = 0;
 }
 
-_Noreturn void	get_input(char **env)
+_Noreturn void get_input(char **env)
 {
 	t_input	*input;
 
@@ -50,11 +50,12 @@ _Noreturn void	get_input(char **env)
 			exit_minishell(input, input->last_exit_status);
 		if (is_valid_input(input->line))
 		{
-			add_history(input->line);
 			if (parse_input(input) && g_sig != SIGINT)
 				start_exec(input);
 			clear_vector(&input->v_tokens);
 		}
+		if (ft_strlen(input->line))
+			add_history(input->line);
 		reset_input(input);
 	}
 }
