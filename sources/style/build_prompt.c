@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:56:17 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 07:59:00 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 18:58:03 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	build_prompt(t_input *input)
 			exit_minishell(input, EXIT_FAILURE);
 	}
 	input->prompt = str_free_to_join(input->prompt,
-			FG_WHITE "\n\001⚡\002 " R_ALL);
+			FG_WHITE "\n$ " R_ALL);
 	if (!input->prompt)
 		exit_minishell(input, EXIT_FAILURE);
 }
