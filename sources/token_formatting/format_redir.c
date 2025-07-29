@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 07:59:03 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 14:31:29 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,25 +28,6 @@ static char	*unquote_arg(char *qtd_arg)
 	return (ft_strdup(qtd_arg));
 }
 
-static char	*join_args(char **content, t_token *array, size_t *i, size_t *j,
-		bool *expand)
-{
-	while (array[*i].link_to_next)
-	{
-		*content = str_free_to_join(*content, array[*i + 1].raw_content);
-		if (!*content)
-			return ((void *)0);
-		if (ft_strchr(*content, '\'') || ft_strchr(*content, '"'))
-		{
-			*expand = false;
-			*content = str_replace(content, unquote_arg(*content));
-		}
-		(*i)++;
-		(*j)++;
-	}
-	return (*content);
-}
-
 static char	*join_unquoted_args(t_token *array, size_t i, size_t *j,
 		bool *expand)
 {
@@ -60,7 +41,20 @@ static char	*join_unquoted_args(t_token *array, size_t i, size_t *j,
 		*expand = false;
 		content = str_replace(&content, unquote_arg(content));
 	}
-	return (join_args(&content, array, &i, j, expand));
+	while (content && array[i].link_to_next)
+	{
+		content = str_free_to_join(content, array[i + 1].raw_content);
+		if (!content)
+			return ((void *)0);
+		if (content && (ft_strchr(content, '\'') || ft_strchr(content, '"')))
+		{
+			*expand = false;
+			content = str_replace(&content, unquote_arg(content));
+		}
+		i++;
+		(*j)++;
+	}
+	return (content);
 }
 
 void	format_redir(t_input *input, ssize_t *i)
