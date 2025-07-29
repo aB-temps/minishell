@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 22:22:50 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 23:21:51 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_pwd(void)
 	{
 		ft_putstr_fd("pwd: error retrieving current directory: getcwd: \
 			cannot access parent directories: No such file or directory\n",
-						STDERR_FILENO);
+					STDERR_FILENO);
 		return (1);
 	}
 	printf("%s\n", cwd);
