@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/28 14:42:52 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 18:26:32 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	handle_env_var_expansion(t_input *input)
 	ssize_t	i;
 
 	array = (t_token *)input->v_tokens->array;
+	last_type = -1;
 	i = 0;
 	while (i < input->token_qty)
 	{
