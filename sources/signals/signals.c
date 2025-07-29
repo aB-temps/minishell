@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 06:42:03 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 08:58:23 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 18:58:19 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	sigint_handler(int sig)
 	rl_replace_line("", 0);
 	rl_done = 1;
 	g_sig = sig;
-	write(1, "\n", 1);
+	write(STDOUT_FILENO, "\n", 1);
 }
 
 void	setup_signals(void)
