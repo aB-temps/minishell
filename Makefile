@@ -154,11 +154,13 @@ F_UTILS :=				init_struct.c		\
 						safe_close.c		\
 						unlink_free_tmpfile.c	\
 						quoted_arg_len.c	\
+						count_command_args.c	\
 						
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\
 						format_redir.c		\
 						format_env_var.c	\
+						remove_empty_env_var.c	\
 
 F_STYLE :=				welcome.c 			\
 						build_prompt.c		\

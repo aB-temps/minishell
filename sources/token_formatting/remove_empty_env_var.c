@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   format_input.c                                     :+:      :+:    :+:   */
+/*   remove_empty_env_var.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 22:09:40 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/30 00:50:16 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,37 +29,39 @@ static size_t	count_valid_tokens(size_t qty, const t_token *array)
 	valid_tokens = 0;
 	while (i < qty)
 	{
-		if (array[i].type >= COMMAND && array[i].type <= HEREDOC)
+		if (!(array[i].type == ENV_VAR
+				&& !ft_strlen(array[i].formatted_content)))
 			valid_tokens++;
 		i++;
 	}
 	return (valid_tokens);
 }
 
-void	format_input(t_input *input, t_token *array)
+void	remove_empty_env_var(t_input **input, t_token *array)
 {
 	t_vector	*new_vec;
 	t_token		token;
 	ssize_t		i;
 
 	i = 0;
-	new_vec = create_vector(count_valid_tokens(input->token_qty, array),
+	new_vec = create_vector(count_valid_tokens((*input)->token_qty, array),
 			sizeof(t_token), clear_token);
 	if (!new_vec)
-		exit_minishell(input, EXIT_FAILURE);
-	while (i < input->token_qty)
+		exit_minishell(*input, EXIT_FAILURE);
+	while (i < (*input)->token_qty)
 	{
-		if (array[i].type >= COMMAND && array[i].type <= HEREDOC)
+		if (!(array[i].type == ENV_VAR
+				&& !ft_strlen(array[i].formatted_content)))
 		{
 			init_token(&token);
 			token = dup_token(array[i]);
 			if (token.type == -1 || !add_element(new_vec, &token))
 			{
 				clear_vector(&new_vec);
-				exit_minishell(input, EXIT_FAILURE);
+				exit_minishell(*input, EXIT_FAILURE);
 			}
 		}
 		i++;
 	}
-	update_token_vector(input, new_vec);
+	update_token_vector(*input, new_vec);
 }

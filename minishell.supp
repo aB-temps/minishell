@@ -11,10 +11,3 @@
 	...
 	fun:add_history
 }
-
-{
-	<bin-leaks>
-	Memcheck:Leak
-	...
-	fun:bin/*
-}
