@@ -6,13 +6,30 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 07:38:08 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 21:40:27 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "libft.h"
 #include "token_formatting.h"
+
+int	handle_cd_alone(t_input *input, char *home)
+{
+	home = get_env_value("HOME", input);
+	if (!home || chdir(home) == -1)
+	{
+		if (!home)
+			ft_putstr_fd("cd: HOME not set\n", 2);
+		else
+			perror("cd");
+		if (home)
+			free(home);
+		return (1);
+	}
+	free(home);
+	return (0);
+}
 
 int	ft_cd(char **cmd, t_input *input)
 {
@@ -21,28 +38,23 @@ int	ft_cd(char **cmd, t_input *input)
 	char	**to_exp;
 	char	*home;
 
+	home = NULL;
 	to_exp = ft_calloc(4, sizeof(char *));
 	if (!to_exp)
 		exit_minishell(input, EXIT_FAILURE);
 	new_wd = NULL;
 	old_pwd = getcwd(new_wd, PATH_MAX);
+	if (!old_pwd)
+	{
+		ft_putstr_fd("minishell: cd: ", STDERR_FILENO);
+		ft_putstr_fd(cmd[1], STDERR_FILENO);
+		ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		return (free_tab_return_int(to_exp, 1));
+	}
 	to_exp[0] = ft_strdup("export");
 	to_exp[1] = ft_strjoin("OLDPWD=", old_pwd);
 	if (cmd[1] == NULL)
-	{
-		home = get_env_value("HOME", input);
-		if (!home || chdir(home) == -1)
-		{
-			if (!home)
-				ft_putstr_fd("cd: HOME not set\n", 2);
-			else
-				perror("cd");
-			if (home)
-				free(home);
-			return (1);
-		}
-		free(home);
-	}
+		handle_cd_alone(input, home);
 	else if (cmd[2] != NULL)
 	{
 		ft_putstr_fd("cd: too many arguments\n", 2);

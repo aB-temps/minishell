@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 18:14:16 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 21:53:51 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-void	ft_unset(char **cmd_args, t_input *input)
+int	ft_unset(char **cmd_args, t_input *input)
 {
 	size_t	args;
 	size_t	i;
@@ -28,4 +28,5 @@ void	ft_unset(char **cmd_args, t_input *input)
 		ft_lstdelone(prev, elem, &clear_env_list_elem);
 	}
 	update_env_array(input);
+	return (0);
 }
