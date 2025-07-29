@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:56:17 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/28 22:23:35 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 06:22:50 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*build_ps1(t_input *input)
 	free(username);
 	if (!ps1)
 		exit_minishell(input, EXIT_FAILURE);
-	ps1 = str_free_to_join(ps1, FG_WHITE " → " DIM);
+	ps1 = str_free_to_join(ps1, FG_WHITE " \001→\002 " DIM);
 	if (!ps1)
 		exit_minishell(input, EXIT_FAILURE);
 	return (ps1);
@@ -94,7 +94,8 @@ void	build_prompt(t_input *input)
 		if (!input->prompt)
 			exit_minishell(input, EXIT_FAILURE);
 	}
-	input->prompt = str_free_to_join(input->prompt, FG_WHITE "\n\001⚡\002 " R_ALL);
+	input->prompt = str_free_to_join(input->prompt,
+			FG_WHITE "\n\001⚡\002 " R_ALL);
 	if (!input->prompt)
 		exit_minishell(input, EXIT_FAILURE);
 }

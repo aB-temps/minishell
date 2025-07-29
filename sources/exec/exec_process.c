@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/29 03:05:54 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 06:03:41 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ static int	execute_child(t_exec *exec, int i, t_input *input, int error)
 		exit(free_child(exec, input, error));
 	}
 	free(exec->cmd_path);
+	exec->cmd_path = NULL;
 	return (pid);
 }
 

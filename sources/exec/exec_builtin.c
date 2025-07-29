@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 18:46:00 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 06:02:02 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int	handle_multiple_cmd(t_exec *exec, t_input *input, int i, char **cmd)
 	}
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
 		prepare_pipe(exec, i);
 		execute_builtin(cmd, input, exec);
 		exit(free_child(exec, input, 0));

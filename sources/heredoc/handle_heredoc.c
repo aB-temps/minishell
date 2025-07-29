@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/28 23:26:26 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 07:21:18 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	tmp = (void *)0;
 	while (1)
 	{
-		line = readline("\001\e[34m\002\e[1mheredoc > \001\e[0m\002");
-		if (g_sig == SIGINT || !line || !ft_strcmp(line, (char *)token->formatted_content))
+		line = readline(FG_CYAN BOLD "heredoc > " R_ALL);
+		if (g_sig == SIGINT || !line || !ft_strcmp(line,
+				(char *)token->formatted_content))
 			break ;
 		if (token->link_to_next)
 		{
