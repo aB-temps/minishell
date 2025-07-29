@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_prompt.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:56:17 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/28 15:10:36 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/28 22:23:35 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	build_prompt(t_input *input)
 		if (!input->prompt)
 			exit_minishell(input, EXIT_FAILURE);
 	}
-	input->prompt = str_free_to_join(input->prompt, FG_WHITE "\n⚡ " R_ALL);
+	input->prompt = str_free_to_join(input->prompt, FG_WHITE "\n\001⚡\002 " R_ALL);
 	if (!input->prompt)
 		exit_minishell(input, EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/27 06:28:01 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 03:05:54 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,16 @@
 
 int	free_child(t_exec *exec, t_input *input, int error)
 {
-	close_all(exec);
-	free(exec->fd);
-	free(exec->cmd_path);
-	free(exec->pid_child);
+	if (exec)
+	{
+		close_all(exec);
+		if (exec->fd)
+			free(exec->fd);
+		if (exec->cmd_path)
+			free(exec->cmd_path);
+		if (exec->pid_child)
+			free(exec->pid_child);
+	}
 	clear_vector(&input->v_tokens);
 	ft_lstclear(&input->env->list, &clear_env_list_elem);
 	free_tab_return_null(input->env->array);
@@ -42,6 +48,8 @@ static int	execute_child(t_exec *exec, int i, t_input *input, int error)
 	}
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
 		prepare_pipe(exec, i);
 		if (!exec->cmd_path)
 			exit(free_child(exec, input, error));

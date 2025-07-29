@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 22:55:41 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 03:02:22 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,7 @@ int			create_all_files(t_exec *exec, t_input *input,
 				t_token *token_array);
 int			execute_all_commands(t_input *input, t_exec *exec);
 void		handle_sigint(t_input *input);
+void		check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
+				int i);
+
 #endif

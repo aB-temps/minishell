@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 18:47:16 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/28 23:26:26 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "debug.h"
 #include "heredoc.h"
+#include "signals.h"
 
 void	fill_heredoc(t_token *token, int *fds, t_input *input)
 {
@@ -21,8 +22,8 @@ void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	tmp = (void *)0;
 	while (1)
 	{
-		line = readline("\e[34m\e[1mheredoc > \e[0m");
-		if (!line || !ft_strcmp(line, (char *)token->formatted_content))
+		line = readline("\001\e[34m\002\e[1mheredoc > \001\e[0m\002");
+		if (g_sig == SIGINT || !line || !ft_strcmp(line, (char *)token->formatted_content))
 			break ;
 		if (token->link_to_next)
 		{

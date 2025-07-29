@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:48 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/27 18:10:23 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 03:02:32 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,34 +50,6 @@ int	launch_all_commands(t_input *input, t_exec *exec)
 	}
 	close_all(exec);
 	return (0);
-}
-
-static void	check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
-		int i)
-{
-	int		sig;
-	int		status;
-	t_token	*cur_token;
-
-	status = 0;
-	cur_token = &tokens_array[i];
-	waitpid(exec->pid_child[i], &status, 0);
-	if (WIFEXITED(status))
-	{
-		input->last_exit_status = WEXITSTATUS(status);
-		if (input->last_exit_status == 127)
-			check_cmd(input, tokens_array, i);
-		else if (input->last_exit_status == 126)
-		{
-			if (errno != 0)
-				perror(((char **)cur_token->formatted_content)[0]);
-		}
-	}
-	else if (WIFSIGNALED(status))
-	{
-		sig = WTERMSIG(status);
-		input->last_exit_status = 128 + sig;
-	}
 }
 
 void	wait_childs(t_exec *exec, t_input *input)

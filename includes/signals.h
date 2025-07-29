@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 06:42:12 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/28 21:18:53 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/28 22:16:49 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 extern volatile sig_atomic_t	g_sig;
 
-void		sigint_handler(int sig);
+void		handler_sig(int sig);
 void		setup_signals(void);
 
 #endif

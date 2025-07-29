@@ -132,6 +132,7 @@ F_EXEC :=				exec_cmd.c			\
 						redir_builtin.c		\
 						error_utils.c		\
 						redir_simple_cmd.c	\
+						check_sig_child.c	\
 
 F_ENV 	:=				env_array_to_list.c	\
 						get_env_value.c		\
