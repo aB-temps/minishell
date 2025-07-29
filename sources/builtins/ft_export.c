@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:06 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 18:14:07 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 07:57:17 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	print_env_empty_export(char **env)
 		printf("%s\n", env[i++]);
 }
 
-void	clear_env_var(t_env_var *var, t_input *input)
+static void	clear_env_var(t_env_var *var, t_input *input)
 {
 	if (var)
 	{
@@ -36,7 +36,7 @@ void	clear_env_var(t_env_var *var, t_input *input)
 	exit_minishell(input, EXIT_FAILURE);
 }
 
-t_env_var	*parse_assignation(char *arg, t_input *input)
+static t_env_var	*parse_assignation(char *arg, t_input *input)
 {
 	t_env_var	*var;
 
@@ -62,7 +62,7 @@ t_env_var	*parse_assignation(char *arg, t_input *input)
 	return (var);
 }
 
-void	assign_var(t_list *existing_var, t_list **varlist_node, t_env_var *var,
+static void	assign_var(t_list *existing_var, t_list **varlist_node, t_env_var *var,
 		t_input *input)
 {
 	if (existing_var)
@@ -92,7 +92,10 @@ void	ft_export(char **cmd_args, t_input *input)
 	i = 1;
 	args = ft_tablen(cmd_args) - 1;
 	if (!args)
-		return (print_env_empty_export(input->env->array));
+	{
+		print_env_empty_export(input->env->array);
+		return ;
+	}
 	while (i <= args)
 	{
 		var = parse_assignation(cmd_args[i], input);

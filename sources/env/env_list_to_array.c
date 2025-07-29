@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_to_array.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:15:46 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 18:15:47 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 08:05:30 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "input.h"
 #include "libft.h"
 #include "utils.h"
+#include "builtins.h"
 
 void	update_env_array(t_input *input)
 {

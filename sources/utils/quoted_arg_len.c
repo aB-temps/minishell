@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   quoted_arg_len.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 15:01:07 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 15:01:26 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 08:04:30 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checking.h"
+
+void	quoted_arg_len(char quote, size_t *i, char *line);
 
 void	quoted_arg_len(char quote, size_t *i, char *line)
 {

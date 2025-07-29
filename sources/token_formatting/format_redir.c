@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   format_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/28 15:06:29 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 07:59:03 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token_formatting.h"
 
-char	*unquote_arg(char *qtd_arg)
+static char	*unquote_arg(char *qtd_arg)
 {
 	size_t	i;
 

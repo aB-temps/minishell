@@ -6,14 +6,14 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:55 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/27 18:10:53 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 07:58:15 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "input.h"
 
-void	first_cmd(t_exec *exec, int fd_infile)
+static void	first_cmd(t_exec *exec, int fd_infile)
 {
 	if (fd_infile == -1)
 	{
@@ -29,7 +29,7 @@ void	first_cmd(t_exec *exec, int fd_infile)
 	close_all(exec);
 }
 
-void	middle_cmd(t_exec *exec)
+static void	middle_cmd(t_exec *exec)
 {
 	if (dup2(exec->fd->fd1[0], STDIN_FILENO) == -1)
 		error_occured(exec, "dup2");
@@ -38,7 +38,7 @@ void	middle_cmd(t_exec *exec)
 	close_all(exec);
 }
 
-void	last_cmd(t_exec *exec, int fd_outfile)
+static void	last_cmd(t_exec *exec, int fd_outfile)
 {
 	if (fd_outfile == -1)
 	{

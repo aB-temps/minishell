@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:31 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:48:32 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 07:58:55 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "utils.h"
 #include <linux/limits.h>
 
-void	init_empty_env(t_input *input)
+static void	init_empty_env(t_input *input)
 {
 	char	*cwd;
 

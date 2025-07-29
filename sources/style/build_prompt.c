@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:56:17 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 06:22:50 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 07:59:00 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <linux/limits.h>
 #include <unistd.h>
 
-char	*build_ps1(t_input *input)
+static char	*build_ps1(t_input *input)
 {
 	char	*ps1;
 	char	*username;
@@ -34,7 +34,7 @@ char	*build_ps1(t_input *input)
 	return (ps1);
 }
 
-char	*build_ps2(t_input *input)
+static char	*build_ps2(t_input *input)
 {
 	char	*ps2;
 	char	*pwd;
@@ -51,7 +51,7 @@ char	*build_ps2(t_input *input)
 	return (ps2);
 }
 
-char	*build_ps3(t_input *input)
+static char	*build_ps3(t_input *input)
 {
 	char	*ps3;
 	char	*exit_status;

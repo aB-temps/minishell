@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   clear_var_vector.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:47:23 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 08:09:25 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
+#include "utils.h"
 
 void	clear_var_vector(t_vector *v_var_array)
 {

@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   str_replace.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 17:52:19 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 17:52:31 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 08:10:52 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "utils.h"
 #include <stdlib.h>
 
 char	*str_replace(char **from, char *to)

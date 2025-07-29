@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   gen_random_num_sequence.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:02 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:48:57 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 08:10:00 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "utils.h"
 #include <fcntl.h>
 #include <unistd.h>
 

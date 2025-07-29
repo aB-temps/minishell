@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:35 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 07:48:00 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 08:14:48 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ struct						s_token
 	bool					link_to_next;
 	char					*raw_content;
 	void					*formatted_content;
-	int						_padding;
+
 };
 
 struct						s_input

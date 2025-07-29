@@ -6,13 +6,13 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:16:58 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 18:17:09 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 07:58:02 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 
-int	handle_redir_in(t_exec *exec, t_token current_token)
+static int	handle_redir_in(t_exec *exec, t_token current_token)
 {
 	int	fd_temp;
 
@@ -40,7 +40,7 @@ int	handle_redir_in(t_exec *exec, t_token current_token)
 	return (0);
 }
 
-int	handle_redir_out(t_exec *exec, t_token current_token)
+static int	handle_redir_out(t_exec *exec, t_token current_token)
 {
 	int	flags;
 	int	fd_temp;

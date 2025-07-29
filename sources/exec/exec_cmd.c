@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/27 18:23:24 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 07:58:26 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int	execute_all_commands(t_input *input, t_exec *exec)
 	return (0);
 }
 
-void	init_t_exec(t_exec *exec, t_input *input)
+static void	init_t_exec(t_exec *exec, t_input *input)
 {
 	exec->cmd_path = NULL;
 	exec->args = NULL;

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 07:39:21 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 07:58:09 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	restore_redirections_builtin(int old_stdout, int old_stdin)
 	}
 }
 
-int	handle_multiple_cmd(t_exec *exec, t_input *input, int i, char **cmd)
+static int	handle_multiple_cmd(t_exec *exec, t_input *input, int i, char **cmd)
 {
 	int	pid;
 

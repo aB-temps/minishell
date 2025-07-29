@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   extract_var_key.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:41 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:47:48 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 08:10:40 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include "utils.h"
 
 char	*extract_var_key(char *s)
 {

@@ -6,12 +6,13 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:17 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 18:28:18 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 08:04:57 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "input.h"
+#include "builtins.h"
 
 static int	is_valid_number(char *str)
 {
