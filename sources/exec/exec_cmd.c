@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/29 23:20:48 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 23:28:04 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	start_exec(t_input *input)
 	int		res;
 
 	if (init_t_exec(&exec, input) == -1)
-		return (1);
+		return ;
 	res = execute_all_commands(input, &exec);
 	free(exec.fd);
 	if (res == 1)
