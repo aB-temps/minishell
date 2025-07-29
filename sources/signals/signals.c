@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 06:42:03 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/28 23:40:35 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 07:53:32 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,13 @@
 
 volatile sig_atomic_t	g_sig;
 
-void	sigint_handler(int sig)
+void	handle_sigint(t_input *input)
+{
+	input->last_exit_status = 130;
+	g_sig = 0;
+}
+
+static void	sigint_handler(int sig)
 {
 	rl_replace_line("", 0);
 	rl_done = 1;
@@ -30,8 +36,4 @@ void	setup_signals(void)
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	handle_sigint(t_input *input)
-{
-	input->last_exit_status = 130;
-	g_sig = 0;
-}
+

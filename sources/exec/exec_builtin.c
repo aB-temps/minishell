@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 06:02:02 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 07:39:21 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	execute_builtin(char **cmd, t_input *input, t_exec *exec)
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
 		ft_pwd();
 	else if (ft_strcmp(cmd[0], "cd") == 0)
-		ft_cd(cmd, input);
+		input->last_exit_status = ft_cd(cmd, input);
 	else if (ft_strcmp(cmd[0], "export") == 0)
 		ft_export(cmd, input);
 	else if (ft_strcmp(cmd[0], "unset") == 0)

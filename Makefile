@@ -14,7 +14,7 @@ DIR_INC_LIB	:= $(DIR_LIB)includes/
 # FLAGS & COMPILATOR SETTINGS =========================================================
 CC 			:= cc
 DEPS_FLAGS	:= -MMD -MP
-WARN_FLAGS	:= -Wall -Werror -Wextra
+WARN_FLAGS	:= -Wall -Wextra -Weverything
 C_FLAGS		:= $(WARN_FLAGS) $(DEPS_FLAGS)
 INC_FLAGS	:= -I $(DIR_INC) -I $(DIR_INC_LIB)
 LIB_FLAGS	:= -L $(DIR_LIB) -lft
@@ -46,16 +46,6 @@ endef
 TOTAL_FILES		=	$(words $(OBJS))
 CURRENT_FILE	:=	0
 BAR_LENGTH		:=	50
-
-define exec_cmd_with_status
-    output=$$($(1) 2>&1); \
-    exit_code=$$?; \
-    if [ $$exit_code -ne 0 ]; then \
-        printf "\n$(RED)$(BOLD)[ERROR]$(RESET)$(WHITE) Compilation : $(BOLD)$(RED)$(1) failed$(RESET)\n\n"; \
-        printf "$(WHITE)$$output$(RESET)\n"; \
-        exit $$exit_code; \
-    fi;
-endef
 
 define draw_progress_bar
 	@printf "\r$(CYAN)$(BOLD)Compiling $(NAME): $(RESET)["
@@ -202,7 +192,7 @@ DEPS := $(foreach comp, $(COMPONENTS), $(DEPS_$(comp))) \
 # COMPILATION =========================================================================
 $(NAME) : $(OBJS)
 	@printf "$(BLUE)$(BOLD)[INFO]$(RESET) $(WHITE)Linking objects...$(RESET)\n"
-	$(call exec_cmd_with_status, $(COMP) $^ -o $@ $(LINK))
+	$(COMP) $^ -o $@ $(LINK)
 	@printf "$(GREEN)$(BOLD)[SUCCESS]$(RESET) $(WHITE)Build successful!$(RESET) Created $(BOLD)$(CYAN)$(NAME)$(RESET)\n"
 
 $(DIR_BUILD) :
@@ -212,7 +202,7 @@ $(DIR_BUILD)%.o : $(DIR_SRC)%.c $(ANTI_RELINK) | $(DIR_BUILD)
 	@mkdir -p $(dir $@)
 	$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
 	$(call draw_progress_bar)
-	$(call exec_cmd_with_status, $(COMP) -c $< -o $@)
+	$(COMP) -c $< -o $@
 	@if [ $(CURRENT_FILE) = $(TOTAL_FILES) ]; then echo; fi
 
 -include $(DEPS)

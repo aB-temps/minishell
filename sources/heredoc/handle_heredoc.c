@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 07:21:18 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 07:54:09 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "heredoc.h"
 #include "signals.h"
 
-void	fill_heredoc(t_token *token, int *fds, t_input *input)
+static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 {
 	char	*line;
 	char	*tmp;

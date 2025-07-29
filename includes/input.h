@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:35 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 19:46:15 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 07:48:00 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ struct						s_token
 	bool					link_to_next;
 	char					*raw_content;
 	void					*formatted_content;
+	int						_padding;
 };
 
 struct						s_input
@@ -63,6 +64,7 @@ struct						s_input
 	t_vector				*v_tokens;
 	ssize_t					token_qty;
 	int						last_exit_status;
+	int						_padding;
 };
 
 void						init_env(char **env, t_input *input);
