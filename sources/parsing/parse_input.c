@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 22:53:27 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 18:35:14 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	*parse_input(t_input *input)
 	// print_input(input, "TOKENIZED");
 	if (!check_syntax_error(input))
 	{
-		ft_putstr_fd(BOLD FG_RED "minishell: syntax error\n" R_ALL,
+		ft_putstr_fd(FG_RED "minishell: syntax error\n" R_ALL,
 			STDERR_FILENO);
 		return ((void *)0);
 	}

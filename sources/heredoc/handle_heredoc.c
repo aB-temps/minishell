@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 07:54:09 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 18:34:04 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	tmp = (void *)0;
 	while (1)
 	{
-		line = readline(FG_CYAN BOLD "heredoc > " R_ALL);
+		line = readline(FG_BLUE BOLD "heredoc > " R_ALL);
 		if (g_sig == SIGINT || !line || !ft_strcmp(line,
 				(char *)token->formatted_content))
 			break ;
@@ -38,6 +38,8 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		ft_putstr_fd(line, fds[0]);
 		free(line);
 	}
+	if (!line)
+		ft_putstr_fd(FG_RED"warning : heredoc exited before EOF\n"R_ALL, STDERR_FILENO);
 	safe_close(fds[0]);
 	free(token->formatted_content);
 	token->formatted_content = fds;

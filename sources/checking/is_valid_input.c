@@ -6,11 +6,12 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:12:10 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 18:12:11 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 18:34:52 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checking.h"
+#include "style.h"
 #include <unistd.h>
 
 static bool	are_quotes_paired(char *s)
@@ -42,7 +43,7 @@ bool	is_valid_input(char *line)
 		return (false);
 	if (!are_quotes_paired(line))
 	{
-		ft_putstr_fd("minishell: syntax error", STDERR_FILENO);
+		ft_putstr_fd(FG_RED"minishell: syntax error\n"R_ALL, STDERR_FILENO);
 		return (false);
 	}
 	while (line[i])
