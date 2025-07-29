@@ -14,7 +14,7 @@ DIR_INC_LIB	:= $(DIR_LIB)includes/
 # FLAGS & COMPILATOR SETTINGS =========================================================
 CC 			:= cc
 DEPS_FLAGS	:= -MMD -MP
-WARN_FLAGS	:= -Wall -Wextra -Weverything
+WARN_FLAGS	:= -Wall -Werror -Wextra 
 C_FLAGS		:= $(WARN_FLAGS) $(DEPS_FLAGS)
 INC_FLAGS	:= -I $(DIR_INC) -I $(DIR_INC_LIB)
 LIB_FLAGS	:= -L $(DIR_LIB) -lft
