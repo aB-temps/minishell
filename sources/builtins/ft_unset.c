@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 22:25:11 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 04:16:07 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	ft_unset(char **cmd_args, t_input *input)
 	{
 		elem = find_env_var(cmd_args[i++], input->env->list);
 		prev = lstgetprev(input->env->list, elem);
-		if (!prev)
+		if (!prev && elem)
 		{
 			input->env->list = elem->next;
 			clear_env_list_elem(elem->content);
 			free(elem);
 		}
-		else
+		else if (elem)
 			ft_lstdelone(prev, elem, &clear_env_list_elem);
 	}
 	update_env_array(input);
