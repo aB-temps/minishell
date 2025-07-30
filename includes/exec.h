@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/30 18:30:15 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 19:26:42 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ void		prepare_pipe(t_exec *exec, int i);
 char		*get_cmd_by_index(t_input *input, t_token *tokens_array, int index);
 int			is_builtin(t_token current_token, t_input *input, t_exec *exec,
 				int i);
-int			create_all_files(t_exec *exec, t_input *input, t_token *token_array,
-				int i);
+int			create_all_files(t_exec *exec, t_input *input, int i);
 void		exit_exec(t_input *input, t_exec *exec);
 int			check_builtin(char *cmd);
 void		apply_redirections_builtin(t_input *input, int *old_stdout,

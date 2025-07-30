@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/30 18:27:09 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 19:26:50 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ void	reset_sig(void)
 	signal(SIGINT, SIG_DFL);
 }
 
-static int	execute_child(t_exec *exec, int i, t_input *input, int error,
-		t_token *tokens_array)
+static int	execute_child(t_exec *exec, int i, t_input *input, int error)
 {
 	pid_t	pid;
 	int		res;
@@ -56,7 +55,7 @@ static int	execute_child(t_exec *exec, int i, t_input *input, int error,
 	}
 	if (pid == 0)
 	{
-		res = create_all_files(exec, input, tokens_array, i);
+		res = create_all_files(exec, input, i);
 		if (res != 0)
 			exit(free_child(exec, input, error));
 		reset_sig();
@@ -83,6 +82,6 @@ int	execute_command(t_token *current_token, t_exec *exec, int i, t_input *input)
 	exec->args = (char **)(current_token->formatted_content);
 	exec->cmd_path = find_full_command_path(exec->args[0], input->env->array,
 			&error);
-	pid = execute_child(exec, i, input, error, token_array);
+	pid = execute_child(exec, i, input, error);
 	return (pid);
 }

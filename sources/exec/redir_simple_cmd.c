@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:16:58 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/30 18:29:21 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 19:26:28 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,12 @@ int	search_cmd_by_index(t_input *input, t_token *token_array,
 	return (-1);
 }
 
-int	create_all_files(t_exec *exec, t_input *input, t_token *token_array,
-		int cmd_nb)
+int	create_all_files(t_exec *exec, t_input *input, int cmd_nb)
 {
-	int	i;
+	int		i;
+	t_token	*token_array;
 
+	token_array = (t_token *)input->v_tokens->array;
 	i = search_cmd_by_index(input, token_array, cmd_nb);
 	if (i != 0)
 		i++;
