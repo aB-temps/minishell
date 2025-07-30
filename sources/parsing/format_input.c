@@ -6,12 +6,13 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/30 03:28:55 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/30 17:09:56 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "debug.h"
 #include "parsing.h"
+
 
 static void	update_token_vector(t_input *input, t_vector *new_vec)
 {

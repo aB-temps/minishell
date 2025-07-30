@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 21:35:43 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 22:04:20 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/30 17:14:46 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ ssize_t	count_command_args(t_input *input, t_token *array, ssize_t *i)
 		count++;
 		j++;
 	}
-	return (count + 1);
+	return (count);
 }
