@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:19 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/30 18:47:00 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/30 21:32:51 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ char	*str_patreplace(char *s, char *old, char *new);
 char	*str_patdel(char *s, char *pat);
 char	*get_env_value(char *var_name, t_input *input);
 char	*substitute_env_var(char *s, t_input *input);
-void	remove_empty_env_var(t_input *input, t_token *array);
 void	remove_useless_token(t_input *input, t_token *array);
 
 #endif

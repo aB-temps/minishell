@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/30 19:37:59 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/30 21:47:54 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	remove_useless_token(t_input *input, t_token *array)
 	while (i < input->token_qty)
 	{
 		if (!(array[i].type >= ARG && ((last_type >= REDIR_IN
-						&& last_type <= HEREDOC) ||last_ltn)))
+						&& last_type <= HEREDOC) || last_ltn)))
 		{
 			init_token(&token);
 			token = dup_token(array[i]);

@@ -6,10 +6,11 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/30 18:41:50 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 00:24:01 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "debug.h"
 #include "token_formatting.h"
 
 static char	*unquote_arg(char *qtd_arg)
@@ -62,6 +63,7 @@ void	format_redir(t_input *input, ssize_t *i)
 	t_token	*array;
 	bool	expand;
 	size_t	j;
+	size_t	k;
 
 	array = (t_token *)input->v_tokens->array;
 	if (array[*i].type == HEREDOC)
@@ -69,6 +71,7 @@ void	format_redir(t_input *input, ssize_t *i)
 	else
 		expand = false;
 	j = 0;
+	k = 0;
 	array[(*i) + 1].raw_content = str_replace(&array[(*i) + 1].raw_content,
 			join_unquoted_args(array, (*i) + 1, &j, &expand));
 	if (!array[(*i) + 1].raw_content)
@@ -81,6 +84,10 @@ void	format_redir(t_input *input, ssize_t *i)
 		array[(*i)].formatted_content = ft_strdup(array[(*i) + 1].raw_content);
 	if (!array[(*i)].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
-	(*i)++;
-	(*i) += j + 1;
+	k = ++j;
+	while (k > 0)
+	{
+		array[++(*i)].type = -1;
+		k--;
+	}
 }
