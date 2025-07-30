@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   format_input.c                                     :+:      :+:    :+:   */
+/*   remove_useless_token.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/30 17:23:40 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/30 19:37:59 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,35 @@ static size_t	count_valid_tokens(size_t qty, const t_token *array)
 {
 	size_t	i;
 	size_t	valid_tokens;
+	size_t	last_type;
+	bool	last_ltn;
 
 	i = 0;
+	last_type = -1;
+	last_ltn = false;
 	valid_tokens = 0;
 	while (i < qty)
 	{
-		if (array[i].type >= COMMAND && array[i].type <= HEREDOC)
+		if (!(array[i].type >= ARG && ((last_type >= REDIR_IN
+						&& last_type <= HEREDOC) || last_ltn)))
 			valid_tokens++;
+		last_type = array[i].type;
+		last_ltn = array[i].link_to_next;
 		i++;
 	}
 	return (valid_tokens);
 }
 
-void	format_input(t_input *input, t_token *array)
+void	remove_useless_token(t_input *input, t_token *array)
 {
 	t_vector	*new_vec;
 	t_token		token;
 	ssize_t		i;
+	size_t		last_type;
+	bool		last_ltn;
 
+	last_type = -1;
+	last_ltn = false;
 	i = 0;
 	new_vec = create_vector(count_valid_tokens(input->token_qty, array),
 			sizeof(t_token), clear_token);
@@ -49,7 +60,8 @@ void	format_input(t_input *input, t_token *array)
 		exit_minishell(input, EXIT_FAILURE);
 	while (i < input->token_qty)
 	{
-		if (array[i].type >= COMMAND && array[i].type <= HEREDOC)
+		if (!(array[i].type >= ARG && ((last_type >= REDIR_IN
+						&& last_type <= HEREDOC) ||last_ltn)))
 		{
 			init_token(&token);
 			token = dup_token(array[i]);
@@ -59,6 +71,8 @@ void	format_input(t_input *input, t_token *array)
 				exit_minishell(input, EXIT_FAILURE);
 			}
 		}
+		last_type = array[i].type;
+		last_ltn = array[i].link_to_next;
 		i++;
 	}
 	update_token_vector(input, new_vec);
