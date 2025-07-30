@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 14:35:58 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/30 17:14:24 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/30 20:38:35 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	format_command(t_input *input, t_token *array, ssize_t *i)
 
 	tmp = array[*i].formatted_content;
 	arg_qty = count_command_args(input, array, i);
-	printf("arg_qty: %zu\n", arg_qty);
+	// printf("arg_qty: %zu\n", arg_qty);
 	array[*i].formatted_content = command_args_to_array(input, array, i,
 			arg_qty);
 	free(tmp);

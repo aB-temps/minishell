@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/30 01:43:25 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 21:29:19 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	if (!line && g_sig != SIGINT)
 		ft_putstr_fd("warning : heredoc exited before EOF\n", STDERR_FILENO);
 	if (g_sig == SIGINT)
+	{
+		printf("coucou\n");
 		safe_close(fds[1]);
+	}
 	safe_close(fds[0]);
 	free(token->formatted_content);
 	token->formatted_content = fds;
