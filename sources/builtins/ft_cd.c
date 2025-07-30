@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/30 03:53:37 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 03:58:13 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	ft_cd(char **cmd, t_input *input)
 
 	new_wd = NULL;
 	old_pwd = NULL;
-	old_pwd = getcwd(old_pwd, 0);
+	old_pwd = getcwd(old_pwd, PATH_MAX);
 	if (!old_pwd)
 		return (1);
 	if (cmd[1] == NULL)
