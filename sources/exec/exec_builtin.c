@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 07:58:09 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/29 21:47:07 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ int	check_builtin(char *cmd)
 static void	execute_builtin(char **cmd, t_input *input, t_exec *exec)
 {
 	if (ft_strcmp(cmd[0], "echo") == 0)
-		ft_echo(cmd);
+		input->last_exit_status = ft_echo(cmd);
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		ft_pwd();
+		input->last_exit_status = ft_pwd();
 	else if (ft_strcmp(cmd[0], "cd") == 0)
 		input->last_exit_status = ft_cd(cmd, input);
 	else if (ft_strcmp(cmd[0], "export") == 0)
-		ft_export(cmd, input);
+		input->last_exit_status = ft_export(cmd, input);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
-		ft_unset(cmd, input);
+		input->last_exit_status = ft_unset(cmd, input);
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		ft_env(input->env->array);
+		input->last_exit_status = ft_env(input->env->array);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
 		ft_exit(cmd, input, exec);
 }

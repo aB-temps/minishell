@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 18:14:19 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/29 21:51:45 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "debug.h"
 
-void	ft_env(char **env)
+int	ft_env(char **env)
 {
 	const size_t	size = ft_tablen(env);
 	size_t			i;
@@ -25,4 +25,5 @@ void	ft_env(char **env)
 			printf("%s\n", env[i]);
 		i++;
 	}
+	return (0);
 }

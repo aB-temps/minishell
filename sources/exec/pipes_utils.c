@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:55 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/29 07:58:15 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 00:21:59 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	first_cmd(t_exec *exec, int fd_infile)
 		error_occured(exec, "dup2");
 	if (dup2(exec->fd->fd2[1], STDOUT_FILENO) == -1)
 		error_occured(exec, "dup2");
-	close_all(exec);
 }
 
 static void	middle_cmd(t_exec *exec)
@@ -35,7 +34,6 @@ static void	middle_cmd(t_exec *exec)
 		error_occured(exec, "dup2");
 	if (dup2(exec->fd->fd2[1], STDOUT_FILENO) == -1)
 		error_occured(exec, "dup2");
-	close_all(exec);
 }
 
 static void	last_cmd(t_exec *exec, int fd_outfile)
@@ -51,7 +49,6 @@ static void	last_cmd(t_exec *exec, int fd_outfile)
 		error_occured(exec, "dup2");
 	if (dup2(exec->fd->fd1[0], STDIN_FILENO) == -1)
 		error_occured(exec, "dup2");
-	close_all(exec);
 }
 
 int	close_all(t_exec *exec)
@@ -85,12 +82,14 @@ void	prepare_pipe(t_exec *exec, int i)
 			if (dup2(exec->fd_outfile, STDOUT_FILENO) == -1)
 				error_occured(exec, "dup2");
 		}
+		close_all(exec);
 		return ;
 	}
-	if (i == 0)
+	else if (i == 0)
 		first_cmd(exec, exec->fd_infile);
 	else if (i == exec->cmd_count - 1)
 		last_cmd(exec, exec->fd_outfile);
 	else
 		middle_cmd(exec);
+	close_all(exec);
 }
