@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/30 03:58:13 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 04:41:30 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@ int	handle_cd_alone(t_input *input)
 	char	*home;
 
 	home = get_env_value("HOME", input);
-	if (!home || chdir(home) == -1)
+	if (chdir(home) == -1)
 	{
-		if (!home)
+		if (!home[0])
 			ft_putstr_fd("cd: HOME not set\n", 2);
 		else
 			perror("cd");
 		if (home)
 			free(home);
-		return (1);
+		return (0);
 	}
 	free(home);
 	return (0);
