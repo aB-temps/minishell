@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/30 01:44:49 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 16:43:16 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 int	execute_all_commands(t_input *input, t_exec *exec)
 {
 	t_token	*tokens_array;
-	int		res;
 	int		saved_exit_status;
 	char	**cmd;
 
@@ -25,12 +24,8 @@ int	execute_all_commands(t_input *input, t_exec *exec)
 	if (!exec->pid_child)
 		return (1);
 	tokens_array = (t_token *)input->v_tokens->array;
-	res = create_all_files(exec, input, tokens_array);
-	if (res != 0)
-		return (res);
-	res = launch_all_commands(input, exec);
-	if (res != 0)
-		return (res);
+	if (launch_all_commands(input, exec) != 0)
+		return (1);
 	saved_exit_status = input->last_exit_status;
 	wait_childs(exec, input);
 	if (exec->cmd_count == 1 && tokens_array[0].type == COMMAND)
