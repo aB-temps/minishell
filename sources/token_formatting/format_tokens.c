@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/30 00:53:22 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/30 03:29:15 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	format_tokens(t_input *input)
 	array = (t_token *)input->v_tokens->array;
 	handle_quotes(array, input);
 	handle_env_var_expansion(input);
-	remove_empty_env_var(&input, array);
-	print_input(input, "AFTER REMOVING EMPTY ENV_VAR");
+	remove_empty_env_var(input, array);
+	// print_input(input, "AFTER REMOVING EMPTY ENV_VAR");
 	array = (t_token *)input->v_tokens->array;
 	while (i < input->token_qty)
 	{

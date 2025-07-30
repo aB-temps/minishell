@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 14:35:58 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 22:06:00 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/30 03:28:15 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,14 @@ static char	**command_args_to_array(t_input *input, t_token *array, ssize_t *i,
 
 void	format_command(t_input *input, t_token *array, ssize_t *i)
 {
+	char	*tmp;
 	ssize_t	arg_qty;
 
+	tmp = array[*i].formatted_content;
 	arg_qty = count_command_args(input, array, i);
 	array[*i].formatted_content = command_args_to_array(input, array, i,
 			arg_qty);
+	free(tmp);
 	if (!array[*i].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
 	array[*i].type = COMMAND;
