@@ -6,11 +6,10 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 22:23:42 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 22:54:19 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
 #include "token_formatting.h"
 
 static char	*unquote_arg(char *qtd_arg)
@@ -74,28 +73,24 @@ void	format_redir(t_input *input, ssize_t *i)
 	size_t	j;
 
 	array = (t_token *)input->v_tokens->array;
+	expand = false;
 	if (array[*i].type == HEREDOC)
 		expand = true;
-	else
-		expand = false;
 	j = 0;
-	array[(*i) + 1].raw_content = str_replace(&array[(*i) + 1].raw_content,
-			join_unquoted_args(array, (*i) + 1, &j, &expand));
+	array[(*i) + 1].raw_content = str_replace(&array[*i + 1].raw_content,
+			join_unquoted_args(array, *i + 1, &j, &expand));
 	if (!array[(*i) + 1].raw_content)
 		exit_minishell(input, EXIT_FAILURE);
 	array[*i].link_to_next = expand;
-	if ((*i) + 1 < input->token_qty && array[(*i) + 1].type == ENV_VAR)
-	{
-		free(array[(*i)].formatted_content);
-		array[(*i)].formatted_content = ft_strdup(array[(*i)
-				+ 1].formatted_content);
-	}
-	else if ((*i) + 1 < input->token_qty && array[(*i) + 1].type >= ARG)
-	{
-		free(array[(*i)].formatted_content);
-		array[(*i)].formatted_content = ft_strdup(array[(*i) + 1].raw_content);
-	}
-	if (!array[(*i)].formatted_content)
+	if (*i + 1 < input->token_qty && array[*i + 1].type == ENV_VAR)
+		array[*i].formatted_content
+			= str_replace((char **)&array[*i].formatted_content,
+				ft_strdup(array[*i + 1].formatted_content));
+	else if (*i + 1 < input->token_qty && array[*i + 1].type >= ARG)
+		array[*i].formatted_content
+			= str_replace((char **)&array[*i].formatted_content,
+				ft_strdup(array[*i + 1].raw_content));
+	if (!array[*i].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
 	tag_tokens_to_remove(array, i, ++j);
 }
