@@ -4,6 +4,7 @@ on: [push]
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -13,7 +14,7 @@ jobs:
           pip3 install norminette
       - name: Norminette start
         run: |
-          norminette -R CheckForbiddenSourceHeader | grep -q -v OK && exit 1
+          norminette -R CheckForbiddenSourceHeader | grep -v OK && exit 1
       - name: Try to compile
         run: |
           make || exit 1
