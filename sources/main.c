@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 06:53:15 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 07:52:28 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/31 04:04:03 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,13 @@
 #include "style.h"
 #include <stdio.h>
 
-static int	do_nothing(void)
-{
-	return (0);
-}
+
 
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-	rl_event_hook = do_nothing;
+	rl_event_hook = set_loop;
 	welcome();
 	if (isatty(STDIN_FILENO) != 1)
 	{
