@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/30 16:27:23 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/31 04:14:24 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,7 @@ int	ft_cd(char **cmd, t_input *input)
 {
 	char	*new_wd;
 	char	*old_wd;
-	char	**to_exp;
 
-	to_exp = NULL;
 	if (!init_wds(&new_wd, &old_wd))
 		return (1);
 	if (cmd[1] == NULL)
