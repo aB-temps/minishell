@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/30 16:27:23 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/31 04:00:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	handle_cd_alone(t_input *input, char *old_wd, char *new_wd)
 			perror("cd");
 		if (home)
 			free(home);
-		return (1);
+		return (2);
 	}
 	free(home);
 	return (0);
@@ -89,12 +89,12 @@ int	ft_cd(char **cmd, t_input *input)
 	else if (cmd[2] != NULL)
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
-		return (1);
+		return (2);
 	}
 	else if (chdir(cmd[1]) == -1)
 	{
 		perror(cmd[1]);
-		return (1);
+		return (2);
 	}
 	export_pwd_in_cd(input, old_wd, new_wd);
 	return (0);
