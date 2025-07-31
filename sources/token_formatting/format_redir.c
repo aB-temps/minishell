@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 04:13:12 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 04:22:11 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	format_redir(t_input *input, ssize_t *i)
 	t_token	*array;
 	bool	expand;
 	size_t	j;
-	size_t	k;
 
 	array = (t_token *)input->v_tokens->array;
 	if (array[*i].type == HEREDOC)
@@ -80,7 +79,6 @@ void	format_redir(t_input *input, ssize_t *i)
 	else
 		expand = false;
 	j = 0;
-	k = 0;
 	array[(*i) + 1].raw_content = str_replace(&array[(*i) + 1].raw_content,
 			join_unquoted_args(array, (*i) + 1, &j, &expand));
 	if (!array[(*i) + 1].raw_content)
