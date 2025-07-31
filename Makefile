@@ -158,12 +158,12 @@ F_UTILS :=				init_struct.c		\
 						count_valid_tokens.c	\
 						is_empty_env_var_token.c	\
 						is_redir_object_token.c	\
+						count_command_args.c	\
 						
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\
 						format_redir.c		\
 						format_env_var.c	\
-						count_command_args.c	\
 
 F_STYLE :=				welcome.c 					\
 						build_prompt.c				\

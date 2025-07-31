@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 01:26:30 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 18:22:48 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	update_token_vector(t_input *input, t_vector *new_vec)
 {
 	clear_vector(&input->v_tokens);
 	input->v_tokens = new_vec;
-	input->token_qty = input->v_tokens->capacity;
+	input->token_qty = input->v_tokens->nb_elements;
 }
 
 static size_t	count_valid_tokens(size_t qty, const t_token *array)

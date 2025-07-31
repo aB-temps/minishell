@@ -2,8 +2,11 @@
 includes
 la
 libft
+log
+log2
 Makefile
 minishell
 minishell.supp
 minishell_tester
 sources
+test

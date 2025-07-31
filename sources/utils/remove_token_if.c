@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 02:34:55 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 19:38:24 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 
 static void	update_token_vector(t_input *input, t_vector *new_vec)
 {
-	clear_vector(&input->v_tokens);
+	printf("CLEARING:\n-----\n");
+	clear_vector(&(input->v_tokens));
 	input->v_tokens = new_vec;
-	input->token_qty = input->v_tokens->capacity;
+	input->token_qty = input->v_tokens->nb_elements;
 }
 
 static size_t	count_valid_tokens(ssize_t qty, t_token *array,
@@ -57,12 +58,14 @@ void	remove_token_if(t_input *input, t_token **array,
 			token = dup_token((*array)[i]);
 			if (token.type == -1 || !add_element(new_vec, &token))
 			{
+				printf("je vais pas clear badnewssss\n");
 				clear_vector(&new_vec);
 				exit_minishell(input, EXIT_FAILURE);
 			}
 		}
 		i++;
 	}
+	printf("je vais clear\n");
 	update_token_vector(input, new_vec);
 	*array = (t_token *)input->v_tokens->array;
 }

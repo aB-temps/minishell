@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 04:22:11 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 20:24:30 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,16 @@ void	format_redir(t_input *input, ssize_t *i)
 		exit_minishell(input, EXIT_FAILURE);
 	array[*i].link_to_next = expand;
 	if ((*i) + 1 < input->token_qty && array[(*i) + 1].type == ENV_VAR)
+	{
+		free(array[(*i)].formatted_content);
 		array[(*i)].formatted_content = ft_strdup(array[(*i)
 				+ 1].formatted_content);
+	}
 	else if ((*i) + 1 < input->token_qty && array[(*i) + 1].type >= ARG)
+	{
+		free(array[(*i)].formatted_content);
 		array[(*i)].formatted_content = ft_strdup(array[(*i) + 1].raw_content);
+	}
 	if (!array[(*i)].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
 	tag_tokens_to_remove(array, i, ++j);
