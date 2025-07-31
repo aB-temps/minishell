@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count_command_args.c                               :+:      :+:    :+:   */
+/*   is_empty_env_var_token.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/29 21:35:43 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/30 17:14:46 by abetemps         ###   ########.fr       */
+/*   Created: 2025/07/30 21:45:43 by abetemps          #+#    #+#             */
+/*   Updated: 2025/07/30 21:45:44 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-ssize_t	count_command_args(t_input *input, t_token *array, ssize_t *i)
+bool	is_empty_var_token(t_token *array, ssize_t i)
 {
-	ssize_t	j;
-	ssize_t	count;
-
-	j = *i;
-	count = 0;
-	while (j + 1 <= input->token_qty && !(array[j].type >= PIPE
-			&& array[j].type <= HEREDOC))
-	{
-		count++;
-		j++;
-	}
-	return (count);
+	if (!(array[i].type == ENV_VAR && !ft_strlen(array[i].formatted_content)))
+		return (true);
+	else
+		return (false);
 }

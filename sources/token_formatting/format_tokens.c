@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/30 15:49:58 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 02:26:34 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	handle_env_var_expansion(t_input *input)
 		if (array[i].type != S_QUOTES && ft_strchr(array[i].raw_content, '$')
 			&& ft_strlen(array[i].raw_content) != 1 && last_type != HEREDOC)
 		{
-			array[i].formatted_content
-				= substitute_env_var(array[i].raw_content, input);
+			array[i].formatted_content = substitute_env_var(array[i].raw_content,
+					input);
 			if (!array[i].formatted_content)
 				exit_minishell(input, EXIT_FAILURE);
 			array[i].type = ENV_VAR;
@@ -76,15 +76,25 @@ void	format_tokens(t_input *input)
 	array = (t_token *)input->v_tokens->array;
 	handle_quotes(array, input);
 	handle_env_var_expansion(input);
-	remove_empty_env_var(input, array);
-	array = (t_token *)input->v_tokens->array;
+	remove_token_if(input, &array, is_empty_var_token);
+	print_input(input, "AFTER REM USELESS VAR");
 	while (i < input->token_qty)
 	{
 		if (array[i].type >= REDIR_IN && array[i].type <= HEREDOC)
 			format_redir(input, &i);
-		else if (array[i].type >= ARG)
+		else
+			i++;
+			
+	}
+	print_input(input, "AFTER FORMAT REDIR");
+	remove_token_if(input, &array, is_redir_object_token);
+	i = 0;
+	while (i < input->token_qty)
+	{
+		if (array[i].type >= ARG)
 			format_command(input, array, &i);
 		else
 			i++;
 	}
+	print_input(input, "AFTER FORMAT CMD");
 }

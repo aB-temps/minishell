@@ -132,35 +132,38 @@ F_ENV 	:=				env_array_to_list.c			\
 F_HEREDOC	:=			handle_heredoc.c			\
 						gen_heredoc_filename.c		\
 						
-F_UTILS :=				init_struct.c				\
-						clear_token.c				\
-						clear_env_list_elem.c		\
-						dup_token.c					\
-						create_token.c				\
-						exit_minishell.c			\
-						countocc.c					\
-						str_patdel.c				\
-						str_chardel.c				\
-						str_patreplace.c			\
-						str_replace.c				\
-						extract_var_key.c			\
-						exp_var_strlen.c			\
-						ft_tablen.c					\
-						ft_tabdup.c					\
-						gen_random_num_sequence.c	\
-						clear_hd_filename_elem.c	\
-						clear_var_vector.c			\
-						lstgetprev.c				\
-						safe_close.c				\
-						unlink_free_tmpfile.c		\
-						quoted_arg_len.c			\
-						count_command_args.c		\
+F_UTILS :=				init_struct.c		\
+						clear_token.c		\
+						clear_env_list_elem.c	\
+						dup_token.c			\
+						create_token.c		\
+						exit_minishell.c	\
+						countocc.c			\
+						str_patdel.c		\
+						str_chardel.c		\
+						str_patreplace.c	\
+						str_replace.c		\
+						extract_var_key.c	\
+						exp_var_strlen.c	\
+						ft_tabdup.c			\
+						ft_tablen.c			\
+						gen_random_num_sequence.c \
+						clear_hd_filename_elem.c \
+						clear_var_vector.c	\
+						lstgetprev.c		\
+						safe_close.c		\
+						unlink_free_tmpfile.c	\
+						quoted_arg_len.c	\
+						remove_token_if.c	\
+						count_valid_tokens.c	\
+						is_empty_env_var_token.c	\
+						is_redir_object_token.c	\
 						
-F_TOKEN_FORMATTING :=	format_tokens.c				\
-						format_command.c			\
-						format_redir.c				\
-						format_env_var.c			\
-						remove_empty_env_var.c		\
+F_TOKEN_FORMATTING :=	format_tokens.c		\
+						format_command.c	\
+						format_redir.c		\
+						format_env_var.c	\
+						count_command_args.c	\
 
 F_STYLE :=				welcome.c 					\
 						build_prompt.c				\
