@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/30 00:09:39 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 21:35:21 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,31 @@
 #include "input.h"
 #include <stdio.h>
 
+void	close_hd_fd(t_input *input)
+{
+	t_token	*tokens_array;
+	t_token	*current_token;
+	int		hd_fd;
+	int		i;
+
+	i = 0;
+	tokens_array = input->v_tokens->array;
+	while (i < input->token_qty)
+	{
+		current_token = &tokens_array[i];
+		if (current_token->type == HEREDOC)
+		{
+			hd_fd = ((int *)current_token->formatted_content)[1];
+			if (hd_fd)
+				close(hd_fd);
+		}
+		i++;
+	}
+}
+
 int	free_child(t_exec *exec, t_input *input, int error)
 {
+	close_hd_fd(input);
 	if (exec)
 	{
 		close_all(exec);
@@ -35,9 +58,16 @@ int	free_child(t_exec *exec, t_input *input, int error)
 	return (error);
 }
 
+void	reset_sig(void)
+{
+	signal(SIGQUIT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
+}
+
 static int	execute_child(t_exec *exec, int i, t_input *input, int error)
 {
 	pid_t	pid;
+	int		res;
 
 	pid = fork();
 	if (pid == -1)
@@ -48,8 +78,10 @@ static int	execute_child(t_exec *exec, int i, t_input *input, int error)
 	}
 	if (pid == 0)
 	{
-		signal(SIGQUIT, SIG_DFL);
-		signal(SIGINT, SIG_DFL);
+		res = create_all_files(exec, input, i);
+		if (res != 0)
+			exit(free_child(exec, input, error));
+		reset_sig();
 		prepare_pipe(exec, i);
 		if (!exec->cmd_path)
 			exit(free_child(exec, input, error));
@@ -63,14 +95,17 @@ static int	execute_child(t_exec *exec, int i, t_input *input, int error)
 
 int	execute_command(t_token *current_token, t_exec *exec, int i, t_input *input)
 {
-	int	pid;
-	int	error;
+	int		pid;
+	int		error;
+	t_token	*token_array;
 
 	error = 0;
 	pid = 0;
+	token_array = (t_token *)input->v_tokens->array;
 	exec->args = (char **)(current_token->formatted_content);
 	exec->cmd_path = find_full_command_path(exec->args[0], input->env->array,
 			&error);
 	pid = execute_child(exec, i, input, error);
+	close_hd_fd(input);
 	return (pid);
 }

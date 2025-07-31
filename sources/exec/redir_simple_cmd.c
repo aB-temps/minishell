@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:16:58 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 07:58:02 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 19:26:28 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,40 @@ static int	handle_redir_out(t_exec *exec, t_token current_token)
 	return (0);
 }
 
-int	create_all_files(t_exec *exec, t_input *input, t_token *token_array)
+int	search_cmd_by_index(t_input *input, t_token *token_array,
+		int searched_n_cmd)
 {
+	int	cmd_index;
 	int	i;
 
 	i = 0;
+	cmd_index = 0;
+	if (searched_n_cmd == 0)
+		return (0);
 	while (i < input->token_qty)
 	{
+		while (i < input->token_qty && token_array[i].type != PIPE)
+			i++;
+		if (++cmd_index == searched_n_cmd)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int	create_all_files(t_exec *exec, t_input *input, int cmd_nb)
+{
+	int		i;
+	t_token	*token_array;
+
+	token_array = (t_token *)input->v_tokens->array;
+	i = search_cmd_by_index(input, token_array, cmd_nb);
+	if (i != 0)
+		i++;
+	while (i < input->token_qty)
+	{
+		if (token_array[i].type == PIPE)
+			return (0);
 		if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
 		{
 			if (handle_redir_out(exec, token_array[i]))

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 08:00:03 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/30 19:26:42 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,13 @@ void		prepare_pipe(t_exec *exec, int i);
 char		*get_cmd_by_index(t_input *input, t_token *tokens_array, int index);
 int			is_builtin(t_token current_token, t_input *input, t_exec *exec,
 				int i);
-int			create_all_files(t_exec *exec, t_input *input,
-				t_token *token_array);
+int			create_all_files(t_exec *exec, t_input *input, int i);
 void		exit_exec(t_input *input, t_exec *exec);
 int			check_builtin(char *cmd);
 void		apply_redirections_builtin(t_input *input, int *old_stdout,
 				int *old_stdin);
 void		check_cmd(t_input *input, t_token *tokens_array, int i);
 void		error_occured(t_exec *exec, char *error_msg);
-int			create_all_files(t_exec *exec, t_input *input,
-				t_token *token_array);
 int			execute_all_commands(t_input *input, t_exec *exec);
 void		handle_sigint(t_input *input);
 void		check_sig(t_exec *exec, t_token *tokens_array, t_input *input,

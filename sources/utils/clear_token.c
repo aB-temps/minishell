@@ -6,12 +6,14 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:16 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:47:17 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/30 03:28:48 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "input.h"
 #include <unistd.h>
+#include "input.h"
+#include "utils.h"
+#include "debug.h"
 
 void	clear_token(t_vector *tokens)
 {
@@ -26,10 +28,8 @@ void	clear_token(t_vector *tokens)
 		else if (array[i].type == HEREDOC
 			&& ft_strlen(array[i].raw_content) > 2)
 		{
-			if (((int *)array[i].formatted_content)[0] != -1)
-				close(((int *)array[i].formatted_content)[0]);
-			if (((int *)array[i].formatted_content)[1] != -1)
-				close(((int *)array[i].formatted_content)[1]);
+			safe_close(((int *)array[i].formatted_content)[0]);
+			safe_close(((int *)array[i].formatted_content)[1]);
 			free(array[i].formatted_content);
 		}
 		else
