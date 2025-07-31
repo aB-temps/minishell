@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 06:42:03 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 18:58:19 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/31 04:04:36 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,11 @@
 #include <unistd.h>
 
 volatile sig_atomic_t	g_sig;
+
+int	set_loop(void)
+{
+	return (0);
+}
 
 void	handle_sigint(t_input *input)
 {
