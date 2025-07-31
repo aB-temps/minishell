@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 02:33:26 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 22:23:42 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,20 @@ static char	*join_unquoted_args(t_token *array, size_t i, size_t *j,
 	return (content);
 }
 
+static void	tag_tokens_to_remove(t_token *array, ssize_t *i, size_t j)
+{
+	while (j > 0)
+	{
+		array[++(*i)].type = -1;
+		j--;
+	}
+}
+
 void	format_redir(t_input *input, ssize_t *i)
 {
 	t_token	*array;
 	bool	expand;
 	size_t	j;
-	size_t	k;
 
 	array = (t_token *)input->v_tokens->array;
 	if (array[*i].type == HEREDOC)
@@ -71,23 +79,23 @@ void	format_redir(t_input *input, ssize_t *i)
 	else
 		expand = false;
 	j = 0;
-	k = 0;
 	array[(*i) + 1].raw_content = str_replace(&array[(*i) + 1].raw_content,
 			join_unquoted_args(array, (*i) + 1, &j, &expand));
 	if (!array[(*i) + 1].raw_content)
 		exit_minishell(input, EXIT_FAILURE);
 	array[*i].link_to_next = expand;
 	if ((*i) + 1 < input->token_qty && array[(*i) + 1].type == ENV_VAR)
+	{
+		free(array[(*i)].formatted_content);
 		array[(*i)].formatted_content = ft_strdup(array[(*i)
 				+ 1].formatted_content);
+	}
 	else if ((*i) + 1 < input->token_qty && array[(*i) + 1].type >= ARG)
+	{
+		free(array[(*i)].formatted_content);
 		array[(*i)].formatted_content = ft_strdup(array[(*i) + 1].raw_content);
+	}
 	if (!array[(*i)].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
-	k = ++j;
-	while (k > 0)
-	{
-		array[++(*i)].type = -1;
-		k--;
-	}
+	tag_tokens_to_remove(array, i, ++j);
 }
