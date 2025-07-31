@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 02:28:41 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 02:32:53 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	reset_input(t_input *input)
 	input->token_qty = 0;
 }
 
-void get_input(char **env)
+void	get_input(char **env)
 {
 	t_input	*input;
 

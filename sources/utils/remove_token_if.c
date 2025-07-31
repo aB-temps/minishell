@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 00:25:03 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 02:34:55 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ void	remove_token_if(t_input *input, t_token **array,
 		i++;
 	}
 	update_token_vector(input, new_vec);
-	*array = (t_token*)input->v_tokens->array;
+	*array = (t_token *)input->v_tokens->array;
 }

@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 21:35:43 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 02:26:47 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 02:33:04 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 ssize_t	count_command_args(t_input *input, t_token *array, ssize_t *i)
 {
-	ssize_t j;
-	ssize_t count;
+	ssize_t	j;
+	ssize_t	count;
 
 	j = *i;
 	count = 0;
