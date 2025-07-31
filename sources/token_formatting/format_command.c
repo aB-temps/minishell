@@ -6,11 +6,12 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 14:35:58 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/30 18:57:38 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 02:26:31 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token_formatting.h"
+#include "debug.h"
 
 static void	*joinback_args(t_token *array, size_t *k, size_t *arg_qty)
 {
@@ -92,5 +93,5 @@ void	format_command(t_input *input, t_token *array, ssize_t *i)
 	if (!array[*i].formatted_content)
 		exit_minishell(input, EXIT_FAILURE);
 	array[*i].type = COMMAND;
-	(*i) += arg_qty;
+	(*i) += arg_qty + 1;
 }

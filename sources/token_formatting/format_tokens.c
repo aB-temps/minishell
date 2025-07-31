@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 00:15:34 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 02:26:34 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	format_tokens(t_input *input)
 	handle_quotes(array, input);
 	handle_env_var_expansion(input);
 	remove_token_if(input, &array, is_empty_var_token);
-	// array = (t_token *)input->v_tokens->array;
 	print_input(input, "AFTER REM USELESS VAR");
 	while (i < input->token_qty)
 	{
@@ -89,7 +88,6 @@ void	format_tokens(t_input *input)
 	}
 	print_input(input, "AFTER FORMAT REDIR");
 	remove_token_if(input, &array, is_redir_object_token);
-	// array = (t_token *)input->v_tokens->array;
 	i = 0;
 	while (i < input->token_qty)
 	{
