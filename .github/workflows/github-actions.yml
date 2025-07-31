@@ -2,9 +2,8 @@ name: GitHub Actions Demo
 run-name: Basic tests 🚀
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  Norm-and-compile:
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
@@ -13,6 +12,7 @@ jobs:
           sudo apt-get update && sudo apt-get install -y python3-pip make clang libghc-readline-dev
           pip3 install norminette
       - name: Norminette start
+        continue-on-error: true
         run: |
           norminette -R CheckForbiddenSourceHeader | grep -v OK && exit 1
       - name: Try to compile
