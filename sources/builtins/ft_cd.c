@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/01 00:27:49 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/01 00:30:02 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,9 @@ int	handle_cd_old_pwd(t_input *input)
 	char	*old_wd;
 
 	old_wd = get_env_value("OLDPWD", input);
-	printf("OLDWD= %s\n", old_wd);
 	if (chdir(old_wd) == -1)
 	{
-		if (ft_strlen(old_wd))
+		if (!ft_strlen(old_wd))
 			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
 		else
 			perror("cd");
