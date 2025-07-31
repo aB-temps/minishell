@@ -1,5 +1,5 @@
 name: GitHub Actions Demo
-run-name: Norminette test 🚀
+run-name: Basic tests 🚀
 on: [push]
 jobs:
   Explore-GitHub-Actions:
