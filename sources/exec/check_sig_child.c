@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 03:01:55 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 03:02:10 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/01 04:47:36 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
 	{
 		sig = WTERMSIG(status);
 		if (sig == SIGQUIT)
-			printf("Quit (core dumped)\n");
+			ft_putstr_fd("Quit (core dumped)\n", 2);
 		input->last_exit_status = 128 + sig;
 	}
 }

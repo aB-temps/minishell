@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dup_token.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:46:27 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 19:14:43 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/01 04:46:48 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ t_token	dup_token(t_token token)
 	init_token(&new_token);
 	new_token.type = token.type;
 	new_token.link_to_next = token.link_to_next;
-	printf("KEPT TOKENS:\n-----\n'%s'\n", (char *)token.raw_content);
-	printf("'%s'\n-----\n\n", (char *)token.formatted_content);
 	new_token.raw_content = ft_strdup(token.raw_content);
 	if (!new_token.raw_content)
 	{
