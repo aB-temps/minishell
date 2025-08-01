@@ -159,6 +159,7 @@ F_UTILS :=				init_struct.c		\
 						is_empty_env_var_token.c	\
 						is_redir_object_token.c	\
 						count_command_args.c	\
+						cd_utils.c			\
 						
 F_TOKEN_FORMATTING :=	format_tokens.c		\
 						format_command.c	\
