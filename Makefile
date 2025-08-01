@@ -93,94 +93,94 @@ COMPONENTS :=			PARSING 					\
 						SIGNALS						\
 
 # FILES ===============================================================================
-F_MAIN :=				main.c						\
 
-F_SIGNALS :=			signals.c					\
+F_BUILTINS 			:=	ft_cd.c						\
+						ft_echo.c 					\
+						ft_env.c					\
+						ft_exit.c					\
+						ft_export.c					\
+						ft_pwd.c					\
+						ft_unset.c					\
 
-F_LEXING :=				tokenize_input.c			\
-						tokenize_word.c				\
-						tokenize_operator.c			\
-						tokenize_quote.c			\
-			
-F_CHECKING :=			is_valid_input.c			\
-						is_quote.c					\
-						is_whitespace.c				\
+F_CHECKING 			:=	check_syntax_error.c		\
 						is_operator.c				\
-						check_syntax_error.c		\
+						is_quote.c					\
+						is_valid_input.c			\
+						is_whitespace.c				\
 
-F_PARSING :=			get_input.c					\
-						parse_input.c				\
-						format_input.c				\
+F_DEBUG 			:=	print_exec.c				\
+						print_heredoc.c				\
+						print_input.c				\
+						print_tab.c					\
 
-F_EXEC :=				exec_cmd.c					\
+F_ENV 				:=	env_array_to_list.c			\
+						env_list_to_array.c			\
+						find_env_var.c				\
+						get_env_value.c				\
+
+F_EXEC 				:=	check_sig_child.c			\
+						error_utils.c				\
+						exec_builtin.c				\
+						exec_cmd.c					\
 						exec_launcher.c				\
 						exec_process.c				\
 						path_utils.c				\
-						utils.c						\
 						pipes_utils.c				\
-						exec_builtin.c				\
 						redir_builtin.c				\
-						error_utils.c				\
 						redir_simple_cmd.c			\
-						check_sig_child.c			\
+						utils.c						\
 
-F_ENV 	:=				env_array_to_list.c			\
-						get_env_value.c				\
-						find_env_var.c				\
-						env_list_to_array.c			\
+F_HEREDOC			:=	gen_heredoc_filename.c		\
+						handle_heredoc.c			\
 
-F_HEREDOC	:=			handle_heredoc.c			\
-						gen_heredoc_filename.c		\
-						
-F_UTILS :=				init_struct.c		\
-						clear_token.c		\
-						clear_env_list_elem.c	\
-						dup_token.c			\
-						create_token.c		\
-						exit_minishell.c	\
-						countocc.c			\
-						str_patdel.c		\
-						str_chardel.c		\
-						str_patreplace.c	\
-						str_replace.c		\
-						extract_var_key.c	\
-						exp_var_strlen.c	\
-						ft_tabdup.c			\
-						ft_tablen.c			\
-						gen_random_num_sequence.c \
-						clear_hd_filename_elem.c \
-						clear_var_vector.c	\
-						lstgetprev.c		\
-						safe_close.c		\
-						unlink_free_tmpfile.c	\
-						quoted_arg_len.c	\
-						remove_token_if.c	\
-						count_valid_tokens.c	\
+F_LEXING			:=	tokenize_input.c			\
+						tokenize_operator.c			\
+						tokenize_quote.c			\
+						tokenize_word.c				\
+
+F_PARSING			:=	format_input.c				\
+						get_input.c					\
+						parse_input.c				\
+
+F_SIGNALS 			:=	signals.c					\
+
+F_STYLE 			:=	build_prompt.c 				\
+						welcome.c					\
+
+F_TOKEN_FORMATTING	:=	format_command.c			\
+						format_env_var.c			\
+						format_redir.c				\
+						format_tokens.c				\
+
+F_UTILS				:=	clear_env_list_elem.c		\
+						clear_hd_filename_elem.c 	\
+						clear_token.c				\
+						clear_var_vector.c			\
+						count_command_args.c		\
+						count_valid_tokens.c		\
+						countocc.c					\
+						create_token.c				\
+						dup_token.c					\
+						exit_minishell.c			\
+						exp_var_strlen.c			\
+						extract_var_key.c			\
+						ft_tabdup.c					\
+						ft_tablen.c					\
+						gen_random_num_sequence.c	\
+						init_struct.c				\
 						is_empty_env_var_token.c	\
-						is_redir_object_token.c	\
-						count_command_args.c	\
-						
-F_TOKEN_FORMATTING :=	format_tokens.c		\
-						format_command.c	\
-						format_redir.c		\
-						format_env_var.c	\
+						is_redir_object_token.c		\
+						lstgetprev.c				\
+						quoted_arg_len.c			\
+						remove_token_if.c			\
+						safe_close.c				\
+						str_chardel.c				\
+						str_patdel.c				\
+						str_patreplace.c			\
+						str_replace.c				\
+						unlink_free_tmpfile.c		\
 
-F_STYLE :=				welcome.c 					\
-						build_prompt.c				\
-
-F_BUILTINS :=			ft_echo.c 					\
-						ft_cd.c						\
-						ft_pwd.c					\
-						ft_export.c					\
-						ft_unset.c					\
-						ft_exit.c					\
-						ft_env.c					\
-
-F_DEBUG :=				print_input.c				\
-						print_tab.c					\
-						print_heredoc.c				\
-						print_exec.c				\
-
+F_MAIN :=				main.c						\
 
 # VARS GENERATION =====================================================================
 $(foreach comp,$(COMPONENTS),$(eval $(call generate_var_sources_dir,$(comp))))
