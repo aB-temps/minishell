@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/08/01 04:05:54 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/01 05:10:57 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,31 +94,6 @@ static int	execute_child(t_exec *exec, int i, t_input *input, int error)
 	return (pid);
 }
 
-int	check_stat_mode(t_input *input, char *path)
-{
-	struct stat	*statbuf;
-	int			err;
-
-	statbuf = ft_calloc(1, sizeof(struct stat));
-	if (!statbuf)
-		exit_minishell(input, 1);
-	err = stat(path, statbuf);
-	if (err == -1)
-	{
-		free(statbuf);
-		return (errno);
-	}
-	if (S_ISDIR(statbuf->st_mode))
-	{
-		ft_putstr_fd("minishell: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": Is a directory\n", 2);
-		return (1);
-	}
-	free(statbuf);
-	return (0);
-}
-
 int	execute_command(t_token *current_token, t_exec *exec, int i, t_input *input)
 {
 	int	pid;
@@ -133,7 +108,7 @@ int	execute_command(t_token *current_token, t_exec *exec, int i, t_input *input)
 			&error);
 	if (exec->cmd_path && ft_strchr(exec->cmd_path, '/'))
 	{
-		res = check_stat_mode(input, exec->cmd_path);
+		res = check_if_dir(input, exec->cmd_path);
 		if (res != 1 && res != 0)
 			exit_minishell(input, 1);
 	}

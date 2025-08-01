@@ -122,6 +122,7 @@ F_EXEC 				:=	check_sig_child.c			\
 						pipes_utils.c				\
 						redir_builtin.c				\
 						redir_simple_cmd.c			\
+						check_if_dir.c				\
 						utils.c						\
 
 F_HEREDOC			:=	gen_heredoc_filename.c		\
