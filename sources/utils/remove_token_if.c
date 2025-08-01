@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_token_if.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 19:38:24 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/01 01:10:56 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static void	update_token_vector(t_input *input, t_vector *new_vec)
 {
-	printf("CLEARING:\n-----\n");
+	// printf("CLEARING:\n-----\n");
 	clear_vector(&(input->v_tokens));
 	input->v_tokens = new_vec;
 	input->token_qty = input->v_tokens->nb_elements;
@@ -58,14 +58,14 @@ void	remove_token_if(t_input *input, t_token **array,
 			token = dup_token((*array)[i]);
 			if (token.type == -1 || !add_element(new_vec, &token))
 			{
-				printf("je vais pas clear badnewssss\n");
+				// printf("je vais pas clear badnewssss\n");
 				clear_vector(&new_vec);
 				exit_minishell(input, EXIT_FAILURE);
 			}
 		}
 		i++;
 	}
-	printf("je vais clear\n");
+	// printf("je vais clear\n");
 	update_token_vector(input, new_vec);
 	*array = (t_token *)input->v_tokens->array;
 }

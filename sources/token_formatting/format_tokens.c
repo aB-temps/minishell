@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 19:18:20 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/01 00:59:24 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void	format_tokens(t_input *input)
 	array = (t_token *)input->v_tokens->array;
 	handle_quotes(array, input);
 	handle_env_var_expansion(input);
-	print_input(input, "BEFORE REM TOKEN ENVVAR");
+	// print_input(input, "BEFORE REM TOKEN ENVVAR");
 	remove_token_if(input, &array, is_empty_var_token);
-	print_input(input, "AFTER REM TOKEN ENVVAR");
+	// print_input(input, "AFTER REM TOKEN ENVVAR");
 	while (i < input->token_qty)
 	{
 		if (array[i].type >= REDIR_IN && array[i].type <= HEREDOC)
@@ -86,9 +86,9 @@ void	format_tokens(t_input *input)
 		else
 			i++;
 	}
-	print_input(input, "BEFORE REM TOKEN CMD");
+	// print_input(input, "BEFORE REM TOKEN CMD");
 	remove_token_if(input, &array, is_redir_object_token);
-	print_input(input, "AFTER REM TOKEN CMD");
+	// print_input(input, "AFTER REM TOKEN CMD");
 	i = 0;
 	while (i < input->token_qty)
 	{
