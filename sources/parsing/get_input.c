@@ -6,11 +6,11 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 04:00:57 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/07/31 22:42:58 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
+#include "style.h"
 #include "exec.h"
 #include "parsing.h"
 #include "signals.h"

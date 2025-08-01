@@ -3,19 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 06:53:15 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/31 04:04:03 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/07/31 22:34:03 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 #include "signals.h"
 #include "style.h"
-#include <stdio.h>
-
-
 
 int	main(int ac, char **av, char **env)
 {
