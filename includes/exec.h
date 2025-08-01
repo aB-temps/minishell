@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/30 19:26:42 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/01 00:56:56 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_exec
 
 /*------------------------------- FUNCTIONS -------------------------------*/
 char		*get_path(char **env);
-char		*find_full_command_path(char *cmd, char **env, int *error);
+char		*find_full_command_path(char **cmd, char **env, int *error);
 int			execute_command(t_token *current_token, t_exec *exec, int i,
 				t_input *input);
 int			launch_all_commands(t_input *input, t_exec *exec);
