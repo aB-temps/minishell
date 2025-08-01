@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/01 05:08:34 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/01 05:11:53 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	reset_input(t_input *input)
 	}
 	if (input->line)
 	{
+		if (ft_strlen(input->line))
+			add_history(input->line);
 		free(input->line);
 		input->line = (void *)0;
 	}
@@ -56,8 +58,6 @@ void	get_input(char **env)
 		}
 		else
 			input->last_exit_status = 2;
-		if (ft_strlen(input->line))
-			add_history(input->line);
 		reset_input(input);
 	}
 }
