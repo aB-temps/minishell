@@ -146,7 +146,8 @@ F_TOKEN_FORMATTING	:=	format_command.c			\
 						format_redir.c				\
 						format_tokens.c				\
 
-F_UTILS				:=	clear_env_list_elem.c		\
+F_UTILS				:=	cd_utils.c					\
+						clear_env_list_elem.c		\
 						clear_hd_filename_elem.c 	\
 						clear_token.c				\
 						clear_var_vector.c			\
@@ -173,6 +174,24 @@ F_UTILS				:=	clear_env_list_elem.c		\
 						str_patreplace.c			\
 						str_replace.c				\
 						unlink_free_tmpfile.c		\
+						is_redir_object_token.c		\
+						count_command_args.c		\
+						
+F_TOKEN_FORMATTING :=	format_tokens.c				\
+						format_command.c			\
+						format_redir.c				\
+						format_env_var.c			\
+
+F_STYLE :=				welcome.c 					\
+						build_prompt.c				\
+
+F_BUILTINS :=			ft_echo.c 					\
+						ft_cd.c						\
+						ft_pwd.c					\
+						ft_export.c					\
+						ft_unset.c					\
+						ft_exit.c					\
+						ft_env.c					\
 
 F_MAIN :=				main.c						\
 

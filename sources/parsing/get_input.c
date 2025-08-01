@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 22:42:58 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/01 05:08:34 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "style.h"
 #include "exec.h"
 #include "parsing.h"
 #include "signals.h"
+#include "style.h"
 #include <linux/limits.h>
 
 static void	reset_input(t_input *input)

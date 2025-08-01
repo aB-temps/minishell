@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/01 00:30:02 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/01 04:59:01 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,124 +14,100 @@
 #include "libft.h"
 #include "token_formatting.h"
 
-int	export_pwd_in_cd(t_input *input, char *actual_wd, char *new_wd)
+static int	export_pwd_in_cd(t_input *input, char *prev_wd)
 {
 	char	**to_exp;
+	char	*new_wd;
 
-	new_wd = getcwd(new_wd, PATH_MAX);
-	if (!new_wd)
-	{
-		ft_putstr_fd("minishell: cd: error getting current directory\n",
-			STDERR_FILENO);
-		return (1);
-	}
+	new_wd = NULL;
+	if (!safe_get_cwd(&new_wd))
+		return (EXIT_FAILURE);
 	to_exp = ft_calloc(4, sizeof(char *));
 	if (!to_exp)
 		exit_minishell(input, EXIT_FAILURE);
-	to_exp[0] = ft_strdup("export");              // malloc de con
-	to_exp[1] = ft_strjoin("OLDPWD=", actual_wd); // malloc
-	to_exp[2] = ft_strjoin("PWD=", new_wd);       // malloc
+	to_exp[0] = ft_strdup("export");
+	if (!to_exp[0])
+		return (free_tab_return_int(to_exp, EXIT_FAILURE));
+	to_exp[1] = ft_strjoin("OLDPWD=", prev_wd);
+	if (!to_exp[1])
+		return (free_tab_return_int(to_exp, EXIT_FAILURE));
+	to_exp[2] = ft_strjoin("PWD=", new_wd);
+	if (!to_exp[2])
+		return (free_tab_return_int(to_exp, EXIT_FAILURE));
 	to_exp[3] = NULL;
 	ft_export(to_exp, input);
-	free_tab_return_null(to_exp);
-	if (new_wd)
-		free(new_wd);
-	if (actual_wd)
-		free(actual_wd);
+	free(new_wd);
+	free_tab_return_int(to_exp, EXIT_FAILURE);
 	return (0);
 }
 
-int	handle_cd_alone(t_input *input, char *actual_wd, char *new_wd)
+static void	change_dir(char *cwd, char *target, t_input *input)
 {
-	char	*home;
-
-	home = get_env_value("HOME", input);
-	if (chdir(home) == -1)
+	if (chdir(target) < 0)
 	{
-		if (!home[0])
-			ft_putstr_fd("cd: HOME not set\n", 2);
-		else
-			perror("cd");
-		if (home)
-			free(home);
-		if (actual_wd)
-			free(actual_wd);
-		if (new_wd)
-			free(new_wd);
-		return (1);
+		perror("cd");
+		clear_wds(cwd, target);
+		return ;
 	}
-	free(home);
-	return (0);
-}
-
-int	handle_cd_old_pwd(t_input *input)
-{
-	char	*old_wd;
-
-	old_wd = get_env_value("OLDPWD", input);
-	if (chdir(old_wd) == -1)
+	else
 	{
-		if (!ft_strlen(old_wd))
-			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
-		else
-			perror("cd");
-		free(old_wd);
-		return (1);
+		if (export_pwd_in_cd(input, cwd))
+		{
+			clear_wds(cwd, target);
+			exit_minishell(input, EXIT_FAILURE);
+		}
+		clear_wds(cwd, target);
 	}
-	free(old_wd);
-	return (0);
 }
 
-bool	init_wds(char **new_wd, char **actual_wd)
+bool	init_wds(char **cwd, char **target, char **cmd, t_input *input)
 {
-	*new_wd = NULL;
-	*actual_wd = NULL;
-	*actual_wd = getcwd(*actual_wd, PATH_MAX);
-	if (!(*actual_wd))
-	{
-		ft_putstr_fd("minishell: cd: error getting current directory\n",
-			STDERR_FILENO);
+	*cwd = getcwd(*cwd, PATH_MAX);
+	if (!(*cwd))
 		return (false);
+	if (cmd[1])
+	{
+		*target = ft_strdup(cmd[1]);
+		if (!(*target))
+			exit_minishell(input, EXIT_FAILURE);
+	}
+	else
+	{
+		*target = get_env_value("HOME", input);
+		if (!ft_strlen(*target))
+		{
+			clear_wds(*cwd, *target);
+			ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
+			return (false);
+		}
 	}
 	return (true);
 }
 
 int	ft_cd(char **cmd, t_input *input)
 {
-	char	*new_wd;
-	char	*actual_wd;
+	char	*cwd;
+	char	*target;
 
-	if (ft_tablen(cmd) >= 3)
+	cwd = NULL;
+	target = NULL;
+	if (ft_tablen(cmd) > 2)
 	{
 		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
-		return (1);
+		return (EXIT_FAILURE);
 	}
-	if (!init_wds(&new_wd, &actual_wd))
-		return (1);
-	if (cmd[1] == NULL)
+	if (!init_wds(&cwd, &target, cmd, input))
+		return (EXIT_FAILURE);
+	if (!ft_strcmp(target, "-"))
 	{
-		if (handle_cd_alone(input, actual_wd, new_wd))
+		target = str_replace(&target, get_env_value("OLDPWD", input));
+		if (!ft_strlen(target))
 		{
-			free(actual_wd);
-			return (1);
+			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
+			clear_wds(cwd, target);
+			return (EXIT_FAILURE);
 		}
 	}
-	else if (!ft_strcmp(cmd[1], "-"))
-	{
-		if (handle_cd_old_pwd(input))
-		{
-			free(actual_wd);
-			return (1);
-		}
-	}
-	else if (chdir(cmd[1]) == -1)
-	{
-		perror(cmd[1]);
-		{
-			free(actual_wd);
-			return (1);
-		}
-	}
-	export_pwd_in_cd(input, actual_wd, new_wd);
-	return (0);
+	change_dir(cwd, target, input);
+	return (EXIT_SUCCESS);
 }
