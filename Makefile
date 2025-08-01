@@ -89,7 +89,6 @@ COMPONENTS :=			PARSING 					\
 						EXEC						\
 						ENV							\
 						BUILTINS					\
-						DEBUG						\
 						SIGNALS						\
 
 # FILES ===============================================================================
@@ -107,11 +106,6 @@ F_CHECKING 			:=	check_syntax_error.c		\
 						is_quote.c					\
 						is_valid_input.c			\
 						is_whitespace.c				\
-
-F_DEBUG 			:=	print_exec.c				\
-						print_heredoc.c				\
-						print_input.c				\
-						print_tab.c					\
 
 F_ENV 				:=	env_array_to_list.c			\
 						env_list_to_array.c			\
