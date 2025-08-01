@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:52 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/29 07:58:19 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/01 03:39:00 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,20 @@ static char	*find_command_path(char *cmd, char **paths, int *error)
 	return (NULL);
 }
 
-char	*find_full_command_path(char *cmd, char **env, int *error)
+char	*find_full_command_path(char **cmd, char **env, int *error)
 {
 	char	*path;
 	char	**split_path;
 	char	*cmd_path;
 
-	if (!cmd || !env || cmd[0] == '\0')
+	if (!cmd || !env || *cmd[0] == '\0')
 	{
 		*error = 127;
 		return (NULL);
 	}
 	path = get_path(env);
 	split_path = ft_split(path, ':');
-	cmd_path = find_command_path(cmd, split_path, error);
+	cmd_path = find_command_path(cmd[0], split_path, error);
 	if (split_path)
 		free_tab_return_null(split_path);
 	return (cmd_path);
