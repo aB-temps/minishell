@@ -6,14 +6,31 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:34 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:47:35 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 14:08:43 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "exec.h"
 #include "input.h"
 #include "utils.h"
 
-void	exit_minishell(t_input *input, int exit_code)
+void	exit_minishell(t_input *input, t_exec *exec, int exit_code)
+{
+	close_hd_fd(input);
+	if (exec)
+	{
+		close_all(exec);
+		if (exec->fd)
+			free(exec->fd);
+		if (exec->cmd_path)
+			free(exec->cmd_path);
+		if (exec->pid_child)
+			free(exec->pid_child);
+	}
+	exit_parsing(input, input->last_exit_status);
+}
+
+void	exit_parsing(t_input *input, int exit_code)
 {
 	if (input)
 	{

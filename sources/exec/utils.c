@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:57 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/24 16:39:50 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 14:13:39 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,6 @@
 #include "input.h"
 #include <fcntl.h>
 
-void	exit_exec(t_input *input, t_exec *exec)
-{
-	close_all(exec);
-	free(exec->pid_child);
-	free(exec->fd);
-	exit_minishell(input, input->last_exit_status);
-}
 
 char	*get_cmd_by_index(t_input *input, t_token *tokens_array, int index)
 {

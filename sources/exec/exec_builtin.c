@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 21:47:07 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 14:17:26 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ static void	execute_builtin(char **cmd, t_input *input, t_exec *exec)
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
 		input->last_exit_status = ft_pwd();
 	else if (ft_strcmp(cmd[0], "cd") == 0)
-		input->last_exit_status = ft_cd(cmd, input);
+		input->last_exit_status = ft_cd(cmd, input, exec);
 	else if (ft_strcmp(cmd[0], "export") == 0)
-		input->last_exit_status = ft_export(cmd, input);
+		input->last_exit_status = ft_export(cmd, input, exec);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
-		input->last_exit_status = ft_unset(cmd, input);
+		input->last_exit_status = ft_unset(cmd, input, exec);
 	else if (ft_strcmp(cmd[0], "env") == 0)
 		input->last_exit_status = ft_env(input->env->array);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
@@ -74,7 +74,7 @@ static int	handle_multiple_cmd(t_exec *exec, t_input *input, int i, char **cmd)
 		signal(SIGINT, SIG_DFL);
 		prepare_pipe(exec, i);
 		execute_builtin(cmd, input, exec);
-		exit(free_child(exec, input, 0));
+		exit_minishell(input, exec, EXIT_SUCCESS);
 	}
 	return (pid);
 }

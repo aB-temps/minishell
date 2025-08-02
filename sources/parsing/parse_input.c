@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/01 05:05:01 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 14:03:44 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	*parse_input(t_input *input)
 {
 	input->v_tokens = create_vector(4, sizeof(t_token), clear_token);
 	if (!input->v_tokens)
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	tokenize_input(input, input->line);
 	if (!check_syntax_error(input))
 	{

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:50 by enzo              #+#    #+#             */
-/*   Updated: 2025/08/01 05:10:57 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 14:13:03 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "input.h"
+#include "utils.h"
 #include <stdio.h>
 #include <sys/stat.h>
 
@@ -37,28 +38,6 @@ void	close_hd_fd(t_input *input)
 	}
 }
 
-int	free_child(t_exec *exec, t_input *input, int error)
-{
-	close_hd_fd(input);
-	if (exec)
-	{
-		close_all(exec);
-		if (exec->fd)
-			free(exec->fd);
-		if (exec->cmd_path)
-			free(exec->cmd_path);
-		if (exec->pid_child)
-			free(exec->pid_child);
-	}
-	clear_vector(&input->v_tokens);
-	ft_lstclear(&input->env->list, &clear_env_list_elem);
-	free_tab_return_null(input->env->array);
-	free(input->env);
-	free(input->prompt);
-	free(input);
-	return (error);
-}
-
 void	reset_sig(void)
 {
 	signal(SIGQUIT, SIG_DFL);
@@ -81,13 +60,13 @@ static int	execute_child(t_exec *exec, int i, t_input *input, int error)
 	{
 		res = create_all_files(exec, input, i);
 		if (res != 0)
-			exit(free_child(exec, input, error));
+			exit_minishell(input, exec, error);
 		reset_sig();
 		prepare_pipe(exec, i);
 		if (!exec->cmd_path)
-			exit(free_child(exec, input, error));
+			exit_minishell(input, exec, error);
 		execve(exec->cmd_path, exec->args, input->env->array);
-		exit(free_child(exec, input, error));
+		exit_minishell(input, exec, error);
 	}
 	free(exec->cmd_path);
 	exec->cmd_path = NULL;
@@ -110,7 +89,7 @@ int	execute_command(t_token *current_token, t_exec *exec, int i, t_input *input)
 	{
 		res = check_if_dir(input, exec->cmd_path);
 		if (res != 1 && res != 0)
-			exit_minishell(input, 1);
+			exit_minishell(input, exec, EXIT_FAILURE);
 	}
 	pid = execute_child(exec, i, input, error);
 	close_hd_fd(input);
