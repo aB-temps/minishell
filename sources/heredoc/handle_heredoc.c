@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 03:38:41 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 13:58:23 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	char	*line;
 
 	line = (void *)0;
-	while (1 && g_sig != SIGINT)
+	while (g_sig != SIGINT)
 	{
 		line = readline(FG_BLUE "heredoc> " R_ALL);
 		if (g_sig == SIGINT || !line || !ft_strcmp(line,
@@ -33,13 +33,12 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		ft_putstr_fd(line, fds[0]);
 		free(line);
 	}
-	if (!line && g_sig != SIGINT)
-		ft_putstr_fd("warning : heredoc exited before EOF\n", STDERR_FILENO);
+	if (!line && g_sig != SIGINT){
+		ft_putstr_fd("warning : heredoc exited before EOF\n", STDERR_FILENO);}
 	if (g_sig == SIGINT)
 		safe_close(fds[1]);
 	safe_close(fds[0]);
-	free(token->formatted_content);
-	token->formatted_content = fds;
+	token->formatted_content = ptr_replace(&token->formatted_content, fds);
 }
 
 static void	open_heredoc(int **fds, char *tmpfile, t_input *input)
