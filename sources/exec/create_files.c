@@ -6,13 +6,12 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/02 15:28:25 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 17:53:59 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 17:58:26 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "input.h"
-
 
 int	search_cmd_by_index(t_input *input, t_token *token_array,
 		int searched_n_cmd)
@@ -26,9 +25,9 @@ int	search_cmd_by_index(t_input *input, t_token *token_array,
 	{
 		if (token_array[i].type == COMMAND)
 		{
+			cmd_count++;
 			if (cmd_count == searched_n_cmd)
 				break ;
-			cmd_count++;
 		}
 		i++;
 	}
