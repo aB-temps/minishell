@@ -6,12 +6,13 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:48 by enzo              #+#    #+#             */
-/*   Updated: 2025/08/02 17:21:43 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 17:54:47 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "debug.h"
 #include "exec.h"
+#include "utils.h"
 
 static void	close_and_swap(t_exec *exec)
 {
@@ -34,11 +35,10 @@ int	launch_all_commands(t_input *input, t_exec *exec, t_token *tokens_array)
 	while (++y < input->token_qty && i < exec->cmd_count)
 	{
 		cur_token = &tokens_array[y];
-		// create_files_no_cmd();
 		if (cur_token->type == COMMAND)
 		{
 			if (pipe(exec->fd->fd2) == -1)
-				exit_minishell(input, 1);
+				exit_minishell(input, exec, 1);
 			exec->pid_child[i] = is_builtin(*cur_token, input, exec, i);
 			if (exec->pid_child[i] == 0)
 				exec->pid_child[i] = execute_command(cur_token, exec, i, input);
