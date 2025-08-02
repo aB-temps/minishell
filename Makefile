@@ -20,7 +20,7 @@ INC_FLAGS	:= -I $(DIR_INC) -I $(DIR_INC_LIB)
 LIB_FLAGS	:= -L $(DIR_LIB) -lft
 
 
-COMP 		:= $(CC) $(C_FLAGS) $(INC_FLAGS) -g3
+COMP 		:= $(CC) $(C_FLAGS) $(INC_FLAGS)
 LINK		:= $(LIB_FLAGS) -lreadline
 
 ANTI_RELINK	:= Makefile $(DIR_INC) $(DIR_INC_LIB) 
@@ -175,8 +175,6 @@ F_UTILS				:=	cd_utils.c					\
 						str_patreplace.c			\
 						str_replace.c				\
 						unlink_free_tmpfile.c		\
-						is_redir_object_token.c		\
-						count_command_args.c		\
 						
 F_TOKEN_FORMATTING :=	format_tokens.c				\
 						format_command.c			\
