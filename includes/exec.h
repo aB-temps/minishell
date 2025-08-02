@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/01 05:13:36 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 17:21:36 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ char		*get_path(char **env);
 char		*find_full_command_path(char **cmd, char **env, int *error);
 int			execute_command(t_token *current_token, t_exec *exec, int i,
 				t_input *input);
-int			launch_all_commands(t_input *input, t_exec *exec);
+int			launch_all_commands(t_input *input, t_exec *exec,
+				t_token *token_array);
+// int			create_files_no_cmd(int cur_index, t_token *token_array);
 void		start_exec(t_input *input);
 int			count_cmd(t_input *input);
 void		wait_childs(t_exec *exec, t_input *input);
@@ -74,5 +76,7 @@ void		check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
 				int i);
 int			free_child(t_exec *exec, t_input *input, int error);
 int			check_if_dir(t_input *input, char *path);
+int			handle_redir_in(t_exec *exec, t_token current_token);
+int			handle_redir_out(t_exec *exec, t_token current_token);
 
 #endif

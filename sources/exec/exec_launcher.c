@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:48 by enzo              #+#    #+#             */
-/*   Updated: 2025/07/29 03:02:32 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 17:21:43 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,28 @@ static void	close_and_swap(t_exec *exec)
 	exec->fd->fd1[1] = exec->fd->fd2[1];
 }
 
-int	launch_all_commands(t_input *input, t_exec *exec)
+int	launch_all_commands(t_input *input, t_exec *exec, t_token *tokens_array)
 {
 	t_token	*cur_token;
-	t_token	*tokens_array;
 	int		i;
 	int		y;
 
-	tokens_array = (t_token *)input->v_tokens->array;
-	y = 0;
+	y = -1;
 	i = 0;
-	while (y < input->token_qty && i < exec->cmd_count)
+	while (++y < input->token_qty && i < exec->cmd_count)
 	{
 		cur_token = &tokens_array[y];
+		// create_files_no_cmd();
 		if (cur_token->type == COMMAND)
 		{
 			if (pipe(exec->fd->fd2) == -1)
-				return (close_all(exec));
+				exit_minishell(input, 1);
 			exec->pid_child[i] = is_builtin(*cur_token, input, exec, i);
 			if (exec->pid_child[i] == 0)
 				exec->pid_child[i] = execute_command(cur_token, exec, i, input);
 			if (i++ < exec->cmd_count - 1)
 				close_and_swap(exec);
 		}
-		y++;
 	}
 	close_all(exec);
 	return (0);
