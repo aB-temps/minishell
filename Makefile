@@ -167,6 +167,7 @@ F_UTILS				:=	cd_utils.c					\
 						is_empty_env_var_token.c	\
 						is_redir_object_token.c		\
 						lstgetprev.c				\
+						ptr_replace.c				\
 						quoted_arg_len.c			\
 						remove_token_if.c			\
 						safe_close.c				\
@@ -175,7 +176,6 @@ F_UTILS				:=	cd_utils.c					\
 						str_patreplace.c			\
 						str_replace.c				\
 						unlink_free_tmpfile.c		\
-						ptr_replace.c				\
 
 F_TOKEN_FORMATTING :=	format_tokens.c				\
 						format_command.c			\
