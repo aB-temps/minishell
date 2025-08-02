@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 15:45:34 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 16:13:03 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	handle_heredoc(t_input *input)
 			tmpfile = gen_heredoc_filename(input);
 			open_heredoc(&fds, tmpfile, input);
 			fill_heredoc(&array[i], fds, input);
+			if (g_sig != SIGINT)
+				input->last_exit_status = EXIT_SUCCESS;
 		}
 		i++;
 	}
