@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gen_random_num_sequence.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:02 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 08:10:00 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 16:21:57 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extract_var_key.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:41 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 08:10:40 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 16:21:59 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

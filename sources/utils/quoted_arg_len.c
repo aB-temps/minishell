@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quoted_arg_len.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 15:01:07 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 08:04:30 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 16:21:54 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

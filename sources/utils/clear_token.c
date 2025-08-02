@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:16 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/01 05:08:38 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 16:22:12 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
