@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:06 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 15:06:07 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:23:09 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static void	assign_var(t_list *existing_var, t_list **varlist_node,
 	{
 		*varlist_node = ft_lstnew(var);
 		if (!(*varlist_node))
-			exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
+			clear_env_var(var, minishell->input, minishell->exec);
 		ft_lstadd_back(&minishell->input->env->list, *varlist_node);
 	}
 }
