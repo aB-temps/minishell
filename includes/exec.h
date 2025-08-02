@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 14:13:43 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:03:51 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,6 @@ void		handle_sigint(t_input *input);
 void		check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
 				int i);
 int			check_if_dir(t_input *input, char *path);
+void		close_hd_fd(t_input *input);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:34 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 14:08:43 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:03:25 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	exit_minishell(t_input *input, t_exec *exec, int exit_code)
 		if (exec->pid_child)
 			free(exec->pid_child);
 	}
-	exit_parsing(input, input->last_exit_status);
+	exit_parsing(input, exit_code);
 }
 
 void	exit_parsing(t_input *input, int exit_code)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_builtin.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 17:05:21 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/27 18:11:20 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 14:54:27 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static void	handle_redir_append_builtin(int *old_stdout, t_token *tok_array,
 	}
 }
 
-static void	handle_redir_out_builtin(int *old_stdout, t_token *tok_array, int i)
+static void	handle_redir_out_minishell(int *old_stdout, t_token *tok_array, int i)
 {
 	int	fd_temp;
 
@@ -84,7 +84,7 @@ void	apply_redirections_builtin(t_input *input, int *old_stdout,
 			while (++i < input->token_qty && tok_array[i].type != COMMAND)
 			{
 				if (tok_array[i].type == REDIR_OUT)
-					handle_redir_out_builtin(old_stdout, tok_array, i);
+					handle_redir_out_minishell(old_stdout, tok_array, i);
 				else if (tok_array[i].type == APPEND)
 					handle_redir_append_builtin(old_stdout, tok_array, i);
 				else if (tok_array[i].type == REDIR_IN)
