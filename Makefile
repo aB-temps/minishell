@@ -176,7 +176,8 @@ F_UTILS				:=	cd_utils.c					\
 						str_patreplace.c			\
 						str_replace.c				\
 						unlink_free_tmpfile.c		\
-						
+						ptr_replace.c				\
+
 F_TOKEN_FORMATTING :=	format_tokens.c				\
 						format_command.c			\
 						format_redir.c				\

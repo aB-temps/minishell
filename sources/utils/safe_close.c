@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   safe_close.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 08:55:48 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 08:08:29 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 16:21:53 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

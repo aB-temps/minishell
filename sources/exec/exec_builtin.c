@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 17:48:23 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 17:50:59 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,23 @@ int	check_builtin(char *cmd)
 	return (0);
 }
 
-static void	execute_builtin(char **cmd, t_input *input, t_exec *exec)
+static void	execute_builtin(char **cmd, t_minishell *minishell)
 {
 	if (ft_strcmp(cmd[0], "echo") == 0)
-		input->last_exit_status = ft_echo(cmd);
+		minishell->input->last_exit_status = ft_echo(cmd);
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		input->last_exit_status = ft_pwd();
+		minishell->input->last_exit_status = ft_pwd();
 	else if (ft_strcmp(cmd[0], "cd") == 0)
-		input->last_exit_status = ft_cd(cmd, input);
+		minishell->input->last_exit_status = ft_cd(cmd, minishell);
 	else if (ft_strcmp(cmd[0], "export") == 0)
-		input->last_exit_status = ft_export(cmd, input);
+		minishell->input->last_exit_status = ft_export(cmd, minishell);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
-		input->last_exit_status = ft_unset(cmd, input);
+		minishell->input->last_exit_status = ft_unset(cmd, minishell);
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		input->last_exit_status = ft_env(input->env->array);
+		minishell->input->last_exit_status
+			= ft_env(minishell->input->env->array);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
-		ft_exit(cmd, input, exec);
+		ft_exit(cmd, minishell);
 }
 
 static void	restore_redirections_builtin(int old_stdout, int old_stdin)
@@ -58,7 +59,7 @@ static void	restore_redirections_builtin(int old_stdout, int old_stdin)
 	}
 }
 
-static int	handle_multiple_cmd(t_exec *exec, t_input *input, int i, char **cmd)
+static int	handle_multiple_cmd(t_minishell *minishell, int i, char **cmd)
 {
 	int	pid;
 
@@ -72,30 +73,33 @@ static int	handle_multiple_cmd(t_exec *exec, t_input *input, int i, char **cmd)
 	{
 		signal(SIGQUIT, SIG_DFL);
 		signal(SIGINT, SIG_DFL);
-		prepare_pipe(exec, i);
-		execute_builtin(cmd, input, exec);
-		exit(free_child(exec, input, 0));
+		prepare_pipe(minishell->exec, i);
+		execute_builtin(cmd, minishell);
+		exit_minishell(minishell->input, minishell->exec, EXIT_SUCCESS);
 	}
 	return (pid);
 }
 
 int	is_builtin(t_token current_token, t_input *input, t_exec *exec, int i)
 {
-	char	**cmd;
-	int		old_stdout;
-	int		old_stdin;
+	char		**cmd;
+	int			old_stdout;
+	int			old_stdin;
+	t_minishell	minishell;
 
+	minishell.input = input;
+	minishell.exec = exec;
 	cmd = ((char **)current_token.formatted_content);
 	if (check_builtin(cmd[0]) == 0)
 		return (0);
 	if (exec->cmd_count > 1)
-		return (handle_multiple_cmd(exec, input, i, cmd));
+		return (handle_multiple_cmd(&minishell, i, cmd));
 	else
 	{
 		old_stdout = -1;
 		old_stdin = -1;
 		apply_redirections_builtin(input, &old_stdout, &old_stdin);
-		execute_builtin(cmd, input, exec);
+		execute_builtin(cmd, &minishell);
 		restore_redirections_builtin(old_stdout, old_stdin);
 		return (1);
 	}

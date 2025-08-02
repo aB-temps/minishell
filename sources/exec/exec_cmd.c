@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/08/02 17:04:56 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 17:51:05 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ void	start_exec(t_input *input)
 	res = execute_all_commands(input, &exec);
 	free(exec.fd);
 	if (res == 1)
-		exit_minishell(input, input->last_exit_status);
+		exit_parsing(input, input->last_exit_status);
 }

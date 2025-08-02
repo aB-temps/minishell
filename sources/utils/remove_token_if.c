@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_token_if.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/01 05:07:57 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 14:05:02 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	remove_token_if(t_input *input, t_token **array,
 	new_vec = create_vector(count_valid_tokens(input->token_qty, *array,
 				remove_condition), sizeof(t_token), clear_token);
 	if (!new_vec)
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	while (i < input->token_qty)
 	{
 		if (remove_condition(*array, i))
@@ -58,7 +58,7 @@ void	remove_token_if(t_input *input, t_token **array,
 			if (token.type == -1 || !add_element(new_vec, &token))
 			{
 				clear_vector(&new_vec);
-				exit_minishell(input, EXIT_FAILURE);
+				exit_parsing(input, EXIT_FAILURE);
 			}
 		}
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_hd_filename_elem.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 08:09:42 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 14:05:02 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,5 @@ void	clear_hd_filename_elem(t_input *input, const char *temp_dir,
 		free((char *)fileid);
 	if (full_path)
 		free(full_path);
-	exit_minishell(input, EXIT_FAILURE);
+	exit_parsing(input, EXIT_FAILURE);
 }

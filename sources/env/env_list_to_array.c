@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   env_list_to_array.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:15:46 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 08:05:30 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 15:11:32 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtins.h"
 #include "debug.h"
 #include "input.h"
 #include "libft.h"
 #include "utils.h"
-#include "builtins.h"
 
-void	update_env_array(t_input *input)
+void	update_env_array(t_input *input, t_exec *exec)
 {
 	if (input->env->array)
 		free_tab_return_null(input->env->array);
 	input->env->array = env_list_to_array(input->env->list);
 	if (!input->env->array)
-		exit_minishell(input, EXIT_FAILURE);
+		exit_minishell(input, exec, EXIT_FAILURE);
 }
 
 static void	cpy_var_value(char *value, char **var, size_t line_len)

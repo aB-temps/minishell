@@ -1,32 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   extract_var_key.c                                  :+:      :+:    :+:   */
+/*   ptr_replace.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/26 17:47:41 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 16:21:59 by abetemps         ###   ########.fr       */
+/*   Created: 2025/08/02 13:55:01 by abetemps          #+#    #+#             */
+/*   Updated: 2025/08/02 13:55:41 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "utils.h"
+#include <stdlib.h>
 
-char	*extract_var_key(char *s)
+void	*ptr_replace(void **from, void *to)
 {
-	char	*var_key;
-	size_t	start;
-	size_t	end;
-
-	start = 0;
-	while (s[start] && s[start] != '$')
-		start++;
-	end = start + 1;
-	while (s[end] && s[end] != '$' && ft_isalnum(s[end]))
-		end++;
-	var_key = ft_strndup(s + start, end - start);
-	if (!var_key)
-		return ((void *)0);
-	return (var_key);
+	if (*from)
+	{
+		free(*from);
+		*from = (void *)0;
+	}
+	return (to);
 }

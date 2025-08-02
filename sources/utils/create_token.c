@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:30 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:47:32 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 14:05:02 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	create_token(t_input *input, int type, char *raw_content, bool to_link)
 	{
 		temp_token.raw_content = ft_strdup(raw_content);
 		if (!temp_token.raw_content)
-			exit_minishell(input, EXIT_FAILURE);
+			exit_parsing(input, EXIT_FAILURE);
 	}
 	temp_token.link_to_next = to_link;
 	if (!add_element(input->v_tokens, &temp_token))
 	{
 		if (!(type >= PIPE && type <= HEREDOC) && raw_content)
 			free(raw_content);
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	}
 }

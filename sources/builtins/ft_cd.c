@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/01 04:59:01 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:11:22 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "libft.h"
 #include "token_formatting.h"
 
-static int	export_pwd_in_cd(t_input *input, char *prev_wd)
+static int	export_pwd_in_cd(char *prev_wd, t_minishell *minishell)
 {
 	char	**to_exp;
 	char	*new_wd;
@@ -24,7 +24,7 @@ static int	export_pwd_in_cd(t_input *input, char *prev_wd)
 		return (EXIT_FAILURE);
 	to_exp = ft_calloc(4, sizeof(char *));
 	if (!to_exp)
-		exit_minishell(input, EXIT_FAILURE);
+		return (EXIT_FAILURE);
 	to_exp[0] = ft_strdup("export");
 	if (!to_exp[0])
 		return (free_tab_return_int(to_exp, EXIT_FAILURE));
@@ -35,13 +35,13 @@ static int	export_pwd_in_cd(t_input *input, char *prev_wd)
 	if (!to_exp[2])
 		return (free_tab_return_int(to_exp, EXIT_FAILURE));
 	to_exp[3] = NULL;
-	ft_export(to_exp, input);
+	ft_export(to_exp, minishell);
 	free(new_wd);
 	free_tab_return_int(to_exp, EXIT_FAILURE);
 	return (0);
 }
 
-static void	change_dir(char *cwd, char *target, t_input *input)
+static void	change_dir(char *cwd, char *target, t_minishell *minishell)
 {
 	if (chdir(target) < 0)
 	{
@@ -51,16 +51,16 @@ static void	change_dir(char *cwd, char *target, t_input *input)
 	}
 	else
 	{
-		if (export_pwd_in_cd(input, cwd))
+		if (export_pwd_in_cd(cwd, minishell))
 		{
 			clear_wds(cwd, target);
-			exit_minishell(input, EXIT_FAILURE);
+			exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
 		}
 		clear_wds(cwd, target);
 	}
 }
 
-bool	init_wds(char **cwd, char **target, char **cmd, t_input *input)
+bool	init_wds(char **cwd, char **target, char **cmd, t_minishell *minishell)
 {
 	*cwd = getcwd(*cwd, PATH_MAX);
 	if (!(*cwd))
@@ -69,11 +69,11 @@ bool	init_wds(char **cwd, char **target, char **cmd, t_input *input)
 	{
 		*target = ft_strdup(cmd[1]);
 		if (!(*target))
-			exit_minishell(input, EXIT_FAILURE);
+			exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
 	}
 	else
 	{
-		*target = get_env_value("HOME", input);
+		*target = get_env_value("HOME", minishell->input);
 		if (!ft_strlen(*target))
 		{
 			clear_wds(*cwd, *target);
@@ -84,7 +84,7 @@ bool	init_wds(char **cwd, char **target, char **cmd, t_input *input)
 	return (true);
 }
 
-int	ft_cd(char **cmd, t_input *input)
+int	ft_cd(char **cmd, t_minishell *minishell)
 {
 	char	*cwd;
 	char	*target;
@@ -96,11 +96,12 @@ int	ft_cd(char **cmd, t_input *input)
 		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
-	if (!init_wds(&cwd, &target, cmd, input))
+	if (!init_wds(&cwd, &target, cmd, minishell))
 		return (EXIT_FAILURE);
 	if (!ft_strcmp(target, "-"))
 	{
-		target = str_replace(&target, get_env_value("OLDPWD", input));
+		target = str_replace(&target,
+				get_env_value("OLDPWD", minishell->input));
 		if (!ft_strlen(target))
 		{
 			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
@@ -108,6 +109,6 @@ int	ft_cd(char **cmd, t_input *input)
 			return (EXIT_FAILURE);
 		}
 	}
-	change_dir(cwd, target, input);
+	change_dir(cwd, target, minishell);
 	return (EXIT_SUCCESS);
 }

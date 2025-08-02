@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 17:21:36 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 17:50:43 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ char		*get_cmd_by_index(t_input *input, t_token *tokens_array, int index);
 int			is_builtin(t_token current_token, t_input *input, t_exec *exec,
 				int i);
 int			create_all_files(t_exec *exec, t_input *input, int i);
-void		exit_exec(t_input *input, t_exec *exec);
 int			check_builtin(char *cmd);
 void		apply_redirections_builtin(t_input *input, int *old_stdout,
 				int *old_stdin);
@@ -74,8 +73,8 @@ int			execute_all_commands(t_input *input, t_exec *exec);
 void		handle_sigint(t_input *input);
 void		check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
 				int i);
-int			free_child(t_exec *exec, t_input *input, int error);
 int			check_if_dir(t_input *input, char *path);
+void		close_hd_fd(t_input *input);
 int			handle_redir_in(t_exec *exec, t_token current_token);
 int			handle_redir_out(t_exec *exec, t_token current_token);
 

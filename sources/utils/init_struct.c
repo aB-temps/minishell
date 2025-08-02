@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:31 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/29 07:58:55 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 14:21:46 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,35 +23,35 @@ static void	init_empty_env(t_input *input)
 	cwd = (void *)0;
 	cwd = getcwd(cwd, PATH_MAX);
 	if (!cwd)
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	input->env->array = ft_calloc(3, sizeof(char *));
 	if (!input->env->array)
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	input->env->array[0] = ft_strjoin("PWD=", cwd);
 	if (!input->env->array[0])
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	input->env->array[1] = ft_strdup("SHLVL=1");
 	if (!input->env->array[1])
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	input->env->array[2] = (void *)0;
-	update_env_list(input);
+	update_env_list(input, NULL);
 }
 
 void	init_env(char **env, t_input *input)
 {
 	input->env = ft_calloc(1, sizeof(t_env));
 	if (!input->env)
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	if (!env[0])
 		init_empty_env(input);
 	else
 	{
 		input->env->list = env_array_to_list(env);
 		if (!input->env->list)
-			exit_minishell(input, EXIT_FAILURE);
+			exit_parsing(input, EXIT_FAILURE);
 		input->env->array = ft_tabdup(env);
 		if (!input->env->array)
-			exit_minishell(input, EXIT_FAILURE);
+			exit_parsing(input, EXIT_FAILURE);
 	}
 }
 

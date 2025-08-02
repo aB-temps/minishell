@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_if_dir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 05:11:25 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 13:34:17 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 15:04:34 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_if_dir(t_input *input, char *path)
 
 	statbuf = ft_calloc(1, sizeof(struct stat));
 	if (!statbuf)
-		exit_minishell(input, 1);
+		exit_parsing(input, 1);
 	err = stat(path, statbuf);
 	if (err == -1)
 	{

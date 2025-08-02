@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 22:37:44 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 14:03:44 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	format_input(t_input *input, t_token *array)
 	new_vec = create_vector(count_valid_tokens(input->token_qty, array),
 			sizeof(t_token), clear_token);
 	if (!new_vec)
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	while (i < input->token_qty)
 	{
 		if (array[i].type >= COMMAND && array[i].type <= HEREDOC)
@@ -55,7 +55,7 @@ void	format_input(t_input *input, t_token *array)
 			if (token.type == -1 || !add_element(new_vec, &token))
 			{
 				clear_vector(&new_vec);
-				exit_minishell(input, EXIT_FAILURE);
+				exit_parsing(input, EXIT_FAILURE);
 			}
 		}
 		i++;
