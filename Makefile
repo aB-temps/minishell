@@ -114,6 +114,7 @@ F_ENV 				:=	env_array_to_list.c			\
 
 F_EXEC 				:=	check_sig_child.c			\
 						error_utils.c				\
+						create_files.c				\
 						exec_builtin.c				\
 						exec_cmd.c					\
 						exec_launcher.c				\

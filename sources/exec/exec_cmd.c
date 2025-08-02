@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/08/02 15:04:19 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 17:51:05 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	execute_all_commands(t_input *input, t_exec *exec)
 	if (!exec->pid_child)
 		return (1);
 	tokens_array = (t_token *)input->v_tokens->array;
-	if (launch_all_commands(input, exec) != 0)
+	if (launch_all_commands(input, exec, tokens_array) != 0)
 		return (1);
 	saved_exit_status = input->last_exit_status;
 	wait_childs(exec, input);

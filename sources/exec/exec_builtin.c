@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_builtin.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 15:12:23 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 17:50:59 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
