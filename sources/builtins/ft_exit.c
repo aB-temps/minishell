@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:17 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 15:08:02 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 16:18:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_exit(char **cmd, t_minishell *minishell)
 	if (!cmd[1])
 	{
 		exit_minishell(minishell->input, minishell->exec,
-			minishell->input->last_exit_status);
+			EXIT_SUCCESS);
 		return ;
 	}
 	if (!is_valid_number(cmd[1]))
