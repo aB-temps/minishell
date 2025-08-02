@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:42 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 15:00:22 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:10:22 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ struct						s_minishell
 };
 
 int							ft_echo(char **args);
-int							ft_cd(char **cmd, t_minishell* minishell);
+int							ft_cd(char **cmd, t_minishell *minishell);
 int							ft_pwd(void);
 int							ft_env(char **env);
 void						ft_exit(char **cmd, t_minishell *minishell);

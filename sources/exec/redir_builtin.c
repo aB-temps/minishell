@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 17:05:21 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 14:54:27 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:11:54 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static void	handle_redir_append_builtin(int *old_stdout, t_token *tok_array,
 	}
 }
 
-static void	handle_redir_out_minishell(int *old_stdout, t_token *tok_array, int i)
+static void	handle_redir_out_minishell(int *old_stdout, t_token *tok_array,
+		int i)
 {
 	int	fd_temp;
 

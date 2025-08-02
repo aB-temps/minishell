@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 15:01:18 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:11:22 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,8 @@ int	ft_cd(char **cmd, t_minishell *minishell)
 		return (EXIT_FAILURE);
 	if (!ft_strcmp(target, "-"))
 	{
-		target = str_replace(&target, get_env_value("OLDPWD", minishell->input));
+		target = str_replace(&target,
+				get_env_value("OLDPWD", minishell->input));
 		if (!ft_strlen(target))
 		{
 			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);

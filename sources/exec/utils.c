@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 15:51:57 by enzo              #+#    #+#             */
-/*   Updated: 2025/08/02 14:13:39 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:11:44 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 #include "exec.h"
 #include "input.h"
 #include <fcntl.h>
-
 
 char	*get_cmd_by_index(t_input *input, t_token *tokens_array, int index)
 {

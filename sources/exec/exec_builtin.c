@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 16:32:53 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 15:02:45 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:12:23 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ static void	execute_builtin(char **cmd, t_minishell *minishell)
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		minishell->input->last_exit_status = ft_unset(cmd, minishell);
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		minishell->input->last_exit_status = ft_env(minishell->input->env->array);
+		minishell->input->last_exit_status
+			= ft_env(minishell->input->env->array);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
 		ft_exit(cmd, minishell);
 }
