@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:17:30 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 14:25:42 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 14:04:26 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*search_tmpdir(t_input *input)
 
 	tmpdir = get_env_value("TMPDIR", input);
 	if (!tmpdir)
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	if (!ft_strlen(tmpdir))
 	{
 		free(tmpdir);
@@ -31,7 +31,7 @@ static char	*search_tmpdir(t_input *input)
 		else
 			tmpdir = ft_strdup("./");
 		if (!tmpdir)
-			exit_minishell(input, EXIT_FAILURE);
+			exit_parsing(input, EXIT_FAILURE);
 	}
 	return (tmpdir);
 }

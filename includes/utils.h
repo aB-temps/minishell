@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 13:55:07 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:24:14 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "input.h"
 # include "libft.h"
+# include "exec.h"
 # include <stdio.h>
 # include <unistd.h>
 
@@ -43,6 +44,6 @@ bool	is_empty_var_token(t_token *array, ssize_t i);
 bool	is_redir_object_token(t_token *array, ssize_t i);
 void	clear_wds(char *cwd, char *target);
 bool	safe_get_cwd(char **wd);
-void	*ptr_replace(void **from, void *to);
+void	exit_minishell(t_input *input, t_exec *exec, int exit_code);
 
 #endif

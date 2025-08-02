@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format_tokens.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/01 05:08:22 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 14:04:36 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	handle_env_var_expansion(t_input *input)
 			array[i].formatted_content = substitute_env_var(
 					array[i].raw_content, input);
 			if (!array[i].formatted_content)
-				exit_minishell(input, EXIT_FAILURE);
+				exit_parsing(input, EXIT_FAILURE);
 			array[i].type = ENV_VAR;
 		}
 		i++;

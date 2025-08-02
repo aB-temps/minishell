@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:17:14 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 15:03:47 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 14:03:59 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*tokenize_quote(t_input *input, size_t *i, char *line)
 	}
 	content = ft_strndup(&line[j], (*i) - j);
 	if (!content)
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	create_token(input, token_type, content, (line[*i] && !is_operator(line[*i])
 			&& !is_whitespace(line[*i])));
 	input->token_qty++;

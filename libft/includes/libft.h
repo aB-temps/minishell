@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:45:04 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 22:22:10 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 14:25:38 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ t_list						*ft_lstlast(t_list *lst);
 void						ft_lstadd_back(t_list **lst, t_list *new);
 void						ft_lstdelone(t_list *prev, t_list *to_del,
 								void (*del)(void *));
-void						ft_lstclear(t_list **lst, void (*del)(void *));
+void						*ft_lstclear(t_list **lst, void (*del)(void *));
 void						ft_lstiter(t_list *lst, void (*f)(void *));
 t_list						*ft_lstmap(t_list *lst, void *(*f)(void *),
 								void (*del)(void *));

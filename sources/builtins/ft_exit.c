@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:17 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/29 08:04:57 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/02 15:08:02 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtins.h"
 #include "exec.h"
 #include "input.h"
-#include "builtins.h"
 
 static int	is_valid_number(char *str)
 {
@@ -40,31 +40,33 @@ static void	print_numeric_error(char *arg, t_input *input, t_exec *exec)
 	ft_putstr_fd("exit: ", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putendl_fd(": numeric argument required", STDERR_FILENO);
-	exit_exec(input, exec);
+	exit_minishell(input, exec, input->last_exit_status);
 }
 
-void	ft_exit(char **cmd, t_input *input, t_exec *exec)
+void	ft_exit(char **cmd, t_minishell *minishell)
 {
 	int	nb;
 	int	error;
 
 	error = 0;
-	if (exec->cmd_count == 1 && isatty(fileno(stdin)))
+	if (minishell->exec->cmd_count == 1 && isatty(fileno(stdin)))
 		ft_putendl_fd("exit", STDERR_FILENO);
 	if (!cmd[1])
 	{
-		exit_exec(input, exec);
+		exit_minishell(minishell->input, minishell->exec,
+			minishell->input->last_exit_status);
 		return ;
 	}
 	if (!is_valid_number(cmd[1]))
-		print_numeric_error(cmd[1], input, exec);
+		print_numeric_error(cmd[1], minishell->input, minishell->exec);
 	if (cmd[2])
 	{
-		input->last_exit_status = 1;
+		minishell->input->last_exit_status = 1;
 		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
 		return ;
 	}
 	nb = ft_atoi(cmd[1], &error);
-	input->last_exit_status = nb % 256;
-	exit_exec(input, exec);
+	minishell->input->last_exit_status = nb % 256;
+	exit_minishell(minishell->input, minishell->exec,
+		minishell->input->last_exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 13:58:23 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 15:24:21 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 			line = str_replace(&line, substitute_env_var(line, input));
 		line = str_free_to_join(line, "\n");
 		if (!line)
-			exit_minishell(input, EXIT_FAILURE);
+			exit_parsing(input, EXIT_FAILURE);
 		ft_putstr_fd(line, fds[0]);
 		free(line);
 	}
@@ -45,13 +45,13 @@ static void	open_heredoc(int **fds, char *tmpfile, t_input *input)
 {
 	*fds = ft_calloc(2, sizeof(int));
 	if (!*fds)
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	(*fds)[0] = open(tmpfile, O_WRONLY | O_CREAT, 0644);
 	if ((*fds)[0] < 0)
 	{
 		free(*fds);
 		unlink_free_tmpfile(tmpfile);
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	}
 	(*fds)[1] = open(tmpfile, O_RDONLY);
 	if ((*fds)[1] < 0)
@@ -59,7 +59,7 @@ static void	open_heredoc(int **fds, char *tmpfile, t_input *input)
 		safe_close((*fds)[0]);
 		free(*fds);
 		unlink_free_tmpfile(tmpfile);
-		exit_minishell(input, EXIT_FAILURE);
+		exit_parsing(input, EXIT_FAILURE);
 	}
 	unlink_free_tmpfile(tmpfile);
 }

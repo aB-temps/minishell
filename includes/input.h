@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:35 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/30 03:33:33 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 14:10:17 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ struct						s_token
 	bool					link_to_next;
 	char					*raw_content;
 	void					*formatted_content;
-
 };
 
 struct						s_input
@@ -75,7 +74,7 @@ void						clear_token(t_vector *tokens);
 t_token						dup_token(t_token token);
 t_list						*env_array_to_list(char **env);
 char						**env_list_to_array(t_list *env);
-void						exit_minishell(t_input *input, int exit_code);
+void						exit_parsing(t_input *input, int exit_code);
 void						clear_env_list_elem(void *var);
 
 #endif
