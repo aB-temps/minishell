@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:34 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 15:03:25 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/02 17:45:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ void	exit_parsing(t_input *input, int exit_code)
 			clear_vector(&input->v_tokens);
 		if (input->env)
 		{
-			ft_lstclear(&input->env->list, &clear_env_list_elem);
-			free_tab_return_null(input->env->array);
+			if (input->env->list)
+				ft_lstclear(&input->env->list, &clear_env_list_elem);
+			if (input->env->array)
+				free_tab_return_null(input->env->array);
 			free(input->env);
 		}
 		if (input->line)
