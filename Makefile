@@ -86,6 +86,7 @@ COMPONENTS :=			PARSING 					\
 						STYLE						\
 						UTILS						\
 						HEREDOC						\
+						DEBUG						\
 						EXEC						\
 						ENV							\
 						BUILTINS					\
@@ -111,6 +112,11 @@ F_ENV 				:=	env_array_to_list.c			\
 						env_list_to_array.c			\
 						find_env_var.c				\
 						get_env_value.c				\
+
+F_DEBUG				:=	print_input.c				\
+						print_tab.c					\
+						print_heredoc.c				\
+						print_exec.c				\
 
 F_EXEC 				:=	check_sig_child.c			\
 						error_utils.c				\
