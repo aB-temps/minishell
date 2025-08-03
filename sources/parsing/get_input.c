@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 17:19:51 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/03 16:12:17 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ void	get_input(char **env)
 				start_exec(input);
 			clear_vector(&input->v_tokens);
 		}
-		else
-			input->last_exit_status = 2;
 		reset_input(input);
 	}
 }
