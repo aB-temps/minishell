@@ -31,7 +31,10 @@ void	print_input(t_input *input, char *part)
 		printf("To link : %s%i%s\n", BOLD, array[i].link_to_next, R_ALL);
 		printf("Raw Content : '%s%s%s'\n", BOLD, array[i].raw_content, R_ALL);
 		if (array[i].type == COMMAND)
+		{
+			printf("Formatted Content :\n");
 			print_tab((char **)array[i].formatted_content);
+		}
 		else if (array[i].type == HEREDOC
 			&& ft_strlen(array[i].raw_content) > 2)
 		{

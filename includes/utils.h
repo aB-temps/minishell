@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 16:22:32 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/04 00:52:18 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,10 @@ void	clear_wds(char *cwd, char *target);
 bool	safe_get_cwd(char **wd);
 void	*ptr_replace(void **from, void *to);
 void	exit_minishell(t_input *input, t_exec *exec, int exit_code);
+size_t	count_blocks(t_token *array, ssize_t tkn_qty);
+void	close_fd_exec(t_exec *exec);
+bool	init_cmd(t_input *input, t_block *block);
+void	free_blocks(t_block **block);
+bool	init_block_array(t_block **block, size_t *block_qty, t_input *input);
 
 #endif

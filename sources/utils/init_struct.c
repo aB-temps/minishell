@@ -3,18 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:31 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 17:46:28 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/03 22:13:53 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "exec.h"
 #include "input.h"
 #include "parsing.h"
 #include "utils.h"
 #include <linux/limits.h>
+
+bool	init_exec(t_exec **exec, t_input *input)
+{
+	*exec = malloc(sizeof(t_exec));
+	if (!*exec)
+		return (false);
+	if (!init_block_array(&(*exec)->block, &(*exec)->block_qty, input))
+	{
+		free(exec);
+		return (false);
+	}
+	(*exec)->pid_child = NULL;
+	(*exec)->pipe_fds = NULL;
+	return (true);
+}
 
 static void	init_empty_env(t_input *input)
 {

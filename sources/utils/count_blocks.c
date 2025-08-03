@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug.h                                            :+:      :+:    :+:   */
+/*   count_blocks.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 19:43:37 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/03 18:52:33 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/08/03 19:13:28 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/03 20:26:32 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEBUG_H
-# define DEBUG_H
+#include "input.h"
+#include "debug.h"
 
-# include "exec.h"
-# include "parsing.h"
-# include "style.h"
-# include <stdio.h>
+size_t	count_blocks(t_token *array, ssize_t tkn_qty)
+{
+	ssize_t	i;
+	size_t	block_qty;
 
-void	print_tab(char **tab);
-void	print_input(t_input *input, char *part);
-void	print_token_heredoc(t_token token);
-void	print_exec(t_exec *exec, const char *stage);
-
-#endif
+	i = 0;
+	block_qty = 1;
+	while (i < tkn_qty)
+	{
+		if (array[i].type == PIPE)
+			++block_qty;
+		i++;
+	}
+	return (block_qty);
+}

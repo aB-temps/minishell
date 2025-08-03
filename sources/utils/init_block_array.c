@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   debug.h                                            :+:      :+:    :+:   */
+/*   init_block_array.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 19:43:37 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/03 18:52:33 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/08/03 22:14:19 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/04 00:52:28 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef DEBUG_H
-# define DEBUG_H
+#include "exec.h"
+#include "utils.h"
 
-# include "exec.h"
-# include "parsing.h"
-# include "style.h"
-# include <stdio.h>
-
-void	print_tab(char **tab);
-void	print_input(t_input *input, char *part);
-void	print_token_heredoc(t_token token);
-void	print_exec(t_exec *exec, const char *stage);
-
-#endif
+bool	init_block_array(t_block **block, size_t *block_qty, t_input *input)
+{
+	*block_qty = count_blocks((t_token *)input->v_tokens->array,
+			input->token_qty);
+	(*block) = malloc(sizeof(t_block) * ((*block_qty) + 1));
+	if (!*block)
+		return (false);
+	if (init_cmd(input, *block) == false)
+	{
+		free(block);
+		return (false);
+	}
+	return (true);
+}

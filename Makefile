@@ -14,7 +14,7 @@ DIR_INC_LIB	:= $(DIR_LIB)includes/
 # FLAGS & COMPILATOR SETTINGS =========================================================
 CC 			:= cc
 DEPS_FLAGS	:= -MMD -MP
-WARN_FLAGS	:= -Wall -Werror -Wextra
+WARN_FLAGS	:= -Wall -Werror -Wextra -g3
 C_FLAGS		:= $(WARN_FLAGS) $(DEPS_FLAGS)
 INC_FLAGS	:= -I $(DIR_INC) -I $(DIR_INC_LIB)
 LIB_FLAGS	:= -L $(DIR_LIB) -lft
@@ -118,19 +118,7 @@ F_DEBUG				:=	print_input.c				\
 						print_heredoc.c				\
 						print_exec.c				\
 
-F_EXEC 				:=	check_sig_child.c			\
-						error_utils.c				\
-						create_files.c				\
-						exec_builtin.c				\
-						exec_cmd.c					\
-						exec_launcher.c				\
-						exec_process.c				\
-						path_utils.c				\
-						pipes_utils.c				\
-						redir_builtin.c				\
-						redir_simple_cmd.c			\
-						check_if_dir.c				\
-						utils.c						\
+F_EXEC 				:=	start_exec.c				\
 
 F_HEREDOC			:=	gen_heredoc_filename.c		\
 						handle_heredoc.c			\
@@ -159,6 +147,8 @@ F_UTILS				:=	cd_utils.c					\
 						clear_hd_filename_elem.c 	\
 						clear_token.c				\
 						clear_var_vector.c			\
+						close_fd_exec.c				\
+						count_blocks.c				\
 						count_command_args.c		\
 						count_valid_tokens.c		\
 						countocc.c					\
@@ -167,9 +157,12 @@ F_UTILS				:=	cd_utils.c					\
 						exit_minishell.c			\
 						exp_var_strlen.c			\
 						extract_var_key.c			\
+						free_blocks.c				\
 						ft_tabdup.c					\
 						ft_tablen.c					\
 						gen_random_num_sequence.c	\
+						init_cmd.c					\
+						init_block_array.c			\
 						init_struct.c				\
 						is_empty_env_var_token.c	\
 						is_redir_object_token.c		\

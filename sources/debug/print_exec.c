@@ -6,48 +6,43 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:33:44 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/24 15:55:09 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 00:57:45 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "debug.h"
-#include "exec.h"
-#include <stdio.h>
 
 void	print_exec(t_exec *exec, const char *stage)
 {
-	int	i;
+	size_t	i;
 
-	printf("================ [DEBUG T_EXEC] ================\n");
-	printf("%s%s%s\n\n", UNDL, stage, R_ALL);
-	if (!exec)
+	// const char	*type[4] = {"NO_TYPE", "CMD_REDIR", "CMD_NOREDIR",
+	// 		"REDIR_NOCMD"};
+	i = 0;
+	printf(BOLD "\n========================\n%s\n" R_ALL, stage);
+	printf(DIM "block_qty: %zu\n" R_ALL, exec->block_qty);
+	while (i < exec->block_qty)
 	{
-		printf("t_exec est NULL\n");
-		printf("============================================\n\n");
-		return ;
-	}
-	printf("cmd_count: %s%d%s\n", BOLD, exec->cmd_count, R_ALL);
-	printf("fd_infile: %s%d%s\n", BOLD, exec->fd_infile, R_ALL);
-	printf("fd_outfile: %s%d%s\n", BOLD, exec->fd_outfile, R_ALL);
-	if (exec->pid_child)
-	{
-		i = 0;
-		while (i < exec->cmd_count)
+		printf(BOLD "------------\n" R_ALL);
+		printf(BOLD "BLOCK[%zu]\n" R_ALL, i);
+		if (exec->pid_child)
+			printf(DIM "pid:%d\n\n" R_ALL, exec->pid_child[i]);
+		// if (exec->block[i].type)
+		// {
+		// 	printf(UNDL "Type:%s %s%s\n" R_ALL, R_ALL, BOLD,
+		// 		type[exec->block[i].type]);
+		// }
+		// if (exec->block[i].cmd->cmd_path)
+		// 	printf(UNDL "Path:%s\n" R_ALL, exec->block[i].cmd->cmd_path);
+		if (exec->block[i].cmd->cmd_args)
 		{
-			printf("pid_child[%d]: %s%d%s\n", i, BOLD, exec->pid_child[i],
-				R_ALL);
-			i++;
+			printf(UNDL "Args:\n" R_ALL);
+			print_tab(exec->block[i].cmd->cmd_args);
 		}
+		printf(UNDL "Builtin:" R_ALL);
+		exec->block[i].cmd->is_builtin == true ? printf(BOLD " Yes\n" R_ALL) : printf(BOLD " No\n" R_ALL);
+		printf(BOLD "------------\n\n" R_ALL);
+		i++;
 	}
-	else
-		printf("pid_child: %sNULL%s\n", BOLD, R_ALL);
-	if (exec->fd)
-	{
-		printf("fd->fd1[0]: %s%d%s, fd->fd1[1]: %s%d%s\n", BOLD,
-			exec->fd->fd1[0], R_ALL, BOLD, exec->fd->fd1[1], R_ALL);
-		printf("fd->fd2[0]: %s%d%s, fd->fd2[1]: %s%d%s\n", BOLD,
-			exec->fd->fd2[0], R_ALL, BOLD, exec->fd->fd2[1], R_ALL);
-	}
-	else
-		printf("exec->fd: %sNULL%s\n", BOLD, R_ALL);
+	printf(BOLD "========================\n\n" R_ALL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:17 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 17:08:52 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/03 19:45:03 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_exit(char **cmd, t_minishell *minishell)
 	int	error;
 
 	error = 0;
-	if (minishell->exec->cmd_count == 1 && isatty(fileno(stdin)))
+	if (minishell->exec->block_qty == 1 && isatty(fileno(stdin)))
 		ft_putendl_fd("exit", STDERR_FILENO);
 	if (!cmd[1])
 	{
