@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:30 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 16:22:28 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 01:08:13 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define TEXT_FORMATTING_H
 
 // FOREGROUND COLORS
-# define FG_BLACK "\001\033[30m\002"
-# define FG_RED "\001\033[31m\002"
-# define FG_GREEN "\001\033[32m\002"
-# define FG_YELLOW "\001\033[33m\002"
-# define FG_BLUE "\001\033[34m\002"
-# define FG_MAGENTA "\001\033[35m\002"
-# define FG_CYAN "\001\033[36m\002"
-# define FG_WHITE "\001\033[97m\002"
+# define BLACK "\001\033[30m\002"
+# define RED "\001\033[31m\002"
+# define GREEN "\001\033[32m\002"
+# define YELLOW "\001\033[33m\002"
+# define BLUE "\001\033[34m\002"
+# define MAGENTA "\001\033[35m\002"
+# define CYAN "\001\033[36m\002"
+# define WHITE "\001\033[97m\002"
 
 // BACKGROUND COLORS
 # define BG_BLACK "\001\033[40m\002"

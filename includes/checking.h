@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:43 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 19:43:44 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 00:42:40 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdbool.h>
 # include <sys/types.h>
 
-bool	is_valid_input(char *line);
+bool	is_valid_input(char *line, t_input *input);
 bool	is_whitespace(char c);
 bool	is_operator(char c);
 bool	is_quote(char c);
@@ -25,5 +25,6 @@ bool	is_d_quote(char c);
 bool	is_s_quote(char c);
 bool	is_quoted_arg(char *s);
 bool	check_syntax_error(t_input *input);
+void	print_syntax_error(t_input *input);
 
 #endif

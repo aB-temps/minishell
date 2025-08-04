@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:56:17 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 00:27:59 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 01:08:05 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ static char	*build_ps1(t_input *input)
 	username = get_env_value("USER", input);
 	if (!ft_strlen(username))
 		return (username);
-	ps1 = ft_strjoin(FG_BLUE, username);
+	ps1 = ft_strjoin(BLUE, username);
 	free(username);
 	if (!ps1)
 		exit_parsing(input, EXIT_FAILURE);
-	ps1 = str_free_to_join(ps1, FG_WHITE " \001→\002 " DIM);
+	ps1 = str_free_to_join(ps1, WHITE " \001→\002 " DIM);
 	if (!ps1)
 		exit_parsing(input, EXIT_FAILURE);
 	return (ps1);
@@ -61,7 +61,7 @@ static char	*build_ps2(t_input *input, char *ps1)
 
 	ps2 = (void *)0;
 	pwd = get_env_value("PWD", input);
-	ps2 = ft_strjoin(FG_GREEN, pwd);
+	ps2 = ft_strjoin(GREEN, pwd);
 	safe_free((void **)&pwd);
 	if (!ps2)
 		exit_clear_ps(ps1, ps2, NULL, input);
@@ -81,13 +81,13 @@ static char	*build_ps3(t_input *input, char *ps1, char *ps2)
 	if (!exit_status)
 		exit_clear_ps(ps1, ps2, ps3, input);
 	if (input->last_exit_status > 0)
-		ps3 = ft_strjoin(FG_WHITE " [" FG_RED, exit_status);
+		ps3 = ft_strjoin(WHITE " [" RED, exit_status);
 	else
-		ps3 = ft_strjoin(FG_WHITE " [" FG_GREEN, exit_status);
+		ps3 = ft_strjoin(WHITE " [" GREEN, exit_status);
 	safe_free((void **)&exit_status);
 	if (!ps3)
 		exit_clear_ps(ps1, ps2, ps3, input);
-	ps3 = str_free_to_join(ps3, FG_WHITE "]" R_ALL);
+	ps3 = str_free_to_join(ps3, WHITE "]" R_ALL);
 	if (!ps3)
 		exit_clear_ps(ps1, ps2, ps3, input);
 	return (ps3);
@@ -115,7 +115,7 @@ void	build_prompt(t_input *input)
 		if (!input->prompt)
 			exit_parsing(input, EXIT_FAILURE);
 	}
-	input->prompt = str_free_to_join(input->prompt, FG_WHITE "\n$ " R_ALL);
+	input->prompt = str_free_to_join(input->prompt, WHITE "\n$ " R_ALL);
 	if (!input->prompt)
 		exit_parsing(input, EXIT_FAILURE);
 }

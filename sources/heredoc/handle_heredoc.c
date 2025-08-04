@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 16:13:03 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 01:07:17 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	line = (void *)0;
 	while (g_sig != SIGINT)
 	{
-		line = readline(FG_BLUE "heredoc> " R_ALL);
+		line = readline(BLUE "heredoc> " R_ALL);
 		if (g_sig == SIGINT || !line || !ft_strcmp(line,
 				(char *)token->formatted_content))
 			break ;
@@ -34,7 +34,7 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		free(line);
 	}
 	if (!line && g_sig != SIGINT)
-		ft_putstr_fd(FG_YELLOW "warning : heredoc exited before EOF\n" R_ALL,
+		ft_putstr_fd(YELLOW "warning : heredoc exited before EOF\n" R_ALL,
 			STDERR_FILENO);
 	if (g_sig == SIGINT)
 		safe_close(fds[1]);

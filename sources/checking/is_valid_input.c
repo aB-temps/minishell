@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:12:10 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/31 05:58:19 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 00:42:48 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static bool	are_quotes_paired(char *s)
 	return (s_quotes % 2 == 0 && d_quotes % 2 == 0);
 }
 
-bool	is_valid_input(char *line)
+bool	is_valid_input(char *line, t_input *input)
 {
 	size_t	i;
 
@@ -43,7 +43,7 @@ bool	is_valid_input(char *line)
 		return (false);
 	if (!are_quotes_paired(line))
 	{
-		ft_putstr_fd(FG_RED"minishell: syntax error\n"R_ALL, STDERR_FILENO);
+		print_syntax_error(input);
 		return (false);
 	}
 	while (line[i])

@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 00:12:38 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 00:30:56 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	get_input(char **env)
 		input->line = readline(input->prompt);
 		if (!input->line)
 			exit_parsing(input, input->last_exit_status);
-		if (is_valid_input(input->line))
+		if (is_valid_input(input->line, input))
 		{
 			if (parse_input(input) && g_sig != SIGINT)
 				start_exec(input);

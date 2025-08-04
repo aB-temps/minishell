@@ -6,11 +6,12 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 15:11:22 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 01:06:53 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "style.h"
 #include "libft.h"
 #include "token_formatting.h"
 
@@ -77,7 +78,7 @@ bool	init_wds(char **cwd, char **target, char **cmd, t_minishell *minishell)
 		if (!ft_strlen(*target))
 		{
 			clear_wds(*cwd, *target);
-			ft_putstr_fd("minishell: cd: HOME not set\n", STDERR_FILENO);
+			ft_putstr_fd(RED"minishell: cd: HOME not set\n"R_ALL, STDERR_FILENO);
 			return (false);
 		}
 	}
@@ -93,7 +94,7 @@ int	ft_cd(char **cmd, t_minishell *minishell)
 	target = NULL;
 	if (ft_tablen(cmd) > 2)
 	{
-		ft_putstr_fd("minishell: cd: too many arguments\n", STDERR_FILENO);
+		ft_putstr_fd(RED"minishell: cd: too many arguments\n"R_ALL, STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
 	if (!init_wds(&cwd, &target, cmd, minishell))
@@ -104,7 +105,7 @@ int	ft_cd(char **cmd, t_minishell *minishell)
 				get_env_value("OLDPWD", minishell->input));
 		if (!ft_strlen(target))
 		{
-			ft_putstr_fd("minishell: cd: OLDPWD not set\n", STDERR_FILENO);
+			ft_putstr_fd(RED"minishell: cd: OLDPWD not set\n"R_ALL, STDERR_FILENO);
 			clear_wds(cwd, target);
 			return (EXIT_FAILURE);
 		}
