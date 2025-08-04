@@ -14,7 +14,7 @@ DIR_INC_LIB	:= $(DIR_LIB)includes/
 # FLAGS & COMPILATOR SETTINGS =========================================================
 CC 			:= cc
 DEPS_FLAGS	:= -MMD -MP
-WARN_FLAGS	:= -Wall -Werror -Wextra
+WARN_FLAGS	:= -Wall -Werror -Wextra -g3
 C_FLAGS		:= $(WARN_FLAGS) $(DEPS_FLAGS)
 INC_FLAGS	:= -I $(DIR_INC) -I $(DIR_INC_LIB)
 LIB_FLAGS	:= -L $(DIR_LIB) -lft
@@ -234,10 +234,14 @@ $(DIR_BUILD)%.o : $(DIR_SRC)%.c $(ANTI_RELINK) | $(DIR_BUILD)
 
 # RULES ===============================================================================
 # build -------------------------------------------------------------------------------
-all : lib $(NAME)
+all : lib $(NAME) inputrc
 
 lib :
 	@make -s -C $(DIR_LIB)
+
+inputrc:
+	@echo "set colored-stats on" > ~/.inputrc
+	@echo "set completion-ignore-case on" >> ~/.inputrc
 
 # clean -------------------------------------------------------------------------------
 clean:
@@ -260,5 +264,6 @@ re: fclean all
 # debug -------------------------------------------------------------------------------
 print-%:
 	@echo $($(patsubst print-%,%,$@))
+
 
 .PHONY: all lib clean fclean re print-%
