@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/04 23:19:55 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 00:12:38 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	get_input(char **env)
 	input = ft_calloc(1, sizeof(t_input));
 	if (!input)
 		exit(EXIT_FAILURE);
+	input->last_exit_status = -1;
 	init_env(env, input);
 	while (1)
 	{

@@ -178,6 +178,7 @@ F_UTILS				:=	cd_utils.c					\
 						quoted_arg_len.c			\
 						remove_token_if.c			\
 						safe_close.c				\
+						safe_free.c					\
 						str_chardel.c				\
 						str_patdel.c				\
 						str_patreplace.c			\
