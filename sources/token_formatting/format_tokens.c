@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 14:04:36 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/04 13:44:51 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	format_tokens(t_input *input)
 			i++;
 	}
 	remove_token_if(input, &array, is_redir_object_token);
+	print_input(input, "AFTER FORMAT REDIR");
 	i = 0;
 	while (i < input->token_qty)
 	{
