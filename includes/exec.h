@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 17:00:33 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 22:33:44 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,12 @@ typedef struct s_block
 {
 	t_cmd		*cmd;
 	int			io_fds[2];
-	int			type;
 }				t_block;
 
 typedef struct s_exec
 {
 	pid_t		*pid_child;
-	t_block		*block;
+	t_block		block;
 	size_t		block_qty;
 	t_pipe_fds	*pipe_fds;
 }				t_exec;

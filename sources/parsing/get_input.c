@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/03 16:12:17 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/04 21:31:28 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "parsing.h"
+#include "debug.h"
 #include "signals.h"
 #include "style.h"
 #include <linux/limits.h>
@@ -53,7 +54,10 @@ void	get_input(char **env)
 		if (is_valid_input(input->line))
 		{
 			if (parse_input(input) && g_sig != SIGINT)
+			{
+				print_input(input, "PARSED");
 				start_exec(input);
+			}
 			clear_vector(&input->v_tokens);
 		}
 		reset_input(input);

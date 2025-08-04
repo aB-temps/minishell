@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:31 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/03 22:13:53 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 23:20:21 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,20 @@ bool	init_exec(t_exec **exec, t_input *input)
 	*exec = malloc(sizeof(t_exec));
 	if (!*exec)
 		return (false);
-	if (!init_block_array(&(*exec)->block, &(*exec)->block_qty, input))
+	(*exec)->block_qty = count_blocks((t_token *)input->v_tokens->array,
+			input->token_qty);
+	(*exec)->pid_child = ft_calloc((*exec)->block_qty, sizeof(pid_t));
+	if (!(*exec)->pid_child)
 	{
 		free(exec);
 		return (false);
 	}
-	(*exec)->pid_child = NULL;
-	(*exec)->pipe_fds = NULL;
+	(*exec)->block.cmd = NULL;
+	(*exec)->block.io_fds[0] = -1;
+	(*exec)->block.io_fds[1] = -1;
+	(*exec)->pipe_fds = malloc(sizeof(t_pipe_fds));
+	if (!(*exec)->pipe_fds)
+		return (false);
 	return (true);
 }
 

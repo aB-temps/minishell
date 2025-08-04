@@ -178,6 +178,8 @@ F_UTILS				:=	cd_utils.c					\
 						str_patreplace.c			\
 						str_replace.c				\
 						unlink_free_tmpfile.c		\
+						close_and_swap.c			\
+
 
 F_TOKEN_FORMATTING :=	format_tokens.c				\
 						format_command.c			\

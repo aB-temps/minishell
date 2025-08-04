@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/04 17:17:48 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 23:43:37 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ void	*ptr_replace(void **from, void *to);
 void	exit_minishell(t_input *input, t_exec *exec, int exit_code);
 size_t	count_blocks(t_token *array, ssize_t tkn_qty);
 void	close_fd_exec(t_exec *exec);
-bool	init_cmd(t_input *input, t_block *block);
-void	free_blocks(t_block **block);
-bool	init_block_array(t_block **block, size_t *block_qty, t_input *input);
+bool	init_cmd(t_input *input, t_cmd *cmd);
+void	free_blocks(t_block *block);
+// bool	init_block_array(t_block **block, size_t *block_qty, t_input *input);
 char	*get_cmd_path(t_input *input, char *cmd_args);
 char	*handle_direct_path(char *cmd);
+void	free_cmd(t_cmd *cmd);
+void	close_and_swap(t_pipe_fds *fds);
 
 #endif

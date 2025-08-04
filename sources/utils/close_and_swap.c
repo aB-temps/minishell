@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   close_fd_exec.c                                    :+:      :+:    :+:   */
+/*   close_and_swap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 19:27:40 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 23:26:30 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/08/04 23:22:39 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/04 23:43:59 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "utils.h"
 
-void	close_fd_exec(t_exec *exec)
+void	close_and_swap(t_pipe_fds *fds)
 {
-	safe_close(exec->pipe_fds->fd1[0]);
-	safe_close(exec->pipe_fds->fd1[1]);
-	safe_close(exec->pipe_fds->fd2[0]);
-	safe_close(exec->pipe_fds->fd2[1]);
-    safe_close(exec->block.io_fds[0]);
-    safe_close(exec->block.io_fds[1]);
+	ft_close(fds->fd1[0]);
+	ft_close(fds->fd2[1]);
+	fds->fd1[0] = fds->fd2[0];
+	fds->fd1[1] = fds->fd2[1];
 }
