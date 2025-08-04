@@ -1,22 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_free_to_join.c                              :+:      :+:    :+:   */
+/*   handle_direct_path.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/07 14:14:55 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 18:35:43 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/08/04 16:59:06 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/04 19:13:32 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "exec.h"
+#include "input.h"
+#include <stdio.h>
 
-char	*str_free_to_join(char *s1, char *s2)
+char	*handle_direct_path(char *cmd) // set les retours d'erreurs ?
 {
-	char	*temp;
-
-	temp = ft_strjoin(s1, s2);
-	free(s1);
-	return (temp);
+	if (!access(cmd, F_OK))
+	{
+		if (!access(cmd, X_OK))
+		{
+			return (cmd);
+		}
+		// error 126 ?
+		perror(cmd);
+		return (NULL);
+	}
+	// error 127 ?
+	perror(cmd);
+	return (NULL);
 }

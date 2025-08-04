@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:33:44 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 00:57:45 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 19:08:13 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ void	print_exec(t_exec *exec, const char *stage)
 		// 	printf(UNDL "Type:%s %s%s\n" R_ALL, R_ALL, BOLD,
 		// 		type[exec->block[i].type]);
 		// }
-		// if (exec->block[i].cmd->cmd_path)
-		// 	printf(UNDL "Path:%s\n" R_ALL, exec->block[i].cmd->cmd_path);
+		printf(UNDL "Path:%s '%s'\n" , R_ALL,exec->block[i].cmd->cmd_path);
 		if (exec->block[i].cmd->cmd_args)
 		{
 			printf(UNDL "Args:\n" R_ALL);

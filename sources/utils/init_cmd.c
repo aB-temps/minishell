@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 00:53:37 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 18:23:55 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,14 @@ static bool	is_builtin(char *cmd)
 	return (false);
 }
 
-static bool	setup_block_cmd(t_token token, t_block *block, size_t i)
+static bool	setup_block_cmd(t_input *input, t_token token, t_block *block)
 {
-	block[i].cmd->cmd_args = (char **)token.formatted_content;
-	block[i].cmd->is_builtin = is_builtin(block[i].cmd->cmd_args[0]);
+	(*block).cmd->cmd_args = (char **)token.formatted_content;
+	(*block).cmd->is_builtin = is_builtin((*block).cmd->cmd_args[0]);
+	if (!(*block).cmd->is_builtin)
+		(*block).cmd->cmd_path = get_cmd_path(input, (*block).cmd->cmd_args[0]);
+	else
+		(*block).cmd->cmd_path = NULL;
 	return (true);
 }
 
@@ -48,7 +52,12 @@ bool	init_cmd(t_input *input, t_block *block)
 		if (token_array[i].type == COMMAND)
 		{
 			block[j].cmd = malloc(sizeof(t_cmd));
-			setup_block_cmd(token_array[i], block, j);
+			if (!block[j].cmd)
+			{
+				free_blocks(&block); // JSP LOL
+				return (false);
+			}
+			setup_block_cmd(input, token_array[i], &block[j]);
 			j++;
 		}
 		++i;

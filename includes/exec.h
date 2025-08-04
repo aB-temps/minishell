@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 00:16:15 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 17:00:33 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 // # include <sys/stat.h>
 // # include <sys/types.h>
 // # include <sys/wait.h>
-// # include <unistd.h>
+# include <unistd.h>
 
 /*--------------------------------- ENUM ---------------------------------*/
 

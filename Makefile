@@ -161,6 +161,8 @@ F_UTILS				:=	cd_utils.c					\
 						ft_tabdup.c					\
 						ft_tablen.c					\
 						gen_random_num_sequence.c	\
+						get_cmd_path.c				\
+						handle_direct_path.c		\
 						init_cmd.c					\
 						init_block_array.c			\
 						init_struct.c				\

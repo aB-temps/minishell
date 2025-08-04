@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/04 00:52:18 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/04 17:17:48 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ void	close_fd_exec(t_exec *exec);
 bool	init_cmd(t_input *input, t_block *block);
 void	free_blocks(t_block **block);
 bool	init_block_array(t_block **block, size_t *block_qty, t_input *input);
+char	*get_cmd_path(t_input *input, char *cmd_args);
+char	*handle_direct_path(char *cmd);
 
 #endif
