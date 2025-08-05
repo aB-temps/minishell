@@ -130,8 +130,7 @@ F_LEXING			:=	tokenize_input.c			\
 						tokenize_quote.c			\
 						tokenize_word.c				\
 
-F_PARSING			:=	format_input.c				\
-						get_input.c					\
+F_PARSING			:=	get_input.c					\
 						parse_input.c				\
 
 F_SIGNALS 			:=	signals.c					\
@@ -147,7 +146,7 @@ F_TOKEN_FORMATTING	:=	format_command.c			\
 F_UTILS				:=	cd_utils.c					\
 						clear_env_list_elem.c		\
 						clear_hd_filename_elem.c 	\
-						clear_token.c				\
+						clear_v_token.c				\
 						clear_var_vector.c			\
 						close_fd_exec.c				\
 						count_blocks.c				\
@@ -160,6 +159,7 @@ F_UTILS				:=	cd_utils.c					\
 						exp_var_strlen.c			\
 						extract_var_key.c			\
 						free_blocks.c				\
+						extract_var_value.c			\
 						ft_tabdup.c					\
 						ft_tablen.c					\
 						gen_random_num_sequence.c	\
@@ -170,11 +170,13 @@ F_UTILS				:=	cd_utils.c					\
 						init_struct.c				\
 						is_empty_env_var_token.c	\
 						is_redir_object_token.c		\
+						is_executable_token.c		\
 						lstgetprev.c				\
 						ptr_replace.c				\
 						quoted_arg_len.c			\
 						remove_token_if.c			\
 						safe_close.c				\
+						safe_free.c					\
 						str_chardel.c				\
 						str_patdel.c				\
 						str_patreplace.c			\
@@ -234,10 +236,14 @@ $(DIR_BUILD)%.o : $(DIR_SRC)%.c $(ANTI_RELINK) | $(DIR_BUILD)
 
 # RULES ===============================================================================
 # build -------------------------------------------------------------------------------
-all : lib $(NAME)
+all : lib $(NAME) inputrc
 
 lib :
 	@make -s -C $(DIR_LIB)
+
+inputrc:
+	@echo "set colored-stats on" > ~/.inputrc
+	@echo "set completion-ignore-case on" >> ~/.inputrc
 
 # clean -------------------------------------------------------------------------------
 clean:
@@ -260,5 +266,6 @@ re: fclean all
 # debug -------------------------------------------------------------------------------
 print-%:
 	@echo $($(patsubst print-%,%,$@))
+
 
 .PHONY: all lib clean fclean re print-%

@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:15:49 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 14:26:10 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/04 23:37:10 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 #include "input.h"
 #include "libft.h"
 #include "utils.h"
+
+static void	*exit_env_a_to_l(t_env_var *var, t_list *l_env)
+{
+	clear_env_list_elem(var);
+	return (ft_lstclear(&l_env, &clear_env_list_elem));
+}
 
 void	update_env_list(t_input *input, t_exec *exec)
 {
@@ -37,16 +43,16 @@ t_list	*env_array_to_list(char **env)
 	{
 		env_var = ft_calloc(1, sizeof(t_env_var));
 		if (!env_var)
-			return (ft_lstclear(&l_env, &clear_env_list_elem));
+			return (exit_env_a_to_l(env_var, l_env));
 		env_var->key = ft_strndup(env[i], ft_strchr(env[i], '=') - env[i]);
 		if (!env_var->key)
-			return (ft_lstclear(&l_env, &clear_env_list_elem));
+			return (exit_env_a_to_l(env_var, l_env));
 		env_var->value = ft_strdup(ft_strchr(env[i], '=') + 1);
 		if (!env_var->value)
-			return (ft_lstclear(&l_env, &clear_env_list_elem));
+			return (exit_env_a_to_l(env_var, l_env));
 		element = ft_lstnew(env_var);
 		if (!element)
-			return (ft_lstclear(&l_env, &clear_env_list_elem));
+			return (exit_env_a_to_l(env_var, l_env));
 		ft_lstadd_back(&l_env, element);
 		i++;
 	}

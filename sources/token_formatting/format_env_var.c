@@ -6,46 +6,20 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:19 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 14:04:36 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:57:09 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token_formatting.h"
 
-static t_env_var	last_exit_status_to_var(t_input *input)
+static void	*clean_env_var_parsing(t_vector *var_array, t_env_var *var)
 {
-	t_env_var	var;
-
-	var.key = ft_strdup("$?");
-	if (!var.key)
-		exit_parsing(input, EXIT_FAILURE);
-	var.value = ft_itoa(input->last_exit_status);
-	if (!var.value)
-	{
-		free(var.key);
-		exit_parsing(input, EXIT_FAILURE);
-	}
-	return (var);
+	clear_var(var);
+	clear_vector(&var_array);
+	return ((void *)0);
 }
 
-static t_env_var	string_to_var(char *s, t_input *input)
-{
-	t_env_var	var;
-
-	var.key = extract_var_key(s);
-	if (!var.key)
-		exit_parsing(input, EXIT_FAILURE);
-	var.value = get_env_value(var.key + 1, input);
-	if (!var.value)
-	{
-		free(var.key);
-		exit_parsing(input, EXIT_FAILURE);
-	}
-	return (var);
-}
-
-static char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input,
-		size_t new_len)
+static char	*replace_env_var(char *s, t_vector *v_var_array, size_t new_len)
 {
 	const t_env_var	*var_array = (t_env_var *)v_var_array->array;
 	char			*ns;
@@ -58,7 +32,7 @@ static char	*replace_env_var(char *s, t_vector *v_var_array, t_input *input,
 	k = 0;
 	ns = ft_calloc(new_len + 1, sizeof(char));
 	if (!ns)
-		exit_parsing(input, EXIT_FAILURE);
+		return ((void *)0);
 	while (s[i])
 	{
 		if (j < v_var_array->nb_elements && !ft_strncmp(var_array[j].key, &s[i],
@@ -83,18 +57,18 @@ static t_vector	*parse_env_var(char *s, t_input *input)
 	i = 0;
 	var_array = create_vector(1, sizeof(t_env_var), clear_var_vector);
 	if (!var_array)
-		exit_parsing(input, EXIT_FAILURE);
+		return ((void *)0);
 	while (s[i])
 	{
-		if (s[i] == '$' && s[i + 1] && (ft_isalnum(s[i + 1])
-				|| s[i + 1] == '?'))
+		if (s[i] == '$' && s[i + 1] && (ft_isalnum(s[i + 1]) || s[i
+					+ 1] == '?'))
 		{
 			if (s[i + 1] == '?')
 				var = last_exit_status_to_var(input);
 			else
 				var = string_to_var(&s[i], input);
-			if (!add_element(var_array, &var))
-				exit_parsing(input, EXIT_FAILURE);
+			if (!var.value || !add_element(var_array, &var))
+				return (clean_env_var_parsing(var_array, &var));
 			i += ft_strlen(var.key);
 		}
 		else
@@ -112,7 +86,7 @@ char	*substitute_env_var(char *s, t_input *input)
 	var_array = parse_env_var(s, input);
 	if (!var_array)
 		exit_parsing(input, EXIT_FAILURE);
-	ns = replace_env_var(s, var_array, input, exp_var_strlen(s, var_array));
+	ns = replace_env_var(s, var_array, exp_var_strlen(s, var_array));
 	clear_vector(&var_array);
 	if (!ns)
 		exit_parsing(input, EXIT_FAILURE);

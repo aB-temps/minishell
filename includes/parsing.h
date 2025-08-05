@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:33 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/27 19:43:34 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 15:30:58 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,5 @@
 
 void	get_input(char **env);
 void	*parse_input(t_input *input);
-void	format_input(t_input *input, t_token *array);
 
 #endif

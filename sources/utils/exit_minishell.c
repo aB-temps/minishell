@@ -6,19 +6,14 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:34 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 16:25:05 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 18:05:25 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "input.h"
 #include "utils.h"
-
-void	clear_exec(t_exec *exec)
-{
-	if (exec)
-		close_fd_exec(exec);
-}
+#include <readline/readline.h>
 
 void	exit_minishell(t_input *input, t_exec *exec, int exit_code)
 {
@@ -47,5 +42,6 @@ void	exit_parsing(t_input *input, int exit_code)
 			free(input->prompt);
 		free(input);
 	}
+	rl_clear_history();
 	exit(exit_code);
 }

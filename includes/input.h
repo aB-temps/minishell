@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:35 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/03 19:37:13 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 18:03:16 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void						init_env(char **env, t_input *input);
 void						init_token(t_token *token);
 void						create_token(t_input *input, int type,
 								char *raw_content, bool to_link);
-void						clear_token(t_vector *tokens);
+void						clear_v_token(t_vector *tokens);
+void						clear_token(t_token *token);
 t_token						dup_token(t_token token);
 t_list						*env_array_to_list(char **env);
 char						**env_list_to_array(t_list *env);

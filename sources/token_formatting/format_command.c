@@ -6,12 +6,12 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 14:35:58 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 14:04:36 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:14:33 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "token_formatting.h"
 #include "debug.h"
+#include "token_formatting.h"
 
 static void	*joinback_args(t_token *array, size_t *k, size_t *arg_qty)
 {
@@ -39,17 +39,18 @@ static void	*joinback_args(t_token *array, size_t *k, size_t *arg_qty)
 	return (content);
 }
 
-static char	*fill_args_array(t_token *array, size_t k, size_t *arg_qty)
+static char	*fill_args_array(t_token *array, size_t *k, size_t *arg_qty)
 {
 	char	*content;
 
+	(void)arg_qty;
 	content = (void *)0;
-	if (array[k].link_to_next)
-		content = joinback_args(array, &k, arg_qty);
-	else if (array[k].type == ENV_VAR)
-		content = ft_strdup(array[k].formatted_content);
-	else if (array[k].raw_content)
-		content = ft_strdup(array[k].raw_content);
+	if (array[*k].link_to_next)
+		content = joinback_args(array, k, arg_qty);
+	else if (array[*k].type == ENV_VAR)
+		content = ft_strdup(array[*k].formatted_content);
+	else if (array[*k].raw_content)
+		content = ft_strdup(array[*k].raw_content);
 	return (content);
 }
 
@@ -69,9 +70,12 @@ static char	**command_args_to_array(t_input *input, t_token *array, ssize_t *i,
 	{
 		if (array[k].type >= ARG)
 		{
-			args_array[j] = fill_args_array(array, k, &arg_qty);
+			args_array[j] = fill_args_array(array, &k, &arg_qty);
 			if (!args_array[j])
+			{
+				free_tab_return_null(args_array);
 				exit_parsing(input, EXIT_FAILURE);
+			}
 			j++;
 		}
 		k++;
@@ -82,10 +86,10 @@ static char	**command_args_to_array(t_input *input, t_token *array, ssize_t *i,
 
 void	format_command(t_input *input, t_token *array, ssize_t *i)
 {
-	char	*tmp;
+	char	**tmp;
 	ssize_t	arg_qty;
 
-	tmp = array[*i].formatted_content;
+	tmp = (char **)array[*i].formatted_content;
 	arg_qty = count_command_args(input, array, i);
 	array[*i].formatted_content = command_args_to_array(input, array, i,
 			arg_qty);

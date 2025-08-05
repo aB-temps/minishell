@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 13:29:05 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 18:04:35 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	get_input(char **env)
 	input = ft_calloc(1, sizeof(t_input));
 	if (!input)
 		exit(EXIT_FAILURE);
+	input->last_exit_status = -1;
 	init_env(env, input);
 	while (1)
 	{
@@ -51,7 +52,7 @@ void	get_input(char **env)
 		input->line = readline(input->prompt);
 		if (!input->line)
 			exit_parsing(input, input->last_exit_status);
-		if (is_valid_input(input->line))
+		if (is_valid_input(input->line, input))
 		{
 			if (parse_input(input) && g_sig != SIGINT)
 			{
@@ -62,4 +63,5 @@ void	get_input(char **env)
 		}
 		reset_input(input);
 	}
+	rl_clear_history();
 }
