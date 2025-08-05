@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:15:26 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 14:04:17 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:33:18 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,10 @@ char	*get_env_value(char *var_name, t_input *input)
 				+ ft_strlen(((t_env_var *)tmp->content)->key)))
 		{
 			var_value = ft_strdup(((t_env_var *)tmp->content)->value);
-			if (!var_value)
-				exit_parsing(input, EXIT_FAILURE);
 			return (var_value);
 		}
 		tmp = tmp->next;
 	}
 	var_value = ft_strdup("");
-	if (!var_value)
-		exit_parsing(input, EXIT_FAILURE);
 	return (var_value);
 }

@@ -6,12 +6,26 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 16:22:02 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:10:21 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 #include "utils.h"
+
+void	clear_var(t_env_var *var)
+{
+	if (var->key)
+	{
+		free(var->key);
+		var->key = (void *)0;
+	}
+	if (var->value)
+	{
+		free(var->value);
+		var->value = (void *)0;
+	}
+}
 
 void	clear_var_vector(t_vector *v_var_array)
 {
@@ -22,16 +36,7 @@ void	clear_var_vector(t_vector *v_var_array)
 	i = 0;
 	while (i < v_var_array->nb_elements)
 	{
-		if (var_array[i].key)
-		{
-			free(var_array[i].key);
-			var_array[i].key = (void *)0;
-		}
-		if (var_array[i].value)
-		{
-			free(var_array[i].value);
-			var_array[i].value = (void *)0;
-		}
+		clear_var(&var_array[i]);
 		i++;
 	}
 }

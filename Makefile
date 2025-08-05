@@ -166,6 +166,7 @@ F_UTILS				:=	cd_utils.c					\
 						exit_minishell.c			\
 						exp_var_strlen.c			\
 						extract_var_key.c			\
+						extract_var_value.c			\
 						ft_tabdup.c					\
 						ft_tablen.c					\
 						gen_random_num_sequence.c	\

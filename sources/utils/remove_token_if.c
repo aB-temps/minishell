@@ -6,14 +6,14 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 15:35:12 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:14:34 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "debug.h"
 #include "parsing.h"
 
-static void	exit_remove_token(t_input *input, t_vector *new_vec, t_token token)
+static void	exit_remove_token(t_input *input, t_vector *new_vec, t_token *token)
 {
 	clear_token(token);
 	clear_vector(&new_vec);
@@ -63,7 +63,7 @@ void	remove_token_if(t_input *input, t_token **array,
 			init_token(&token);
 			token = dup_token((*array)[i]);
 			if (!token.formatted_content || !add_element(new_vec, &token))
-				exit_remove_token(input, new_vec, token);
+				exit_remove_token(input, new_vec, &token);
 		}
 		i++;
 	}
