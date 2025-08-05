@@ -16,17 +16,21 @@
 
 void	clear_token(t_token token)
 {
-	if (token.type == COMMAND)
-		free_tab_return_null((char **)token.formatted_content);
-	else if (token.type == HEREDOC && ft_strlen(token.raw_content) > 2)
+	if (token.formatted_content)
 	{
-		safe_close(((int *)token.formatted_content)[0]);
-		safe_close(((int *)token.formatted_content)[1]);
-		free(token.formatted_content);
+		if (token.type == COMMAND)
+			free_tab_return_null((char **)token.formatted_content);
+		else if (token.type == HEREDOC && ft_strlen(token.raw_content) > 2)
+		{
+			safe_close(((int *)token.formatted_content)[0]);
+			safe_close(((int *)token.formatted_content)[1]);
+			free(token.formatted_content);
+		}
+		else
+			free(token.formatted_content);
 	}
-	else
-		free(token.formatted_content);
-	free(token.raw_content);
+	if (token.raw_content)
+		free(token.raw_content);
 }
 
 void	clear_v_token(t_vector *tokens)

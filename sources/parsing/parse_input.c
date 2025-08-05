@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 02:24:33 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 15:30:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,7 @@ void	*parse_input(t_input *input)
 		return ((void *)0);
 	}
 	format_tokens(input);
-	print_input(input, "FORMAT TOKENS");
-	format_input(input, (t_token *)input->v_tokens->array);
-	print_input(input, "FORMAT INPUT");
+	print_input(input, "FORMATTED TOKENS");
 	handle_heredoc(input);
 	return (input);
 }

@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 02:20:31 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 15:31:47 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,4 +93,5 @@ void	format_tokens(t_input *input)
 		else
 			i++;
 	}
+	remove_token_if(input, &array, is_executable_token);
 }

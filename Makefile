@@ -140,8 +140,7 @@ F_LEXING			:=	tokenize_input.c			\
 						tokenize_quote.c			\
 						tokenize_word.c				\
 
-F_PARSING			:=	format_input.c				\
-						get_input.c					\
+F_PARSING			:=	get_input.c					\
 						parse_input.c				\
 
 F_SIGNALS 			:=	signals.c					\
@@ -173,6 +172,7 @@ F_UTILS				:=	cd_utils.c					\
 						init_struct.c				\
 						is_empty_env_var_token.c	\
 						is_redir_object_token.c		\
+						is_executable_token.c		\
 						lstgetprev.c				\
 						ptr_replace.c				\
 						quoted_arg_len.c			\

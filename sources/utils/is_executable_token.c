@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   is_executabe_token.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 19:43:33 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 15:30:58 by abetemps         ###   ########.fr       */
+/*   Created: 2025/08/05 15:27:34 by abetemps          #+#    #+#             */
+/*   Updated: 2025/08/05 15:28:44 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#include "input.h"
 
-# include "lexing.h"
-# include <readline/history.h>
-# include <readline/readline.h>
-# include <stdlib.h>
-
-void	get_input(char **env);
-void	*parse_input(t_input *input);
-
-#endif
+bool	is_executable_token(t_token *array, ssize_t i)
+{
+	if (array[i].type >= COMMAND && array[i].type <= HEREDOC)
+		return (true);
+	return (false);
+}

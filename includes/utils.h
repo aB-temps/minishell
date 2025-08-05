@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 01:59:07 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 15:28:16 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	remove_token_if(t_input *input, t_token **array,
 			bool (*remove_condition)(t_token *array, ssize_t i));
 bool	is_empty_var_token(t_token *array, ssize_t i);
 bool	is_redir_object_token(t_token *array, ssize_t i);
+bool	is_executable_token(t_token *array, ssize_t i);
 void	clear_wds(char *cwd, char *target);
 bool	safe_get_cwd(char **wd);
 void	*ptr_replace(void **from, void *to);
 void	exit_minishell(t_input *input, t_exec *exec, int exit_code);
 void	*safe_free(void **ptr);
-
 
 #endif
