@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:12:28 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 01:06:53 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:54:48 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ bool	check_syntax_error(t_input *input)
 
 void	print_syntax_error(t_input *input)
 {
-	ft_putstr_fd(RED "minishell: syntax error\n" R_ALL, STDERR_FILENO);
+	ft_putstr_fd(RED "minishell: syntax error\n" RST, STDERR_FILENO);
 	input->last_exit_status = 2;
 }

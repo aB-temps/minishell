@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_v_token.c                                      :+:      :+:    :+:   */
+/*   clear_v_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/26 17:47:16 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 16:22:12 by abetemps         ###   ########.fr       */
+/*   Created: 2025/08/05 16:59:09 by abetemps          #+#    #+#             */
+/*   Updated: 2025/08/05 16:59:15 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,28 @@
 void	clear_token(t_token *token)
 {
 	if (token)
+	{
+		if (token->formatted_content)
 		{
-			if (token->formatted_content)
+			if (token->type == COMMAND)
+				free_tab_return_null((char **)token->formatted_content);
+			else if (token->type == HEREDOC
+				&& ft_strlen(token->raw_content) > 2)
 			{
-				if (token->type == COMMAND)
-					free_tab_return_null((char **)token->formatted_content);
-				else if (token->type == HEREDOC
-					&& ft_strlen(token->raw_content) > 2)
-				{
-					safe_close(((int *)token->formatted_content)[0]);
-					safe_close(((int *)token->formatted_content)[1]);
-					free(token->formatted_content);
-				}
-				else
-					free(token->formatted_content);
-				token->formatted_content = (void *)0;
+				safe_close(((int *)token->formatted_content)[0]);
+				safe_close(((int *)token->formatted_content)[1]);
+				free(token->formatted_content);
 			}
-			if (token->raw_content)
-			{
-				free(token->raw_content);
-				token->raw_content = (void *)0;
-			}
+			else
+				free(token->formatted_content);
+			token->formatted_content = (void *)0;
 		}
+		if (token->raw_content)
+		{
+			free(token->raw_content);
+			token->raw_content = (void *)0;
+		}
+	}
 }
 
 void	clear_v_token(t_vector *tokens)
@@ -49,7 +49,7 @@ void	clear_v_token(t_vector *tokens)
 	i = 0;
 	while (i < tokens->nb_elements)
 	{
-		clear_token((t_token*)&array[i]);
+		clear_token((t_token *)&array[i]);
 		i++;
 	}
 }

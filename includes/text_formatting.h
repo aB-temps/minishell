@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:30 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 01:08:13 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:54:48 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define UNDL "\001\033[4m\002"
 
 // RESET
-# define R_ALL "\001\033[0m\002"
+# define RST "\001\033[0m\002"
 # define R_BOLD "\001\033[21m\002"
 # define R_DIM "\001\033[22m\002"
 # define R_UL "\001\033[24m\002"

@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:56:17 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 01:08:05 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 16:54:48 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static char	*build_ps2(t_input *input, char *ps1)
 	safe_free((void **)&pwd);
 	if (!ps2)
 		exit_clear_ps(ps1, ps2, NULL, input);
-	ps2 = str_free_to_join(ps2, R_ALL);
+	ps2 = str_free_to_join(ps2, RST);
 	if (!ps2)
 		exit_clear_ps(ps1, ps2, NULL, input);
 	return (ps2);
@@ -87,7 +87,7 @@ static char	*build_ps3(t_input *input, char *ps1, char *ps2)
 	safe_free((void **)&exit_status);
 	if (!ps3)
 		exit_clear_ps(ps1, ps2, ps3, input);
-	ps3 = str_free_to_join(ps3, WHITE "]" R_ALL);
+	ps3 = str_free_to_join(ps3, WHITE "]" RST);
 	if (!ps3)
 		exit_clear_ps(ps1, ps2, ps3, input);
 	return (ps3);
@@ -115,7 +115,7 @@ void	build_prompt(t_input *input)
 		if (!input->prompt)
 			exit_parsing(input, EXIT_FAILURE);
 	}
-	input->prompt = str_free_to_join(input->prompt, WHITE "\n$ " R_ALL);
+	input->prompt = str_free_to_join(input->prompt, WHITE "\n$ " RST);
 	if (!input->prompt)
 		exit_parsing(input, EXIT_FAILURE);
 }
