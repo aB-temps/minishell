@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 20:41:11 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 01:13:14 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
 	{
 		if (!create_files_in_block(input, exec, i))
 			exit_minishell(input, exec, 1);
-		print_exec(exec, "INSIDE exec_cmd");
+		if (!exec->block.cmd->cmd_path)
+			exit_minishell(input, exec, 126);
+		printf("COUCUO[%zu]\n", i);
 		execve(exec->block.cmd->cmd_path, exec->block.cmd->cmd_args,
 			input->env->array);
 		exit_minishell(input, exec, 127);

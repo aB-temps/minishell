@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:06:14 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 21:18:21 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 22:18:46 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,23 @@ static bool	get_splited_path(t_input *input, char ***splited_path)
 	return (true);
 }
 
-char	*get_cmd_path(t_input *input, char *cmd)
+char	*get_cmd_path(t_input *input, t_exec *exec,char *cmd)
 {
 	char	**splited_path;
 	char	*cmd_path;
 
 	splited_path = NULL;
+	if (ft_strchr(cmd, '/') != NULL)
+		return (handle_absolute_path(exec, cmd));
 	if (!get_splited_path(input, &splited_path))
-		return (ft_strjoin("./", cmd));
+	{
+		cmd_path = ft_strjoin("./", cmd);
+		if (!cmd_path)
+			return(NULL);
+		return (cmd_path);
+	}
 	if (!splited_path)
 		return (NULL);
-	if (ft_strchr(cmd, '/') != NULL)
-		return (handle_absolute_path(cmd));
 	if (!search_path(splited_path, cmd, &cmd_path))
 	{
 		free_tab_return_null(splited_path);

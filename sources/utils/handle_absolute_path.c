@@ -14,7 +14,7 @@
 #include "input.h"
 #include <stdio.h>
 
-char	*handle_absolute_path(char *cmd) // set les retours d'erreurs ?
+char	*handle_absolute_path(t_exec *exec, char *cmd)
 {
 	if (!access(cmd, F_OK))
 	{
@@ -22,11 +22,11 @@ char	*handle_absolute_path(char *cmd) // set les retours d'erreurs ?
 		{
 			return (cmd);
 		}
-		// error 126 ?
+		exec->return_error = 126;
 		perror(cmd);
 		return (NULL);
 	}
-	// error 127 ?
+	exec->return_error = 127;
 	perror(cmd);
 	return (NULL);
 }

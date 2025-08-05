@@ -124,6 +124,8 @@ F_EXEC 				:=	start_exec.c				\
 						clear_exec.c				\
 						wait_child.c				\
 						is_builtin.c				\
+						init_block_cmd.c			\
+
 
 F_HEREDOC			:=	gen_heredoc_filename.c		\
 						handle_heredoc.c			\
@@ -167,8 +169,6 @@ F_UTILS				:=	cd_utils.c					\
 						gen_random_num_sequence.c	\
 						get_cmd_path.c				\
 						handle_absolute_path.c		\
-						init_cmd.c					\
-						init_block_array.c			\
 						init_struct.c				\
 						is_empty_env_var_token.c	\
 						is_redir_object_token.c		\

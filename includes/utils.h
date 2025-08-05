@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 21:19:19 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 22:21:45 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,11 @@ void		*ptr_replace(void **from, void *to);
 void		exit_minishell(t_input *input, t_exec *exec, int exit_code);
 size_t		count_blocks(t_token *array, ssize_t tkn_qty);
 void		close_fd_exec(t_exec *exec);
-bool		init_cmd(t_input *input, t_cmd **cmd, ssize_t *i);
-// bool	init_block_array(t_block **block, size_t *block_qty, t_input *input);
-char		*get_cmd_path(t_input *input, char *cmd_args);
-char		*handle_absolute_path(char *cmd);
+char		*get_cmd_path(t_input *input, t_exec *exec, char *cmd_args);
+char		*handle_absolute_path(t_exec *exec, char *cmd);
 void		close_and_swap(t_pipe_fds *fds);
 void		ft_close(int fd);
-void		init_io_fds(t_token *array, t_block block, ssize_t tkn_qty);
-void		free_and_close_exec(t_exec **exec);
+bool		free_and_close_exec(t_exec **exec);
 char		*str_patreplace(char *s, char *old, char *new);
 char		*str_patdel(char *s, char *pat);
 char		*extract_var_key(char *s);

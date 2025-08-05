@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 20:43:17 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 22:10:35 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_exec
 	t_block		block;
 	size_t		block_qty;
 	t_pipe_fds	*pipe_fds;
+	int			return_error;
 }				t_exec;
 
 /*-------------------------------- FUNCTIONS --------------------------------*/
@@ -86,5 +87,7 @@ bool			create_files_in_block(t_input *input, t_exec *exec,
 void			free_cmd(t_cmd **cmd);
 void			wait_child(t_exec *exec, int *exit_status);
 bool			is_builtin(char *cmd);
+bool			init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd,
+					ssize_t *i);
 
 #endif

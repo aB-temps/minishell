@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:37:59 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 20:29:40 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 01:13:49 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ bool	create_files_in_block(t_input *input, t_exec *exec, ssize_t cmd_nb)
 	while (i < input->token_qty)
 	{
 		if (token_array[i].type == PIPE)
-			return (0);
+			return (true);
 		if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
 		{
 			if (!handle_redir_out(exec, token_array[i]))
