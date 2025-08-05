@@ -1,41 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_blocks.c                                      :+:      :+:    :+:   */
+/*   wait_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/03 21:14:35 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 18:23:25 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/08/05 18:49:29 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/05 18:54:42 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "wait.h"
 
-void	free_cmd(t_cmd *cmd)
+void	wait_child(t_exec *exec, int *exit_status)
 {
-	if (cmd)
+	size_t i = 0;
+	int status;
+
+	while (i < exec->block_qty)
 	{
-		if (cmd->cmd_path)
+		if (exec->pid_child[i] > 0)
 		{
-			free(cmd->cmd_path);
-			cmd->cmd_path = NULL;
+			waitpid(exec->pid_child[i], &status, 0);
+			if (i == exec->block_qty - 1)
+				*exit_status = WEXITSTATUS(status);
 		}
-		if (cmd->cmd_args)
-			cmd->cmd_args = free_tab_return_null(cmd->cmd_args);
-		free(cmd);
-	}
-}
-
-void	free_blocks(t_block *block)
-{
-	int	i;
-
-	i = 0;
-	while (&block[i])
-	{
-		free_cmd(block[i].cmd);
-		free(&block[i]);
-		++i;
+		i++;
 	}
 }

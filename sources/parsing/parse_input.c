@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 18:04:52 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 18:22:02 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	*parse_input(t_input *input)
 		return ((void *)0);
 	}
 	format_tokens(input);
-	print_input(input, "FORMATTED TOKENS");
+	// print_input(input, "FORMATTED TOKENS");
 	handle_heredoc(input);
 	return (input);
 }

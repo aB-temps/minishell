@@ -121,6 +121,8 @@ F_DEBUG				:=	print_input.c				\
 F_EXEC 				:=	start_exec.c				\
 						exec_cmd.c					\
 						create_files_in_block.c		\
+						clear_exec.c				\
+						wait_child.c				\
 
 F_HEREDOC			:=	gen_heredoc_filename.c		\
 						handle_heredoc.c			\
@@ -158,7 +160,6 @@ F_UTILS				:=	cd_utils.c					\
 						exit_minishell.c			\
 						exp_var_strlen.c			\
 						extract_var_key.c			\
-						free_blocks.c				\
 						extract_var_value.c			\
 						ft_tabdup.c					\
 						ft_tablen.c					\

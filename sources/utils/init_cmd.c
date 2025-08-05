@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 13:56:11 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 18:24:29 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static bool	is_builtin(char *cmd)
 
 static bool	setup_block_cmd(t_input *input, t_token token, t_cmd *cmd)
 {
+	cmd->cmd_path = NULL;
 	cmd->cmd_args = (char **)token.formatted_content;
 	cmd->is_builtin = is_builtin(cmd->cmd_args[0]);
 	if (!cmd->is_builtin)
