@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 16:54:48 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:36:11 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ static void	open_heredoc(int **fds, char *tmpfile, t_input *input)
 {
 	*fds = ft_calloc(2, sizeof(int));
 	if (!*fds)
+	{
+		free(tmpfile);
 		exit_parsing(input, EXIT_FAILURE);
+	}
 	(*fds)[0] = open(tmpfile, O_WRONLY | O_CREAT, 0644);
 	if ((*fds)[0] < 0)
 	{
