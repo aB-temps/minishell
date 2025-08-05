@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 14:35:58 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 15:15:36 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 17:14:33 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static char	*fill_args_array(t_token *array, size_t *k, size_t *arg_qty)
 {
 	char	*content;
 
+	(void)arg_qty;
 	content = (void *)0;
 	if (array[*k].link_to_next)
 		content = joinback_args(array, k, arg_qty);
@@ -71,7 +72,10 @@ static char	**command_args_to_array(t_input *input, t_token *array, ssize_t *i,
 		{
 			args_array[j] = fill_args_array(array, &k, &arg_qty);
 			if (!args_array[j])
+			{
+				free_tab_return_null(args_array);
 				exit_parsing(input, EXIT_FAILURE);
+			}
 			j++;
 		}
 		k++;
