@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:06:14 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 18:39:55 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 21:18:21 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*get_cmd_path(t_input *input, char *cmd)
 	if (!splited_path)
 		return (NULL);
 	if (ft_strchr(cmd, '/') != NULL)
-		return (handle_direct_path(cmd));
+		return (handle_absolute_path(cmd));
 	if (!search_path(splited_path, cmd, &cmd_path))
 	{
 		free_tab_return_null(splited_path);

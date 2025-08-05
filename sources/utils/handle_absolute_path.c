@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_direct_path.c                               :+:      :+:    :+:   */
+/*   handle_absolute_path.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,7 +14,7 @@
 #include "input.h"
 #include <stdio.h>
 
-char	*handle_direct_path(char *cmd) // set les retours d'erreurs ?
+char	*handle_absolute_path(char *cmd) // set les retours d'erreurs ?
 {
 	if (!access(cmd, F_OK))
 	{

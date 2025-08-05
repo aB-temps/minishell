@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:20:06 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 20:52:13 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 21:14:53 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ int	set_blocks(t_exec *exec, t_input *input)
 	t_token	*array;
 	size_t	i;
 	int		exit_status;
+	ssize_t	index_token;
 
+	index_token = 0;
 	exit_status = 0;
 	i = 0;
 	array = (t_token *)input->v_tokens->array;
 	while (i < exec->block_qty)
 	{
-		init_cmd(input, exec, &exec->block.cmd);
+		init_cmd(input, &exec->block.cmd, &index_token);
 		if (i != exec->block_qty - 1)
 		{
 			if (pipe(exec->pipe_fds->fd2) == -1)

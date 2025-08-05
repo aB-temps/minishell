@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 20:42:23 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 21:14:20 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 #include "exec.h"
 #include "input.h"
 #include "utils.h"
-
-
 
 static bool	setup_block_cmd(t_input *input, t_token token, t_cmd *cmd)
 {
@@ -29,27 +27,21 @@ static bool	setup_block_cmd(t_input *input, t_token token, t_cmd *cmd)
 	return (true);
 }
 
-bool	init_cmd(t_input *input, t_exec *exec, t_cmd **cmd)
+bool	init_cmd(t_input *input, t_cmd **cmd, ssize_t *i)
 {
-	ssize_t	i;
-	size_t	j;
 	t_token	*token_array;
 
-	i = 0;
-	j = 0;
 	token_array = (t_token *)input->v_tokens->array;
-	while (i < input->token_qty)
+	while (*i < input->token_qty)
 	{
-		print_exec(exec, "MAIN LOOP");
-		if (token_array[i].type == COMMAND)
+		if (token_array[*i].type == COMMAND)
 		{
 			*cmd = malloc(sizeof(t_cmd));
 			if (!cmd)
 				return (false);
-			setup_block_cmd(input, token_array[i], *cmd);
-			j++;
+			setup_block_cmd(input, token_array[*i], *cmd);
 		}
-		++i;
+		++(*i);
 	}
 	return (true);
 }
