@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 22:33:44 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 10:56:38 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,5 @@ typedef struct s_exec
 /*-------------------------------- FUNCTIONS --------------------------------*/
 void			start_exec(t_input *input);
 bool			init_exec(t_exec **exec, t_input *input);
-
+pid_t			exec_cmd(t_input *input, t_exec *exec, t_block block);
 #endif

@@ -119,6 +119,7 @@ F_DEBUG				:=	print_input.c				\
 						print_exec.c				\
 
 F_EXEC 				:=	start_exec.c				\
+						exec_cmd.c					\
 
 F_HEREDOC			:=	gen_heredoc_filename.c		\
 						handle_heredoc.c			\
@@ -179,6 +180,7 @@ F_UTILS				:=	cd_utils.c					\
 						str_replace.c				\
 						unlink_free_tmpfile.c		\
 						close_and_swap.c			\
+						ft_close.c					\
 
 
 F_TOKEN_FORMATTING :=	format_tokens.c				\

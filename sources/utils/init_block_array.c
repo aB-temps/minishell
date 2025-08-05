@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 22:14:19 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 23:43:40 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 11:06:13 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,56 +15,49 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-void	init_io_fds(t_token *array, t_block *block, ssize_t tkn_qty)
+void	init_io_fds(t_token *array, t_block block, ssize_t tkn_qty)
 {
 	ssize_t	i;
-	size_t	j;
 
 	i = 0;
-	j = 0;
 	while (i < tkn_qty)
 	{
-		block[j].io_fds[0] = -1;
-		block[j].io_fds[1] = -1;
+		block.io_fds[0] = -1;
+		block.io_fds[1] = -1;
 		while (i < tkn_qty && array[i].type != PIPE)
 		{
 			if (array[i].type >= REDIR_IN && array[i].type <= HEREDOC)
 			{
 				if (array[i].type == REDIR_IN)
 				{
-					if (block[j].io_fds[0] != STDIN_FILENO)
-						safe_close(block[j].io_fds[0]);
-					block[j].io_fds[0] = open((char *)array[i].formatted_content,
+					if (block.io_fds[0] != STDIN_FILENO)
+						safe_close(block.io_fds[0]);
+					block.io_fds[0] = open((char *)array[i].formatted_content,
 							O_RDONLY | 0644);
 				}
 				else if (array[i].type == HEREDOC)
 				{
-					if (block[j].io_fds[0] != STDIN_FILENO)
-						safe_close(block[j].io_fds[0]);
-					block[j].io_fds[0] = ((int *)array[i].formatted_content)[1];
+					if (block.io_fds[0] != STDIN_FILENO)
+						safe_close(block.io_fds[0]);
+					block.io_fds[0] = ((int *)array[i].formatted_content)[1];
 				}
 				else if (array[i].type == REDIR_OUT)
 				{
-					if (block[j].io_fds[1] != STDOUT_FILENO)
-						safe_close(block[j].io_fds[1]);
-					block[j].io_fds[1] = open((char *)array[i].formatted_content,
+					if (block.io_fds[1] != STDOUT_FILENO)
+						safe_close(block.io_fds[1]);
+					block.io_fds[1] = open((char *)array[i].formatted_content,
 							O_WRONLY | O_CREAT | 0644);
 				}
 				else if (array[i].type == APPEND)
 				{
-					if (block[j].io_fds[1] != STDOUT_FILENO)
-						safe_close(block[j].io_fds[1]);
-					block[j].io_fds[1] = open((char *)array[i].formatted_content,
+					if (block.io_fds[1] != STDOUT_FILENO)
+						safe_close(block.io_fds[1]);
+					block.io_fds[1] = open((char *)array[i].formatted_content,
 							O_WRONLY | O_APPEND | O_CREAT | 0644);
 				}
 			}
 			i++;
 		}
-		if (block[j].io_fds[0] < 0)
-			block[j].io_fds[0] = STDIN_FILENO;
-		if (block[j].io_fds[1] < 0)
-			block[j].io_fds[1] = STDOUT_FILENO;
-		j++;
 		i++;
 	}
 }

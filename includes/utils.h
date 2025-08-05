@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/04 23:43:37 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 11:06:50 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,7 @@ char	*get_cmd_path(t_input *input, char *cmd_args);
 char	*handle_direct_path(char *cmd);
 void	free_cmd(t_cmd *cmd);
 void	close_and_swap(t_pipe_fds *fds);
+void	ft_close(int fd);
+void	init_io_fds(t_token *array, t_block block, ssize_t tkn_qty);
 
 #endif
