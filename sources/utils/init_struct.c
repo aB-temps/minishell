@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:31 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/04 23:20:21 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 16:45:19 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,15 @@ bool	init_exec(t_exec **exec, t_input *input)
 	(*exec)->block.io_fds[1] = -1;
 	(*exec)->pipe_fds = malloc(sizeof(t_pipe_fds));
 	if (!(*exec)->pipe_fds)
+	{
+		free((*exec)->pid_child);
+		free(exec);
 		return (false);
+	}
+	(*exec)->pipe_fds->fd1[0] = -1;
+	(*exec)->pipe_fds->fd1[1] = -1;
+	(*exec)->pipe_fds->fd2[0] = -1;
+	(*exec)->pipe_fds->fd2[1] = -1;
 	return (true);
 }
 

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 22:31:14 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 13:56:11 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static bool	setup_block_cmd(t_input *input, t_token token, t_cmd *cmd)
 	return (true);
 }
 
-bool	init_cmd(t_input *input, t_cmd *cmd)
+bool	init_cmd(t_input *input, t_cmd **cmd)
 {
 	ssize_t	i;
 	size_t	j;
@@ -51,10 +51,10 @@ bool	init_cmd(t_input *input, t_cmd *cmd)
 	{
 		if (token_array[i].type == COMMAND)
 		{
-			cmd = malloc(sizeof(t_cmd));
+			*cmd = malloc(sizeof(t_cmd));
 			if (!cmd)
 				return (false);
-			setup_block_cmd(input, token_array[i], cmd);
+			setup_block_cmd(input, token_array[i], *cmd);
 			j++;
 		}
 		++i;

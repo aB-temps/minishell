@@ -6,14 +6,13 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 22:14:19 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 11:06:13 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 13:41:17 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "utils.h"
 #include <fcntl.h>
-#include <unistd.h>
 
 void	init_io_fds(t_token *array, t_block block, ssize_t tkn_qty)
 {

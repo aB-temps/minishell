@@ -120,6 +120,7 @@ F_DEBUG				:=	print_input.c				\
 
 F_EXEC 				:=	start_exec.c				\
 						exec_cmd.c					\
+						create_files_in_block.c		\
 
 F_HEREDOC			:=	gen_heredoc_filename.c		\
 						handle_heredoc.c			\

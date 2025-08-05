@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:34 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/03 22:08:41 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 16:25:05 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	clear_exec(t_exec *exec)
 
 void	exit_minishell(t_input *input, t_exec *exec, int exit_code)
 {
-	clear_exec(exec);
+	if (exec)
+		clear_exec(exec);
 	exit_parsing(input, exit_code);
 }
 

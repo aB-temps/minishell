@@ -6,31 +6,37 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 11:07:56 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 17:25:01 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "debug.h"
 #include "exec.h"
 #include "input.h"
 #include "utils.h"
 
-pid_t	exec_cmd(t_input *input, t_exec *exec, t_block block)
+pid_t	exec_cmd(t_input *input, t_exec *exec, t_block block, size_t i)
 {
 	pid_t	pid;
-	t_token	token_array;
 
+	pid = 0;
 	(void)block;
-	(void)exec;
 	(void)input;
-	pid = fork();
-	if (pid == -1)
-	{
-		perror(fork);
-		return (-1);
-	}
-	if (pid == 0)
-	{
-		init_io_fds();
-	}
+	(void)i;
+	print_exec(exec, "INSIDE exec_cmd");
+	// pid = fork();
+	// if (pid == -1)
+	// {
+	// 	free_and_close_exec(&exec);
+	// 	perror("fork");
+	// 	return (-1);
+	// }
+	// if (pid == 0)
+	// {
+	// 	create_files_in_block(input, exec, i);
+	// 	print_exec(exec, "INSIDE CHILD");
+	// 	free_and_close_exec(&exec);
+	// 	exit(0);
+	// }
 	return (pid);
 }
