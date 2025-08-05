@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 14:35:58 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/04 15:31:25 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 15:15:36 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	format_command(t_input *input, t_token *array, ssize_t *i)
 
 	tmp = (char **)array[*i].formatted_content;
 	arg_qty = count_command_args(input, array, i);
-	printf("ARG_QTY => %zu\n", arg_qty);
 	array[*i].formatted_content = command_args_to_array(input, array, i,
 			arg_qty);
 	free(tmp);

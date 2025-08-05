@@ -6,12 +6,19 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 14:05:02 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 15:12:54 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "debug.h"
 #include "parsing.h"
+
+static void	exit_remove_token(t_input *input, t_vector *new_vec, t_token token)
+{
+	clear_token(token);
+	clear_vector(&new_vec);
+	exit_parsing(input, EXIT_FAILURE);
+}
 
 static void	update_token_vector(t_input *input, t_vector *new_vec)
 {
@@ -46,7 +53,7 @@ void	remove_token_if(t_input *input, t_token **array,
 
 	i = 0;
 	new_vec = create_vector(count_valid_tokens(input->token_qty, *array,
-				remove_condition), sizeof(t_token), clear_token);
+				remove_condition), sizeof(t_token), clear_v_token);
 	if (!new_vec)
 		exit_parsing(input, EXIT_FAILURE);
 	while (i < input->token_qty)
@@ -56,10 +63,7 @@ void	remove_token_if(t_input *input, t_token **array,
 			init_token(&token);
 			token = dup_token((*array)[i]);
 			if (token.type == -1 || !add_element(new_vec, &token))
-			{
-				clear_vector(&new_vec);
-				exit_parsing(input, EXIT_FAILURE);
-			}
+				exit_remove_token(input, new_vec, token);
 		}
 		i++;
 	}

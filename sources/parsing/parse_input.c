@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 00:42:30 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 02:24:33 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	*parse_input(t_input *input)
 {
-	input->v_tokens = create_vector(1, sizeof(t_token), clear_token);
+	input->v_tokens = create_vector(1, sizeof(t_token), clear_v_token);
 	if (!input->v_tokens)
 		exit_parsing(input, EXIT_FAILURE);
 	tokenize_input(input, input->line);

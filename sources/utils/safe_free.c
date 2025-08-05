@@ -6,17 +6,18 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 00:25:23 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 00:25:28 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 01:59:01 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 
-void	safe_free(void **ptr)
+void	*safe_free(void **ptr)
 {
 	if (*ptr)
 	{
 		free(*ptr);
 		*ptr = NULL;
 	}
+	return (NULL);
 }

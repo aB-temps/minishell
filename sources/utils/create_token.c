@@ -6,11 +6,12 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:30 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 14:05:02 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 01:55:28 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+#include "style.h"
 
 void	create_token(t_input *input, int type, char *raw_content, bool to_link)
 {

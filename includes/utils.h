@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 00:25:35 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 01:59:07 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	clear_wds(char *cwd, char *target);
 bool	safe_get_cwd(char **wd);
 void	*ptr_replace(void **from, void *to);
 void	exit_minishell(t_input *input, t_exec *exec, int exit_code);
-void	safe_free(void **ptr);
+void	*safe_free(void **ptr);
 
 
 #endif

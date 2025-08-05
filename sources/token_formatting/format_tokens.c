@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/04 13:44:51 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 02:20:31 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	handle_env_var_expansion(t_input *input)
 		if (array[i].type != S_QUOTES && ft_strchr(array[i].raw_content, '$')
 			&& ft_strlen(array[i].raw_content) != 1 && last_type != HEREDOC)
 		{
-			array[i].formatted_content = substitute_env_var(
-					array[i].raw_content, input);
+			array[i].formatted_content = substitute_env_var(array[i].raw_content,
+					input);
 			if (!array[i].formatted_content)
 				exit_parsing(input, EXIT_FAILURE);
 			array[i].type = ENV_VAR;
@@ -52,16 +52,15 @@ static void	handle_quotes(t_token *array, t_input *input)
 		temp = array[i].raw_content;
 		if (array[i].type < ARG)
 			last_type = array[i].type;
-		if (array[i].type == S_QUOTES && !(i - 1 >= 0 && last_type == HEREDOC))
+		if (array[i].type == S_QUOTES && !(i > 0 && last_type == HEREDOC))
 		{
 			array[i].raw_content = str_patdel(array[i].raw_content, "'");
-			free(temp);
+			safe_free((void **)&temp);
 		}
-		else if (array[i].type == D_QUOTES && !(i - 1 >= 0
-				&& last_type == HEREDOC))
+		else if (array[i].type == D_QUOTES && !(i > 0 && last_type == HEREDOC))
 		{
 			array[i].raw_content = str_patdel(array[i].raw_content, "\"");
-			free(temp);
+			safe_free((void **)&temp);
 		}
 		i++;
 	}
@@ -74,7 +73,7 @@ void	format_tokens(t_input *input)
 
 	i = 0;
 	array = (t_token *)input->v_tokens->array;
-	handle_quotes(array, input);
+	handle_quotes(array, input); // protec ok mais n'exit pas
 	handle_env_var_expansion(input);
 	remove_token_if(input, &array, is_empty_var_token);
 	while (i < input->token_qty)

@@ -157,7 +157,7 @@ F_TOKEN_FORMATTING	:=	format_command.c			\
 F_UTILS				:=	cd_utils.c					\
 						clear_env_list_elem.c		\
 						clear_hd_filename_elem.c 	\
-						clear_token.c				\
+						clear_v_token.c				\
 						clear_var_vector.c			\
 						count_command_args.c		\
 						count_valid_tokens.c		\

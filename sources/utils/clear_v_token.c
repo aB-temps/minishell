@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clear_token.c                                      :+:      :+:    :+:   */
+/*   clear_v_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,7 +14,22 @@
 #include "input.h"
 #include "utils.h"
 
-void	clear_token(t_vector *tokens)
+void	clear_token(t_token token)
+{
+	if (token.type == COMMAND)
+		free_tab_return_null((char **)token.formatted_content);
+	else if (token.type == HEREDOC && ft_strlen(token.raw_content) > 2)
+	{
+		safe_close(((int *)token.formatted_content)[0]);
+		safe_close(((int *)token.formatted_content)[1]);
+		free(token.formatted_content);
+	}
+	else
+		free(token.formatted_content);
+	free(token.raw_content);
+}
+
+void	clear_v_token(t_vector *tokens)
 {
 	const t_token	*array = (t_token *)tokens->array;
 	size_t			i;
@@ -22,18 +37,7 @@ void	clear_token(t_vector *tokens)
 	i = 0;
 	while (i < tokens->nb_elements)
 	{
-		if (array[i].type == COMMAND)
-			free_tab_return_null((char **)array[i].formatted_content);
-		else if (array[i].type == HEREDOC
-			&& ft_strlen(array[i].raw_content) > 2)
-		{
-			safe_close(((int *)array[i].formatted_content)[0]);
-			safe_close(((int *)array[i].formatted_content)[1]);
-			free(array[i].formatted_content);
-		}
-		else
-			free(array[i].formatted_content);
-		free(array[i].raw_content);
+		clear_token(array[i]);
 		i++;
 	}
 }
