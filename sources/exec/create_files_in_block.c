@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:37:59 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 13:52:42 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 20:29:40 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	handle_redir_in(t_exec *exec, t_token current_token)
 	return (0);
 }
 
-static int	handle_redir_out(t_exec *exec, t_token current_token)
+static bool	handle_redir_out(t_exec *exec, t_token current_token)
 {
 	int	flags;
 	int	fd_temp;
@@ -56,7 +56,7 @@ static int	handle_redir_out(t_exec *exec, t_token current_token)
 	if (fd_temp == -1)
 	{
 		perror(current_token.formatted_content);
-		return (1);
+		return (false);
 	}
 	else
 	{
@@ -64,7 +64,7 @@ static int	handle_redir_out(t_exec *exec, t_token current_token)
 			close(exec->block.io_fds[1]);
 		exec->block.io_fds[1] = fd_temp;
 	}
-	return (0);
+	return (true);
 }
 
 static int	search_cmd_by_index(t_input *input, t_token *token_array,
@@ -92,7 +92,7 @@ static int	search_cmd_by_index(t_input *input, t_token *token_array,
 	return (i);
 }
 
-int	create_files_in_block(t_input *input, t_exec *exec, ssize_t cmd_nb)
+bool	create_files_in_block(t_input *input, t_exec *exec, ssize_t cmd_nb)
 {
 	int		i;
 	t_token	*token_array;
@@ -107,16 +107,16 @@ int	create_files_in_block(t_input *input, t_exec *exec, ssize_t cmd_nb)
 			return (0);
 		if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
 		{
-			if (handle_redir_out(exec, token_array[i]))
-				return (2);
+			if (!handle_redir_out(exec, token_array[i]))
+				return (false);
 		}
 		else if (token_array[i].type == REDIR_IN
 			|| token_array[i].type == HEREDOC)
 		{
-			if (handle_redir_in(exec, token_array[i]))
-				return (2);
+			if (!handle_redir_in(exec, token_array[i]))
+				return (false);
 		}
 		i++;
 	}
-	return (0);
+	return (true);
 }

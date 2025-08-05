@@ -123,6 +123,7 @@ F_EXEC 				:=	start_exec.c				\
 						create_files_in_block.c		\
 						clear_exec.c				\
 						wait_child.c				\
+						is_builtin.c				\
 
 F_HEREDOC			:=	gen_heredoc_filename.c		\
 						handle_heredoc.c			\

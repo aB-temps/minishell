@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 18:54:52 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 20:43:17 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,11 @@ typedef struct s_exec
 /*-------------------------------- FUNCTIONS --------------------------------*/
 void			start_exec(t_input *input);
 bool			init_exec(t_exec **exec, t_input *input);
-pid_t			exec_cmd(t_input *input, t_exec *exec, t_block block, size_t i);
-int				create_files_in_block(t_input *input, t_exec *exec,
+bool			exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i);
+bool			create_files_in_block(t_input *input, t_exec *exec,
 					ssize_t cmd_nb);
 void			free_cmd(t_cmd **cmd);
 void			wait_child(t_exec *exec, int *exit_status);
+bool			is_builtin(char *cmd);
 
 #endif

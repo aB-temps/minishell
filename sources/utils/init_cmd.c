@@ -6,26 +6,16 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 18:24:29 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 20:42:23 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "debug.h"
 #include "exec.h"
 #include "input.h"
 #include "utils.h"
 
-static bool	is_builtin(char *cmd)
-{
-	if (cmd)
-	{
-		if (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "pwd") == 0
-			|| ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "export") == 0
-			|| ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0
-			|| ft_strcmp(cmd, "exit") == 0)
-			return (true);
-	}
-	return (false);
-}
+
 
 static bool	setup_block_cmd(t_input *input, t_token token, t_cmd *cmd)
 {
@@ -39,7 +29,7 @@ static bool	setup_block_cmd(t_input *input, t_token token, t_cmd *cmd)
 	return (true);
 }
 
-bool	init_cmd(t_input *input, t_cmd **cmd)
+bool	init_cmd(t_input *input, t_exec *exec, t_cmd **cmd)
 {
 	ssize_t	i;
 	size_t	j;
@@ -50,6 +40,7 @@ bool	init_cmd(t_input *input, t_cmd **cmd)
 	token_array = (t_token *)input->v_tokens->array;
 	while (i < input->token_qty)
 	{
+		print_exec(exec, "MAIN LOOP");
 		if (token_array[i].type == COMMAND)
 		{
 			*cmd = malloc(sizeof(t_cmd));

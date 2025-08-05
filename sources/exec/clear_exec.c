@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:16:01 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 18:59:38 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/05 20:53:31 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	free_cmd(t_cmd **cmd)
 			free((*cmd)->cmd_path);
 			(*cmd)->cmd_path = NULL;
 		}
+		(*cmd)->cmd_args = NULL;
 		free(*cmd);
 		*cmd = NULL;
 	}

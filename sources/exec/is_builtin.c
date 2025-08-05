@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   wait_child.c                                       :+:      :+:    :+:   */
+/*   is_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/05 18:49:29 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 20:48:02 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/08/05 20:42:42 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/05 20:43:14 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "wait.h"
 
-void	wait_child(t_exec *exec, int *exit_status)
+bool	is_builtin(char *cmd)
 {
-	size_t	i;
-	int		status;
-
-	i = 0;
-	while (i < exec->block_qty)
+	if (cmd)
 	{
-		if (exec->pid_child[i] >= 0)
-		{
-			waitpid(exec->pid_child[i], &status, 0);
-			if (WIFSIGNALED(status))
-				*exit_status = 128 + WTERMSIG(status);
-			else if (WIFEXITED(status) && i == exec->block_qty - 1)
-				*exit_status = WEXITSTATUS(status);
-		}
-		i++;
+		if (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "pwd") == 0
+			|| ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "export") == 0
+			|| ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0
+			|| ft_strcmp(cmd, "exit") == 0)
+			return (true);
 	}
+	return (false);
 }
