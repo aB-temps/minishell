@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 01:38:42 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 21:57:23 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,37 @@ static bool	first_cmd(t_exec *exec, int fd_infile)
 		if (dup2(fd_infile, STDIN_FILENO) == -1)
 			return (false);
 	}
-	if (dup2(exec->pipe_fds->fd2[1], STDOUT_FILENO) == -1)
-		return (false);
+	if (exec->block.io_fds[1] == -1)
+	{
+		if (dup2(exec->pipe_fds->fd2[1], STDOUT_FILENO) == -1)
+			return (false);
+	}
+	else
+	{
+		if (dup2(exec->block.io_fds[1], STDOUT_FILENO) == -1)
+			return (false);
+	}
 	return (true);
 }
 
 static bool	middle_cmd(t_exec *exec)
 {
-	if (dup2(exec->pipe_fds->fd1[0], STDIN_FILENO) == -1)
-		return (false);
-	if (dup2(exec->pipe_fds->fd2[1], STDOUT_FILENO) == -1)
+	if (exec->block.io_fds[0] == -1)
+	{
+		if (dup2(exec->pipe_fds->fd1[0], STDIN_FILENO) == -1)
+			return (false);
+	}
+	else
+	{
+		if (dup2(exec->block.io_fds[0], STDIN_FILENO) == -1)
+			return (false);
+	}
+	if (exec->block.io_fds[1] == -1)
+	{
+		if (dup2(exec->pipe_fds->fd2[1], STDOUT_FILENO) == -1)
+			return (false);
+	}
+	else if (dup2(exec->pipe_fds->fd2[1], STDOUT_FILENO) == -1)
 		return (false);
 	return (true);
 }
