@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/06 21:18:10 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 21:51:37 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void	get_input(char **env)
 		{
 			if (parse_input(input) && g_sig != SIGINT)
 			{
-				// print_input(input, "PARSED");
 				start_exec(input);
 			}
 			clear_vector(&input->v_tokens);

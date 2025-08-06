@@ -1,20 +1,52 @@
-name: GitHub Actions Demo
-run-name: Basic tests 🚀
-on: [push]
+name: Minishell CI
+run-name: Norminette + Compilation 🚀
+on: 
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
-  Norm-and-compile:
+  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
+      - name: Checkout code
         uses: actions/checkout@v4
-      - name: Install pip norminette
+        
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/pip
+            ~/.apt-cache
+          key: ${{ runner.os }}-deps-${{ hashFiles('Makefile') }}
+          
+      - name: Install dependencies
         run: |
-          sudo apt-get update && sudo apt-get install -y python3-pip make clang libghc-readline-dev
+          sudo apt-get update
+          sudo apt-get install -y python3-pip make clang libreadline-dev
           pip3 install norminette
-      - name: Norminette start
-        continue-on-error: true
+          
+      - name: Check norminette
         run: |
-          norminette -R CheckForbiddenSourceHeader | grep -v OK && exit 1
-      - name: Try to compile
+          echo "🔍 Running norminette..."
+          norminette -R CheckForbiddenSourceHeader . || exit 1
+          echo "✅ Norminette passed!"
+          
+      - name: Clean and compile
         run: |
-          make || exit 1
+          echo "🧹 Cleaning previous builds..."
+          make fclean
+          echo "🔨 Compiling minishell..."
+          make
+          echo "✅ Compilation successful!"
+          
+      - name: Verify executable
+        run: |
+          if [ -f "./minishell" ]; then
+            echo "✅ Minishell executable created"
+            ls -la minishell
+          else
+            echo "❌ No executable found"
+            exit 1
+          fi

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 19:27:40 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 23:26:30 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 21:51:41 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,6 @@ void	close_fd_exec(t_exec *exec)
 	safe_close(exec->pipe_fds->fd1[1]);
 	safe_close(exec->pipe_fds->fd2[0]);
 	safe_close(exec->pipe_fds->fd2[1]);
-    safe_close(exec->block.io_fds[0]);
-    safe_close(exec->block.io_fds[1]);
+	safe_close(exec->block.io_fds[0]);
+	safe_close(exec->block.io_fds[1]);
 }
