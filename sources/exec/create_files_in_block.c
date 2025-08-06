@@ -6,14 +6,14 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:37:59 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 18:23:55 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 23:29:06 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "input.h"
 #include <fcntl.h>
 #include <stdio.h>
+#include <unistd.h>
 
 static bool	handle_redir_in(t_exec *exec, t_token current_token)
 {

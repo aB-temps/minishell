@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "input.h"
+#include "unistd.h"
 #include <stdio.h>
 
 char	*handle_absolute_path(t_exec *exec, char *cmd)

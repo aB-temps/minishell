@@ -6,11 +6,10 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:20:06 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 21:22:33 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 23:30:23 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
 #include "exec.h"
 #include "signals.h"
 #include "utils.h"

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 18:34:49 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 23:26:54 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,8 @@
 # define EXEC_H
 
 /*-------------------------------- INCLUDES --------------------------------*/
-# include "input.h"
-# include "libft.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/stat.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <unistd.h>
+#include "exec.h"
+#include "input.h"
 
 /*--------------------------------- ENUM ---------------------------------*/
 

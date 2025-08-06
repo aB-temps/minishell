@@ -6,13 +6,11 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 01:09:47 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 23:29:59 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
 #include "exec.h"
-#include "input.h"
 #include "utils.h"
 
 static bool	setup_block_cmd(t_input *input, t_exec *exec, t_token token,

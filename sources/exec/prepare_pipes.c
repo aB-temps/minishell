@@ -6,12 +6,11 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 21:57:23 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 23:30:15 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
-#include "input.h"
 #include "utils.h"
 #include <errno.h>
 #include <stdio.h>
