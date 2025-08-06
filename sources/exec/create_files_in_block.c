@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:37:59 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 01:13:49 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 18:23:55 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-static int	handle_redir_in(t_exec *exec, t_token current_token)
+static bool	handle_redir_in(t_exec *exec, t_token current_token)
 {
 	int	fd_temp;
 
@@ -25,7 +25,7 @@ static int	handle_redir_in(t_exec *exec, t_token current_token)
 		if (fd_temp == -1)
 		{
 			perror(current_token.formatted_content);
-			return (1);
+			return (false);
 		}
 		else
 		{
@@ -40,7 +40,7 @@ static int	handle_redir_in(t_exec *exec, t_token current_token)
 			close(exec->block.io_fds[0]);
 		exec->block.io_fds[0] = ((int *)current_token.formatted_content)[1];
 	}
-	return (0);
+	return (true);
 }
 
 static bool	handle_redir_out(t_exec *exec, t_token current_token)

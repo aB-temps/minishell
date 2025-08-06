@@ -70,10 +70,6 @@ SRCS				=	$(addprefix $(LIST_DIR), $(LIST_SRCS)) \
 OBJS			=	$(patsubst %.c,$(BUILD_DIR)%.o,$(SRCS))
 DEPENDENCIES	=	$(OBJS:.o=.d)
 
-#-------------------------------- PROGRESS BAR -------------------------------#
-TOTAL_FILES		= $(words $(OBJS))
-CURRENT_FILE	:= 0
-BAR_LENGTH		:= 50
 
 #-------------------------------- COLORS -------------------------------------#
 
@@ -90,51 +86,26 @@ PURPLE		:=	\033[38;2;147;112;219m
 RESET		:=	\033[0m
 BOLD		:=	\033[1m
 
-define draw_progress_bar
-	@printf "\r$(CYAN)$(BOLD)Compiling libft:     $(RESET)["
-	@n=$(CURRENT_FILE); \
-	total=$(TOTAL_FILES); \
-	pct=$$(expr $$n '*' 100 / $$total); \
-	fill=$$(expr $$n '*' $(BAR_LENGTH) / $$total); \
-	empty=$$(expr $(BAR_LENGTH) - $$fill); \
-	printf "$(GREEN)%*s$(RESET)" $$fill "" | tr ' ' '='; \
-	printf "%*s" $$empty "" | tr ' ' ' '; \
-	if [ $$n -eq $$total ]; then \
-		printf "] $(BLUE)$(BOLD)%3d%%$(RESET) (%d/%d)" $$pct $$n $$total; \
-	else \
-		printf "] $(BOLD)%3d%%$(RESET) (%d/%d)" $$pct $$n $$total; \
-	fi; \
-	if [ $$n = $$total ]; then printf "\n"; fi
-endef
-
-
 #-------------------------------- RULES --------------------------------------#
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	@printf "\n$(BLUE)$(BOLD)[INFO]$(RESET) $(WHITE)Creating library $(NAME)...\n"
-	@$(AR) $(NAME) $(OBJS)
-	@printf "$(GREEN)$(BOLD)[SUCCESS]$(RESET) $(WHITE)Library built successfully!$(RESET)\n"
+	$(AR) $(NAME) $(OBJS)
 
 
 $(BUILD_DIR)%.o: %.c
-	@mkdir -p $(dir $@)
-	@$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
-	$(call draw_progress_bar)
-	@$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -MMD -MP -c $< -o $@
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -MMD -MP -c $< -o $@
 
 clean:
-	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Cleaning object files from $(CYAN)$(NAME)$(RESET)\n"
-	@$(RM) -r $(BUILD_DIR)
+	$(RM) -r $(BUILD_DIR)
 
 fclean: clean
-	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Removing library...$(RESET)\n"
-	@$(RM) $(NAME)
-	@printf "$(GREEN)$(BOLD)[DONE]$(RESET) $(WHITE)Clean complete libft!$(RESET)\n"
+	$(RM) $(NAME)
 
 re: fclean
-	@$(MAKE) --silent all
+	$(MAKE) all
 
 print-%:
 	@echo $($(patsubst print-%,%,$@))

@@ -1,39 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   signal_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/27 06:42:03 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 21:29:21 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/08/06 21:30:00 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/06 21:29:14 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 #include "signals.h"
-#include <unistd.h>
 
-volatile sig_atomic_t	g_sig;
-
-void	sigint_interactive_handler(int sig)
+int	set_loop(void)
 {
-	rl_replace_line("", 0);
-	rl_done = 1;
-	g_sig = sig;
-	// write(STDOUT_FILENO, "\n", 1);
+	return (0);
 }
 
-void	sigint_command_handler(int sig)
+void	handle_sigint(t_input *input)
 {
-	rl_replace_line("", 0);
-	rl_done = 1;
-	g_sig = sig;
-	write(STDOUT_FILENO, "\n", 1);
+	input->last_exit_status = 130;
+	g_sig = 0;
 }
 
-void	sigquit_command_handler(int sig)
+void	set_sig_for_child(void)
 {
-	g_sig = sig;
-	write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+void	setup_signals_interactive(void)
+{
+	signal(SIGINT, sigint_interactive_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	setup_signals_command(void)
+{
+	signal(SIGINT, sigint_command_handler);
+	signal(SIGQUIT, sigquit_command_handler);
 }

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/06 01:57:00 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 21:18:10 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	get_input(char **env)
 	init_env(env, input);
 	while (1)
 	{
-		setup_signals();
+		setup_signals_interactive();
 		if (g_sig == SIGINT)
 			handle_sigint(input);
 		build_prompt(input);

@@ -6,17 +6,22 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 01:36:58 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 21:12:02 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "debug.h"
 #include "exec.h"
 #include "input.h"
+#include "signals.h"
 #include "utils.h"
+#include <sys/wait.h>
+
+
 
 bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
 {
+	print_exec(exec, "BEFORE CHILD");
 	*pid = fork();
 	if (*pid == -1)
 	{
@@ -26,6 +31,7 @@ bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
 	}
 	if (*pid == 0)
 	{
+		set_sig_for_child();
 		if (!create_files_in_block(input, exec, i))
 			exit_minishell(input, exec, 1);
 		if (!exec->block.cmd->cmd_path)

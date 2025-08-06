@@ -1,7 +1,7 @@
 # GENERAL SETTINGS ====================================================================
 NAME = minishell
 LIB_NAME = libft
-.SILENT:
+# .SILENT:
 
 # DIRECTORIES==========================================================================
 DIR_SRC		:= sources/
@@ -14,7 +14,7 @@ DIR_INC_LIB	:= $(DIR_LIB)includes/
 # FLAGS & COMPILATOR SETTINGS =========================================================
 CC 			:= cc
 DEPS_FLAGS	:= -MMD -MP
-WARN_FLAGS	:= -Wall -Werror -Wextra -g3
+WARN_FLAGS	:= -Wall -Wextra -Werror -g3
 C_FLAGS		:= $(WARN_FLAGS) $(DEPS_FLAGS)
 INC_FLAGS	:= -I $(DIR_INC) -I $(DIR_INC_LIB)
 LIB_FLAGS	:= -L $(DIR_LIB) -lft
@@ -40,28 +40,6 @@ endef
 
 define generate_var_deps
 DEPS_$(1) = $(patsubst $(DIR_SRC)%.c,$(DIR_BUILD)%.d,$(SRC_$(1)))
-endef
-
-# FUNCTIONS ===========================================================================
-TOTAL_FILES		=	$(words $(OBJS))
-CURRENT_FILE	:=	0
-BAR_LENGTH		:=	50
-
-define draw_progress_bar
-	@printf "\r$(CYAN)$(BOLD)Compiling $(NAME): $(RESET)["
-	@n=$(CURRENT_FILE); \
-	total=$(TOTAL_FILES); \
-	pct=`expr $$n '*' 100 / $$total`; \
-	fill=`expr $$n '*' $(BAR_LENGTH) / $$total`; \
-	empty=`expr $(BAR_LENGTH) - $$fill`; \
-	printf "$(GREEN)%*s$(RESET)" $$fill "" | tr ' ' '='; \
-	printf "%*s" $$empty "" | tr ' ' ' '; \
-	if [ $$n -eq $$total ]; then \
-		printf "] $(BLUE)$(BOLD)%3d%%$(RESET) (%d/%d)" $$pct $$n $$total; \
-	else \
-		printf "] $(BOLD)%3d%%$(RESET) (%d/%d)" $$pct $$n $$total; \
-	fi; \
-	if [ $$n = $$total ]; then printf "\n"; fi
 endef
 
 # COLORS ==============================================================================
@@ -125,6 +103,7 @@ F_EXEC 				:=	start_exec.c				\
 						wait_child.c				\
 						is_builtin.c				\
 						init_block_cmd.c			\
+						prepare_pipes.c				\
 
 
 F_HEREDOC			:=	gen_heredoc_filename.c		\
@@ -139,6 +118,7 @@ F_PARSING			:=	get_input.c					\
 						parse_input.c				\
 
 F_SIGNALS 			:=	signals.c					\
+						signal_utils.c				\
 
 F_STYLE 			:=	build_prompt.c 				\
 						welcome.c					\
@@ -220,19 +200,14 @@ DEPS := $(foreach comp, $(COMPONENTS), $(DEPS_$(comp))) \
 
 # COMPILATION =========================================================================
 $(NAME) : $(OBJS)
-	@printf "$(BLUE)$(BOLD)[INFO]$(RESET) $(WHITE)Linking objects...$(RESET)\n"
 	$(COMP) $^ -o $@ $(LINK)
-	@printf "$(GREEN)$(BOLD)[SUCCESS]$(RESET) $(WHITE)Build successful!$(RESET) Created $(BOLD)$(CYAN)$(NAME)$(RESET)\n"
 
 $(DIR_BUILD) :
-	@mkdir -p $(DIR_BUILD)
+	mkdir -p $(DIR_BUILD)
 
 $(DIR_BUILD)%.o : $(DIR_SRC)%.c $(ANTI_RELINK) | $(DIR_BUILD)
-	@mkdir -p $(dir $@)
-	$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
-	$(call draw_progress_bar)
+	mkdir -p $(dir $@)
 	$(COMP) -c $< -o $@
-	@if [ $(CURRENT_FILE) = $(TOTAL_FILES) ]; then echo; fi
 
 -include $(DEPS)
 
@@ -241,7 +216,7 @@ $(DIR_BUILD)%.o : $(DIR_SRC)%.c $(ANTI_RELINK) | $(DIR_BUILD)
 all : lib $(NAME) inputrc
 
 lib :
-	@make -s -C $(DIR_LIB)
+	make -C $(DIR_LIB)
 
 inputrc:
 	@echo "set colored-stats on" > ~/.inputrc
@@ -249,17 +224,13 @@ inputrc:
 
 # clean -------------------------------------------------------------------------------
 clean:
-	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Cleaning object files from $(CYAN)$(NAME)$(RESET)...\n"
-	@make -s clean -C $(DIR_LIB)
+	make clean -C $(DIR_LIB)
 	@rm -rf $(DIR_BUILD)
 
 fclean: 
-	@make -s fclean -C $(DIR_LIB)
-	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Cleaning object files from $(CYAN)$(NAME)$(RESET)...\n"
-	@rm -rf $(DIR_BUILD)
-	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Removing executables...$(RESET)\n"
-	@rm -f $(NAME)
-	@printf "$(GREEN)$(BOLD)[DONE]$(RESET) $(WHITE)Clean complete!$(RESET)\n"
+	make fclean -C $(DIR_LIB)
+	rm -rf $(DIR_BUILD)
+	rm -f $(NAME)
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 06:42:12 by enchevri          #+#    #+#             */
-/*   Updated: 2025/07/31 04:04:18 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 21:30:58 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,13 @@
 
 extern volatile sig_atomic_t	g_sig;
 
-void							handle_sigint(t_input *input);
-void							setup_signals(void);
+void							sigint_interactive_handler(int sig);
+void							sigint_command_handler(int sig);
+void							sigquit_command_handler(int sig);
 int								set_loop(void);
+void							handle_sigint(t_input *input);
+void							set_sig_for_child(void);
+void							setup_signals_interactive(void);
+void							setup_signals_command(void);
 
 #endif
