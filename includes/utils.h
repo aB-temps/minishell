@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 22:21:45 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 01:35:45 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,5 @@ t_env_var	string_to_var(char *s, t_input *input);
 void		clear_var(t_env_var *var);
 bool		is_executable_token(t_token *array, ssize_t i);
 void		*safe_free(void **ptr);
-
+void		close_redir_fd(t_exec *exec);
 #endif

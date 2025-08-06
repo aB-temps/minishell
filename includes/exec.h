@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 22:10:35 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 01:36:29 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,5 +89,6 @@ void			wait_child(t_exec *exec, int *exit_status);
 bool			is_builtin(char *cmd);
 bool			init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd,
 					ssize_t *i);
+void			prepare_pipes(t_input *input, t_exec *exec, size_t i);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:20:06 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 01:10:19 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/06 01:51:52 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,7 @@ static bool	set_blocks(t_exec *exec, t_input *input)
 	array = (t_token *)input->v_tokens->array;
 	while (i < exec->block_qty)
 	{
-		// printf("BEFORE %zu\n", index_token);
 		init_block_cmd(input, exec, &exec->block.cmd, &index_token);
-		// printf("AFTER %zu\n", index_token);
 		if (i != exec->block_qty - 1)
 		{
 			if (pipe(exec->pipe_fds->fd2) == -1)
@@ -48,10 +46,14 @@ static bool	set_blocks(t_exec *exec, t_input *input)
 		if (!execute_block_cmd(input, exec, i))
 			return (false);
 		free_cmd(&exec->block.cmd);
-		if (i < exec->block_qty - 1)
+		if (i > 0 && i != exec->block_qty - 1)
+			ft_close(exec->pipe_fds->fd1[0]);
+		if (i != exec->block_qty - 1)
 			close_and_swap(exec->pipe_fds);
 		i++;
 	}
+	if (exec->block_qty > 1)
+		ft_close(exec->pipe_fds->fd1[0]);
 	wait_child(exec, &input->last_exit_status);
 	return (true);
 }

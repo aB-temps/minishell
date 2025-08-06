@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 16:56:23 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/06 01:58:04 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	change_dir(char *cwd, char *target, t_minishell *minishell)
 	}
 }
 
-bool	init_wds(char **cwd, char **target, char **cmd, t_minishell *minishell)
+static bool	init_wds(char **cwd, char **target, char **cmd, t_minishell *minishell)
 {
 	*cwd = getcwd(*cwd, PATH_MAX);
 	if (!(*cwd))
