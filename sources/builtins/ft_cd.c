@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 01:58:04 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 14:13:04 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ static void	change_dir(char *cwd, char *target, t_minishell *minishell)
 	}
 }
 
-static bool	init_wds(char **cwd, char **target, char **cmd, t_minishell *minishell)
+static enum e_bool	init_wds(char **cwd, char **target, char **cmd, t_minishell *minishell)
 {
 	*cwd = getcwd(*cwd, PATH_MAX);
 	if (!(*cwd))
-		return (false);
+		return (FALSE);
 	if (cmd[1])
 	{
 		*target = ft_strdup(cmd[1]);
@@ -79,10 +79,10 @@ static bool	init_wds(char **cwd, char **target, char **cmd, t_minishell *minishe
 		{
 			clear_wds(*cwd, *target);
 			ft_putstr_fd(RED "cd: HOME not set\n" RST, STDERR_FILENO);
-			return (false);
+			return (FALSE);
 		}
 	}
-	return (true);
+	return (TRUE);
 }
 
 int	ft_cd(char **cmd, t_minishell *minishell)

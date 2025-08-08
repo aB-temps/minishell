@@ -6,14 +6,13 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:45:04 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/03 20:10:28 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 14:08:00 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <stdbool.h>
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE
@@ -45,11 +44,11 @@ typedef struct s_list
 	struct s_list			*next;
 }							t_list;
 
-typedef enum e_bool
+enum						e_bool
 {
 	FALSE,
 	TRUE
-}							t_bool;
+};
 
 int							ft_tolower(int c);
 int							ft_toupper(int c);
@@ -133,8 +132,8 @@ int							print_pointer(void *ptr);
 t_vector					*create_vector(size_t capacity,
 								size_t datatype_size,
 								void (*clear_array)(t_vector *));
-bool						grow_vector(t_vector *vec, size_t new_elements);
-bool						add_element(t_vector *vec, void *element);
+enum e_bool						grow_vector(t_vector *vec, size_t new_elements);
+enum e_bool						add_element(t_vector *vec, void *element);
 void						clear_vector(t_vector **vec);
 
 /*************************************************************/

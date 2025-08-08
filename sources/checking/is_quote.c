@@ -3,37 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   is_quote.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:12:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 18:12:20 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/08 14:10:21 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checking.h"
 
-bool	is_d_quote(char c)
+enum e_bool	is_d_quote(char c)
 {
 	return (c == '"');
 }
 
-bool	is_s_quote(char c)
+enum e_bool	is_s_quote(char c)
 {
 	return (c == '\'');
 }
 
-bool	is_quote(char c)
+enum e_bool	is_quote(char c)
 {
 	return (c == '\'' || c == '"');
 }
 
-bool	is_quoted_arg(char *s)
+enum e_bool	is_quoted_arg(char *s)
 {
 	size_t	i;
 
 	i = 0;
 	while (s[i] && !is_whitespace(s[i]) && !is_operator(s[i]))
 		if (is_quote(s[i++]))
-			return (true);
-	return (false);
+			return (TRUE);
+	return (FALSE);
 }

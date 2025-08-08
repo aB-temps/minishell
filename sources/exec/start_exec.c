@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:20:06 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 23:30:23 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 19:10:25 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,24 @@
 #include "signals.h"
 #include "utils.h"
 
-static bool	execute_block_cmd(t_input *input, t_exec *exec, ssize_t i)
+static enum e_bool	execute_block_cmd(t_input *input, t_exec *exec, ssize_t i)
 {
-	if (exec->block.cmd->is_builtin)
+	if (!exec->block.cmd)
 	{
-		printf("builtin\n");
-		// exec_builtin(input, block, &exec->pid_child[i], i);
+		if (!create_files_in_block(input, exec, i))
+			return (FALSE);
 	}
-	else if (!exec_cmd(input, exec, &exec->pid_child[i], i))
-		return (false);
-	return (true);
+	else
+	{
+		if (exec->block.cmd->is_builtin)
+			handle_builtin(input, exec, &exec->pid_child[i], i);
+		else if (!exec_cmd(input, exec, &exec->pid_child[i], i))
+			return (FALSE);
+	}
+	return (TRUE);
 }
 
-static bool	set_blocks(t_exec *exec, t_input *input)
+static enum e_bool	set_blocks(t_exec *exec, t_input *input)
 {
 	t_token	*array;
 	size_t	i;
@@ -40,18 +45,18 @@ static bool	set_blocks(t_exec *exec, t_input *input)
 		if (i != exec->block_qty - 1)
 		{
 			if (pipe(exec->pipe_fds->fd2) == -1)
-				return (false);
+				return (FALSE);
 		}
 		if (!init_block_cmd(input, exec, &exec->block.cmd, &index_token))
-			return (false);
+			return (FALSE);
 		if (!execute_block_cmd(input, exec, i))
-			return (false);
+			return (FALSE);
 		free_cmd(&exec->block.cmd);
 		close_and_swap(exec->pipe_fds);
 		i++;
 	}
 	close_fd_exec(exec);
-	return (true);
+	return (TRUE);
 }
 
 void	start_exec(t_input *input)

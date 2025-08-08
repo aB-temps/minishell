@@ -6,14 +6,14 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 23:29:59 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 19:07:20 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "utils.h"
 
-static bool	setup_block_cmd(t_input *input, t_exec *exec, t_token token,
+static enum e_bool	setup_block_cmd(t_input *input, t_exec *exec, t_token token,
 		t_cmd *cmd)
 {
 	cmd->cmd_path = NULL;
@@ -23,10 +23,10 @@ static bool	setup_block_cmd(t_input *input, t_exec *exec, t_token token,
 		cmd->cmd_path = get_cmd_path(input, exec, cmd->cmd_args[0]);
 	else
 		cmd->cmd_path = NULL;
-	return (true);
+	return (TRUE);
 }
 
-bool	init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd, ssize_t *i)
+enum e_bool	init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd, ssize_t *i)
 {
 	t_token	*token_array;
 
@@ -39,12 +39,14 @@ bool	init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd, ssize_t *i)
 			// 	((char **)token_array[*i].formatted_content)[0]);
 			*cmd = malloc(sizeof(t_cmd));
 			if (!cmd)
-				return (false);
+				return (FALSE);
 			setup_block_cmd(input, exec, token_array[*i], *cmd);
 			break ;
 		}
 		++(*i);
 	}
+	if (!cmd)
+		return (FALSE);
 	++(*i);
-	return (true);
+	return (TRUE);
 }

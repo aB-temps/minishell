@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 23:26:54 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 14:35:39 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define EXEC_H
 
 /*-------------------------------- INCLUDES --------------------------------*/
-#include "exec.h"
-#include "input.h"
+# include "exec.h"
+# include "input.h"
 
 /*--------------------------------- ENUM ---------------------------------*/
 
@@ -49,7 +49,7 @@ typedef struct s_cmd
 {
 	char		*cmd_path;
 	char		**cmd_args;
-	bool		is_builtin;
+	enum e_bool	is_builtin;
 
 }				t_cmd;
 
@@ -70,15 +70,17 @@ typedef struct s_exec
 
 /*-------------------------------- FUNCTIONS --------------------------------*/
 void			start_exec(t_input *input);
-bool			init_exec(t_exec **exec, t_input *input);
-bool			exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i);
-bool			create_files_in_block(t_input *input, t_exec *exec,
+enum e_bool		init_exec(t_exec **exec, t_input *input);
+enum e_bool		exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i);
+enum e_bool		create_files_in_block(t_input *input, t_exec *exec,
 					ssize_t cmd_nb);
 void			free_cmd(t_cmd **cmd);
 void			wait_child(t_exec *exec, int *exit_status);
-bool			is_builtin(char *cmd);
-bool			init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd,
+enum e_bool		is_builtin(char *cmd);
+enum e_bool		init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd,
 					ssize_t *i);
-void			prepare_pipes(t_input *input, t_exec *exec, size_t i);
+void			prepare_redir(t_input *input, t_exec *exec, size_t i);
+int				handle_builtin(t_input *input, t_exec *exec, int *pid_child,
+					int i);
 
 #endif

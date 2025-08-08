@@ -72,14 +72,6 @@ COMPONENTS :=			PARSING 					\
 
 # FILES ===============================================================================
 
-F_BUILTINS 			:=	ft_cd.c						\
-						ft_echo.c 					\
-						ft_env.c					\
-						ft_exit.c					\
-						ft_export.c					\
-						ft_pwd.c					\
-						ft_unset.c					\
-
 F_CHECKING 			:=	check_syntax_error.c		\
 						is_operator.c				\
 						is_quote.c					\
@@ -103,7 +95,8 @@ F_EXEC 				:=	start_exec.c				\
 						wait_child.c				\
 						is_builtin.c				\
 						init_block_cmd.c			\
-						prepare_pipes.c				\
+						prepare_redir.c				\
+						handle_builtin.c			\
 
 
 F_HEREDOC			:=	gen_heredoc_filename.c		\
@@ -119,14 +112,6 @@ F_PARSING			:=	get_input.c					\
 
 F_SIGNALS 			:=	signals.c					\
 						signal_utils.c				\
-
-F_STYLE 			:=	build_prompt.c 				\
-						welcome.c					\
-
-F_TOKEN_FORMATTING	:=	format_command.c			\
-						format_env_var.c			\
-						format_redir.c				\
-						format_tokens.c				\
 
 F_UTILS				:=	cd_utils.c					\
 						clear_env_list_elem.c		\

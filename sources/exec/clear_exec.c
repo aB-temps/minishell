@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:16:01 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 21:33:43 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 14:12:25 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	close_redir_fd(t_exec *exec)
 	safe_close(exec->pipe_fds->fd2[1]);
 }
 
-bool	free_and_close_exec(t_exec **exec)
+enum e_bool	free_and_close_exec(t_exec **exec)
 {
 	if (exec && *exec)
 	{
@@ -49,5 +49,5 @@ bool	free_and_close_exec(t_exec **exec)
 		free(*exec);
 		*exec = NULL;
 	}
-	return (false);
+	return (FALSE);
 }

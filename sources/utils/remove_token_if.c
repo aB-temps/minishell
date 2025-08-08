@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/06 02:02:49 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 14:12:15 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	update_token_vector(t_input *input, t_vector *new_vec)
 }
 
 static size_t	count_valid_tokens(ssize_t qty, t_token *array,
-		bool(remove_condition)(t_token *array, ssize_t i))
+		enum e_bool(remove_condition)(t_token *array, ssize_t i))
 {
 	ssize_t	i;
 	size_t	valid_tokens;
@@ -45,7 +45,7 @@ static size_t	count_valid_tokens(ssize_t qty, t_token *array,
 }
 
 void	remove_token_if(t_input *input, t_token **array,
-		bool (*remove_condition)(t_token *array, ssize_t i))
+		enum e_bool (*remove_condition)(t_token *array, ssize_t i))
 {
 	t_vector	*new_vec;
 	t_token		token;

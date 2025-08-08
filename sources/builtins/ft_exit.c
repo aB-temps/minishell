@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:17 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/03 19:45:03 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 18:29:43 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	is_valid_number(char *str)
 static void	print_numeric_error(char *arg, t_input *input, t_exec *exec)
 {
 	input->last_exit_status = 2;
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd("exit: ", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
 	ft_putendl_fd(": numeric argument required", STDERR_FILENO);
@@ -53,8 +54,7 @@ void	ft_exit(char **cmd, t_minishell *minishell)
 		ft_putendl_fd("exit", STDERR_FILENO);
 	if (!cmd[1])
 	{
-		exit_minishell(minishell->input, minishell->exec,
-			EXIT_SUCCESS);
+		exit_minishell(minishell->input, minishell->exec, EXIT_SUCCESS);
 		return ;
 	}
 	if (!is_valid_number(cmd[1]))

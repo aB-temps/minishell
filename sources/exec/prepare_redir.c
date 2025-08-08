@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prepare_pipes.c                                    :+:      :+:    :+:   */
+/*   prepare_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/08 13:41:02 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 14:32:16 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	error_occured(t_input *input, t_exec *exec, char *error_msg)
 	exit_minishell(input, exec, errno);
 }
 
-void	prepare_pipes(t_input *input, t_exec *exec, size_t i)
+void	prepare_redir(t_input *input, t_exec *exec, size_t i)
 {
 	if (exec->block.io_fds[0] != -1)
 	{

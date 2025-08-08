@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:06:14 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 22:18:46 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 14:11:35 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include "token_formatting.h"
 #include "utils.h"
 
-static bool	search_path(char **path, char *cmd, char **cmd_path)
+static enum e_bool	search_path(char **path, char *cmd, char **cmd_path)
 {
 	int	i;
 
@@ -27,17 +27,17 @@ static bool	search_path(char **path, char *cmd, char **cmd_path)
 		*cmd_path = ft_strjoin(path[i], "/");
 		*cmd_path = str_free_to_join(*cmd_path, cmd);
 		if (!*cmd_path)
-			return (false);
+			return (FALSE);
 		if (!access(*cmd_path, X_OK))
-			return (true);
+			return (TRUE);
 		free(*cmd_path);
 		++i;
 	}
 	*cmd_path = NULL;
-	return (true);
+	return (TRUE);
 }
 
-static bool	get_splited_path(t_input *input, char ***splited_path)
+static enum e_bool	get_splited_path(t_input *input, char ***splited_path)
 {
 	char	*path;
 
@@ -45,11 +45,11 @@ static bool	get_splited_path(t_input *input, char ***splited_path)
 	if (!ft_strlen(path))
 	{
 		free(path);
-		return (false);
+		return (FALSE);
 	}
 	*splited_path = ft_split(path, ':');
 	free(path);
-	return (true);
+	return (TRUE);
 }
 
 char	*get_cmd_path(t_input *input, t_exec *exec,char *cmd)

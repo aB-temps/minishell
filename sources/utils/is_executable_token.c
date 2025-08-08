@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   is_executabe_token.c                               :+:      :+:    :+:   */
+/*   is_executable_token.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 15:27:34 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 15:28:44 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/08 14:11:42 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "input.h"
 
-bool	is_executable_token(t_token *array, ssize_t i)
+enum e_bool	is_executable_token(t_token *array, ssize_t i)
 {
 	if (array[i].type >= COMMAND && array[i].type <= HEREDOC)
-		return (true);
-	return (false);
+		return (TRUE);
+	return (FALSE);
 }

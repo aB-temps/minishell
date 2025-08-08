@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:37:59 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 23:29:06 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/08 14:13:00 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static bool	handle_redir_in(t_exec *exec, t_token current_token)
+static enum e_bool	handle_redir_in(t_exec *exec, t_token current_token)
 {
 	int	fd_temp;
 
@@ -25,7 +25,7 @@ static bool	handle_redir_in(t_exec *exec, t_token current_token)
 		if (fd_temp == -1)
 		{
 			perror(current_token.formatted_content);
-			return (false);
+			return (FALSE);
 		}
 		else
 		{
@@ -40,10 +40,10 @@ static bool	handle_redir_in(t_exec *exec, t_token current_token)
 			close(exec->block.io_fds[0]);
 		exec->block.io_fds[0] = ((int *)current_token.formatted_content)[1];
 	}
-	return (true);
+	return (TRUE);
 }
 
-static bool	handle_redir_out(t_exec *exec, t_token current_token)
+static enum e_bool	handle_redir_out(t_exec *exec, t_token current_token)
 {
 	int	flags;
 	int	fd_temp;
@@ -56,7 +56,7 @@ static bool	handle_redir_out(t_exec *exec, t_token current_token)
 	if (fd_temp == -1)
 	{
 		perror(current_token.formatted_content);
-		return (false);
+		return (FALSE);
 	}
 	else
 	{
@@ -64,7 +64,7 @@ static bool	handle_redir_out(t_exec *exec, t_token current_token)
 			close(exec->block.io_fds[1]);
 		exec->block.io_fds[1] = fd_temp;
 	}
-	return (true);
+	return (TRUE);
 }
 
 static int	search_cmd_by_index(t_input *input, t_token *token_array,
@@ -92,7 +92,7 @@ static int	search_cmd_by_index(t_input *input, t_token *token_array,
 	return (i);
 }
 
-bool	create_files_in_block(t_input *input, t_exec *exec, ssize_t cmd_nb)
+enum e_bool	create_files_in_block(t_input *input, t_exec *exec, ssize_t cmd_nb)
 {
 	int		i;
 	t_token	*token_array;
@@ -104,19 +104,19 @@ bool	create_files_in_block(t_input *input, t_exec *exec, ssize_t cmd_nb)
 	while (i < input->token_qty)
 	{
 		if (token_array[i].type == PIPE)
-			return (true);
+			return (TRUE);
 		if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
 		{
 			if (!handle_redir_out(exec, token_array[i]))
-				return (false);
+				return (FALSE);
 		}
 		else if (token_array[i].type == REDIR_IN
 			|| token_array[i].type == HEREDOC)
 		{
 			if (!handle_redir_in(exec, token_array[i]))
-				return (false);
+				return (FALSE);
 		}
 		i++;
 	}
-	return (true);
+	return (TRUE);
 }
