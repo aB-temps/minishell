@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:20:06 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/09 02:45:40 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/09 02:46:11 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,11 @@ static enum e_bool	execute_block_cmd(t_input *input, t_exec *exec, ssize_t i)
 
 static enum e_bool	set_blocks(t_exec *exec, t_input *input)
 {
-	t_token	*array;
 	size_t	i;
 	ssize_t	index_token;
 
 	index_token = 0;
 	i = 0;
-	array = (t_token *)input->v_tokens->array;
 	while (i < exec->block_qty)
 	{
 		if (i != exec->block_qty - 1)
