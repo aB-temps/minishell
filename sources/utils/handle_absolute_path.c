@@ -19,9 +19,7 @@ char	*handle_absolute_path(t_exec *exec, char *cmd)
 	if (!access(cmd, F_OK))
 	{
 		if (!access(cmd, X_OK))
-		{
-			return (cmd);
-		}
+			return (ft_strdup(cmd));
 		exec->return_error = 126;
 		perror(cmd);
 		return (NULL);
