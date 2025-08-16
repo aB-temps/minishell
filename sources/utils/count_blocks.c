@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "input.h"
-#include "debug.h"
 
 size_t	count_blocks(t_token *array, ssize_t tkn_qty)
 {

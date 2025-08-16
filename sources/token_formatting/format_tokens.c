@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
 #include "token_formatting.h"
 
 static void	handle_env_var_expansion(t_input *input)

@@ -12,7 +12,6 @@
 
 #include "exec.h"
 #include "input.h"
-#include "libft.h"
 #include "token_formatting.h"
 #include "utils.h"
 

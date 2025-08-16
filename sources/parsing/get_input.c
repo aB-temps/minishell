@@ -12,7 +12,6 @@
 
 #include "exec.h"
 #include "parsing.h"
-#include "debug.h"
 #include "signals.h"
 #include "style.h"
 #include <linux/limits.h>

@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "debug.h"
 
 static void	print_env_export_noarg(char **env)
 {

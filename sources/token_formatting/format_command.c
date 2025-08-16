@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
 #include "token_formatting.h"
 
 static void	*joinback_args(t_token *array, size_t *k, size_t *arg_qty)

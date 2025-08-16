@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
 #include "parsing.h"
 
 static void	exit_remove_token(t_input *input, t_vector *new_vec, t_token *token)

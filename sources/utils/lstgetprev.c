@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "utils.h"
 
 t_list	*lstgetprev(t_list *lst, t_list *elem)

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "token_formatting.h"
+#include "../libft/includes/libft.h"
 
 char	*str_chardel(char *s, char *c)
 {

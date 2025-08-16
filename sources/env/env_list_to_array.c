@@ -11,9 +11,7 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "debug.h"
 #include "input.h"
-#include "libft.h"
 #include "utils.h"
 
 void	update_env_array(t_input *input, t_exec *exec)

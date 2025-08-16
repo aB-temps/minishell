@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   print_tab.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 06:05:24 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 00:55:31 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 16:03:56 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <debug.h>
+#include "debug.h"
 
 void	print_tab(char **tab)
 {

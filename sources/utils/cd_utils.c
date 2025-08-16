@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "libft.h"
 #include "style.h"
 #include "token_formatting.h"
 
