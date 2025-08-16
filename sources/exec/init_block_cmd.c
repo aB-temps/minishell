@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/15 16:49:39 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/16 20:04:37 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ static enum e_bool	setup_block_cmd(t_input *input, t_exec *exec, t_token token,
 	return (TRUE);
 }
 
-enum e_bool	init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd, ssize_t *i)
+enum e_bool	init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd,
+	ssize_t *i)
 {
 	t_token	*token_array;
 

@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:42 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/16 16:21:45 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/16 20:17:11 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 # include "input.h"
 # include "utils.h"
 # include <linux/limits.h>
-
-typedef struct s_exec	t_exec;
 # include <stdio.h>
+
+typedef struct s_exec		t_exec;
 
 typedef struct s_minishell	t_minishell;
 

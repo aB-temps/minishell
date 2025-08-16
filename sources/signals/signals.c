@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 06:42:03 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 21:29:21 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:04:26 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	sigint_interactive_handler(int sig)
 	rl_replace_line("", 0);
 	rl_done = 1;
 	g_sig = sig;
-	// write(STDOUT_FILENO, "\n", 1);
 }
 
 void	sigint_command_handler(int sig)

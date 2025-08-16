@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/08 14:13:04 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:04:08 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ static void	change_dir(char *cwd, char *target, t_minishell *minishell)
 	}
 }
 
-static enum e_bool	init_wds(char **cwd, char **target, char **cmd, t_minishell *minishell)
+static enum e_bool	init_wds(char **cwd, char **target, char **cmd,
+	t_minishell *minishell)
 {
 	*cwd = getcwd(*cwd, PATH_MAX);
 	if (!(*cwd))

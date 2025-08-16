@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 06:53:15 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/15 16:31:44 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/16 20:17:26 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int ac, char **av, char **env)
 	if (isatty(STDIN_FILENO) != 1)
 	{
 		ft_putstr_fd(YELLOW "minishell: interactive mode only\n" RST,
-		STDERR_FILENO);
+			STDERR_FILENO);
 		exit(2);
 	}
 	welcome();

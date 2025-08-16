@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:35 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/08 14:09:50 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:16:23 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ struct						s_env
 struct						s_token
 {
 	ssize_t					type;
-	enum e_bool					link_to_next;
+	enum e_bool				link_to_next;
 	char					*raw_content;
 	void					*formatted_content;
 };

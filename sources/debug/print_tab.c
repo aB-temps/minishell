@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 06:05:24 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 16:03:56 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/16 20:10:06 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	print_tab(char **tab)
 
 	i = 0;
 	if (!tab)
-		return;
+		return ;
 	while (tab[i])
 	{
 		printf("[%i]: '%s'\n", i, tab[i]);

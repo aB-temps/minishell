@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 16:21:47 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/16 20:06:15 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,9 @@
 /*-------------------------------- INCLUDES --------------------------------*/
 # include "input.h"
 
-/*------------------------------ FORWARD DECLARATIONS ----------------------------*/
 typedef struct s_minishell	t_minishell;
 
-/*--------------------------------- ENUM ---------------------------------*/
-
-enum			block_type
-{
-	NO_TYPE = -1,
-	CMD_REDIR,
-	CMD_NOREDIR,
-	REDIR_NOCMD,
-};
-
 /*-------------------------------- STRUCTS --------------------------------*/
-
-/*
-BASH FORK lorsqu'il y a :
-	- au moins 1 token commande (non builtin)
-	- au moins 1 pipe
-
-DONC BASH NE FORK PAS lorsqu'il y a :
-	- une redir sans commande (non builtin) sans pipe
-	- une commande (builtin) sans pipe
-*/
 
 typedef struct s_pipe_fds
 {

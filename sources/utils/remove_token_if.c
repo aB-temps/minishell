@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   remove_token_if.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/08 14:12:15 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:03:05 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	remove_token_if(t_input *input, t_token **array,
 	{
 		if (remove_condition(*array, i))
 		{
-		init_token(&token);
+			init_token(&token);
 			token = dup_token((*array)[i]);
 			if (!token.formatted_content || !add_element(new_vec, &token))
 				exit_remove_token(input, new_vec, &token);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   close_and_swap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 23:22:39 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 01:41:28 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:02:44 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 void	close_and_swap(t_pipe_fds *fds)
 {
-    ft_close(fds->fd1[0]);
-    ft_close(fds->fd1[1]);
-    fds->fd1[0] = fds->fd2[0];
-    fds->fd1[1] = fds->fd2[1];
-    fds->fd2[0] = -1;
-    fds->fd2[1] = -1;
+	ft_close(fds->fd1[0]);
+	ft_close(fds->fd1[1]);
+	fds->fd1[0] = fds->fd2[0];
+	fds->fd1[1] = fds->fd2[1];
+	fds->fd2[0] = -1;
+	fds->fd2[1] = -1;
 }

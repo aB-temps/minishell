@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/08 14:10:03 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:00:53 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ static void	tag_tokens_to_remove(t_token *array, ssize_t *i, size_t j)
 
 void	format_redir(t_input *input, ssize_t *i)
 {
-	t_token	*array;
+	t_token		*array;
 	enum e_bool	expand;
-	size_t	j;
+	size_t		j;
 
 	array = (t_token *)input->v_tokens->array;
 	expand = FALSE;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:43 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/08 14:08:30 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:07:03 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ enum e_bool	is_d_quote(char c);
 enum e_bool	is_s_quote(char c);
 enum e_bool	is_quoted_arg(char *s);
 enum e_bool	check_syntax_error(t_input *input);
-void	print_syntax_error(t_input *input);
+void		print_syntax_error(t_input *input);
 
 #endif

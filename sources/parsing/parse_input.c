@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 18:22:02 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:05:19 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,12 @@ void	*parse_input(t_input *input)
 	if (!input->v_tokens)
 		exit_parsing(input, EXIT_FAILURE);
 	tokenize_input(input, input->line);
-	// print_input(input, "TOKENIZED");
 	if (!check_syntax_error(input))
 	{
 		print_syntax_error(input);
 		return ((void *)0);
 	}
 	format_tokens(input);
-	// print_input(input, "FORMATTED TOKENS");
 	handle_heredoc(input);
 	return (input);
 }

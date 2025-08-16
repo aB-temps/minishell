@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 15:55:54 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/16 20:04:50 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	restore_redirections_builtin(int old_stdout, int old_stdin)
 		close(old_stdin);
 	}
 }
+
 static void	error_occured(t_input *input, t_exec *exec, char *error_msg)
 {
 	perror(error_msg);

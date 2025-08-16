@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/08 14:13:09 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:04:18 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	parse_param(char *arg, enum e_bool *n_param, size_t *i)
 int	ft_echo(char **args)
 {
 	const size_t	args_qty = ft_tablen(args);
-	enum e_bool			n_param;
+	enum e_bool		n_param;
 	size_t			i;
 	size_t			j;
 

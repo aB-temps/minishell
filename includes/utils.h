@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/16 16:21:47 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/16 20:06:19 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 # include <stdio.h>
 # include <unistd.h>
 
-/*------------------------------ FORWARD DECLARATIONS ----------------------------*/
 typedef struct s_exec		t_exec;
 typedef struct s_pipe_fds	t_pipe_fds;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:45:04 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/08 14:08:00 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:06:34 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@ int							print_pointer(void *ptr);
 t_vector					*create_vector(size_t capacity,
 								size_t datatype_size,
 								void (*clear_array)(t_vector *));
-enum e_bool						grow_vector(t_vector *vec, size_t new_elements);
-enum e_bool						add_element(t_vector *vec, void *element);
+enum e_bool					grow_vector(t_vector *vec, size_t new_elements);
+enum e_bool					add_element(t_vector *vec, void *element);
 void						clear_vector(t_vector **vec);
 
 /*************************************************************/

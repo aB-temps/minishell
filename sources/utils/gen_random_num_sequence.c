@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gen_random_num_sequence.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:02 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 17:33:38 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/16 20:01:23 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*gen_random_num_sequence(size_t len)
 	fd = open("/dev/urandom", O_RDONLY);
 	if (fd < 0)
 		return (clean_exit(seq, fd));
-	seq =ft_calloc(len + 1, sizeof(char));
+	seq = ft_calloc(len + 1, sizeof(char));
 	if (!seq)
 		return (clean_exit(seq, fd));
 	i = 0;

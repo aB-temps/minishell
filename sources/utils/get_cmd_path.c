@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:06:14 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/08 14:11:35 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:03:44 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static enum e_bool	get_splited_path(t_input *input, char ***splited_path)
 	return (TRUE);
 }
 
-char	*get_cmd_path(t_input *input, t_exec *exec,char *cmd)
+char	*get_cmd_path(t_input *input, t_exec *exec, char *cmd)
 {
 	char	**splited_path;
 	char	*cmd_path;
@@ -63,7 +63,7 @@ char	*get_cmd_path(t_input *input, t_exec *exec,char *cmd)
 	{
 		cmd_path = ft_strjoin("./", cmd);
 		if (!cmd_path)
-			return(NULL);
+			return (NULL);
 		return (cmd_path);
 	}
 	if (!splited_path)
