@@ -8,10 +8,8 @@ on:
 
 jobs:
   test:
-  test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -25,8 +23,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip make clang libreadline-dev
           sudo apt-get update
           sudo apt-get install -y python3-pip make clang libreadline-dev
           pip3 install norminette
@@ -47,14 +43,6 @@ jobs:
 
       - name: Verify executable
         run: |
-          if [ -f "./minishell" ]; then
-            echo "✅ Minishell executable created"
-            ls -la minishell
-          else
-            echo "❌ No executable found"
-            exit 1
-          fi
-
           if [ -f "./minishell" ]; then
             echo "✅ Minishell executable created"
             ls -la minishell
