@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include <stdio.h>
 
 static enum e_bool	is_valid_echo_param(char c)
 {
@@ -65,5 +66,7 @@ int	ft_echo(char **args)
 	}
 	if (!n_param)
 		printf("\n");
+	// Flush the output buffer to ensure immediate writing, especially for redirections
+	fflush(stdout);
 	return (0);
 }
