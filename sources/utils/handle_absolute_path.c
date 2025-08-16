@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_tab.c                                        :+:      :+:    :+:   */
+/*   handle_absolute_path.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/29 06:05:24 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 20:10:06 by enzo             ###   ########.fr       */
+/*   Created: 2025/08/16 20:03:56 by enzo              #+#    #+#             */
+/*   Updated: 2025/08/16 20:03:59 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
+#include "exec.h"
+#include <unistd.h>
+#include <stdio.h>
 
-void	print_tab(char **tab)
+char	*handle_absolute_path(t_exec *exec, char *cmd)
 {
-	int	i;
-
-	i = 0;
-	if (!tab)
-		return ;
-	while (tab[i])
+	if (!access(cmd, F_OK))
 	{
-		printf("[%i]: '%s'\n", i, tab[i]);
-		i++;
+		if (!access(cmd, X_OK))
+			return (ft_strdup(cmd));
+		exec->return_error = 126;
+		perror(cmd);
+		return (NULL);
 	}
-	printf("\n");
+	exec->return_error = 127;
+	perror(cmd);
+	return (NULL);
 }

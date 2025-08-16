@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_tab.c                                        :+:      :+:    :+:   */
+/*   count_blocks.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/29 06:05:24 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 20:10:06 by enzo             ###   ########.fr       */
+/*   Created: 2025/08/03 19:13:28 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/03 20:26:32 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
+#include "input.h"
 
-void	print_tab(char **tab)
+size_t	count_blocks(t_token *array, ssize_t tkn_qty)
 {
-	int	i;
+	ssize_t	i;
+	size_t	block_qty;
 
 	i = 0;
-	if (!tab)
-		return ;
-	while (tab[i])
+	block_qty = 1;
+	while (i < tkn_qty)
 	{
-		printf("[%i]: '%s'\n", i, tab[i]);
+		if (array[i].type == PIPE)
+			++block_qty;
 		i++;
 	}
-	printf("\n");
+	return (block_qty);
 }

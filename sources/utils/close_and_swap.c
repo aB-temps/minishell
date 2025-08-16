@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_tab.c                                        :+:      :+:    :+:   */
+/*   close_and_swap.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/29 06:05:24 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 20:10:06 by enzo             ###   ########.fr       */
+/*   Created: 2025/08/04 23:22:39 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/16 20:02:44 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
+#include "exec.h"
+#include "utils.h"
 
-void	print_tab(char **tab)
+void	close_and_swap(t_pipe_fds *fds)
 {
-	int	i;
-
-	i = 0;
-	if (!tab)
-		return ;
-	while (tab[i])
-	{
-		printf("[%i]: '%s'\n", i, tab[i]);
-		i++;
-	}
-	printf("\n");
+	ft_close(fds->fd1[0]);
+	ft_close(fds->fd1[1]);
+	fds->fd1[0] = fds->fd2[0];
+	fds->fd1[1] = fds->fd2[1];
+	fds->fd2[0] = -1;
+	fds->fd2[1] = -1;
 }

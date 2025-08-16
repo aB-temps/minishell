@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_free_to_join.c                              :+:      :+:    :+:   */
+/*   close_fd_exec.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/07 14:14:55 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 18:35:43 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/08/03 19:27:40 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/06 21:51:41 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "exec.h"
+#include "utils.h"
 
-char	*str_free_to_join(char *s1, char *s2)
+void	close_fd_exec(t_exec *exec)
 {
-	char	*temp;
-
-	temp = ft_strjoin(s1, s2);
-	free(s1);
-	return (temp);
+	safe_close(exec->pipe_fds->fd1[0]);
+	safe_close(exec->pipe_fds->fd1[1]);
+	safe_close(exec->pipe_fds->fd2[0]);
+	safe_close(exec->pipe_fds->fd2[1]);
+	safe_close(exec->block.io_fds[0]);
+	safe_close(exec->block.io_fds[1]);
 }

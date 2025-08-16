@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/02 17:50:43 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:06:15 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,67 +15,56 @@
 
 /*-------------------------------- INCLUDES --------------------------------*/
 # include "input.h"
-# include "libft.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <signal.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <sys/stat.h>
-# include <sys/types.h>
-# include <sys/wait.h>
-# include <unistd.h>
 
-/*--------------------------------- ENUM ---------------------------------*/
+typedef struct s_minishell	t_minishell;
 
 /*-------------------------------- STRUCTS --------------------------------*/
-typedef struct s_fd
+
+typedef struct s_pipe_fds
 {
-	int		fd1[2];
-	int		fd2[2];
-}			t_fd;
+	int			fd1[2];
+	int			fd2[2];
+}				t_pipe_fds;
+
+typedef struct s_cmd
+{
+	char		*cmd_path;
+	char		**cmd_args;
+	enum e_bool	is_builtin;
+
+}				t_cmd;
+
+typedef struct s_block
+{
+	t_cmd		*cmd;
+	int			io_fds[2];
+}				t_block;
 
 typedef struct s_exec
 {
-	int		fd_infile;
-	int		fd_outfile;
-	pid_t	*pid_child;
-	int		cmd_count;
-	char	*cmd_path;
-	char	**args;
-	t_fd	*fd;
-}			t_exec;
+	pid_t		*pid_child;
+	t_block		block;
+	size_t		block_qty;
+	t_pipe_fds	*pipe_fds;
+	int			return_error;
+}				t_exec;
 
-/*------------------------------- FUNCTIONS -------------------------------*/
-char		*get_path(char **env);
-char		*find_full_command_path(char **cmd, char **env, int *error);
-int			execute_command(t_token *current_token, t_exec *exec, int i,
-				t_input *input);
-int			launch_all_commands(t_input *input, t_exec *exec,
-				t_token *token_array);
-// int			create_files_no_cmd(int cur_index, t_token *token_array);
-void		start_exec(t_input *input);
-int			count_cmd(t_input *input);
-void		wait_childs(t_exec *exec, t_input *input);
-int			close_all(t_exec *exec);
-void		prepare_pipe(t_exec *exec, int i);
-char		*get_cmd_by_index(t_input *input, t_token *tokens_array, int index);
-int			is_builtin(t_token current_token, t_input *input, t_exec *exec,
-				int i);
-int			create_all_files(t_exec *exec, t_input *input, int i);
-int			check_builtin(char *cmd);
-void		apply_redirections_builtin(t_input *input, int *old_stdout,
-				int *old_stdin);
-void		check_cmd(t_input *input, t_token *tokens_array, int i);
-void		error_occured(t_exec *exec, char *error_msg);
-int			execute_all_commands(t_input *input, t_exec *exec);
-void		handle_sigint(t_input *input);
-void		check_sig(t_exec *exec, t_token *tokens_array, t_input *input,
-				int i);
-int			check_if_dir(t_input *input, char *path);
-void		close_hd_fd(t_input *input);
-int			handle_redir_in(t_exec *exec, t_token current_token);
-int			handle_redir_out(t_exec *exec, t_token current_token);
+/*-------------------------------- FUNCTIONS --------------------------------*/
+void			start_exec(t_input *input);
+enum e_bool		init_exec(t_exec **exec, t_input *input);
+enum e_bool		exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i);
+enum e_bool		create_files_in_block(t_input *input, t_exec *exec,
+					ssize_t cmd_nb);
+void			free_cmd(t_cmd **cmd);
+void			wait_child(t_exec *exec, int *exit_status);
+enum e_bool		is_builtin(char *cmd);
+enum e_bool		init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd,
+					ssize_t *i);
+void			prepare_redir(t_input *input, t_exec *exec, size_t i);
+int				handle_builtin(t_input *input, t_exec *exec, int *pid_child,
+					int i);
+void			apply_redirections_builtin(t_minishell *minishell,
+					int *old_stdout, int *old_stdin, int i);
+void			restore_redirections_builtin(int old_stdout, int old_stdin);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:34 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 01:50:31 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/05 18:27:45 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,7 @@
 
 void	exit_minishell(t_input *input, t_exec *exec, int exit_code)
 {
-	if (exec)
-	{
-		close_all(exec);
-		if (exec->fd)
-			free(exec->fd);
-		if (exec->cmd_path)
-			free(exec->cmd_path);
-		if (exec->pid_child)
-			free(exec->pid_child);
-	}
+	free_and_close_exec(&exec);
 	exit_parsing(input, exit_code);
 }
 

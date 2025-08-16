@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_free_to_join.c                              :+:      :+:    :+:   */
+/*   is_builtin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/07 14:14:55 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 18:35:43 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/08/05 20:42:42 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/08 14:12:23 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "exec.h"
 
-char	*str_free_to_join(char *s1, char *s2)
+enum e_bool	is_builtin(char *cmd)
 {
-	char	*temp;
-
-	temp = ft_strjoin(s1, s2);
-	free(s1);
-	return (temp);
+	if (ft_strcmp(cmd, "echo") == 0 || ft_strcmp(cmd, "pwd") == 0
+		|| ft_strcmp(cmd, "cd") == 0 || ft_strcmp(cmd, "export") == 0
+		|| ft_strcmp(cmd, "unset") == 0 || ft_strcmp(cmd, "env") == 0
+		|| ft_strcmp(cmd, "exit") == 0)
+		return (TRUE);
+	return (FALSE);
 }

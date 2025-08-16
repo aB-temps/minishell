@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/05 16:56:23 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/16 20:04:08 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "libft.h"
 #include "style.h"
 #include "token_formatting.h"
 
@@ -61,11 +60,12 @@ static void	change_dir(char *cwd, char *target, t_minishell *minishell)
 	}
 }
 
-bool	init_wds(char **cwd, char **target, char **cmd, t_minishell *minishell)
+static enum e_bool	init_wds(char **cwd, char **target, char **cmd,
+	t_minishell *minishell)
 {
 	*cwd = getcwd(*cwd, PATH_MAX);
 	if (!(*cwd))
-		return (false);
+		return (FALSE);
 	if (cmd[1])
 	{
 		*target = ft_strdup(cmd[1]);
@@ -79,10 +79,10 @@ bool	init_wds(char **cwd, char **target, char **cmd, t_minishell *minishell)
 		{
 			clear_wds(*cwd, *target);
 			ft_putstr_fd(RED "cd: HOME not set\n" RST, STDERR_FILENO);
-			return (false);
+			return (FALSE);
 		}
 	}
-	return (true);
+	return (TRUE);
 }
 
 int	ft_cd(char **cmd, t_minishell *minishell)

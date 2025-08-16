@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_str_free_to_join.c                              :+:      :+:    :+:   */
+/*   wait_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/07 14:14:55 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 18:35:43 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/08/05 18:49:29 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/06 21:26:59 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "exec.h"
+#include "wait.h"
 
-char	*str_free_to_join(char *s1, char *s2)
+void	wait_child(t_exec *exec, int *exit_status)
 {
-	char	*temp;
+	size_t	i;
+	int		status;
 
-	temp = ft_strjoin(s1, s2);
-	free(s1);
-	return (temp);
+	i = 0;
+	while (i < exec->block_qty)
+	{
+		if (exec->pid_child[i] >= 0)
+		{
+			waitpid(exec->pid_child[i], &status, 0);
+			if (WIFSIGNALED(status))
+				*exit_status = 128 + WTERMSIG(status);
+			else if (WIFEXITED(status) && i == exec->block_qty - 1)
+				*exit_status = WEXITSTATUS(status);
+		}
+		i++;
+	}
 }

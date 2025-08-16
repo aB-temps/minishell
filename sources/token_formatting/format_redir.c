@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format_redir.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 17:10:35 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/16 20:00:53 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static char	*unquote_arg(char *qtd_arg)
 }
 
 static char	*join_unquoted_args(t_token *array, size_t i, size_t *j,
-		bool *expand)
+		enum e_bool *expand)
 {
 	char	*content;
 
@@ -38,7 +38,7 @@ static char	*join_unquoted_args(t_token *array, size_t i, size_t *j,
 		return ((void *)0);
 	if (ft_strchr(content, '\'') || ft_strchr(content, '"'))
 	{
-		*expand = false;
+		*expand = FALSE;
 		content = str_replace(&content, unquote_arg(content));
 	}
 	while (content && array[i].link_to_next)
@@ -48,7 +48,7 @@ static char	*join_unquoted_args(t_token *array, size_t i, size_t *j,
 			return ((void *)0);
 		if (content && (ft_strchr(content, '\'') || ft_strchr(content, '"')))
 		{
-			*expand = false;
+			*expand = FALSE;
 			content = str_replace(&content, unquote_arg(content));
 		}
 		i++;
@@ -68,14 +68,14 @@ static void	tag_tokens_to_remove(t_token *array, ssize_t *i, size_t j)
 
 void	format_redir(t_input *input, ssize_t *i)
 {
-	t_token	*array;
-	bool	expand;
-	size_t	j;
+	t_token		*array;
+	enum e_bool	expand;
+	size_t		j;
 
 	array = (t_token *)input->v_tokens->array;
-	expand = false;
+	expand = FALSE;
 	if (array[*i].type == HEREDOC)
-		expand = true;
+		expand = TRUE;
 	j = 0;
 	array[(*i) + 1].raw_content = str_replace(&array[*i + 1].raw_content,
 			join_unquoted_args(array, *i + 1, &j, &expand));

@@ -1,28 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_tab.c                                        :+:      :+:    :+:   */
+/*   ft_close.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/29 06:05:24 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 20:10:06 by enzo             ###   ########.fr       */
+/*   Created: 2025/08/05 10:44:01 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/05 10:44:52 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
+#include "utils.h"
 
-void	print_tab(char **tab)
+void	ft_close(int fd)
 {
-	int	i;
-
-	i = 0;
-	if (!tab)
-		return ;
-	while (tab[i])
-	{
-		printf("[%i]: '%s'\n", i, tab[i]);
-		i++;
-	}
-	printf("\n");
+	if (fd != -1)
+		close(fd);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 06:42:03 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/04 23:40:01 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/16 20:04:26 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,14 @@
 
 volatile sig_atomic_t	g_sig;
 
-int	set_loop(void)
+void	sigint_interactive_handler(int sig)
 {
-	return (0);
+	rl_replace_line("", 0);
+	rl_done = 1;
+	g_sig = sig;
 }
 
-void	handle_sigint(t_input *input)
-{
-	input->last_exit_status = 130;
-	g_sig = 0;
-}
-
-static void	sigint_handler(int sig)
+void	sigint_command_handler(int sig)
 {
 	rl_replace_line("", 0);
 	rl_done = 1;
@@ -35,8 +31,8 @@ static void	sigint_handler(int sig)
 	write(STDOUT_FILENO, "\n", 1);
 }
 
-void	setup_signals(void)
+void	sigquit_command_handler(int sig)
 {
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
+	g_sig = sig;
+	write(STDOUT_FILENO, "Quit (core dumped)\n", 19);
 }

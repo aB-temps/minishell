@@ -5,66 +5,35 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/19 15:51:45 by enzo              #+#    #+#             */
-/*   Updated: 2025/08/02 17:51:05 by enchevri         ###   ########lyon.fr   */
+/*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/08 14:32:16 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
 #include "exec.h"
-#include <errno.h>
+#include "signals.h"
+#include "utils.h"
 
-int	execute_all_commands(t_input *input, t_exec *exec)
+enum e_bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
 {
-	t_token	*tokens_array;
-	int		saved_exit_status;
-	char	**cmd;
-
-	exec->pid_child = ft_calloc(exec->cmd_count, sizeof(pid_t));
-	if (!exec->pid_child)
-		return (1);
-	tokens_array = (t_token *)input->v_tokens->array;
-	if (launch_all_commands(input, exec, tokens_array) != 0)
-		return (1);
-	saved_exit_status = input->last_exit_status;
-	wait_childs(exec, input);
-	if (exec->cmd_count == 1 && tokens_array[0].type == COMMAND)
+	*pid = fork();
+	if (*pid == -1)
 	{
-		cmd = (char **)tokens_array[0].formatted_content;
-		if (cmd && check_builtin(cmd[0]) == 1)
-			input->last_exit_status = saved_exit_status;
+		free_and_close_exec(&exec);
+		perror("fork");
+		return (FALSE);
 	}
-	free(exec->pid_child);
-	return (0);
-}
-
-static int	init_t_exec(t_exec *exec, t_input *input)
-{
-	exec->cmd_path = NULL;
-	exec->args = NULL;
-	exec->cmd_count = count_cmd(input);
-	exec->fd_infile = -1;
-	exec->fd_outfile = -1;
-	exec->pid_child = NULL;
-	exec->fd = ft_calloc(1, sizeof(t_fd));
-	if (!exec->fd)
-		return (-1);
-	exec->fd->fd1[0] = -1;
-	exec->fd->fd1[1] = -1;
-	exec->fd->fd2[0] = -1;
-	exec->fd->fd2[1] = -1;
-	return (0);
-}
-
-void	start_exec(t_input *input)
-{
-	t_exec	exec;
-	int		res;
-
-	if (init_t_exec(&exec, input) == -1)
-		return ;
-	res = execute_all_commands(input, &exec);
-	free(exec.fd);
-	if (res == 1)
-		exit_parsing(input, input->last_exit_status);
+	if (*pid == 0)
+	{
+		set_sig_for_child();
+		if (!create_files_in_block(input, exec, i))
+			exit_minishell(input, exec, 1);
+		if (!exec->block.cmd->cmd_path)
+			exit_minishell(input, exec, 126);
+		prepare_redir(input, exec, i);
+		execve(exec->block.cmd->cmd_path, exec->block.cmd->cmd_args,
+			input->env->array);
+		exit_minishell(input, exec, 127);
+	}
+	return (TRUE);
 }

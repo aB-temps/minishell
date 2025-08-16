@@ -1,7 +1,7 @@
 # GENERAL SETTINGS ====================================================================
 NAME = minishell
 LIB_NAME = libft
-.SILENT:
+# .SILENT:
 
 # DIRECTORIES==========================================================================
 DIR_SRC		:= sources/
@@ -14,7 +14,7 @@ DIR_INC_LIB	:= $(DIR_LIB)includes/
 # FLAGS & COMPILATOR SETTINGS =========================================================
 CC 			:= cc
 DEPS_FLAGS	:= -MMD -MP
-WARN_FLAGS	:= -Wall -Werror -Wextra -g3
+WARN_FLAGS	:= -Wall -Wextra -Werror -g3
 C_FLAGS		:= $(WARN_FLAGS) $(DEPS_FLAGS)
 INC_FLAGS	:= -I $(DIR_INC) -I $(DIR_INC_LIB)
 LIB_FLAGS	:= -L $(DIR_LIB) -lft
@@ -40,28 +40,6 @@ endef
 
 define generate_var_deps
 DEPS_$(1) = $(patsubst $(DIR_SRC)%.c,$(DIR_BUILD)%.d,$(SRC_$(1)))
-endef
-
-# FUNCTIONS ===========================================================================
-TOTAL_FILES		=	$(words $(OBJS))
-CURRENT_FILE	:=	0
-BAR_LENGTH		:=	50
-
-define draw_progress_bar
-	@printf "\r$(CYAN)$(BOLD)Compiling $(NAME): $(RESET)["
-	@n=$(CURRENT_FILE); \
-	total=$(TOTAL_FILES); \
-	pct=`expr $$n '*' 100 / $$total`; \
-	fill=`expr $$n '*' $(BAR_LENGTH) / $$total`; \
-	empty=`expr $(BAR_LENGTH) - $$fill`; \
-	printf "$(GREEN)%*s$(RESET)" $$fill "" | tr ' ' '='; \
-	printf "%*s" $$empty "" | tr ' ' ' '; \
-	if [ $$n -eq $$total ]; then \
-		printf "] $(BLUE)$(BOLD)%3d%%$(RESET) (%d/%d)" $$pct $$n $$total; \
-	else \
-		printf "] $(BOLD)%3d%%$(RESET) (%d/%d)" $$pct $$n $$total; \
-	fi; \
-	if [ $$n = $$total ]; then printf "\n"; fi
 endef
 
 # COLORS ==============================================================================
@@ -94,14 +72,6 @@ COMPONENTS :=			PARSING 					\
 
 # FILES ===============================================================================
 
-F_BUILTINS 			:=	ft_cd.c						\
-						ft_echo.c 					\
-						ft_env.c					\
-						ft_exit.c					\
-						ft_export.c					\
-						ft_pwd.c					\
-						ft_unset.c					\
-
 F_CHECKING 			:=	check_syntax_error.c		\
 						is_operator.c				\
 						is_quote.c					\
@@ -118,19 +88,16 @@ F_DEBUG				:=	print_input.c				\
 						print_heredoc.c				\
 						print_exec.c				\
 
-F_EXEC 				:=	check_sig_child.c			\
-						error_utils.c				\
-						create_files.c				\
-						exec_builtin.c				\
+F_EXEC 				:=	start_exec.c				\
 						exec_cmd.c					\
-						exec_launcher.c				\
-						exec_process.c				\
-						path_utils.c				\
-						pipes_utils.c				\
-						redir_builtin.c				\
-						redir_simple_cmd.c			\
-						check_if_dir.c				\
-						utils.c						\
+						create_files_in_block.c		\
+						clear_exec.c				\
+						wait_child.c				\
+						is_builtin.c				\
+						init_block_cmd.c			\
+						prepare_redir.c				\
+						handle_builtin.c			\
+
 
 F_HEREDOC			:=	gen_heredoc_filename.c		\
 						handle_heredoc.c			\
@@ -144,20 +111,15 @@ F_PARSING			:=	get_input.c					\
 						parse_input.c				\
 
 F_SIGNALS 			:=	signals.c					\
-
-F_STYLE 			:=	build_prompt.c 				\
-						welcome.c					\
-
-F_TOKEN_FORMATTING	:=	format_command.c			\
-						format_env_var.c			\
-						format_redir.c				\
-						format_tokens.c				\
+						signal_utils.c				\
 
 F_UTILS				:=	cd_utils.c					\
 						clear_env_list_elem.c		\
 						clear_hd_filename_elem.c 	\
 						clear_v_token.c				\
 						clear_var_vector.c			\
+						close_fd_exec.c				\
+						count_blocks.c				\
 						count_command_args.c		\
 						count_valid_tokens.c		\
 						countocc.c					\
@@ -170,6 +132,8 @@ F_UTILS				:=	cd_utils.c					\
 						ft_tabdup.c					\
 						ft_tablen.c					\
 						gen_random_num_sequence.c	\
+						get_cmd_path.c				\
+						handle_absolute_path.c		\
 						init_struct.c				\
 						is_empty_env_var_token.c	\
 						is_redir_object_token.c		\
@@ -185,6 +149,9 @@ F_UTILS				:=	cd_utils.c					\
 						str_patreplace.c			\
 						str_replace.c				\
 						unlink_free_tmpfile.c		\
+						close_and_swap.c			\
+						ft_close.c					\
+
 
 F_TOKEN_FORMATTING :=	format_tokens.c				\
 						format_command.c			\
@@ -218,19 +185,14 @@ DEPS := $(foreach comp, $(COMPONENTS), $(DEPS_$(comp))) \
 
 # COMPILATION =========================================================================
 $(NAME) : $(OBJS)
-	@printf "$(BLUE)$(BOLD)[INFO]$(RESET) $(WHITE)Linking objects...$(RESET)\n"
 	$(COMP) $^ -o $@ $(LINK)
-	@printf "$(GREEN)$(BOLD)[SUCCESS]$(RESET) $(WHITE)Build successful!$(RESET) Created $(BOLD)$(CYAN)$(NAME)$(RESET)\n"
 
 $(DIR_BUILD) :
-	@mkdir -p $(DIR_BUILD)
+	mkdir -p $(DIR_BUILD)
 
 $(DIR_BUILD)%.o : $(DIR_SRC)%.c $(ANTI_RELINK) | $(DIR_BUILD)
-	@mkdir -p $(dir $@)
-	$(eval CURRENT_FILE=$(shell echo $$(($(CURRENT_FILE) + 1))))
-	$(call draw_progress_bar)
+	mkdir -p $(dir $@)
 	$(COMP) -c $< -o $@
-	@if [ $(CURRENT_FILE) = $(TOTAL_FILES) ]; then echo; fi
 
 -include $(DEPS)
 
@@ -239,7 +201,7 @@ $(DIR_BUILD)%.o : $(DIR_SRC)%.c $(ANTI_RELINK) | $(DIR_BUILD)
 all : lib $(NAME) inputrc
 
 lib :
-	@make -s -C $(DIR_LIB)
+	make -C $(DIR_LIB)
 
 inputrc:
 	@echo "set colored-stats on" > ~/.inputrc
@@ -247,17 +209,13 @@ inputrc:
 
 # clean -------------------------------------------------------------------------------
 clean:
-	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Cleaning object files from $(CYAN)$(NAME)$(RESET)...\n"
-	@make -s clean -C $(DIR_LIB)
+	make clean -C $(DIR_LIB)
 	@rm -rf $(DIR_BUILD)
 
 fclean: 
-	@make -s fclean -C $(DIR_LIB)
-	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Cleaning object files from $(CYAN)$(NAME)$(RESET)...\n"
-	@rm -rf $(DIR_BUILD)
-	@printf "$(ORANGE)$(BOLD)[CLEAN]$(RESET) $(WHITE)Removing executables...$(RESET)\n"
-	@rm -f $(NAME)
-	@printf "$(GREEN)$(BOLD)[DONE]$(RESET) $(WHITE)Clean complete!$(RESET)\n"
+	make fclean -C $(DIR_LIB)
+	rm -rf $(DIR_BUILD)
+	rm -f $(NAME)
 
 re: fclean all
 

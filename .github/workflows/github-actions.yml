@@ -1,6 +1,6 @@
 name: Minishell CI
 run-name: Norminette + Compilation 🚀
-on: 
+on:
   push:
     branches: [ main, develop ]
   pull_request:
@@ -8,11 +8,13 @@ on:
 
 jobs:
   test:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Cache dependencies
         uses: actions/cache@v4
         with:
@@ -20,19 +22,21 @@ jobs:
             ~/.cache/pip
             ~/.apt-cache
           key: ${{ runner.os }}-deps-${{ hashFiles('Makefile') }}
-          
+
       - name: Install dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y python3-pip make clang libreadline-dev
+          sudo apt-get update
+          sudo apt-get install -y python3-pip make clang libreadline-dev
           pip3 install norminette
-          
+
       - name: Check norminette
         run: |
           echo "🔍 Running norminette..."
           norminette -R CheckForbiddenSourceHeader . | grep -v OK || echo "⚠️ Norminette failed but continuing..."
           echo "✅ Norminette check completed!"
-          
+
       - name: Clean and compile
         run: |
           echo "🧹 Cleaning previous builds..."
@@ -40,9 +44,17 @@ jobs:
           echo "🔨 Compiling minishell..."
           make
           echo "✅ Compilation successful!"
-          
+
       - name: Verify executable
         run: |
+          if [ -f "./minishell" ]; then
+            echo "✅ Minishell executable created"
+            ls -la minishell
+          else
+            echo "❌ No executable found"
+            exit 1
+          fi
+
           if [ -f "./minishell" ]; then
             echo "✅ Minishell executable created"
             ls -la minishell

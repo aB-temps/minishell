@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "input.h"
-#include "stdio.h"
+#include <stdio.h>
 
 void	clear_env_list_elem(void *var)
 {

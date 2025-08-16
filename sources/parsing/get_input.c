@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 00:30:56 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/06 21:51:37 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	get_input(char **env)
 	init_env(env, input);
 	while (1)
 	{
-		setup_signals();
+		setup_signals_interactive();
 		if (g_sig == SIGINT)
 			handle_sigint(input);
 		build_prompt(input);
@@ -54,10 +54,12 @@ void	get_input(char **env)
 		if (is_valid_input(input->line, input))
 		{
 			if (parse_input(input) && g_sig != SIGINT)
+			{
 				start_exec(input);
+			}
 			clear_vector(&input->v_tokens);
 		}
 		reset_input(input);
 	}
-	rl_clear_history();
+	rl_clear_history();//pk c la ????
 }

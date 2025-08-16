@@ -12,7 +12,6 @@
 
 #include "builtins.h"
 #include "input.h"
-#include "libft.h"
 #include "utils.h"
 
 static void	*exit_env_a_to_l(t_env_var *var, t_list *l_env)

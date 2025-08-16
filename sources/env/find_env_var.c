@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "builtins.h"
-#include "debug.h"
 
 t_list	*find_env_var(char *key, t_list *env)
 {

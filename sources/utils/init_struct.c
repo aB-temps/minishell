@@ -3,18 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:31 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/04 23:39:29 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/08 14:11:38 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "exec.h"
 #include "input.h"
 #include "parsing.h"
 #include "utils.h"
 #include <linux/limits.h>
+
+enum e_bool	init_exec(t_exec **exec, t_input *input)
+{
+	*exec = malloc(sizeof(t_exec));
+	if (!*exec)
+		return (FALSE);
+	(*exec)->block_qty = count_blocks((t_token *)input->v_tokens->array,
+			input->token_qty);
+	(*exec)->pid_child = ft_calloc((*exec)->block_qty, sizeof(pid_t));
+	if (!(*exec)->pid_child)
+	{
+		free(*exec);
+		return (FALSE);
+	}
+	(*exec)->block.cmd = NULL;
+	(*exec)->block.io_fds[0] = -1;
+	(*exec)->block.io_fds[1] = -1;
+	(*exec)->pipe_fds = malloc(sizeof(t_pipe_fds));
+	if (!(*exec)->pipe_fds)
+		return (free_and_close_exec(exec));
+	(*exec)->pipe_fds->fd1[0] = -1;
+	(*exec)->pipe_fds->fd1[1] = -1;
+	(*exec)->pipe_fds->fd2[0] = -1;
+	(*exec)->pipe_fds->fd2[1] = -1;
+	(*exec)->return_error = input->last_exit_status;
+	return (TRUE);
+}
 
 static void	init_empty_env(t_input *input)
 {
@@ -58,7 +86,7 @@ void	init_env(char **env, t_input *input)
 void	init_token(t_token *token)
 {
 	token->type = -1;
-	token->link_to_next = false;
+	token->link_to_next = FALSE;
 	token->raw_content = (void *)0;
 	token->formatted_content = (void *)0;
 }

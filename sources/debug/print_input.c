@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   print_input.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/06 21:51:57 by enchevri          #+#    #+#             */
+/*   Updated: 2025/08/06 21:51:59 by enchevri         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "debug.h"
 
 void	print_input(t_input *input, char *part)
@@ -31,7 +43,10 @@ void	print_input(t_input *input, char *part)
 		printf("To link : %s%i%s\n", BOLD, array[i].link_to_next, RST);
 		printf("Raw Content : '%s%s%s'\n", BOLD, array[i].raw_content, RST);
 		if (array[i].type == COMMAND)
+		{
+			printf("Formatted Content :\n");
 			print_tab((char **)array[i].formatted_content);
+		}
 		else if (array[i].type == HEREDOC
 			&& ft_strlen(array[i].raw_content) > 2)
 		{
