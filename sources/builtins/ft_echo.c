@@ -30,26 +30,14 @@ static enum e_bool	is_valid_echo_param(char c)
 
 static void	parse_param(char *arg, enum e_bool *n_param, size_t *i)
 {
-	size_t	j;
-
-	j = 0;
-	while (arg[j] && arg[j] != '-')
-		j++;
-	if (!arg[j] || !arg[j + 1])
-		return ;
-	j++;
-	while (arg[j])
+	// Only process -n as a flag if it's the first argument
+	// This prevents false positives with words ending in -n
+	// Example: "echo somethi-n" will print "somethi-n" with newline
+	if (*i == 1 && ft_strcmp(arg, "-n") == 0)
 	{
-		if (is_valid_echo_param(arg[j]))
-			*n_param = (arg[j] == 'n');
-		else
-		{
-			*n_param = FALSE;
-			return ;
-		}
-		j++;
+		*n_param = TRUE;
+		(*i)++;
 	}
-	(*i)++;
 }
 
 int	ft_echo(char **args)
