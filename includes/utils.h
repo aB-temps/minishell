@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/16 20:06:19 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/18 05:07:15 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,4 @@ t_env_var	string_to_var(char *s, t_input *input);
 void		clear_var(t_env_var *var);
 enum e_bool	is_executable_token(t_token *array, ssize_t i);
 void		*safe_free(void **ptr);
-void		close_redir_fd(t_exec *exec);
 #endif
