@@ -152,7 +152,6 @@ F_UTILS				:=	cd_utils.c					\
 						close_and_swap.c			\
 						ft_close.c					\
 
-
 F_TOKEN_FORMATTING :=	format_tokens.c				\
 						format_command.c			\
 						format_redir.c				\
