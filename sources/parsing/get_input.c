@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/06 21:51:37 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 03:54:04 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	get_input(char **env)
 	input = ft_calloc(1, sizeof(t_input));
 	if (!input)
 		exit(EXIT_FAILURE);
-	input->last_exit_status = -1;
+	input->last_exit_status = 0;
 	init_env(env, input);
 	while (1)
 	{
