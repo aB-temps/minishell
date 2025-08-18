@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:03:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/18 05:27:10 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 05:59:04 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,21 @@
 
 static void	exec_builtin(char **cmd, t_minishell *minishell)
 {
+	int	*exit_status;
+
+	exit_status = &minishell->input->last_exit_status;
 	if (ft_strcmp(cmd[0], "echo") == 0)
-		minishell->input->last_exit_status = ft_echo(cmd);
+		*exit_status = ft_echo(cmd);
 	else if (ft_strcmp(cmd[0], "pwd") == 0)
-		minishell->input->last_exit_status = ft_pwd();
+		*exit_status = ft_pwd();
 	else if (ft_strcmp(cmd[0], "cd") == 0)
-		minishell->input->last_exit_status = ft_cd(cmd, minishell);
+		*exit_status = ft_cd(cmd, minishell);
 	else if (ft_strcmp(cmd[0], "export") == 0)
-		minishell->input->last_exit_status = ft_export(cmd, minishell);
+		*exit_status = ft_export(cmd, minishell);
 	else if (ft_strcmp(cmd[0], "unset") == 0)
-		minishell->input->last_exit_status = ft_unset(cmd, minishell);
+		*exit_status = ft_unset(cmd, minishell);
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		minishell->input->last_exit_status \
-		= ft_env(minishell->input->env->array);
+		*exit_status = ft_env(minishell->input->env->array);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
 		ft_exit(cmd, minishell);
 }
