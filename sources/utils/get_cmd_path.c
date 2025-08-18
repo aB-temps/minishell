@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:06:14 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/18 03:59:15 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 04:07:40 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ char	*get_cmd_path(t_input *input, t_exec *exec, char *cmd)
 	}
 	if (!splited_path)
 		return (NULL);
-	free_tab_return_null(splited_path);
 	if (!search_path(splited_path, cmd, &cmd_path))
-		return(NULL);
+		return (free_tab_return_null(splited_path));
+	free_tab_return_null(splited_path);
 	return (cmd_path);
 }
