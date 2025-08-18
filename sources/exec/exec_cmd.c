@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/08 14:32:16 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 03:34:58 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ enum e_bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
 		if (!create_files_in_block(input, exec, i))
 			exit_minishell(input, exec, 1);
 		if (!exec->block.cmd->cmd_path)
-			exit_minishell(input, exec, 126);
+			exit_minishell(input, exec, 127);
 		prepare_redir(input, exec, i);
 		execve(exec->block.cmd->cmd_path, exec->block.cmd->cmd_args,
 			input->env->array);
