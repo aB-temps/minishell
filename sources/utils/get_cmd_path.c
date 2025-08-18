@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:06:14 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 20:03:44 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/18 03:59:15 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,8 @@ char	*get_cmd_path(t_input *input, t_exec *exec, char *cmd)
 	}
 	if (!splited_path)
 		return (NULL);
-	if (!search_path(splited_path, cmd, &cmd_path))
-	{
-		free_tab_return_null(splited_path);
-		return (NULL);
-	}
 	free_tab_return_null(splited_path);
+	if (!search_path(splited_path, cmd, &cmd_path))
+		return(NULL);
 	return (cmd_path);
 }
