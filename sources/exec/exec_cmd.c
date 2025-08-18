@@ -6,10 +6,11 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/18 03:34:58 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 03:46:16 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "errno.h"
 #include "exec.h"
 #include "signals.h"
 #include "utils.h"
@@ -33,7 +34,10 @@ enum e_bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
 		prepare_redir(input, exec, i);
 		execve(exec->block.cmd->cmd_path, exec->block.cmd->cmd_args,
 			input->env->array);
-		exit_minishell(input, exec, 127);
+		if (errno == EACCES)
+			exit_minishell(input, exec, 126);
+		else
+			exit_minishell(input, exec, 1);
 	}
 	return (TRUE);
 }
