@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 20:04:50 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/18 20:16:44 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	error_occured(t_input *input, t_exec *exec, char *error_msg)
 void	prepare_redir(t_input *input, t_exec *exec, size_t i)
 {
 	if (!create_files_in_block(input, exec, i))
-		return ;
+		exit_minishell(input, exec, 1);
 	if (exec->block.io_fds[0] != -1)
 	{
 		if (dup2(exec->block.io_fds[0], STDIN_FILENO) == -1)

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/18 04:52:53 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 20:19:11 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ static void	handle_child_process(t_input *input, t_exec *exec, size_t i)
 	set_sig_for_child();
 	if (!exec->block.cmd->cmd_path)
 		handle_cmd_not_found(input, exec);
-	if (!create_files_in_block(input, exec, i))
-		exit_minishell(input, exec, 1);
 	if (stat(exec->block.cmd->cmd_path, &file_stat) == 0)
 	{
 		if (S_ISDIR(file_stat.st_mode))
