@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:18 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/18 03:54:04 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/18 05:01:44 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,9 @@ void	get_input(char **env)
 		if (is_valid_input(input->line, input))
 		{
 			if (parse_input(input) && g_sig != SIGINT)
-			{
 				start_exec(input);
-			}
 			clear_vector(&input->v_tokens);
 		}
 		reset_input(input);
 	}
-	rl_clear_history();//pk c la ????
 }
