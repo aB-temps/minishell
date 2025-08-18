@@ -30,7 +30,7 @@ jobs:
       - name: Check norminette
         run: |
           echo "🔍 Running norminette..."
-          norminette -R CheckForbiddenSourceHeader . | grep -v OK || echo "⚠️ Norminette failed but continuing..."
+          norminette -R CheckForbiddenSourceHeader . | grep -v OK
           echo "✅ Norminette check completed!"
 
       - name: Clean and compile
