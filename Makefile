@@ -23,7 +23,7 @@ LIB_FLAGS	:= -L $(DIR_LIB) -lft
 COMP 		:= $(CC) $(C_FLAGS) $(INC_FLAGS)
 LINK		:= $(LIB_FLAGS) -lreadline
 
-ANTI_RELINK	:= Makefile $(DIR_INC) $(DIR_INC_LIB) 
+ANTI_RELINK	:= Makefile $(DIR_INC) $(DIR_INC_LIB)
 
 # FUNCTIONS ===========================================================================
 define generate_var_sources_dir
@@ -212,7 +212,7 @@ clean:
 	make clean -C $(DIR_LIB)
 	@rm -rf $(DIR_BUILD)
 
-fclean: 
+fclean:
 	make fclean -C $(DIR_LIB)
 	rm -rf $(DIR_BUILD)
 	rm -f $(NAME)
@@ -226,4 +226,4 @@ print-%:
 	@echo $($(patsubst print-%,%,$@))
 
 
-.PHONY: all lib clean fclean re print-%
+.PHONY: all lib clean fclean re print-% inputrc

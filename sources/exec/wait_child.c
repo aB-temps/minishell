@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:49:29 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 21:26:59 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/16 20:32:20 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	wait_child(t_exec *exec, int *exit_status)
 	i = 0;
 	while (i < exec->block_qty)
 	{
-		if (exec->pid_child[i] >= 0)
+		if (exec->pid_child[i] > 0)
 		{
 			waitpid(exec->pid_child[i], &status, 0);
 			if (WIFSIGNALED(status))
