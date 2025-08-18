@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/16 20:04:18 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/18 16:48:37 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,12 @@ int	ft_echo(char **args)
 	}
 	while (i < args_qty)
 	{
-		printf("%s", args[i]);
+		ft_putstr_fd(args[i], 1);
 		if (i < args_qty - 1)
-			printf(" ");
+			ft_putstr_fd(" ", 1);
 		i++;
 	}
 	if (!n_param)
-		printf("\n");
+		ft_putstr_fd("\n", 1);
 	return (0);
 }
