@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:03:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 20:05:10 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/18 05:27:10 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	exec_builtin(char **cmd, t_minishell *minishell)
 	else if (ft_strcmp(cmd[0], "unset") == 0)
 		minishell->input->last_exit_status = ft_unset(cmd, minishell);
 	else if (ft_strcmp(cmd[0], "env") == 0)
-		minishell->input->last_exit_status = \
-		ft_env(minishell->input->env->array);
+		minishell->input->last_exit_status \
+		= ft_env(minishell->input->env->array);
 	else if (ft_strcmp(cmd[0], "exit") == 0)
 		ft_exit(cmd, minishell);
 }
