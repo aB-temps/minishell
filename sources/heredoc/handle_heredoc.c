@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 17:36:11 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/19 17:49:21 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,16 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	token->formatted_content = ptr_replace(&token->formatted_content, fds);
 }
 
+static void	stash_heredoc(t_input *input, int fd)
+{
+	t_list	*new;
+
+	new = ft_lstnew(&fd);
+	if (!new)
+		return (exit_parsing(input, input->last_exit_status));
+	ft_lstadd_back(&input->stash, new);
+}
+
 static void	open_heredoc(int **fds, char *tmpfile, t_input *input)
 {
 	*fds = ft_calloc(2, sizeof(int));
@@ -58,6 +68,7 @@ static void	open_heredoc(int **fds, char *tmpfile, t_input *input)
 		exit_parsing(input, EXIT_FAILURE);
 	}
 	(*fds)[1] = open(tmpfile, O_RDONLY);
+	stash_heredoc(input, (*fds)[1]);
 	if ((*fds)[1] < 0)
 	{
 		safe_close((*fds)[0]);

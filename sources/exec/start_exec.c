@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:20:06 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/09 02:46:11 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/19 18:09:39 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static enum e_bool	set_blocks(t_exec *exec, t_input *input)
 		close_and_swap(exec->pipe_fds);
 		i++;
 	}
-	close_fd_exec(exec);
+	close_fd_exec(input, exec);
 	return (TRUE);
 }
 
@@ -69,5 +69,5 @@ void	start_exec(t_input *input)
 		exit_minishell(input, exec, 1);
 	wait_child(exec, &input->last_exit_status);
 	setup_signals_interactive();
-	free_and_close_exec(&exec);
+	free_and_close_exec(input, exec);
 }

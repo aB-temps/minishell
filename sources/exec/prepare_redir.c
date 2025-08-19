@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/18 20:16:44 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/19 18:10:00 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,5 @@ void	prepare_redir(t_input *input, t_exec *exec, size_t i)
 		if (dup2(exec->pipe_fds->fd2[1], STDOUT_FILENO) == -1)
 			error_occured(input, exec, "dup2");
 	}
-	close_fd_exec(exec);
+	close_fd_exec(input, exec);
 }

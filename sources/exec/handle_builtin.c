@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:03:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/18 20:21:01 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/19 18:10:07 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	handle_builtin_pipeline(t_input *input, t_exec *exec,
 	minishell.exec = exec;
 	*pid_child = fork();
 	if (*pid_child == -1)
-		return (free_and_close_exec(&exec));
+		return (free_and_close_exec(input, exec));
 	if (*pid_child == 0)
 	{
 		prepare_redir(input, exec, i);

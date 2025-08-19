@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:31 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/08 14:11:38 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/19 18:08:49 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ enum e_bool	init_exec(t_exec **exec, t_input *input)
 	(*exec)->block.io_fds[1] = -1;
 	(*exec)->pipe_fds = malloc(sizeof(t_pipe_fds));
 	if (!(*exec)->pipe_fds)
-		return (free_and_close_exec(exec));
+		return (free_and_close_exec(input, *exec));
 	(*exec)->pipe_fds->fd1[0] = -1;
 	(*exec)->pipe_fds->fd1[1] = -1;
 	(*exec)->pipe_fds->fd2[0] = -1;
