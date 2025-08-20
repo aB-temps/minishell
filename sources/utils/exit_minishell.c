@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:34 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/19 18:08:41 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/20 02:04:44 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,20 @@
 
 void	close_all_hd(t_input *input)
 {
-	ft_lstiter(input->stash, ((void *)&safe_close));
+	t_list	*current;
+
+	current = input->stash;
+	while (current)
+	{
+		if (current->content)
+			safe_close(*(int *)current->content);
+		current = current->next;
+	}
 }
 
 void	exit_minishell(t_input *input, t_exec *exec, int exit_code)
 {
-	if (input->stash)
-		close_all_hd(input);
+
 	free_and_close_exec(input, exec);
 	exit_parsing(input, exit_code);
 }
@@ -32,6 +39,8 @@ void	exit_parsing(t_input *input, int exit_code)
 {
 	if (input)
 	{
+		if (input->stash)
+			close_all_hd(input);
 		if (input->v_tokens)
 			clear_vector(&input->v_tokens);
 		if (input->stash)

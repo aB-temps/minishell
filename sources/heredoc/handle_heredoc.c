@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/19 17:49:21 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/20 02:01:15 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,18 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 static void	stash_heredoc(t_input *input, int fd)
 {
 	t_list	*new;
+	int		*fd_ptr;
 
-	new = ft_lstnew(&fd);
-	if (!new)
+	fd_ptr = malloc(sizeof(int));
+	if (!fd_ptr)
 		return (exit_parsing(input, input->last_exit_status));
+	*fd_ptr = fd;
+	new = ft_lstnew(fd_ptr);
+	if (!new)
+	{
+		free(fd_ptr);
+		return (exit_parsing(input, input->last_exit_status));
+	}
 	ft_lstadd_back(&input->stash, new);
 }
 
