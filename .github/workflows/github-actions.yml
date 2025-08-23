@@ -7,24 +7,16 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  norminette:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Cache dependencies
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/pip
-            ~/.apt-cache
-          key: ${{ runner.os }}-deps-${{ hashFiles('Makefile') }}
-
       - name: Install dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y python3-pip make clang libreadline-dev
+          sudo apt-get install -y python3-pip
           pip3 install norminette
 
       - name: Check norminette
@@ -33,10 +25,20 @@ jobs:
           norminette -R CheckForbiddenSourceHeader . | grep -v OK
           echo "✅ Norminette check completed!"
 
+
+  Compilation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y make clang libreadline-dev
+
       - name: Clean and compile
         run: |
-          echo "🧹 Cleaning previous builds..."
-          make fclean
           echo "🔨 Compiling minishell..."
           make
           echo "✅ Compilation successful!"
