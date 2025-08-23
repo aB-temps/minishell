@@ -33,6 +33,14 @@ jobs:
           norminette -R CheckForbiddenSourceHeader . | grep -v OK
           echo "✅ Norminette check completed!"
 
+      - name: Copilot Code Review
+        uses: github/super-linter/slim@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: main
+          VALIDATE_C: true
+          VALIDATE_MAKEFILE: true
+
       - name: Clean and compile
         run: |
           echo "🧹 Cleaning previous builds..."
