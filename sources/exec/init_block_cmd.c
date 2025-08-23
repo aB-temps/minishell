@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_block_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 20:04:37 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/23 14:38:17 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static enum e_bool	setup_block_cmd(t_input *input, t_exec *exec, t_token token,
 	cmd->cmd_path = NULL;
 	cmd->cmd_args = (char **)token.formatted_content;
 	cmd->is_builtin = is_builtin(cmd->cmd_args[0]);
-	if (!cmd->is_builtin)
+	if (cmd->cmd_args[0][0] && !cmd->is_builtin)
 		cmd->cmd_path = get_cmd_path(input, exec, cmd->cmd_args[0]);
 	else
 		cmd->cmd_path = NULL;
