@@ -41,13 +41,13 @@ static int	export_pwd_in_cd(char *prev_wd, t_minishell *minishell)
 	return (0);
 }
 
-static void	change_dir(char *cwd, char *target, t_minishell *minishell)
+static int	change_dir(char *cwd, char *target, t_minishell *minishell)
 {
 	if (chdir(target) < 0)
 	{
-		perror(RED"cd"RST);
+		perror(RED "minishell: cd" RST);
 		clear_wds(cwd, target);
-		return ;
+		return (1);
 	}
 	else
 	{
@@ -57,6 +57,7 @@ static void	change_dir(char *cwd, char *target, t_minishell *minishell)
 			exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
 		}
 		clear_wds(cwd, target);
+		return (0);
 	}
 }
 
@@ -110,6 +111,5 @@ int	ft_cd(char **cmd, t_minishell *minishell)
 			return (EXIT_FAILURE);
 		}
 	}
-	change_dir(cwd, target, minishell);
-	return (EXIT_SUCCESS);
+	return (change_dir(cwd, target, minishell));
 }

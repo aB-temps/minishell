@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 04:56:51 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/08 14:10:25 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/25 14:48:40 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,15 @@
 void	clear_wds(char *cwd, char *target)
 {
 	if (cwd)
+	{
 		free(cwd);
+		cwd = NULL;
+	}
 	if (target)
+	{
 		free(target);
+		target = NULL;
+	}
 }
 
 enum e_bool	safe_get_cwd(char **wd)
