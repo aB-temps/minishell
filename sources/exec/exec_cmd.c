@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/18 04:52:53 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/19 18:09:44 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,15 @@ static void	handle_execve_error(t_input *input, t_exec *exec)
 
 static void	handle_child_process(t_input *input, t_exec *exec, size_t i)
 {
-	struct stat	file_stat;
+	struct stat	buf;
 	int			exit_code;
 
 	set_sig_for_child();
 	if (!exec->block.cmd->cmd_path)
 		handle_cmd_not_found(input, exec);
-	if (!create_files_in_block(input, exec, i))
-		exit_minishell(input, exec, 1);
-	if (stat(exec->block.cmd->cmd_path, &file_stat) == 0)
+	if (stat(exec->block.cmd->cmd_path, &buf) == 0)
 	{
-		if (S_ISDIR(file_stat.st_mode))
+		if (S_ISDIR(buf.st_mode))
 			handle_is_directory(input, exec);
 	}
 	prepare_redir(input, exec, i);
@@ -84,7 +82,7 @@ enum e_bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
 	*pid = fork();
 	if (*pid == -1)
 	{
-		free_and_close_exec(&exec);
+		free_and_close_exec(input, exec);
 		perror("fork");
 		return (FALSE);
 	}

@@ -1,21 +1,6 @@
 {
-	<bin>
-	Memcheck:Leak
-	...
-	obj:/usr/bin/*
-	...
-}
-
-{
 	<readline-leaks>
 	Memcheck:Leak
 	...
 	fun:readline
-}
-
-{
-	<add_history-leaks>
-	Memcheck:Leak
-	...
-	fun:add_history
 }

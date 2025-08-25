@@ -43,7 +43,7 @@ DEPS_$(1) = $(patsubst $(DIR_SRC)%.c,$(DIR_BUILD)%.d,$(SRC_$(1)))
 endef
 
 # COMPONENTS ==========================================================================
-COMPONENTS :=			PARSING 					\
+COMPONENTS			:=	PARSING 					\
 						LEXING						\
 						CHECKING					\
 						TOKEN_FORMATTING			\
@@ -58,13 +58,13 @@ COMPONENTS :=			PARSING 					\
 
 # FILES ===============================================================================
 
-F_CHECKING 			:=	check_syntax_error.c		\
+F_CHECKING			:=	check_syntax_error.c		\
 						is_operator.c				\
 						is_quote.c					\
 						is_valid_input.c			\
 						is_whitespace.c				\
 
-F_ENV 				:=	env_array_to_list.c			\
+F_ENV				:=	env_array_to_list.c			\
 						env_list_to_array.c			\
 						find_env_var.c				\
 						get_env_value.c				\
@@ -74,7 +74,7 @@ F_DEBUG				:=	print_input.c				\
 						print_heredoc.c				\
 						print_exec.c				\
 
-F_EXEC 				:=	start_exec.c				\
+F_EXEC				:=	start_exec.c				\
 						exec_cmd.c					\
 						create_files_in_block.c		\
 						clear_exec.c				\
@@ -138,15 +138,15 @@ F_UTILS				:=	cd_utils.c					\
 						close_and_swap.c			\
 						ft_close.c					\
 
-F_TOKEN_FORMATTING :=	format_tokens.c				\
+F_TOKEN_FORMATTING	:=	format_tokens.c				\
 						format_command.c			\
 						format_redir.c				\
 						format_env_var.c			\
 
-F_STYLE :=				welcome.c 					\
+F_STYLE				:=	welcome.c 					\
 						build_prompt.c				\
 
-F_BUILTINS :=			ft_echo.c 					\
+F_BUILTINS			:=	ft_echo.c 					\
 						ft_cd.c						\
 						ft_pwd.c					\
 						ft_export.c					\
@@ -154,7 +154,7 @@ F_BUILTINS :=			ft_echo.c 					\
 						ft_exit.c					\
 						ft_env.c					\
 
-F_MAIN :=				main.c						\
+F_MAIN				:=	main.c						\
 
 # VARS GENERATION =====================================================================
 $(foreach comp,$(COMPONENTS),$(eval $(call generate_var_sources_dir,$(comp))))

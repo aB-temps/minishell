@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:16:01 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/18 05:07:21 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/19 18:09:21 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,17 @@ void	free_cmd(t_cmd **cmd)
 	}
 }
 
-enum e_bool	free_and_close_exec(t_exec **exec)
+enum e_bool	free_and_close_exec(t_input *input, t_exec *exec)
 {
-	if (exec && *exec)
+	if (exec)
 	{
-		close_fd_exec(*exec);
-		if ((*exec)->pid_child)
-			free((*exec)->pid_child);
-		if ((*exec)->pipe_fds)
-			free((*exec)->pipe_fds);
-		free_cmd(&(*exec)->block.cmd);
-		free(*exec);
-		*exec = NULL;
+		close_fd_exec(input, exec);
+		if (exec->pid_child)
+			free(exec->pid_child);
+		if (exec->pipe_fds)
+			free(exec->pipe_fds);
+		free_cmd(&exec->block.cmd);
+		free(exec);
 	}
 	return (FALSE);
 }
