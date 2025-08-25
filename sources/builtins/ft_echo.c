@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/18 16:48:37 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/25 14:57:24 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static enum e_bool	is_valid_echo_param(char c)
 {
-	const char	valid_params[3] = {'e', 'E', 'n'};
+	const char	valid_params[1] = {'n'};
 	size_t		i;
 
 	i = 0;
-	while (i < 3)
+	while (i < 1)
 	{
 		if (c == valid_params[i])
 			return (TRUE);
@@ -70,12 +70,12 @@ int	ft_echo(char **args)
 	}
 	while (i < args_qty)
 	{
-		ft_putstr_fd(args[i], 1);
+		ft_putstr_fd(args[i], STDOUT_FILENO);
 		if (i < args_qty - 1)
-			ft_putstr_fd(" ", 1);
+			ft_putstr_fd(" ", STDOUT_FILENO);
 		i++;
 	}
 	if (!n_param)
-		ft_putstr_fd("\n", 1);
+		ft_putstr_fd("\n", STDOUT_FILENO);
 	return (0);
 }
