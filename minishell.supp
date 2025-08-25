@@ -1,4 +1,11 @@
 {
+	<add_history-leaks>
+	Memcheck:Leak
+	...
+	fun:add_history
+}
+
+{
 	<readline-leaks>
 	Memcheck:Leak
 	...

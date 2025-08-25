@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/25 14:57:24 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/25 15:01:21 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	parse_param(char *arg, enum e_bool *n_param, size_t *i)
 	size_t	j;
 
 	j = 0;
-	while (arg[j] && arg[j] != '-')
+	while (arg[j] && is_whitespace(arg[j]) && arg[j] != '-')
 		j++;
 	if (!arg[j] || !arg[j + 1])
 		return ;

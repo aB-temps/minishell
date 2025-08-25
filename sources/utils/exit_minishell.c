@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:34 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/20 02:04:44 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/25 14:36:03 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	close_all_hd(t_input *input)
 
 void	exit_minishell(t_input *input, t_exec *exec, int exit_code)
 {
-
 	free_and_close_exec(input, exec);
 	exit_parsing(input, exit_code);
 }
