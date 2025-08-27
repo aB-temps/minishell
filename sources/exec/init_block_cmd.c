@@ -27,7 +27,7 @@ static enum e_bool	setup_block_cmd(t_input *input, t_exec *exec, t_token token,
 }
 
 enum e_bool	init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd,
-	ssize_t *i)
+		ssize_t *i)
 {
 	t_token	*token_array;
 

@@ -3,30 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/19 18:10:00 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 04:52:22 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "builtins.h"
 #include "exec.h"
 #include "utils.h"
 #include <errno.h>
 #include <stdio.h>
-#include "builtins.h"
 
-void	apply_redirections_builtin(t_minishell *minishell, int *old_stdout,
+int	apply_redirections_builtin(t_minishell *minishell, int *old_stdout,
 		int *old_stdin, int i)
 {
 	*old_stdout = dup(STDOUT_FILENO);
 	*old_stdin = dup(STDIN_FILENO);
 	if (!create_files_in_block(minishell->input, minishell->exec, i))
-		return ;
+		return (1);
 	if (minishell->exec->block.io_fds[0] != -1)
+	{
 		dup2(minishell->exec->block.io_fds[0], STDIN_FILENO);
+		exit_minishell(minishell->input, minishell->exec, 1);
+	}
 	if (minishell->exec->block.io_fds[1] != -1)
+	{
 		dup2(minishell->exec->block.io_fds[1], STDOUT_FILENO);
+		exit_minishell(minishell->input, minishell->exec, 1);
+	}
+	return (0);
 }
 
 void	restore_redirections_builtin(int old_stdout, int old_stdin)
