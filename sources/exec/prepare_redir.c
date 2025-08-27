@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/27 04:52:22 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/27 15:32:54 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	apply_redirections_builtin(t_minishell *minishell, int *old_stdout,
 		return (1);
 	if (minishell->exec->block.io_fds[0] != -1)
 	{
-		dup2(minishell->exec->block.io_fds[0], STDIN_FILENO);
-		exit_minishell(minishell->input, minishell->exec, 1);
+		if (dup2(minishell->exec->block.io_fds[0], STDIN_FILENO) != 0)
+			exit_minishell(minishell->input, minishell->exec, 1);
 	}
 	if (minishell->exec->block.io_fds[1] != -1)
 	{
-		dup2(minishell->exec->block.io_fds[1], STDOUT_FILENO);
-		exit_minishell(minishell->input, minishell->exec, 1);
+		if (dup2(minishell->exec->block.io_fds[1], STDOUT_FILENO) != 0)
+			exit_minishell(minishell->input, minishell->exec, 1);
 	}
 	return (0);
 }
