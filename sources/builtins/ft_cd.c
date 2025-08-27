@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 20:04:08 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/27 04:31:58 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,76 +14,61 @@
 #include "style.h"
 #include "token_formatting.h"
 
-static int	export_pwd_in_cd(char *prev_wd, t_minishell *minishell)
-{
-	char	**to_exp;
-	char	*new_wd;
-
-	new_wd = NULL;
-	if (!safe_get_cwd(&new_wd))
-		return (EXIT_FAILURE);
-	to_exp = ft_calloc(4, sizeof(char *));
-	if (!to_exp)
-		return (EXIT_FAILURE);
-	to_exp[0] = ft_strdup("export");
-	if (!to_exp[0])
-		return (free_tab_return_int(to_exp, EXIT_FAILURE));
-	to_exp[1] = ft_strjoin("OLDPWD=", prev_wd);
-	if (!to_exp[1])
-		return (free_tab_return_int(to_exp, EXIT_FAILURE));
-	to_exp[2] = ft_strjoin("PWD=", new_wd);
-	if (!to_exp[2])
-		return (free_tab_return_int(to_exp, EXIT_FAILURE));
-	to_exp[3] = NULL;
-	ft_export(to_exp, minishell);
-	free(new_wd);
-	free_tab_return_int(to_exp, EXIT_FAILURE);
-	return (0);
-}
-
 static int	change_dir(char *cwd, char *target, t_minishell *minishell)
 {
 	if (chdir(target) < 0)
 	{
 		perror(RED "minishell: cd" RST);
 		clear_wds(cwd, target);
-		return (1);
+		return (EXIT_FAILURE);
 	}
-	else
+	if (export_pwd_in_cd(cwd, target, minishell))
 	{
-		if (export_pwd_in_cd(cwd, minishell))
-		{
-			clear_wds(cwd, target);
-			exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
-		}
 		clear_wds(cwd, target);
-		return (0);
+		exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
 	}
+	clear_wds(cwd, target);
+	return (EXIT_SUCCESS);
 }
 
 static enum e_bool	init_wds(char **cwd, char **target, char **cmd,
-	t_minishell *minishell)
+		t_minishell *minishell)
 {
-	*cwd = getcwd(*cwd, PATH_MAX);
+	*cwd = getcwd(NULL, PATH_MAX);
 	if (!(*cwd))
-		return (FALSE);
+	{
+		*cwd = ft_strdup("");
+		if (!(*cwd))
+			exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
+	}
 	if (cmd[1])
 	{
-		*target = ft_strdup(cmd[1]);
-		if (!(*target))
+		if (!init_target_from_arg(target, cmd[1]))
+		{
+			clear_wds(*cwd, NULL);
 			exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
+		}
 	}
 	else
 	{
-		*target = get_env_value("HOME", minishell->input);
-		if (!ft_strlen(*target))
+		if (!init_target_from_home(target, minishell))
 		{
-			clear_wds(*cwd, *target);
-			ft_putstr_fd(RED "cd: HOME not set\n" RST, STDERR_FILENO);
+			clear_wds(*cwd, NULL);
 			return (FALSE);
 		}
 	}
 	return (TRUE);
+}
+
+static int	handle_oldpwd(char **target, t_minishell *minishell)
+{
+	*target = str_replace(target, get_env_value("OLDPWD", minishell->input));
+	if (!ft_strlen(*target))
+	{
+		ft_putstr_fd(RED "cd: OLDPWD not set\n" RST, STDERR_FILENO);
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
 }
 
 int	ft_cd(char **cmd, t_minishell *minishell)
@@ -99,14 +84,14 @@ int	ft_cd(char **cmd, t_minishell *minishell)
 		return (EXIT_FAILURE);
 	}
 	if (!init_wds(&cwd, &target, cmd, minishell))
+	{
+		clear_wds(cwd, target);
 		return (EXIT_FAILURE);
+	}
 	if (!ft_strcmp(target, "-"))
 	{
-		target = str_replace(&target, get_env_value("OLDPWD",
-					minishell->input));
-		if (!ft_strlen(target))
+		if (handle_oldpwd(&target, minishell) == EXIT_FAILURE)
 		{
-			ft_putstr_fd(RED "cd: OLDPWD not set\n" RST, STDERR_FILENO);
 			clear_wds(cwd, target);
 			return (EXIT_FAILURE);
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 04:56:51 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/25 14:48:40 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/26 16:09:39 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,24 @@ enum e_bool	safe_get_cwd(char **wd)
 		return (FALSE);
 	}
 	return (TRUE);
+}
+
+enum e_bool	init_target_from_arg(char **target, char *arg)
+{
+	*target = ft_strdup(arg);
+	return (*target != NULL);
+}
+
+enum e_bool	init_target_from_home(char **target, t_minishell *minishell)
+{
+	char	*home_value;
+
+	home_value = get_env_value("HOME", minishell->input);
+	if (!home_value || !ft_strlen(home_value))
+	{
+		ft_putstr_fd(RED "cd: HOME not set\n" RST, STDERR_FILENO);
+		return (FALSE);
+	}
+	*target = home_value;
+	return (*target != NULL);
 }

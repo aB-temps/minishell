@@ -100,6 +100,7 @@ F_SIGNALS 			:=	signals.c					\
 						signal_utils.c				\
 
 F_UTILS				:=	cd_utils.c					\
+						cd_utils2.c					\
 						clear_env_list_elem.c		\
 						clear_hd_filename_elem.c 	\
 						clear_v_token.c				\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/19 18:09:35 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/26 17:24:45 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 
 typedef struct s_exec		t_exec;
 typedef struct s_pipe_fds	t_pipe_fds;
+typedef struct s_minishell	t_minishell;
 
 char						**ft_tabdup(char **tab);
 size_t						ft_tablen(char **tab);
@@ -46,6 +47,11 @@ enum e_bool					is_empty_var_token(t_token *array, ssize_t i);
 enum e_bool					is_redir_object_token(t_token *array, ssize_t i);
 void						clear_wds(char *cwd, char *target);
 enum e_bool					safe_get_cwd(char **wd);
+int							export_pwd_in_cd(char *prev_wd, char *target,
+								t_minishell *minishell);
+enum e_bool					init_target_from_arg(char **target, char *arg);
+enum e_bool					init_target_from_home(char **target,
+								t_minishell *minishell);
 void						*ptr_replace(void **from, void *to);
 void						exit_minishell(t_input *input, t_exec *exec,
 								int exit_code);
