@@ -22,7 +22,7 @@ jobs:
       - name: Check norminette
         run: |
           echo "🔍 Running norminette..."
-          norminette
+          norminette sources/builtins/* sources/checking/* sources/env/* sources/exec/* sources/heredoc/* sources/lexing/* sources/main.c sources/parsing/* sources/signals/* sources/style/* sources/token_formatting/* sources/utils/* includes/* libft/*
 
 
   Compilation:
@@ -38,6 +38,6 @@ jobs:
 
       - name: Clean and compile
         run: |
+          make fclean
           echo "🔨 Compiling minishell..."
-          make
-          echo "✅ Compilation successful!"
+          make -j
