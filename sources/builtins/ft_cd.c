@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/27 14:06:31 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 14:45:57 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	change_dir(char *cwd, char *target, t_minishell *minishell)
 		clear_wds(cwd, target);
 		return (EXIT_FAILURE);
 	}
-	if (export_pwd_in_cd(cwd, target, minishell))
+	if (export_pwd_in_cd(cwd, minishell))
 	{
 		clear_wds(cwd, target);
 		exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
@@ -37,7 +37,7 @@ static enum e_bool	init_wds(char **cwd, char **target, char **cmd,
 	*cwd = getcwd(NULL, PATH_MAX);
 	if (!(*cwd))
 	{
-		*cwd = ft_strdup("");
+		*cwd = get_env_value("PWD", minishell->input);
 		if (!(*cwd))
 			exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
 	}

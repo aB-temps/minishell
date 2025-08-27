@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/26 17:24:45 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/27 14:21:31 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ enum e_bool					is_empty_var_token(t_token *array, ssize_t i);
 enum e_bool					is_redir_object_token(t_token *array, ssize_t i);
 void						clear_wds(char *cwd, char *target);
 enum e_bool					safe_get_cwd(char **wd);
-int							export_pwd_in_cd(char *prev_wd, char *target,
+int							export_pwd_in_cd(char *prev_wd,
 								t_minishell *minishell);
 enum e_bool					init_target_from_arg(char **target, char *arg);
 enum e_bool					init_target_from_home(char **target,
