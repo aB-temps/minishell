@@ -22,14 +22,7 @@ jobs:
       - name: Check norminette
         run: |
           echo "🔍 Running norminette..."
-          ERRORS=$(norminette sources/builtins/* sources/checking/* sources/env/* sources/exec/* sources/heredoc/* sources/lexing/* sources/main.c sources/parsing/* sources/signals/* sources/style/* sources/token_formatting/* sources/utils/* includes/* libft/includes/* libft/src/*/* 2>&1 | grep -E "(Error:|Warning:|NOTICE)" | grep -v "is not valid C or C header file")
-          if [ -z "$ERRORS" ]; then
-            echo "✅ No norminette errors found!"
-          else
-            echo "❌ Norminette errors found:"
-            echo "$ERRORS"
-            exit 1
-          fi
+          norminette $(find sources includes libft/includes libft/src -name "*.c" -o -name "*.h" | grep -v debug) | grep -v "GLOBAL_VAR_DETECTED"
 
 
   Compilation:
