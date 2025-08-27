@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 16:00:00 by enzo              #+#    #+#             */
-/*   Updated: 2025/08/27 14:30:10 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 16:05:27 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	export_with_cleanup(char **to_exp, char *new_wd,
 	return (EXIT_SUCCESS);
 }
 
-int	export_pwd_in_cd(char *prev_wd,t_minishell *minishell)
+int	export_pwd_in_cd(char *prev_wd, t_minishell *minishell)
 {
 	char	**to_exp;
 	char	*new_wd;
