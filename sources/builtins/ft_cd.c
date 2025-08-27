@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/27 04:31:58 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/27 14:06:31 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,17 +45,14 @@ static enum e_bool	init_wds(char **cwd, char **target, char **cmd,
 	{
 		if (!init_target_from_arg(target, cmd[1]))
 		{
-			clear_wds(*cwd, NULL);
+			clear_wds(*cwd, *target);
 			exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
 		}
 	}
 	else
 	{
 		if (!init_target_from_home(target, minishell))
-		{
-			clear_wds(*cwd, NULL);
 			return (FALSE);
-		}
 	}
 	return (TRUE);
 }
@@ -85,7 +82,7 @@ int	ft_cd(char **cmd, t_minishell *minishell)
 	}
 	if (!init_wds(&cwd, &target, cmd, minishell))
 	{
-		clear_wds(cwd, target);
+		clear_wds(cwd, NULL);
 		return (EXIT_FAILURE);
 	}
 	if (!ft_strcmp(target, "-"))
