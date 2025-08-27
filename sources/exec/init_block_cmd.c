@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/23 14:38:17 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 16:36:14 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ enum e_bool	init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd,
 		if (token_array[*i].type == COMMAND)
 		{
 			*cmd = malloc(sizeof(t_cmd));
-			if (!cmd)
+			if (!*cmd)
 				return (FALSE);
 			setup_block_cmd(input, exec, token_array[*i], *cmd);
 			break ;

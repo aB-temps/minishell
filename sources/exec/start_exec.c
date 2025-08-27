@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:20:06 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/19 18:09:39 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 17:01:18 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ static enum e_bool	set_blocks(t_exec *exec, t_input *input)
 		if (!init_block_cmd(input, exec, &exec->block.cmd, &index_token))
 			return (FALSE);
 		if (!execute_block_cmd(input, exec, i))
+		{
+			free_cmd(&exec->block.cmd);
 			return (FALSE);
+		}
 		free_cmd(&exec->block.cmd);
 		close_and_swap(exec->pipe_fds);
 		i++;
