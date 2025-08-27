@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/27 05:02:13 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/27 15:52:49 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ int							handle_builtin(t_input *input, t_exec *exec,
 								int *pid_child, int i);
 int							apply_redirections_builtin(t_minishell *minishell,
 								int *old_stdout, int *old_stdin, int i);
-void						restore_redirections_builtin(int old_stdout,
-								int old_stdin);
+void						restore_redirections_builtin(t_input *input,
+								t_exec *exec, int old_stdout, int old_stdin);
 void						close_all_hd(t_input *input);
 
 #endif

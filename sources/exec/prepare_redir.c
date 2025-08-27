@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/27 15:32:54 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 15:55:17 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 #include "utils.h"
 #include <errno.h>
 #include <stdio.h>
+
+static void	error_occured(t_input *input, t_exec *exec, char *error_msg)
+{
+	perror(error_msg);
+	exit_minishell(input, exec, errno);
+}
 
 int	apply_redirections_builtin(t_minishell *minishell, int *old_stdout,
 		int *old_stdin, int i)
@@ -36,24 +42,21 @@ int	apply_redirections_builtin(t_minishell *minishell, int *old_stdout,
 	return (0);
 }
 
-void	restore_redirections_builtin(int old_stdout, int old_stdin)
+void	restore_redirections_builtin(t_input *input, t_exec *exec,
+		int old_stdout, int old_stdin)
 {
 	if (old_stdout != -1)
 	{
-		dup2(old_stdout, STDOUT_FILENO);
+		if (dup2(old_stdout, STDOUT_FILENO) == -1)
+			error_occured(input, exec, "dup2");
 		close(old_stdout);
 	}
 	if (old_stdin != -1)
 	{
-		dup2(old_stdin, STDIN_FILENO);
+		if (dup2(old_stdin, STDIN_FILENO) == -1)
+			error_occured(input, exec, "dup2");
 		close(old_stdin);
 	}
-}
-
-static void	error_occured(t_input *input, t_exec *exec, char *error_msg)
-{
-	perror(error_msg);
-	exit_minishell(input, exec, errno);
 }
 
 void	prepare_redir(t_input *input, t_exec *exec, size_t i)
