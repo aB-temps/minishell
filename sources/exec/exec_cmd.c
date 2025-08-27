@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/25 14:56:05 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/27 17:31:23 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ enum e_bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
 	*pid = fork();
 	if (*pid == -1)
 	{
-		free_and_close_exec(input, exec);
 		perror("fork");
 		return (FALSE);
 	}
