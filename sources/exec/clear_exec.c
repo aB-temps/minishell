@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:16:01 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/19 18:09:21 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/28 20:19:43 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ enum e_bool	free_and_close_exec(t_input *input, t_exec *exec)
 {
 	if (exec)
 	{
-		close_fd_exec(input, exec);
+		if (input)
+			close_fd_exec(input, exec);
 		if (exec->pid_child)
 			free(exec->pid_child);
 		if (exec->pipe_fds)
