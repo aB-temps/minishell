@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:33 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 15:30:58 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/28 17:40:04 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <readline/readline.h>
 # include <stdlib.h>
 
-void	get_input(char **env);
+void	get_input(char **env, char **av);
 void	*parse_input(t_input *input);
 
 #endif

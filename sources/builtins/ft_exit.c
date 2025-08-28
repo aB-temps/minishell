@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:17 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/08 18:29:43 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/28 20:13:47 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	ft_exit(char **cmd, t_minishell *minishell)
 	int	error;
 
 	error = 0;
-	if (minishell->exec->block_qty == 1 && isatty(fileno(stdin)))
+	if (minishell->exec->block_qty == 1)
 		ft_putendl_fd("exit", STDERR_FILENO);
 	if (!cmd[1])
 	{
