@@ -1,7 +1,6 @@
 # GENERAL SETTINGS ====================================================================
 NAME = minishell
 LIB_NAME = libft
-# .SILENT:
 
 # DIRECTORIES==========================================================================
 DIR_SRC		:= sources/
@@ -11,6 +10,7 @@ DIR_BUILD	:= .build/
 DIR_LIB		:= $(LIB_NAME)/
 LIBFT		:= $(DIR_LIB)$(LIB_NAME).a
 DIR_INC_LIB	:= $(DIR_LIB)includes/
+INPUTRC		:= ~/.inputrc
 
 # FLAGS & COMPILATOR SETTINGS =========================================================
 CC 			:= cc
@@ -185,16 +185,16 @@ $(DIR_BUILD)%.o : $(DIR_SRC)%.c $(ANTI_RELINK) | $(DIR_BUILD)
 
 # RULES ===============================================================================
 # build -------------------------------------------------------------------------------
-all : $(NAME) inputrc
+all : $(NAME) $(INPUTRC)
 
 $(LIBFT) : FORCE
 	make -C $(DIR_LIB)
 
 FORCE :
 
-inputrc:
-	echo "set colored-stats on" > ~/.inputrc
-	echo "set completion-ignore-case on" >> ~/.inputrc
+$(INPUTRC):
+	echo "set colored-stats on" > $(INPUTRC)
+	echo "set completion-ignore-case on" >> $(INPUTRC)
 
 # clean -------------------------------------------------------------------------------
 clean:
@@ -205,6 +205,7 @@ fclean:
 	make fclean -C $(DIR_LIB)
 	rm -rf $(DIR_BUILD)
 	rm -f $(NAME)
+	rm -f $(INPUTRC)
 
 re: fclean all
 
