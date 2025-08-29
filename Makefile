@@ -205,6 +205,7 @@ fclean:
 	make fclean -C $(DIR_LIB)
 	rm -rf $(DIR_BUILD)
 	rm -f $(NAME)
+	rm -f ~/.inputrc
 
 re: fclean all
 

@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:31 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/28 20:20:43 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/29 06:16:40 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ enum e_bool	init_exec(t_exec **exec, t_input *input)
 		return (FALSE);
 	(*exec)->block_qty = count_blocks((t_token *)input->v_tokens->array,
 			input->token_qty);
-	(*exec)->pid_child = malloc((*exec)->block_qty * sizeof(pid_t));
+	(*exec)->pid_child = ft_calloc((*exec)->block_qty, sizeof(pid_t));
 	if (!(*exec)->pid_child)
 	{
 		free(*exec);
