@@ -9,6 +9,7 @@ DIR_INC 	:= includes/
 DIR_BUILD	:= .build/
 
 DIR_LIB		:= $(LIB_NAME)/
+LIBFT		:= $(DIR_LIB)$(LIB_NAME).a
 DIR_INC_LIB	:= $(DIR_LIB)includes/
 
 # FLAGS & COMPILATOR SETTINGS =========================================================
@@ -170,8 +171,8 @@ DEPS := $(foreach comp, $(COMPONENTS), $(DEPS_$(comp))) \
 		$(DIR_BUILD)main.d
 
 # COMPILATION =========================================================================
-$(NAME) : $(OBJS)
-	$(COMP) $^ -o $@ $(LINK)
+$(NAME) : $(LIBFT) $(OBJS)
+	$(COMP) $(OBJS) -o $@ $(LINK)
 
 $(DIR_BUILD) :
 	mkdir -p $(DIR_BUILD)
@@ -184,19 +185,21 @@ $(DIR_BUILD)%.o : $(DIR_SRC)%.c $(ANTI_RELINK) | $(DIR_BUILD)
 
 # RULES ===============================================================================
 # build -------------------------------------------------------------------------------
-all : lib $(NAME) inputrc
+all : $(NAME) inputrc
 
-lib :
+$(LIBFT) : FORCE
 	make -C $(DIR_LIB)
 
+FORCE :
+
 inputrc:
-	@echo "set colored-stats on" > ~/.inputrc
-	@echo "set completion-ignore-case on" >> ~/.inputrc
+	echo "set colored-stats on" > ~/.inputrc
+	echo "set completion-ignore-case on" >> ~/.inputrc
 
 # clean -------------------------------------------------------------------------------
 clean:
 	make clean -C $(DIR_LIB)
-	@rm -rf $(DIR_BUILD)
+	rm -rf $(DIR_BUILD)
 
 fclean:
 	make fclean -C $(DIR_LIB)
