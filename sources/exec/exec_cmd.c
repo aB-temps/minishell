@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/27 17:31:23 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/29 03:30:53 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	handle_cmd_not_found(t_input *input, t_exec *exec)
 
 	temp = ft_strjoin("minishell: ", exec->block.cmd->cmd_args[0]);
 	error_msg = ft_strjoin(temp, ": command not found\n");
+	free(temp);
 	if (!error_msg)
 		exit_minishell(input, exec, 1);
 	write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
