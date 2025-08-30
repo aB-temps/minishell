@@ -64,6 +64,7 @@ F_CHECKING			:=	check_syntax_error.c		\
 						is_quote.c					\
 						is_valid_input.c			\
 						is_whitespace.c				\
+						is_valid_varname.c			\
 
 F_ENV				:=	env_array_to_list.c			\
 						env_list_to_array.c			\
@@ -188,7 +189,7 @@ $(DIR_BUILD)%.o : $(DIR_SRC)%.c $(ANTI_RELINK) | $(DIR_BUILD)
 all : $(NAME) $(INPUTRC)
 
 $(LIBFT) : FORCE
-	make -C $(DIR_LIB)
+	$(MAKE) -C $(DIR_LIB)
 
 FORCE :
 
@@ -198,16 +199,17 @@ $(INPUTRC):
 
 # clean -------------------------------------------------------------------------------
 clean:
-	make clean -C $(DIR_LIB)
+	$(MAKE) clean -C $(DIR_LIB)
 	rm -rf $(DIR_BUILD)
 
 fclean:
-	make fclean -C $(DIR_LIB)
+	$(MAKE) fclean -C $(DIR_LIB)
 	rm -rf $(DIR_BUILD)
 	rm -f $(NAME)
 	rm -f $(INPUTRC)
 
-re: fclean all
+re: fclean
+	$(MAKE) all
 
 .DEFAULT_GOAL = all
 
