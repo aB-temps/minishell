@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:03:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/30 15:06:01 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/30 17:41:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ static int	handle_builtin_single(t_input *input, t_exec *exec, int i)
 	{
 		minishell.input->last_exit_status = apply_redirections_builtin(&minishell,
 				&old_stdout, &old_stdin, i);
+		if (minishell.input->last_exit_status)
+			return (minishell.input->last_exit_status);
 	}
-	if (minishell.input->last_exit_status)
-		return (minishell.input->last_exit_status);
 	exec_builtin(exec->block.cmd->cmd_args, &minishell);
 	restore_redirections_builtin(input, exec, old_stdout, old_stdin);
 	return (minishell.exec->return_error);
