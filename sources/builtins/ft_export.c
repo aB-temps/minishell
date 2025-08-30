@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:06 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/30 14:54:54 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:06:41 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,13 @@ static void	assign_var(t_list *existing_var, t_list **varlist_node,
 	if (existing_var)
 	{
 		free(var->key);
-		free(((t_env_var *)existing_var->content)->value);
-		((t_env_var *)existing_var->content)->value = var->value;
+		if (!var->value)
+			free(var->value);
+		else
+		{
+			free(((t_env_var *)existing_var->content)->value);
+			((t_env_var *)existing_var->content)->value = var->value;
+		}
 		free(var);
 	}
 	else
