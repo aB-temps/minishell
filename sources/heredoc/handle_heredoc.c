@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/30 16:11:57 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:22:26 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	token->formatted_content = ptr_replace(&token->formatted_content, fds);
 }
 
-static void	stash_heredoc(t_input *input, int fd, int *fds, char *tmpfile)
+static void	hd_list_heredoc(t_input *input, int fd, int *fds, char *tmpfile)
 {
 	t_list	*new;
 	int		*fd_ptr;
@@ -68,7 +68,7 @@ static void	stash_heredoc(t_input *input, int fd, int *fds, char *tmpfile)
 		free(fd_ptr);
 		exit_parsing(input, input->last_exit_status);
 	}
-	ft_lstadd_back(&input->stash, new);
+	ft_lstadd_back(&input->hd_list, new);
 }
 
 static void	open_heredoc(int **fds, char *tmpfile, t_input *input)
@@ -87,7 +87,7 @@ static void	open_heredoc(int **fds, char *tmpfile, t_input *input)
 		exit_parsing(input, EXIT_FAILURE);
 	}
 	(*fds)[1] = open(tmpfile, O_RDONLY);
-	stash_heredoc(input, (*fds)[1], *fds, tmpfile);
+	hd_list_heredoc(input, (*fds)[1], *fds, tmpfile);
 	if ((*fds)[1] < 0)
 	{
 		safe_close((*fds)[0]);

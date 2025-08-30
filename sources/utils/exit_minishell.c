@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:34 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/25 14:36:03 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:22:28 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	close_all_hd(t_input *input)
 {
 	t_list	*current;
 
-	current = input->stash;
+	current = input->hd_list;
 	while (current)
 	{
 		if (current->content)
@@ -38,12 +38,12 @@ void	exit_parsing(t_input *input, int exit_code)
 {
 	if (input)
 	{
-		if (input->stash)
+		if (input->hd_list)
 			close_all_hd(input);
 		if (input->v_tokens)
 			clear_vector(&input->v_tokens);
-		if (input->stash)
-			ft_lstclear(&input->stash, &free);
+		if (input->hd_list)
+			ft_lstclear(&input->hd_list, &free);
 		if (input->env)
 		{
 			if (input->env->list)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:35 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/19 17:21:21 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/30 17:22:26 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ struct						s_input
 	char					*prompt;
 	char					*line;
 	int						last_exit_status;
-	t_list					*stash;
+	t_list					*hd_list;
 };
 
 void						init_env(char **env, t_input *input);
