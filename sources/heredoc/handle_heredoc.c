@@ -6,11 +6,11 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/30 14:07:01 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/30 16:11:57 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
+#include "text_formatting.h"
 #include "heredoc.h"
 #include "signals.h"
 
@@ -31,10 +31,7 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		}
 		if (token->link_to_next)
 			line = str_replace(&line, substitute_env_var(line, input));
-		line = str_free_to_join(line, "\n");
-		if (!line)
-			exit_parsing(input, EXIT_FAILURE);
-		ft_putstr_fd(line, fds[0]);
+		ft_putendl_fd(line, fds[0]);
 		free(line);
 	}
 	if (!line && g_sig != SIGINT)
