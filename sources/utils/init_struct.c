@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:31 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/29 06:16:40 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/30 10:39:32 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,17 @@ static void	init_empty_env(t_input *input)
 	cwd = getcwd(cwd, PATH_MAX);
 	if (!cwd)
 		exit_parsing(input, EXIT_FAILURE);
-	input->env->array = ft_calloc(3, sizeof(char *));
+	input->env->array = ft_calloc(2, sizeof(char *));
 	if (!input->env->array)
+	{
+		free(cwd);
 		exit_parsing(input, EXIT_FAILURE);
+	}
 	input->env->array[0] = ft_strjoin("PWD=", cwd);
+	free(cwd);
 	if (!input->env->array[0])
 		exit_parsing(input, EXIT_FAILURE);
-	input->env->array[1] = ft_strdup("SHLVL=1");
-	if (!input->env->array[1])
-		exit_parsing(input, EXIT_FAILURE);
-	input->env->array[2] = (void *)0;
+	input->env->array[1] = (void *)0;
 	update_env_list(input, NULL);
 }
 
