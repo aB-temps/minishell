@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/30 17:47:16 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/30 18:08:44 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include "utils.h"
 #include <errno.h>
 #include <stdio.h>
+
+static void	exit_builtins_redir(t_minishell *minishell, int old_stdin,
+		int old_stdout)
+{
+	safe_close(old_stdin);
+	safe_close(old_stdout);
+	exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
+}
 
 static void	error_occured(t_input *input, t_exec *exec, char *error_msg)
 {
@@ -26,26 +34,22 @@ int	apply_redirections_builtin(t_minishell *minishell, int *old_stdout,
 		int *old_stdin, int i)
 {
 	*old_stdout = dup(STDOUT_FILENO);
+	if (*old_stdout == -1)
+		exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
 	*old_stdin = dup(STDIN_FILENO);
+	if (*old_stdin == -1)
+		exit_builtins_redir(minishell, *old_stdin, *old_stdout);
 	if (!create_files_in_block(minishell->input, minishell->exec, i))
 		return (1);
 	if (minishell->exec->block.io_fds[0] != -1)
 	{
 		if (dup2(minishell->exec->block.io_fds[0], STDIN_FILENO) == -1)
-		{
-			safe_close(*old_stdin);
-			safe_close(*old_stdout);
-			exit_minishell(minishell->input, minishell->exec, 1);
-		}
+			exit_builtins_redir(minishell, *old_stdin, *old_stdout);
 	}
 	if (minishell->exec->block.io_fds[1] != -1)
 	{
 		if (dup2(minishell->exec->block.io_fds[1], STDOUT_FILENO) == -1)
-		{
-			safe_close(*old_stdin);
-			safe_close(*old_stdout);
-			exit_minishell(minishell->input, minishell->exec, 1);
-		}
+			exit_builtins_redir(minishell, *old_stdin, *old_stdout);
 	}
 	return (0);
 }
@@ -56,14 +60,22 @@ void	restore_redirections_builtin(t_input *input, t_exec *exec,
 	if (old_stdout != -1)
 	{
 		if (dup2(old_stdout, STDOUT_FILENO) == -1)
+		{
+			safe_close(old_stdin);
+			safe_close(old_stdout);
 			error_occured(input, exec, "dup2");
-		close(old_stdout);
+		}
+		safe_close(old_stdout);
 	}
 	if (old_stdin != -1)
 	{
 		if (dup2(old_stdin, STDIN_FILENO) == -1)
+		{
+			safe_close(old_stdout);
+			safe_close(old_stdin);
 			error_occured(input, exec, "dup2");
-		close(old_stdin);
+		}
+		safe_close(old_stdin);
 	}
 }
 

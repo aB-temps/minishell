@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:03:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/30 17:41:49 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/30 17:59:30 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,8 @@ static int	handle_builtin_single(t_input *input, t_exec *exec, int i)
 	minishell.exec = exec;
 	old_stdout = -1;
 	old_stdin = -1;
-	if (ft_strcmp(exec->block.cmd->cmd_args[0], "echo") == 0)
+	if (!ft_strcmp(exec->block.cmd->cmd_args[0], "echo")
+		|| !ft_strcmp(exec->block.cmd->cmd_args[0], "pwd"))
 	{
 		minishell.input->last_exit_status = apply_redirections_builtin(&minishell,
 				&old_stdout, &old_stdin, i);
