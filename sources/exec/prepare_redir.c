@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/27 16:00:05 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/29 09:38:43 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ int	apply_redirections_builtin(t_minishell *minishell, int *old_stdout,
 	if (minishell->exec->block.io_fds[0] != -1)
 	{
 		if (dup2(minishell->exec->block.io_fds[0], STDIN_FILENO) == -1)
-			exit_minishell(minishell->input, minishell->exec, 1);
+			error_occured(minishell->input, minishell->exec, "dup2");
 	}
 	if (minishell->exec->block.io_fds[1] != -1)
 	{
 		if (dup2(minishell->exec->block.io_fds[1], STDOUT_FILENO) == -1)
-			exit_minishell(minishell->input, minishell->exec, 1);
+			error_occured(minishell->input, minishell->exec, "dup2");
 	}
 	return (0);
 }

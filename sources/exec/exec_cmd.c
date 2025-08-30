@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/29 06:04:18 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/29 09:46:13 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,17 @@ enum e_bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
 	if (*pid == -1)
 		return (FALSE);
 	if (*pid == 0)
+	{
+		if (exec->block.cmd->cmd_path)
+		{
+			free(exec->block.cmd->cmd_path);
+			exec->block.cmd->cmd_path = NULL;
+		}
+		exec->block.cmd->cmd_path = get_cmd_path(input, exec,
+				exec->block.cmd->cmd_args[0]);
+		if (!exec->block.cmd->cmd_path)
+			exit_minishell(input, exec, 1);
 		handle_child_process(input, exec, i);
+	}
 	return (TRUE);
 }
