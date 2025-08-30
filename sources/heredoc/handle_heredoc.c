@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/20 02:01:15 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/30 14:04:18 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,11 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		line = readline(BLUE "heredoc> " RST);
 		if (g_sig == SIGINT || !line || !ft_strcmp(line,
 				(char *)token->formatted_content))
+		{
+			if (line)
+				free(line);
 			break ;
+		}
 		if (token->link_to_next)
 			line = str_replace(&line, substitute_env_var(line, input));
 		line = str_free_to_join(line, "\n");
@@ -42,20 +46,30 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 	token->formatted_content = ptr_replace(&token->formatted_content, fds);
 }
 
-static void	stash_heredoc(t_input *input, int fd)
+static void	stash_heredoc(t_input *input, int fd, int *fds, char *tmpfile)
 {
 	t_list	*new;
 	int		*fd_ptr;
 
 	fd_ptr = malloc(sizeof(int));
 	if (!fd_ptr)
-		return (exit_parsing(input, input->last_exit_status));
+	{
+		safe_close(fds[0]);
+		safe_close(fds[1]);
+		unlink_free_tmpfile(tmpfile);
+		free(fds);
+		exit_parsing(input, input->last_exit_status);
+	}
 	*fd_ptr = fd;
 	new = ft_lstnew(fd_ptr);
 	if (!new)
 	{
+		safe_close(fds[0]);
+		safe_close(fds[1]);
+		unlink_free_tmpfile(tmpfile);
+		free(fds);
 		free(fd_ptr);
-		return (exit_parsing(input, input->last_exit_status));
+		exit_parsing(input, input->last_exit_status);
 	}
 	ft_lstadd_back(&input->stash, new);
 }
@@ -76,7 +90,7 @@ static void	open_heredoc(int **fds, char *tmpfile, t_input *input)
 		exit_parsing(input, EXIT_FAILURE);
 	}
 	(*fds)[1] = open(tmpfile, O_RDONLY);
-	stash_heredoc(input, (*fds)[1]);
+	stash_heredoc(input, (*fds)[1], *fds, tmpfile);
 	if ((*fds)[1] < 0)
 	{
 		safe_close((*fds)[0]);
