@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:03:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/27 18:29:50 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/30 15:06:01 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	handle_builtin_pipeline(t_input *input, t_exec *exec,
 	minishell.exec = exec;
 	*pid_child = fork();
 	if (*pid_child == -1)
-		return (FALSE);
+		return (-1);
 	if (*pid_child == 0)
 	{
 		prepare_redir(input, exec, i);
@@ -63,8 +63,11 @@ static int	handle_builtin_single(t_input *input, t_exec *exec, int i)
 	minishell.exec = exec;
 	old_stdout = -1;
 	old_stdin = -1;
-	minishell.input->last_exit_status = apply_redirections_builtin(&minishell,
-			&old_stdout, &old_stdin, i);
+	if (ft_strcmp(exec->block.cmd->cmd_args[0], "echo") == 0)
+	{
+		minishell.input->last_exit_status = apply_redirections_builtin(&minishell,
+				&old_stdout, &old_stdin, i);
+	}
 	if (minishell.input->last_exit_status)
 		return (minishell.input->last_exit_status);
 	exec_builtin(exec->block.cmd->cmd_args, &minishell);
