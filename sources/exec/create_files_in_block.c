@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_files_in_block.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:37:59 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/08 14:13:00 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/31 05:19:06 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,44 +67,14 @@ static enum e_bool	handle_redir_out(t_exec *exec, t_token current_token)
 	return (TRUE);
 }
 
-static int	search_cmd_by_index(t_input *input, t_token *token_array,
-		int searched_n_cmd)
+static enum e_bool	handle_redirs_in_block(t_token *token_array, t_exec *exec,
+		int start, int end)
 {
-	int	cmd_count;
 	int	i;
 
-	cmd_count = -1;
-	i = 0;
-	while (i < input->token_qty)
+	i = start;
+	while (i < end)
 	{
-		if (token_array[i].type == COMMAND)
-		{
-			cmd_count++;
-			if (cmd_count == searched_n_cmd)
-				break ;
-		}
-		i++;
-	}
-	if (i >= input->token_qty)
-		return (-1);
-	while (i >= 0 && token_array[i].type != PIPE)
-		i--;
-	return (i);
-}
-
-enum e_bool	create_files_in_block(t_input *input, t_exec *exec, ssize_t cmd_nb)
-{
-	int		i;
-	t_token	*token_array;
-
-	token_array = (t_token *)input->v_tokens->array;
-	i = search_cmd_by_index(input, token_array, cmd_nb);
-	if (i != 0)
-		i++;
-	while (i < input->token_qty)
-	{
-		if (token_array[i].type == PIPE)
-			return (TRUE);
 		if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
 		{
 			if (!handle_redir_out(exec, token_array[i]))
@@ -119,4 +89,23 @@ enum e_bool	create_files_in_block(t_input *input, t_exec *exec, ssize_t cmd_nb)
 		i++;
 	}
 	return (TRUE);
+}
+
+enum e_bool	create_files_in_block(t_input *input, t_exec *exec, ssize_t cmd_nb)
+{
+	int		pipe_count;
+	int		i;
+	int		start;
+	t_token	*token_array;
+
+	token_array = (t_token *)input->v_tokens->array;
+	pipe_count = 0;
+	i = 0;
+	while (i < input->token_qty && pipe_count < cmd_nb)
+		if (token_array[i++].type == PIPE)
+			pipe_count++;
+	start = i;
+	while (i < input->token_qty && token_array[i].type != PIPE)
+		i++;
+	return (handle_redirs_in_block(token_array, exec, start, i));
 }

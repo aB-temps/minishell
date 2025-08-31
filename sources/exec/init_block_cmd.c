@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_block_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/27 16:36:14 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/08/31 04:58:21 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,28 @@ static enum e_bool	setup_block_cmd(t_input *input, t_exec *exec, t_token token,
 	return (TRUE);
 }
 
-enum e_bool	init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd,
-		ssize_t *i)
+int	init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd, ssize_t *i)
 {
 	t_token	*token_array;
+	int		found;
 
 	token_array = (t_token *)input->v_tokens->array;
+	found = 0;
 	while (*i < input->token_qty)
 	{
 		if (token_array[*i].type == COMMAND)
 		{
 			*cmd = malloc(sizeof(t_cmd));
 			if (!*cmd)
-				return (FALSE);
+				return (-1);
 			setup_block_cmd(input, exec, token_array[*i], *cmd);
+			found = 1;
 			break ;
 		}
 		++(*i);
 	}
-	if (!cmd)
-		return (FALSE);
+	if (!found)
+		return (0);
 	++(*i);
-	return (TRUE);
+	return (1);
 }

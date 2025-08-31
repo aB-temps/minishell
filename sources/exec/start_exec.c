@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 16:20:06 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/30 17:27:52 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/08/31 05:58:23 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,35 @@
 
 static enum e_bool	execute_block_cmd(t_input *input, t_exec *exec, ssize_t i)
 {
-	if (!exec->block.cmd)
+	if (exec->block.cmd->is_builtin)
+		handle_builtin(input, exec, &exec->pid_child[i], i);
+	else if (!exec_cmd(input, exec, &exec->pid_child[i], i))
+		return (FALSE);
+	return (TRUE);
+}
+
+static enum e_bool	handle_block(t_exec *exec, t_input *input, size_t i,
+		ssize_t *index_token)
+{
+	int	ret;
+
+	ret = init_block_cmd(input, exec, &exec->block.cmd, index_token);
+	if (ret == -1)
+		exit_minishell(input, exec, EXIT_FAILURE);
+	if (ret == 0)
 	{
 		if (!create_files_in_block(input, exec, i))
 			return (FALSE);
+		close_and_swap(exec->pipe_fds);
+		return (TRUE);
 	}
-	else
+	if (!execute_block_cmd(input, exec, i))
 	{
-		if (exec->block.cmd->is_builtin)
-			handle_builtin(input, exec, &exec->pid_child[i], i);
-		else if (!exec_cmd(input, exec, &exec->pid_child[i], i))
-			return (FALSE);
+		free_cmd(&exec->block.cmd);
+		return (FALSE);
 	}
+	free_cmd(&exec->block.cmd);
+	close_and_swap(exec->pipe_fds);
 	return (TRUE);
 }
 
@@ -41,19 +58,10 @@ static enum e_bool	set_blocks(t_exec *exec, t_input *input)
 	while (i < exec->block_qty)
 	{
 		if (i != exec->block_qty - 1)
-		{
 			if (pipe(exec->pipe_fds->fd2) == -1)
 				return (FALSE);
-		}
-		if (!init_block_cmd(input, exec, &exec->block.cmd, &index_token))
+		if (!handle_block(exec, input, i, &index_token))
 			return (FALSE);
-		if (!execute_block_cmd(input, exec, i))
-		{
-			free_cmd(&exec->block.cmd);
-			return (FALSE);
-		}
-		free_cmd(&exec->block.cmd);
-		close_and_swap(exec->pipe_fds);
 		i++;
 	}
 	close_fd_exec(input, exec);
