@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:03:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/31 06:02:06 by enzo             ###   ########.fr       */
+/*   Updated: 2025/08/31 06:10:42 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static int	handle_builtin_single(t_input *input, t_exec *exec, int i)
 	old_stdin = -1;
 	if (ft_strcmp(exec->block.cmd->cmd_args[0], "exit"))
 	{
-		minishell.input->last_exit_status = apply_redirections_builtin(&minishell,
+		minishell.input->last_exit_status = \
+			apply_redirections_builtin(&minishell,
 				&old_stdout, &old_stdin, i);
 		if (minishell.input->last_exit_status)
 			return (minishell.input->last_exit_status);
