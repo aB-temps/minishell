@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/26 16:00:00 by enzo              #+#    #+#             */
-/*   Updated: 2025/08/27 16:05:27 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/01 23:00:00 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,13 @@ int	export_pwd_in_cd(char *prev_wd, t_minishell *minishell)
 {
 	char	**to_exp;
 	char	*new_wd;
+	const char	msg[109] = "cd: error retrieving current directory: getcwd:\
+cannot access parent directories: No such file or directory";
 
 	new_wd = getcwd(NULL, PATH_MAX);
 	if (!new_wd)
 	{
+		ft_putendl_fd((char *)msg, STDERR_FILENO);
 		new_wd = get_env_value("PWD", minishell->input);
 		if (!new_wd)
 			return (EXIT_FAILURE);

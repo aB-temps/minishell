@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/01 22:11:07 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/01 23:18:22 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,10 @@ enum e_bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
 {
 	*pid = fork();
 	if (*pid == -1)
-		return (FALSE);
+	{
+		perror("fork");
+		return (-1);
+	}
 	if (*pid == 0)
 		handle_child_process(input, exec, i);
 	return (TRUE);

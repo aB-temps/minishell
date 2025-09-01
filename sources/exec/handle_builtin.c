@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:03:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/01 19:21:47 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/01 23:21:21 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ static int	handle_builtin_pipeline(t_input *input, t_exec *exec,
 	minishell.exec = exec;
 	*pid_child = fork();
 	if (*pid_child == -1)
+	{
+		perror("fork");
 		return (-1);
+	}
 	if (*pid_child == 0)
 	{
 		prepare_redir(input, exec, i);
