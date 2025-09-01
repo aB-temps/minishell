@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:53:10 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/01 20:53:14 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/01 22:38:43 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 static void	exit_builtins_redir(t_minishell *minishell, int old_stdin,
 		int old_stdout)
 {
+	perror("dup2");
 	safe_close(&old_stdin);
 	safe_close(&old_stdout);
 	exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
