@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:03:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/31 06:10:42 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/01 19:21:47 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	handle_builtin_pipeline(t_input *input, t_exec *exec,
 	return (minishell.exec->return_error);
 }
 
-static int	handle_builtin_single(t_input *input, t_exec *exec, int i)
+static int	handle_builtin_single(t_input *input, t_exec *exec)
 {
 	int			old_stdout;
 	int			old_stdin;
@@ -65,9 +65,8 @@ static int	handle_builtin_single(t_input *input, t_exec *exec, int i)
 	old_stdin = -1;
 	if (ft_strcmp(exec->block.cmd->cmd_args[0], "exit"))
 	{
-		minishell.input->last_exit_status = \
-			apply_redirections_builtin(&minishell,
-				&old_stdout, &old_stdin, i);
+		minishell.input->last_exit_status = apply_redirections_builtin(
+				&minishell, &old_stdout, &old_stdin);
 		if (minishell.input->last_exit_status)
 			return (minishell.input->last_exit_status);
 	}
@@ -81,5 +80,5 @@ int	handle_builtin(t_input *input, t_exec *exec, int *pid_child, int i)
 	if (exec->block_qty > 1)
 		return (handle_builtin_pipeline(input, exec, pid_child, i));
 	else
-		return (handle_builtin_single(input, exec, i));
+		return (handle_builtin_single(input, exec));
 }

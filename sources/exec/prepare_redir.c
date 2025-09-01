@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/30 18:08:44 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/01 19:20:43 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	error_occured(t_input *input, t_exec *exec, char *error_msg)
 }
 
 int	apply_redirections_builtin(t_minishell *minishell, int *old_stdout,
-		int *old_stdin, int i)
+		int *old_stdin)
 {
 	*old_stdout = dup(STDOUT_FILENO);
 	if (*old_stdout == -1)
@@ -39,8 +39,6 @@ int	apply_redirections_builtin(t_minishell *minishell, int *old_stdout,
 	*old_stdin = dup(STDIN_FILENO);
 	if (*old_stdin == -1)
 		exit_builtins_redir(minishell, *old_stdin, *old_stdout);
-	if (!create_files_in_block(minishell->input, minishell->exec, i))
-		return (1);
 	if (minishell->exec->block.io_fds[0] != -1)
 	{
 		if (dup2(minishell->exec->block.io_fds[0], STDIN_FILENO) == -1)
@@ -81,8 +79,6 @@ void	restore_redirections_builtin(t_input *input, t_exec *exec,
 
 void	prepare_redir(t_input *input, t_exec *exec, size_t i)
 {
-	if (!create_files_in_block(input, exec, i))
-		exit_minishell(input, exec, 1);
 	if (exec->block.io_fds[0] != -1)
 	{
 		if (dup2(exec->block.io_fds[0], STDIN_FILENO) == -1)

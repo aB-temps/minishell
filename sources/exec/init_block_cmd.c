@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/31 04:58:21 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/01 19:21:22 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,28 +26,44 @@ static enum e_bool	setup_block_cmd(t_input *input, t_exec *exec, t_token token,
 	return (TRUE);
 }
 
-int	init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd, ssize_t *i)
+static int	find_command_in_block(t_token *token_array, int start,
+		int max_tokens)
+{
+	int	i;
+
+	i = start;
+	while (i < max_tokens && token_array[i].type != PIPE)
+	{
+		if (token_array[i].type == COMMAND)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+int	init_block_cmd(t_input *input, t_exec *exec, t_cmd **cmd,
+		ssize_t *block_index)
 {
 	t_token	*token_array;
-	int		found;
+	int		pipe_count;
+	int		i;
+	int		cmd_token_idx;
 
 	token_array = (t_token *)input->v_tokens->array;
-	found = 0;
-	while (*i < input->token_qty)
+	pipe_count = 0;
+	i = 0;
+	while (i < input->token_qty && pipe_count < *block_index)
 	{
-		if (token_array[*i].type == COMMAND)
-		{
-			*cmd = malloc(sizeof(t_cmd));
-			if (!*cmd)
-				return (-1);
-			setup_block_cmd(input, exec, token_array[*i], *cmd);
-			found = 1;
-			break ;
-		}
-		++(*i);
+		if (token_array[i].type == PIPE)
+			pipe_count++;
+		i++;
 	}
-	if (!found)
+	cmd_token_idx = find_command_in_block(token_array, i, input->token_qty);
+	if (cmd_token_idx == -1)
 		return (0);
-	++(*i);
+	*cmd = malloc(sizeof(t_cmd));
+	if (!*cmd)
+		return (-1);
+	setup_block_cmd(input, exec, token_array[cmd_token_idx], *cmd);
 	return (1);
 }

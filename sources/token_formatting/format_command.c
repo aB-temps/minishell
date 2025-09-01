@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   format_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 14:35:58 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 17:14:33 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/01 19:20:52 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static char	*fill_args_array(t_token *array, size_t *k, size_t *arg_qty)
 {
 	char	*content;
 
-	(void)arg_qty;
 	content = (void *)0;
 	if (array[*k].link_to_next)
 		content = joinback_args(array, k, arg_qty);

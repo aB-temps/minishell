@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/31 05:00:33 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/01 19:21:22 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,17 @@ void						wait_child(t_exec *exec, int *exit_status);
 enum e_bool					is_builtin(char *cmd);
 int							init_block_cmd(t_input *input, t_exec *exec,
 								t_cmd **cmd, ssize_t *i);
+void						cleanup_io_fds(t_exec *exec);
+enum e_bool					handle_block_no_cmd(t_exec *exec);
+enum e_bool					handle_block_with_cmd(t_input *input, t_exec *exec,
+								size_t i);
 void						prepare_redir(t_input *input, t_exec *exec,
 								size_t i);
+enum e_bool					set_blocks(t_exec *exec, t_input *input);
 int							handle_builtin(t_input *input, t_exec *exec,
 								int *pid_child, int i);
 int							apply_redirections_builtin(t_minishell *minishell,
-								int *old_stdout, int *old_stdin, int i);
+								int *old_stdout, int *old_stdin);
 void						restore_redirections_builtin(t_input *input,
 								t_exec *exec, int old_stdout, int old_stdin);
 void						close_all_hd(t_input *input);

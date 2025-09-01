@@ -85,6 +85,8 @@ F_EXEC				:=	start_exec.c				\
 						init_block_cmd.c			\
 						prepare_redir.c				\
 						handle_builtin.c			\
+						exec_block.c				\
+						exec_utils.c				\
 
 
 F_HEREDOC			:=	gen_heredoc_filename.c		\
