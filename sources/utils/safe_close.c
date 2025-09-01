@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   safe_close.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 08:55:48 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 16:21:53 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/01 20:42:09 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 #include <unistd.h>
 
-int	safe_close(int fd)
+int	safe_close(int *fd)
 {
-	if (fd > -1)
+	if (*fd > -1)
 	{
-		if (close(fd) < 0)
+		if (close(*fd) < 0)
 			return (-1);
-		fd = -1;
+		*fd = -1;
 	}
 	return (0);
 }

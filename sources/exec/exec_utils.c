@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:45:00 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/01 19:21:22 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/01 20:49:09 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,13 @@
 void	cleanup_io_fds(t_exec *exec)
 {
 	if (exec->block.io_fds[0] != -1)
-		safe_close(exec->block.io_fds[0]);
+	{
+		safe_close(&exec->block.io_fds[0]);
+	}
 	if (exec->block.io_fds[1] != -1)
-		safe_close(exec->block.io_fds[1]);
+	{
+		safe_close(&exec->block.io_fds[1]);
+	}
 }
 
 enum e_bool	handle_block_no_cmd(t_exec *exec)

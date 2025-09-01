@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_minishell.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:34 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/30 17:22:28 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/01 20:43:16 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	close_all_hd(t_input *input)
 	while (current)
 	{
 		if (current->content)
-			safe_close(*(int *)current->content);
+			safe_close((int *)current->content);
 		current = current->next;
 	}
 }

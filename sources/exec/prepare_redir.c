@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/06 01:18:36 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/01 19:20:43 by enzo             ###   ########.fr       */
+/*   Created: 2025/09/01 20:53:10 by enzo              #+#    #+#             */
+/*   Updated: 2025/09/01 20:53:14 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 static void	exit_builtins_redir(t_minishell *minishell, int old_stdin,
 		int old_stdout)
 {
-	safe_close(old_stdin);
-	safe_close(old_stdout);
+	safe_close(&old_stdin);
+	safe_close(&old_stdout);
 	exit_minishell(minishell->input, minishell->exec, EXIT_FAILURE);
 }
 
@@ -59,21 +59,21 @@ void	restore_redirections_builtin(t_input *input, t_exec *exec,
 	{
 		if (dup2(old_stdout, STDOUT_FILENO) == -1)
 		{
-			safe_close(old_stdin);
-			safe_close(old_stdout);
+			safe_close(&old_stdin);
+			safe_close(&old_stdout);
 			error_occured(input, exec, "dup2");
 		}
-		safe_close(old_stdout);
+		safe_close(&old_stdout);
 	}
 	if (old_stdin != -1)
 	{
 		if (dup2(old_stdin, STDIN_FILENO) == -1)
 		{
-			safe_close(old_stdout);
-			safe_close(old_stdin);
+			safe_close(&old_stdout);
+			safe_close(&old_stdin);
 			error_occured(input, exec, "dup2");
 		}
-		safe_close(old_stdin);
+		safe_close(&old_stdin);
 	}
 }
 
@@ -84,7 +84,7 @@ void	prepare_redir(t_input *input, t_exec *exec, size_t i)
 		if (dup2(exec->block.io_fds[0], STDIN_FILENO) == -1)
 			error_occured(input, exec, "dup2");
 	}
-	else if (i > 0)
+	else if (i > 0 && exec->pid_child[i - 1] > 0)
 	{
 		if (dup2(exec->pipe_fds->fd1[0], STDIN_FILENO) == -1)
 			error_occured(input, exec, "dup2");
@@ -92,7 +92,7 @@ void	prepare_redir(t_input *input, t_exec *exec, size_t i)
 	if (exec->block.io_fds[1] != -1)
 	{
 		if (dup2(exec->block.io_fds[1], STDOUT_FILENO) == -1)
-			error_occured(input, exec, "dup2");
+			error_occured(input, exec, "DEBUG");
 	}
 	else if (i < exec->block_qty - 1)
 	{

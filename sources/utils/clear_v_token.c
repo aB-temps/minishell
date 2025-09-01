@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_v_token.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 16:59:09 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 16:59:15 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/01 20:42:45 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ void	clear_token(t_token *token)
 			else if (token->type == HEREDOC
 				&& ft_strlen(token->raw_content) > 2)
 			{
-				safe_close(((int *)token->formatted_content)[0]);
-				safe_close(((int *)token->formatted_content)[1]);
+				safe_close(&((int *)token->formatted_content)[0]);
+				safe_close(&((int *)token->formatted_content)[1]);
 				free(token->formatted_content);
 			}
 			else

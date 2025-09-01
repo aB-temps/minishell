@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/27 14:21:31 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/01 20:42:19 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void						clear_hd_filename_elem(t_input *input,
 								char *full_path);
 void						clear_var_vector(t_vector *v_var_array);
 t_list						*lstgetprev(t_list *lst, t_list *elem);
-int							safe_close(int fd);
+int							safe_close(int *fd);
 void						unlink_free_tmpfile(char *tmpfile);
 void						quoted_arg_len(char quote, size_t *i, char *line);
 ssize_t						count_command_args(t_input *input, t_token *array,

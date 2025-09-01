@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/30 17:22:26 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/01 20:44:47 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		ft_putstr_fd(YELLOW "warning : heredoc exited before EOF\n" RST,
 			STDERR_FILENO);
 	if (g_sig == SIGINT)
-		safe_close(fds[1]);
-	safe_close(fds[0]);
+		safe_close(&fds[1]);
+	safe_close(&fds[0]);
 	token->formatted_content = ptr_replace(&token->formatted_content, fds);
 }
 
@@ -51,8 +51,8 @@ static void	hd_list_heredoc(t_input *input, int fd, int *fds, char *tmpfile)
 	fd_ptr = malloc(sizeof(int));
 	if (!fd_ptr)
 	{
-		safe_close(fds[0]);
-		safe_close(fds[1]);
+		safe_close(&fds[0]);
+		safe_close(&fds[1]);
 		unlink_free_tmpfile(tmpfile);
 		free(fds);
 		exit_parsing(input, input->last_exit_status);
@@ -61,8 +61,8 @@ static void	hd_list_heredoc(t_input *input, int fd, int *fds, char *tmpfile)
 	new = ft_lstnew(fd_ptr);
 	if (!new)
 	{
-		safe_close(fds[0]);
-		safe_close(fds[1]);
+		safe_close(&fds[0]);
+		safe_close(&fds[1]);
 		unlink_free_tmpfile(tmpfile);
 		free(fds);
 		free(fd_ptr);
@@ -90,7 +90,7 @@ static void	open_heredoc(int **fds, char *tmpfile, t_input *input)
 	hd_list_heredoc(input, (*fds)[1], *fds, tmpfile);
 	if ((*fds)[1] < 0)
 	{
-		safe_close((*fds)[0]);
+		safe_close(&(*fds)[0]);
 		free(*fds);
 		unlink_free_tmpfile(tmpfile);
 		exit_parsing(input, EXIT_FAILURE);
