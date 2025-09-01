@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:06:14 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/18 04:07:40 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/01 22:10:59 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ char	*get_cmd_path(t_input *input, t_exec *exec, char *cmd)
 		cmd_path = ft_strjoin("./", cmd);
 		if (!cmd_path)
 			return (NULL);
+		if (!access(cmd_path, X_OK))
+			return (cmd_path);
+		exec->return_error = 126;
 		return (cmd_path);
 	}
 	if (!splited_path)

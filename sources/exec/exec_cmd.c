@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/29 06:04:18 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/01 22:11:07 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	handle_is_directory(t_input *input, t_exec *exec)
 
 static void	handle_execve_error(t_input *input, t_exec *exec)
 {
-	if (ft_strchr(exec->block.cmd->cmd_args[0], '/'))
+	if (ft_strchr(exec->block.cmd->cmd_path, '/'))
 		perror(exec->block.cmd->cmd_args[0]);
 	else
 		handle_cmd_not_found(input, exec);
