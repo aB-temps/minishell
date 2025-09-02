@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:49:29 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/02 20:00:14 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/02 20:03:29 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	wait_child(t_exec *exec, int *exit_status)
 
 	i = 0;
 	last_block_has_pid = 0;
-	while i < exec->block_qty)
+	while (i < exec->block_qty)
 	{
 		if (exec->pid_child[i] > 0)
 		{
