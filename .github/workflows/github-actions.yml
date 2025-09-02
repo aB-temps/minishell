@@ -24,7 +24,7 @@ jobs:
           echo "🔍 Running norminette..."
           norminette $(find sources includes libft/includes libft/src -name "*.c" -o -name "*.h" | grep -v debug) | grep -v "GLOBAL_VAR_DETECTED" > log
           cat log
-          grep KO log
+          ! grep KO log
           rm log
 
   Compilation:
