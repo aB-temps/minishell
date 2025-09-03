@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:43:07 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/03 06:54:23 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/03 07:18:57 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int	handle_block(t_exec *exec, t_input *input, size_t i)
 	ssize_t	block_idx;
 
 	cleanup_io_fds(exec);
+	free_cmd(&exec->block.cmd);
 	block_idx = i;
 	ret = init_block_cmd(input, exec, &exec->block.cmd, &block_idx);
 	if (ret == -1)
