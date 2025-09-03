@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/03 00:29:35 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/03 23:36:51 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,5 @@ void	*parse_input(t_input *input)
 	}
 	format_tokens(input);
 	handle_heredoc(input);
-	print_input(input, "END PARSING");
 	return (input);
 }
