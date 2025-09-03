@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:07:38 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/03 23:32:07 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/04 01:11:08 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ enum e_bool	is_valid_varname(char *s)
 	i = 0;
 	if (!(ft_isalpha(s[i]) || s[i] == '_'))
 	{
-		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+		ft_putstr_fd(RED "minishell: export: `", STDERR_FILENO);
 		ft_putstr_fd(s, STDERR_FILENO);
-		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+		ft_putstr_fd("': not a valid identifier\n" RST, STDERR_FILENO);
 		return (FALSE);
 	}
 	++i;
