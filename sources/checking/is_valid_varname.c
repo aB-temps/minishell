@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:07:38 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/03 16:28:39 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/03 23:32:07 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,6 @@ enum e_bool	is_valid_varname(char *s)
 			return (FALSE);
 		}
 		i++;
-	}
-	if (i == 0 && s[i] == '=')
-	{
-		ft_putstr_fd(RED "minishell: export: `", STDERR_FILENO);
-		ft_putstr_fd(s, STDERR_FILENO);
-		ft_putstr_fd("': not a valid identifier\n" RST, STDERR_FILENO);
-		return (FALSE);
 	}
 	return (TRUE);
 }
