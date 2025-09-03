@@ -6,20 +6,22 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:06 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/30 16:08:35 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/03 16:28:28 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static void	print_env_export_noarg(char **env)
+static void	print_env_export_noarg(t_list *env)
 {
-	const size_t	size = ft_tablen(env);
-	size_t			i;
-
-	i = 0;
-	while (i < size)
-		printf("%s\n", env[i++]);
+	while (env)
+	{
+		printf("%s", ((t_env_var *)env->content)->key);
+		if (((t_env_var *)env->content)->value)
+			printf("=\"%s\"", ((t_env_var *)env->content)->value);
+		printf("\n");
+		env = env->next;
+	}
 }
 
 static void	clear_env_var(t_env_var *var, t_input *input, t_exec *exec)
@@ -92,12 +94,14 @@ int	ft_export(char **cmd_args, t_minishell *minishell)
 	t_env_var	*var;
 	size_t		i;
 	size_t		args;
+	int			error;
 
 	i = 1;
+	error = FALSE;
 	args = ft_tablen(cmd_args) - 1;
 	if (!args)
 	{
-		print_env_export_noarg(minishell->input->env->array);
+		print_env_export_noarg(minishell->input->env->list);
 		return (0);
 	}
 	while (i <= args)
@@ -108,8 +112,10 @@ int	ft_export(char **cmd_args, t_minishell *minishell)
 			existing_var = find_env_var(var->key, minishell->input->env->list);
 			assign_var(existing_var, &varlist_node, var, minishell);
 		}
+		else
+			error = TRUE;
 		i++;
 	}
 	update_env_array(minishell->input, minishell->exec);
-	return (0);
+	return (error);
 }
