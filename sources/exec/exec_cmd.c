@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/01 23:18:22 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/04 01:26:48 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errno.h"
 #include "exec.h"
 #include "signals.h"
+#include "text_formatting.h"
 #include "utils.h"
 #include <sys/stat.h>
 
@@ -26,7 +27,9 @@ void	handle_cmd_not_found(t_input *input, t_exec *exec)
 	free(temp);
 	if (!error_msg)
 		exit_minishell(input, exec, 1);
-	write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
+	ft_putstr_fd(RED, STDERR_FILENO);
+	ft_putstr_fd(error_msg, STDERR_FILENO);
+	ft_putstr_fd(RST, STDERR_FILENO);
 	free(error_msg);
 	exit_minishell(input, exec, 127);
 }
@@ -41,7 +44,9 @@ void	handle_is_directory(t_input *input, t_exec *exec)
 	free(temp);
 	if (!error_msg)
 		exit_minishell(input, exec, 1);
-	write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
+	ft_putstr_fd(RED, STDERR_FILENO);
+	ft_putstr_fd(error_msg, STDERR_FILENO);
+	ft_putstr_fd(RST, STDERR_FILENO);
 	free(error_msg);
 	exit_minishell(input, exec, 126);
 }
