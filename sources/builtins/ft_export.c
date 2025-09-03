@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:06 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/30 16:08:35 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/03 11:12:40 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,10 @@ int	ft_export(char **cmd_args, t_minishell *minishell)
 	t_env_var	*var;
 	size_t		i;
 	size_t		args;
+	int			error;
 
 	i = 1;
+	error = FALSE;
 	args = ft_tablen(cmd_args) - 1;
 	if (!args)
 	{
@@ -108,8 +110,10 @@ int	ft_export(char **cmd_args, t_minishell *minishell)
 			existing_var = find_env_var(var->key, minishell->input->env->list);
 			assign_var(existing_var, &varlist_node, var, minishell);
 		}
+		else
+			error = TRUE;
 		i++;
 	}
 	update_env_array(minishell->input, minishell->exec);
-	return (0);
+	return (error);
 }

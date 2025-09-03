@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_valid_varname.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:07:38 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/30 15:11:55 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/03 11:06:29 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,17 @@ enum e_bool	is_valid_varname(char *s)
 	size_t	i;
 
 	i = 0;
+	if (!(ft_isalpha(s[i]) || s[i] == '_'))
+	{
+		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
+		ft_putstr_fd(s, STDERR_FILENO);
+		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+		return (FALSE);
+	}
+	++i;
 	while (s[i] && s[i] != '=')
 	{
-		if (!(ft_isalpha(s[i]) || s[i] == '_'))
+		if (!(ft_isalnum(s[i]) || s[i] == '_'))
 		{
 			ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 			ft_putstr_fd(s, STDERR_FILENO);
