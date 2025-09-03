@@ -3,25 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/01 20:44:47 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/03 06:27:21 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "text_formatting.h"
 #include "heredoc.h"
 #include "signals.h"
+#include "text_formatting.h"
 
 static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 {
 	char	*line;
+	char	*line1;
 
 	line = (void *)0;
 	while (g_sig != SIGINT)
 	{
-		line = readline(BLUE "heredoc> " RST);
+		if (isatty(fileno(stdin)))
+			line = readline(BLUE "heredoc> " RST);
+		else
+		{
+			line1 = get_next_line(fileno(stdin));
+			line = ft_strtrim(line1, "\n");
+			free(line1);
+		}
 		if (g_sig == SIGINT || !line || !ft_strcmp(line,
 				(char *)token->formatted_content))
 		{
