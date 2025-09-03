@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   create_files_in_block.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:37:59 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/31 05:19:06 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/03 06:51:28 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
+#include "utils.h"
 #include <fcntl.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -52,10 +53,10 @@ static enum e_bool	handle_redir_out(t_exec *exec, t_token current_token)
 		flags = O_WRONLY | O_CREAT | O_APPEND;
 	else
 		flags = O_WRONLY | O_CREAT | O_TRUNC;
-	fd_temp = open(current_token.formatted_content, flags, 0644);
+	fd_temp = open((char *)current_token.formatted_content, flags, 0644);
 	if (fd_temp == -1)
 	{
-		perror(current_token.formatted_content);
+		perror((char *)current_token.formatted_content);
 		return (FALSE);
 	}
 	else

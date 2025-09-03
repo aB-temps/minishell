@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_block.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:43:07 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/01 19:22:08 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/03 06:54:23 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "utils.h"
 
-static enum e_bool	handle_block(t_exec *exec, t_input *input, size_t i)
+static int	handle_block(t_exec *exec, t_input *input, size_t i)
 {
 	int		ret;
 	ssize_t	block_idx;
@@ -22,17 +22,27 @@ static enum e_bool	handle_block(t_exec *exec, t_input *input, size_t i)
 	block_idx = i;
 	ret = init_block_cmd(input, exec, &exec->block.cmd, &block_idx);
 	if (ret == -1)
-		exit_minishell(input, exec, EXIT_FAILURE);
+		return (1);
 	if (!create_files_in_block(input, exec, i))
-		return (FALSE);
+	{
+		ret = 0;
+		input->last_exit_status = 1;
+	}
 	if (ret == 0)
-		return (handle_block_no_cmd(exec));
-	return (handle_block_with_cmd(input, exec, i));
+	{
+		if (!handle_block_no_cmd(exec))
+			return (1);
+		return (0);
+	}
+	if (!handle_block_with_cmd(input, exec, i))
+		return (1);
+	return (0);
 }
 
 enum e_bool	set_blocks(t_exec *exec, t_input *input)
 {
 	size_t	i;
+	int		ret;
 
 	i = 0;
 	while (i < exec->block_qty)
@@ -40,8 +50,14 @@ enum e_bool	set_blocks(t_exec *exec, t_input *input)
 		if (i != exec->block_qty - 1)
 			if (pipe(exec->pipe_fds->fd2) == -1)
 				return (FALSE);
-		if (!handle_block(exec, input, i))
+		ret = handle_block(exec, input, i);
+		if (ret == 1)
 			return (FALSE);
+		if (ret == 2)
+		{
+			i++;
+			continue ;
+		}
 		i++;
 	}
 	close_fd_exec(input, exec);

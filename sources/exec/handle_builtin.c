@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:03:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/01 23:21:21 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/03 06:39:12 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	handle_builtin_pipeline(t_input *input, t_exec *exec,
 		exec_builtin(exec->block.cmd->cmd_args, &minishell);
 		exit_minishell(input, exec, minishell.input->last_exit_status);
 	}
-	return (minishell.exec->return_error);
+	return (0);
 }
 
 static int	handle_builtin_single(t_input *input, t_exec *exec)
@@ -75,7 +75,7 @@ static int	handle_builtin_single(t_input *input, t_exec *exec)
 	}
 	exec_builtin(exec->block.cmd->cmd_args, &minishell);
 	restore_redirections_builtin(input, exec, old_stdout, old_stdin);
-	return (minishell.exec->return_error);
+	return (minishell.input->last_exit_status);
 }
 
 int	handle_builtin(t_input *input, t_exec *exec, int *pid_child, int i)

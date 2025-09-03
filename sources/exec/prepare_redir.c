@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prepare_redir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/01 20:53:10 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/01 22:38:43 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/03 07:06:16 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ void	prepare_redir(t_input *input, t_exec *exec, size_t i)
 	if (exec->block.io_fds[1] != -1)
 	{
 		if (dup2(exec->block.io_fds[1], STDOUT_FILENO) == -1)
-			error_occured(input, exec, "DEBUG");
+			error_occured(input, exec, "dup2");
 	}
-	else if (i < exec->block_qty - 1)
+	else if (i < exec->block_qty - 1 && exec->pipe_fds->fd2[1] > 0)
 	{
 		if (dup2(exec->pipe_fds->fd2[1], STDOUT_FILENO) == -1)
 			error_occured(input, exec, "dup2");
