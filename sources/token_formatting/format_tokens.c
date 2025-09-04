@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/04 20:52:25 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/04 20:53:27 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	format_redir_tokens(t_input *input)
 
 	i = 0;
 	array = (t_token *)input->v_tokens->array;
-	while (++i < input->token_qty)
+	while (i < input->token_qty)
 	{
 		if (array[i].type >= REDIR_IN && array[i].type <= HEREDOC)
 		{
@@ -82,6 +82,7 @@ static void	format_redir_tokens(t_input *input)
 				&& (array[i + 1].type == ARG || array[i + 1].type == ENV_VAR))
 				format_redir(input, &i);
 		}
+		++i;
 	}
 	remove_token_if(input, &array, is_redir_object_token);
 }
@@ -106,9 +107,7 @@ static void	format_command_tokens(t_input *input)
 void	format_tokens(t_input *input)
 {
 	t_token	*array;
-	ssize_t	i;
 
-	i = -1;
 	array = (t_token *)input->v_tokens->array;
 	handle_quotes(array, input);
 	handle_env_var_expansion(input);
