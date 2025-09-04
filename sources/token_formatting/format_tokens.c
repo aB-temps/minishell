@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/04 17:43:03 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/04 18:00:21 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	format_tokens(t_input *input)
 	{
 		if (array[i].type >= REDIR_IN && array[i].type <= HEREDOC)
 		{
-			if (ft_strlen((char *)array[i].formatted_content))
+			if (i + 1 < input->token_qty)
 				format_redir(input, &i);
 		}
 	}
