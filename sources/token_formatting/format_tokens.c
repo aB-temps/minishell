@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/04 20:53:27 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/04 20:54:03 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ static void	format_command_tokens(t_input *input)
 		if (array[i].type >= ARG)
 			format_command(input, array, &i);
 		else
-			i++;
+			++i;
 	}
 	remove_token_if(input, &array, is_executable_token);
 }
