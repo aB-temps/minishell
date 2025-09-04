@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:43:07 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/03 07:18:57 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 22:06:00 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ static int	handle_block(t_exec *exec, t_input *input, size_t i)
 	}
 	if (ret == 0)
 	{
-		if (!handle_block_no_cmd(exec))
-			return (1);
+		close_and_swap(exec->pipe_fds);
 		return (0);
 	}
 	if (!handle_block_with_cmd(input, exec, i))
@@ -54,11 +53,6 @@ enum e_bool	set_blocks(t_exec *exec, t_input *input)
 		ret = handle_block(exec, input, i);
 		if (ret == 1)
 			return (FALSE);
-		if (ret == 2)
-		{
-			i++;
-			continue ;
-		}
 		i++;
 	}
 	close_fd_exec(input, exec);
