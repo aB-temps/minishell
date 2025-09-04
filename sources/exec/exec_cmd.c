@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/04 01:39:01 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/04 01:41:51 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ void	handle_cmd_not_found(t_input *input, t_exec *exec)
 		free(temp);
 	if (!error_msg)
 		exit_minishell(input, exec, 1);
-	ft_putstr_fd(RED, STDERR_FILENO);
 	ft_putstr_fd(error_msg, STDERR_FILENO);
-	ft_putstr_fd(RST, STDERR_FILENO);
 	free(error_msg);
 	exit_minishell(input, exec, 127);
 }
@@ -46,9 +44,7 @@ void	handle_is_directory(t_input *input, t_exec *exec)
 		free(temp);
 	if (!error_msg)
 		exit_minishell(input, exec, 1);
-	ft_putstr_fd(RED, STDERR_FILENO);
 	ft_putstr_fd(error_msg, STDERR_FILENO);
-	ft_putstr_fd(RST, STDERR_FILENO);
 	free(error_msg);
 	exit_minishell(input, exec, 126);
 }

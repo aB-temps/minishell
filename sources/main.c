@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 06:53:15 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/29 07:10:19 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 01:39:48 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 	if (isatty(STDIN_FILENO) != 1 || isatty(STDOUT_FILENO) != 1)
 	{
-		ft_putstr_fd(YELLOW "minishell: interactive mode only\n" RST,
-			STDERR_FILENO);
+		ft_putstr_fd("minishell: interactive mode only\n", STDERR_FILENO);
 		exit(2);
 	}
 	welcome();

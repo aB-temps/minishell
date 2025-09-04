@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:17 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/04 01:22:11 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/04 01:40:46 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ static int	is_valid_number(char *str)
 static void	print_numeric_error(char *arg, t_input *input, t_exec *exec)
 {
 	input->last_exit_status = 2;
-	ft_putstr_fd(RED "minishell: ", STDERR_FILENO);
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
 	ft_putstr_fd("exit: ", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
-	ft_putendl_fd(": numeric argument required" RST, STDERR_FILENO);
+	ft_putendl_fd(": numeric argument required", STDERR_FILENO);
 	exit_minishell(input, exec, input->last_exit_status);
 }
 
@@ -63,7 +63,7 @@ void	ft_exit(char **cmd, t_minishell *minishell)
 	if (cmd[2])
 	{
 		minishell->input->last_exit_status = 1;
-		ft_putendl_fd(RED"exit: too many arguments"RST, STDERR_FILENO);
+		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
 		return ;
 	}
 	nb = ft_atoi(cmd[1], &error);

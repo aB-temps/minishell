@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_builtin.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:03:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/03 23:49:24 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 01:47:34 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ static void	exec_builtin(char **cmd, t_minishell *minishell)
 	else if (ft_strcmp(cmd[0], "env") == 0)
 	{
 		if (!cmd[1])
-			minishell->input->last_exit_status = ft_env(minishell->input->env->array);
+			minishell->input->last_exit_status
+				= ft_env(minishell->input->env->array);
 		else
 		{
 			minishell->input->last_exit_status = EXIT_FAILURE;
-			ft_putstr_fd(RED "Built-in env do not handle arguments\n" RST,
+			ft_putstr_fd("Built-in env do not handle arguments\n",
 				STDERR_FILENO);
 		}
 	}
@@ -75,8 +76,8 @@ static int	handle_builtin_single(t_input *input, t_exec *exec)
 	old_stdin = -1;
 	if (ft_strcmp(exec->block.cmd->cmd_args[0], "exit"))
 	{
-		minishell.input->last_exit_status = apply_redirections_builtin(&minishell,
-				&old_stdout, &old_stdin);
+		minishell.input->last_exit_status
+			= apply_redirections_builtin(&minishell, &old_stdout, &old_stdin);
 		if (minishell.input->last_exit_status)
 			return (minishell.input->last_exit_status);
 	}

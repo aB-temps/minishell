@@ -15,7 +15,7 @@ INPUTRC		:= ~/.inputrc
 # FLAGS & COMPILATOR SETTINGS =========================================================
 CC 			:= cc
 DEPS_FLAGS	:= -MMD -MP
-WARN_FLAGS	:= -Wall -Wextra -Werror -fsanitize=address
+WARN_FLAGS	:= -Wall -Wextra -Werror
 C_FLAGS		:= $(WARN_FLAGS) $(DEPS_FLAGS)
 INC_FLAGS	:= -I $(DIR_INC) -I $(DIR_INC_LIB)
 LIB_FLAGS	:= -L $(DIR_LIB) -lft

@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:06 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/03 16:28:28 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/04 02:05:03 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,31 +90,27 @@ static void	assign_var(t_list *existing_var, t_list **varlist_node,
 int	ft_export(char **cmd_args, t_minishell *minishell)
 {
 	t_list		*varlist_node;
-	t_list		*existing_var;
 	t_env_var	*var;
 	size_t		i;
-	size_t		args;
+	size_t		args_qty;
 	int			error;
 
 	i = 1;
 	error = FALSE;
-	args = ft_tablen(cmd_args) - 1;
-	if (!args)
+	args_qty = ft_tablen(cmd_args) - 1;
+	if (!args_qty)
 	{
 		print_env_export_noarg(minishell->input->env->list);
 		return (0);
 	}
-	while (i <= args)
+	while (i <= args_qty)
 	{
-		if (is_valid_varname(cmd_args[i]))
-		{
-			var = parse_assignation(cmd_args[i], minishell);
-			existing_var = find_env_var(var->key, minishell->input->env->list);
-			assign_var(existing_var, &varlist_node, var, minishell);
-		}
-		else
-			error = TRUE;
-		i++;
+		if (!is_valid_varname(cmd_args[i], &error))
+			continue ;
+		var = parse_assignation(cmd_args[i], minishell);
+		assign_var(find_env_var(var->key, minishell->input->env->list),
+			&varlist_node, var, minishell);
+		++i;
 	}
 	update_env_array(minishell->input, minishell->exec);
 	return (error);
