@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_block.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:43:07 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/04 22:06:00 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/06 19:30:56 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static int	handle_block(t_exec *exec, t_input *input, size_t i)
 	}
 	if (ret == 0)
 	{
+		if (input->last_exit_status != 1)
+			input->last_exit_status = 0;
 		close_and_swap(exec->pipe_fds);
 		return (0);
 	}
