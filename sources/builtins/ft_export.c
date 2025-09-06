@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:06 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/04 02:05:03 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/06 10:16:35 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	ft_export(char **cmd_args, t_minishell *minishell)
 	size_t		args_qty;
 	int			error;
 
-	i = 1;
+	i = 0;
 	error = FALSE;
 	args_qty = ft_tablen(cmd_args) - 1;
 	if (!args_qty)
@@ -103,14 +103,13 @@ int	ft_export(char **cmd_args, t_minishell *minishell)
 		print_env_export_noarg(minishell->input->env->list);
 		return (0);
 	}
-	while (i <= args_qty)
+	while (++i <= args_qty)
 	{
 		if (!is_valid_varname(cmd_args[i], &error))
 			continue ;
 		var = parse_assignation(cmd_args[i], minishell);
 		assign_var(find_env_var(var->key, minishell->input->env->list),
 			&varlist_node, var, minishell);
-		++i;
 	}
 	update_env_array(minishell->input, minishell->exec);
 	return (error);

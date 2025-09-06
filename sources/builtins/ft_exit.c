@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:17 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/04 01:40:46 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/06 19:38:12 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ static void	print_numeric_error(char *arg, t_input *input, t_exec *exec)
 
 void	ft_exit(char **cmd, t_minishell *minishell)
 {
-	int	nb;
-	int	error;
+	long	nb;
+	int		error;
 
 	error = 0;
 	if (minishell->exec->block_qty == 1)
@@ -66,7 +66,9 @@ void	ft_exit(char **cmd, t_minishell *minishell)
 		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
 		return ;
 	}
-	nb = ft_atoi(cmd[1], &error);
+	nb = ft_atoi_long(cmd[1], &error);
+	if (error)
+		print_numeric_error(cmd[1], minishell->input, minishell->exec);
 	minishell->input->last_exit_status = nb % 256;
 	exit_minishell(minishell->input, minishell->exec,
 		minishell->input->last_exit_status);

@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:45:04 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/16 20:06:34 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/06 19:36:21 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ enum						e_bool
 int							ft_tolower(int c);
 int							ft_toupper(int c);
 int							ft_atoi(const char *str, int *error);
+long						ft_atoi_long(const char *str, int *error);
 int							ft_isalpha(int c);
 int							ft_isdigit(int c);
 int							ft_isalnum(int c);

@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:42 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/16 20:17:11 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/06 19:39:11 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "checking.h"
 # include "input.h"
 # include "utils.h"
-# include <linux/limits.h>
 # include <stdio.h>
 
 typedef struct s_exec		t_exec;
