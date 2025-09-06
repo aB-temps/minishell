@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/04 01:46:12 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/06 19:39:20 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "text_formatting.h"
+#include <limits.h>
 
 int	ft_pwd(void)
 {

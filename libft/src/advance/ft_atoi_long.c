@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/06 19:36:12 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/06 19:36:13 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/06 19:40:31 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static long	check_overflow(long nb, int sign, int digit, int *error)
 	return (nb * 10 + sign * digit);
 }
 
-long	ft_atoi(const char *str, int *error)
+long	ft_atoi_long(const char *str, int *error)
 {
 	long	nb;
 	int		sign;

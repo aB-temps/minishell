@@ -6,7 +6,7 @@
 /*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:17 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/06 03:27:06 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/06 19:38:12 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_exit(char **cmd, t_minishell *minishell)
 		ft_putendl_fd("exit: too many arguments", STDERR_FILENO);
 		return ;
 	}
-	nb = ft_atoi(cmd[1], &error);
+	nb = ft_atoi_long(cmd[1], &error);
 	if (error)
 		print_numeric_error(cmd[1], minishell->input, minishell->exec);
 	minishell->input->last_exit_status = nb % 256;
