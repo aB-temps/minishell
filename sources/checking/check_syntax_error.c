@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_syntax_error.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:12:28 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/08 14:09:38 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 01:41:12 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ enum e_bool	check_syntax_error(t_input *input)
 
 void	print_syntax_error(t_input *input)
 {
-	ft_putstr_fd(RED "minishell: syntax error\n" RST, STDERR_FILENO);
+	ft_putstr_fd("minishell: syntax error\n", STDERR_FILENO);
 	input->last_exit_status = 2;
 }

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/01 23:18:22 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/04 01:41:51 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "errno.h"
 #include "exec.h"
 #include "signals.h"
+#include "text_formatting.h"
 #include "utils.h"
 #include <sys/stat.h>
 
@@ -23,10 +24,11 @@ void	handle_cmd_not_found(t_input *input, t_exec *exec)
 
 	temp = ft_strjoin("minishell: ", exec->block.cmd->cmd_args[0]);
 	error_msg = ft_strjoin(temp, ": command not found\n");
-	free(temp);
+	if (temp)
+		free(temp);
 	if (!error_msg)
 		exit_minishell(input, exec, 1);
-	write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
+	ft_putstr_fd(error_msg, STDERR_FILENO);
 	free(error_msg);
 	exit_minishell(input, exec, 127);
 }
@@ -38,10 +40,11 @@ void	handle_is_directory(t_input *input, t_exec *exec)
 
 	temp = ft_strjoin("minishell: ", exec->block.cmd->cmd_args[0]);
 	error_msg = ft_strjoin(temp, ": Is a directory\n");
-	free(temp);
+	if (temp)
+		free(temp);
 	if (!error_msg)
 		exit_minishell(input, exec, 1);
-	write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
+	ft_putstr_fd(error_msg, STDERR_FILENO);
 	free(error_msg);
 	exit_minishell(input, exec, 126);
 }

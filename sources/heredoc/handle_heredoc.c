@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:47:15 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/03 06:27:21 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/06 19:16:08 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ static void	fill_heredoc(t_token *token, int *fds, t_input *input)
 		free(line);
 	}
 	if (!line && g_sig != SIGINT)
-		ft_putstr_fd(YELLOW "warning : heredoc exited before EOF\n" RST,
-			STDERR_FILENO);
+		ft_putstr_fd("warning : heredoc exited before EOF\n", STDERR_FILENO);
 	if (g_sig == SIGINT)
 		safe_close(&fds[1]);
 	safe_close(&fds[0]);

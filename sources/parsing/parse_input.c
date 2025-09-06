@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parse_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/03 23:36:56 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/06 19:16:12 by enzo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
 #include "heredoc.h"
 #include "style.h"
 

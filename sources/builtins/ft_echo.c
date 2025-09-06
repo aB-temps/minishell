@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/25 15:01:21 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 01:36:34 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,17 +57,11 @@ int	ft_echo(char **args)
 	const size_t	args_qty = ft_tablen(args);
 	enum e_bool		n_param;
 	size_t			i;
-	size_t			j;
 
 	i = 1;
 	n_param = FALSE;
-	while (args[i] && ft_strchr(args[i], '-'))
-	{
-		j = i;
+	if (args[i] && ft_strchr(args[i], '-'))
 		parse_param(args[i], &n_param, &i);
-		if (i == j)
-			break ;
-	}
 	while (i < args_qty)
 	{
 		ft_putstr_fd(args[i], STDOUT_FILENO);

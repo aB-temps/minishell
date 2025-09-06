@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/27 14:40:34 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/04 01:46:12 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
+#include "text_formatting.h"
 
 int	ft_pwd(void)
 {
-	char		*cwd;
 	const char	msg[109] = "pwd: error retrieving current directory: getcwd:\
-cannot access parent directories: No such file or directory";
+	cannot access parent directories: No such file or directory";
+	char		*cwd;
 
 	cwd = (void *)0;
 	cwd = getcwd(cwd, PATH_MAX);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 04:56:51 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/26 16:09:39 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/04 01:43:20 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ enum e_bool	safe_get_cwd(char **wd)
 	*wd = getcwd(*wd, PATH_MAX);
 	if (!(*wd))
 	{
-		ft_putstr_fd(RED "cd: error getting current directory\n" RST,
-			STDERR_FILENO);
+		ft_putstr_fd("cd: error getting current directory\n", STDERR_FILENO);
 		return (FALSE);
 	}
 	return (TRUE);
@@ -53,7 +52,8 @@ enum e_bool	init_target_from_home(char **target, t_minishell *minishell)
 	home_value = get_env_value("HOME", minishell->input);
 	if (!home_value || !ft_strlen(home_value))
 	{
-		ft_putstr_fd(RED "cd: HOME not set\n" RST, STDERR_FILENO);
+		ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
+		free(home_value);
 		return (FALSE);
 	}
 	*target = home_value;

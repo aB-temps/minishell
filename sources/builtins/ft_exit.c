@@ -6,13 +6,14 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:17 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/30 17:29:38 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/04 01:40:46 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 #include "exec.h"
 #include "input.h"
+#include "text_formatting.h"
 
 static int	is_valid_number(char *str)
 {
