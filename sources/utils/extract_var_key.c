@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:41 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 16:21:59 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/07 14:39:19 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*extract_var_key(char *s)
 	while (s[start] && s[start] != '$')
 		start++;
 	end = start + 1;
-	while (s[end] && s[end] != '$' && ft_isalnum(s[end]))
+	while (s[end] && s[end] != '$' && (ft_isalnum(s[end]) || s[end] == '_'))
 		end++;
 	var_key = ft_strndup(s + start, end - start);
 	if (!var_key)
