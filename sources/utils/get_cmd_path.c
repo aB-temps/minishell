@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:06:14 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/01 22:10:59 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/07 23:31:39 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,18 +61,19 @@ char	*get_cmd_path(t_input *input, t_exec *exec, char *cmd)
 		return (handle_absolute_path(exec, cmd));
 	if (!get_splited_path(input, &splited_path))
 	{
-		cmd_path = ft_strjoin("./", cmd);
-		if (!cmd_path)
-			return (NULL);
-		if (!access(cmd_path, X_OK))
-			return (cmd_path);
-		exec->return_error = 126;
-		return (cmd_path);
+		exec->return_error = 127;
+		return (ft_strdup(cmd));
 	}
 	if (!splited_path)
 		return (NULL);
 	if (!search_path(splited_path, cmd, &cmd_path))
 		return (free_tab_return_null(splited_path));
+	if (!cmd_path)
+	{
+		exec->return_error = 127;
+		free_tab_return_null(splited_path);
+		return (ft_strdup(cmd));
+	}
 	free_tab_return_null(splited_path);
 	return (cmd_path);
 }
