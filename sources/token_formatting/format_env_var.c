@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:19 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 16:57:09 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/07 14:37:05 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ static t_vector	*parse_env_var(char *s, t_input *input)
 		return ((void *)0);
 	while (s[i])
 	{
-		if (s[i] == '$' && s[i + 1] && (ft_isalnum(s[i + 1]) || s[i
-					+ 1] == '?'))
+		if (s[i] == '$' && s[i + 1] && (ft_isalnum(s[i + 1]) || s[i + 1] == '?'
+				|| s[i + 1] == '_'))
 		{
 			if (s[i + 1] == '?')
 				var = last_exit_status_to_var(input);
