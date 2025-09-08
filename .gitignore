@@ -8,6 +8,8 @@
 *.out
 
 # Test and debug files
+sources/debug/*
+includes/debug.h
 *.test
 outfile*
 infile*

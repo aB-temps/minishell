@@ -55,8 +55,14 @@ COMPONENTS			:=	PARSING 					\
 						ENV							\
 						BUILTINS					\
 						SIGNALS						\
+						DEBUG						\
 
 # FILES ===============================================================================
+
+F_DEBUG				:=	print_exec.c				\
+						print_input.c				\
+						print_heredoc.c				\
+						print_tab.c					\
 
 F_CHECKING			:=	check_syntax_error.c		\
 						is_operator.c				\
