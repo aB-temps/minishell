@@ -6,11 +6,10 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:54:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/07 14:40:53 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:02:44 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "debug.h"
 #include "heredoc.h"
 
 void	*parse_input(t_input *input)

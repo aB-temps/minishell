@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_block.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:43:07 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/08 11:43:51 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 12:04:44 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	handle_block(t_exec *exec, t_input *input, size_t i)
 		close_and_swap(exec->pipe_fds);
 		return (0);
 	}
-	return(handle_block_with_cmd(input, exec, i));
+	return (handle_block_with_cmd(input, exec, i));
 }
 
 enum e_bool	set_blocks(t_exec *exec, t_input *input)
