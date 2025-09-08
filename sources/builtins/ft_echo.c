@@ -6,13 +6,13 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/04 01:36:34 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static enum e_bool	is_valid_echo_param(char c)
+static bool	is_valid_echo_param(char c)
 {
 	const char	valid_params[1] = {'n'};
 	size_t		i;
@@ -21,14 +21,14 @@ static enum e_bool	is_valid_echo_param(char c)
 	while (i < 1)
 	{
 		if (c == valid_params[i])
-			return (TRUE);
+			return (true);
 		else
 			i++;
 	}
-	return (FALSE);
+	return (false);
 }
 
-static void	parse_param(char *arg, enum e_bool *n_param, size_t *i)
+static void	parse_param(char *arg, bool *n_param, size_t *i)
 {
 	size_t	j;
 
@@ -44,7 +44,7 @@ static void	parse_param(char *arg, enum e_bool *n_param, size_t *i)
 			*n_param = (arg[j] == 'n');
 		else
 		{
-			*n_param = FALSE;
+			*n_param = false;
 			return ;
 		}
 		j++;
@@ -55,11 +55,11 @@ static void	parse_param(char *arg, enum e_bool *n_param, size_t *i)
 int	ft_echo(char **args)
 {
 	const size_t	args_qty = ft_tablen(args);
-	enum e_bool		n_param;
+	bool		n_param;
 	size_t			i;
 
 	i = 1;
-	n_param = FALSE;
+	n_param = false;
 	if (args[i] && ft_strchr(args[i], '-'))
 		parse_param(args[i], &n_param, &i);
 	while (i < args_qty)

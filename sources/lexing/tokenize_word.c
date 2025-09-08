@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_word.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:17:08 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/16 20:10:28 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ void	tokenize_word(t_input *input, size_t *i, char *line)
 {
 	char		*raw_content;
 	size_t		j;
-	enum e_bool	to_link;
+	bool	to_link;
 
 	j = *i;
-	to_link = FALSE;
+	to_link = false;
 	while (line[*i] && !is_whitespace(line[*i]) && !is_operator(line[*i])
 		&& !is_quote(line[*i]))
 		(*i)++;
@@ -28,7 +28,7 @@ void	tokenize_word(t_input *input, size_t *i, char *line)
 	if (!raw_content)
 		exit_parsing(input, EXIT_FAILURE);
 	if (is_quote(line[*i]))
-		to_link = TRUE;
+		to_link = true;
 	create_token(input, ARG, raw_content, to_link);
 	input->token_qty++;
 }

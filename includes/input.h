@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:35 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/30 17:22:26 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:24:13 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ struct						s_env
 struct						s_token
 {
 	ssize_t					type;
-	enum e_bool				link_to_next;
+	bool				link_to_next;
 	char					*raw_content;
 	void					*formatted_content;
 };
@@ -59,18 +59,18 @@ struct						s_input
 {
 	t_vector				*v_tokens;
 	t_env					*env;
-	ssize_t					token_qty;
 	char					*prompt;
 	char					*line;
-	int						last_exit_status;
 	t_list					*hd_list;
+	ssize_t					token_qty;
+	int						last_exit_status;
 };
 
 void						init_env(char **env, t_input *input);
 
 void						init_token(t_token *token);
 void						create_token(t_input *input, int type,
-								char *raw_content, enum e_bool to_link);
+								char *raw_content, bool to_link);
 void						clear_v_token(t_vector *tokens);
 void						clear_token(t_token *token);
 t_token						dup_token(t_token token);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_operator.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:17:19 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/08 13:44:17 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 12:31:41 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ static void	tokenize_redir(t_input *input, size_t *i, char *line,
 	{
 		if (*i < line_len - 1 && line[*i + 1] == '>')
 		{
-			create_token(input, APPEND, ">>", FALSE);
+			create_token(input, APPEND, ">>", false);
 			(*i)++;
 		}
 		else
-			create_token(input, REDIR_OUT, ">", FALSE);
+			create_token(input, REDIR_OUT, ">", false);
 	}
 	else if (line[*i] == '<')
 	{
 		if (*i < line_len - 1 && line[*i + 1] == '<')
 		{
-			create_token(input, HEREDOC, "<<", FALSE);
+			create_token(input, HEREDOC, "<<", false);
 			(*i)++;
 		}
 		else
-			create_token(input, REDIR_IN, "<", FALSE);
+			create_token(input, REDIR_IN, "<", false);
 	}
 	(*i)++;
 	input->token_qty++;
@@ -44,7 +44,7 @@ void	tokenize_operator(t_input *input, size_t *i, char *line,
 {
 	if (line[*i] == '|')
 	{
-		create_token(input, PIPE, "|", FALSE);
+		create_token(input, PIPE, "|", false);
 		(*i)++;
 		input->token_qty++;
 	}

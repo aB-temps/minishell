@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   is_operator.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:12:23 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/08 14:10:12 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 12:24:13 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <checking.h>
 
-enum e_bool	is_operator(char c)
+bool	is_operator(char c)
 {
 	return (c == '<' || c == '>' || c == '|');
 }

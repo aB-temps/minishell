@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:07:38 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/06 10:18:22 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "text_formatting.h"
 #include <stdio.h>
 
-enum e_bool	is_valid_varname(char *s, int *error)
+bool	is_valid_varname(char *s, int *error)
 {
 	size_t	i;
 
@@ -24,8 +24,8 @@ enum e_bool	is_valid_varname(char *s, int *error)
 		ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 		ft_putstr_fd(s, STDERR_FILENO);
 		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-		*error = TRUE;
-		return (FALSE);
+		*error = true;
+		return (false);
 	}
 	++i;
 	while (s[i] && s[i] != '=')
@@ -35,10 +35,10 @@ enum e_bool	is_valid_varname(char *s, int *error)
 			ft_putstr_fd("minishell: export: `", STDERR_FILENO);
 			ft_putstr_fd(s, STDERR_FILENO);
 			ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
-			*error = TRUE;
-			return (FALSE);
+			*error = true;
+			return (false);
 		}
 		i++;
 	}
-	return (TRUE);
+	return (true);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_whitespace.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:12:07 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/08 14:11:22 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 12:24:13 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
