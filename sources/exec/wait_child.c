@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:49:29 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/03 07:02:07 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 11:32:06 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	wait_child(t_exec *exec, int *exit_status)
 	}
 	if (!last_block_has_pid)
 	{
-		if (exec->block_qty > 1)
+		if (exec->block_qty > 1 && *exit_status != 1)
 			*exit_status = 0;
 		if (g_sig != 0)
 			handle_no_pid();

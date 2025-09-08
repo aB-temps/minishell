@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_block.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:43:07 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/06 19:30:56 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/08 11:39:45 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static int	handle_block(t_exec *exec, t_input *input, size_t i)
 		ret = 0;
 		input->last_exit_status = 1;
 	}
+	else
+		input->last_exit_status = 0;
 	if (ret == 0)
 	{
 		if (input->last_exit_status != 1)
@@ -36,9 +38,7 @@ static int	handle_block(t_exec *exec, t_input *input, size_t i)
 		close_and_swap(exec->pipe_fds);
 		return (0);
 	}
-	if (!handle_block_with_cmd(input, exec, i))
-		return (1);
-	return (0);
+	return(handle_block_with_cmd(input, exec, i));
 }
 
 enum e_bool	set_blocks(t_exec *exec, t_input *input)
@@ -53,6 +53,7 @@ enum e_bool	set_blocks(t_exec *exec, t_input *input)
 			if (pipe(exec->pipe_fds->fd2) == -1)
 				return (FALSE);
 		ret = handle_block(exec, input, i);
+		printf("%d\n", input->last_exit_status);
 		if (ret == 1)
 			return (FALSE);
 		i++;

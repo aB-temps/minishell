@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:03:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/01 19:21:22 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/08 11:39:13 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,7 @@ enum e_bool					is_builtin(char *cmd);
 int							init_block_cmd(t_input *input, t_exec *exec,
 								t_cmd **cmd, ssize_t *i);
 void						cleanup_io_fds(t_exec *exec);
-enum e_bool					handle_block_no_cmd(t_exec *exec);
-enum e_bool					handle_block_with_cmd(t_input *input, t_exec *exec,
+int							handle_block_with_cmd(t_input *input, t_exec *exec,
 								size_t i);
 void						prepare_redir(t_input *input, t_exec *exec,
 								size_t i);
