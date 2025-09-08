@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:17:14 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/05 01:51:36 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:27:28 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	*tokenize_quote(t_input *input, size_t *i, char *line)
 {
-	ssize_t	j;
+	size_t	j;
 	int		token_type;
 	char	*content;
 

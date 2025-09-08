@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:45:00 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/08 11:38:57 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 12:44:54 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	cleanup_io_fds(t_exec *exec)
 		safe_close(&exec->block.io_fds[1]);
 	}
 }
-
-
 
 int	handle_block_with_cmd(t_input *input, t_exec *exec, size_t i)
 {

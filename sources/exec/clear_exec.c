@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:16:01 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/28 20:19:43 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 12:31:41 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	free_cmd(t_cmd **cmd)
 	}
 }
 
-enum e_bool	free_and_close_exec(t_input *input, t_exec *exec)
+bool	free_and_close_exec(t_input *input, t_exec *exec)
 {
 	if (exec)
 	{
@@ -41,5 +41,5 @@ enum e_bool	free_and_close_exec(t_input *input, t_exec *exec)
 		free_cmd(&exec->block.cmd);
 		free(exec);
 	}
-	return (FALSE);
+	return (false);
 }

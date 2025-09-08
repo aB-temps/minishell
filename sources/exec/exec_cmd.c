@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 10:55:10 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/04 01:41:51 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static void	handle_child_process(t_input *input, t_exec *exec, size_t i)
 	exit_minishell(input, exec, exit_code);
 }
 
-enum e_bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
+bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
 {
 	*pid = fork();
 	if (*pid == -1)
@@ -90,5 +90,5 @@ enum e_bool	exec_cmd(t_input *input, t_exec *exec, int *pid, size_t i)
 	}
 	if (*pid == 0)
 		handle_child_process(input, exec, i);
-	return (TRUE);
+	return (true);
 }

@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:31 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/30 10:39:32 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@
 #include "utils.h"
 #include <linux/limits.h>
 
-enum e_bool	init_exec(t_exec **exec, t_input *input)
+bool	init_exec(t_exec **exec, t_input *input)
 {
 	*exec = malloc(sizeof(t_exec));
 	if (!*exec)
-		return (FALSE);
+		return (false);
 	(*exec)->block_qty = count_blocks((t_token *)input->v_tokens->array,
 			input->token_qty);
 	(*exec)->pid_child = ft_calloc((*exec)->block_qty, sizeof(pid_t));
 	if (!(*exec)->pid_child)
 	{
 		free(*exec);
-		return (FALSE);
+		return (false);
 	}
 	(*exec)->block.cmd = NULL;
 	(*exec)->block.io_fds[0] = -1;
@@ -41,7 +41,7 @@ enum e_bool	init_exec(t_exec **exec, t_input *input)
 	(*exec)->pipe_fds->fd2[0] = -1;
 	(*exec)->pipe_fds->fd2[1] = -1;
 	(*exec)->return_error = input->last_exit_status;
-	return (TRUE);
+	return (true);
 }
 
 static void	init_empty_env(t_input *input)
@@ -87,7 +87,7 @@ void	init_env(char **env, t_input *input)
 void	init_token(t_token *token)
 {
 	token->type = -1;
-	token->link_to_next = FALSE;
+	token->link_to_next = false;
 	token->raw_content = (void *)0;
 	token->formatted_content = (void *)0;
 }

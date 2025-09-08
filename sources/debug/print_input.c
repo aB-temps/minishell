@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/06 21:51:57 by enchevri          #+#    #+#             */
-/*   Updated: 2025/08/06 21:51:59 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 10:55:02 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	print_input(t_input *input, char *part)
 			&& ft_strlen(array[i].raw_content) > 2)
 		{
 			printf("Formatted Content :\n");
-			// print_token_heredoc(array[i]);
+			print_token_heredoc(array[i]);
 		}
 		else
 			printf("Formatted Content : '%s%s%s'\n\n", BOLD,
