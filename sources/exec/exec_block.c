@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:43:07 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:49:29 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static int	handle_block(t_exec *exec, t_input *input, size_t i)
 
 	cleanup_io_fds(exec);
 	free_cmd(&exec->block.cmd);
-	block_idx = i;
+	block_idx = (ssize_t)i;
 	ret = init_block_cmd(input, exec, &exec->block.cmd, &block_idx);
 	if (ret == -1)
 		return (1);
-	if (!create_files_in_block(input, exec, i))
+	if (!create_files_in_block(input, exec, (ssize_t)i))
 	{
 		ret = 0;
 		input->last_exit_status = 1;

@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:15:46 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/02 15:11:32 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:50:41 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**env_list_to_array(t_list *env)
 	size_t	len;
 
 	i = 0;
-	a_env = ft_calloc(ft_lstsize(env) + 1, sizeof(char *));
+	a_env = ft_calloc((size_t)ft_lstsize(env) + 1, sizeof(char *));
 	if (!a_env)
 		return ((void *)0);
 	while (env)

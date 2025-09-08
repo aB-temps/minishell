@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:22 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/08 12:24:13 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:38:36 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ t_list						*lstgetprev(t_list *lst, t_list *elem);
 int							safe_close(int *fd);
 void						unlink_free_tmpfile(char *tmpfile);
 void						quoted_arg_len(char quote, size_t *i, char *line);
-ssize_t						count_command_args(t_input *input, t_token *array,
+size_t						count_command_args(t_input *input, t_token *array,
 								ssize_t *i);
 void						remove_token_if(t_input *input, t_token **array,
 								bool (*remove_condition)(t_token *array,

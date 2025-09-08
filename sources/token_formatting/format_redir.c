@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:13 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:40:18 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static char	*unquote_arg(char *qtd_arg)
 	return (ft_strdup(qtd_arg));
 }
 
-static char	*join_unquoted_args(t_token *array, size_t i, size_t *j,
+static char	*join_unquoted_args(t_token *array, ssize_t i, size_t *j,
 		bool *expand)
 {
 	char	*content;
@@ -69,8 +69,8 @@ static void	tag_tokens_to_remove(t_token *array, ssize_t *i, size_t j)
 void	format_redir(t_input *input, ssize_t *i)
 {
 	t_token		*array;
-	bool	expand;
 	size_t		j;
+	bool	expand;
 
 	array = (t_token *)input->v_tokens->array;
 	expand = false;

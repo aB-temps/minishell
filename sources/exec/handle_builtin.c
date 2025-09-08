@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/08 14:03:13 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/04 01:47:34 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:45:35 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,14 @@ static int	handle_builtin_pipeline(t_input *input, t_exec *exec,
 	}
 	if (*pid_child == 0)
 	{
-		prepare_redir(input, exec, i);
+		prepare_redir(input, exec, (size_t)i);
 		exec_builtin(exec->block.cmd->cmd_args, &minishell);
 		exit_minishell(input, exec, minishell.input->last_exit_status);
 	}
 	return (0);
 }
+
+#include <limits.h>
 
 static int	handle_builtin_single(t_input *input, t_exec *exec)
 {
@@ -84,6 +86,7 @@ static int	handle_builtin_single(t_input *input, t_exec *exec)
 	exec_builtin(exec->block.cmd->cmd_args, &minishell);
 	restore_redirections_builtin(input, exec, old_stdout, old_stdin);
 	return (minishell.input->last_exit_status);
+	
 }
 
 int	handle_builtin(t_input *input, t_exec *exec, int *pid_child, int i)

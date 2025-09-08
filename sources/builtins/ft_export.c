@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:06 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/08 12:31:41 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:51:02 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static t_env_var	*parse_assignation(char *arg, t_minishell *minishell)
 	}
 	else
 	{
-		var->key = ft_strndup(arg, ft_strchr(arg, '=') - arg);
+		var->key = ft_strndup(arg, (size_t)(ft_strchr(arg, '=') - arg));
 		if (!var->key)
 			clear_env_var(var, minishell->input, minishell->exec);
 		var->value = ft_strdup(ft_strchr(arg, '=') + 1);
