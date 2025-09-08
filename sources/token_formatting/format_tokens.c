@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 22:24:05 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/08 08:45:35 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/09 00:28:42 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 static void	handle_env_var_expansion(t_input *input)
 {
 	t_token	*array;
-	int		last_type;
 	ssize_t	i;
+	int		last_type;
 
 	array = (t_token *)input->v_tokens->array;
 	last_type = -1;
@@ -27,8 +27,9 @@ static void	handle_env_var_expansion(t_input *input)
 			last_type = array[i].type;
 		if (array[i].type != S_QUOTES
 			&& ft_strchr(array[i].raw_content, '$')
-			&& ft_strlen(array[i].raw_content) != 1
-			&& last_type != HEREDOC)
+			&& last_type != HEREDOC
+			&& !(ft_strlen(array[i].raw_content) == 1
+				&& !array[i].link_to_next))
 		{
 			array[i].formatted_content
 				= substitute_env_var(array[i].raw_content, input);
