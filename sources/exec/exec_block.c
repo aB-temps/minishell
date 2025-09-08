@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:43:07 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/08 11:39:45 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 11:43:51 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ enum e_bool	set_blocks(t_exec *exec, t_input *input)
 			if (pipe(exec->pipe_fds->fd2) == -1)
 				return (FALSE);
 		ret = handle_block(exec, input, i);
-		printf("%d\n", input->last_exit_status);
 		if (ret == 1)
 			return (FALSE);
 		i++;
