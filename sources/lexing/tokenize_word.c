@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:17:08 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:57:38 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 void	tokenize_word(t_input *input, size_t *i, char *line)
 {
-	char		*raw_content;
-	size_t		j;
+	char	*raw_content;
+	size_t	j;
 	bool	to_link;
 
 	j = *i;

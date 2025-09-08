@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 19:43:35 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/08 12:24:13 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:55:13 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ struct						s_env
 struct						s_token
 {
 	ssize_t					type;
-	bool				link_to_next;
+	bool					link_to_next;
 	char					*raw_content;
 	void					*formatted_content;
 };

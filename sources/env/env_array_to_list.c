@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:15:49 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/08 12:50:19 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:55:39 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_list	*env_array_to_list(char **env)
 		env_var = ft_calloc(1, sizeof(t_env_var));
 		if (!env_var)
 			return (exit_env_a_to_l(env_var, l_env));
-		env_var->key = ft_strndup(env[i], (size_t)(ft_strchr(env[i], '=') - env[i]));
+		env_var->key = ft_strndup(env[i], ft_strchr(env[i], '=') - env[i]);
 		if (!env_var->key)
 			return (exit_env_a_to_l(env_var, l_env));
 		env_var->value = ft_strdup(ft_strchr(env[i], '=') + 1);

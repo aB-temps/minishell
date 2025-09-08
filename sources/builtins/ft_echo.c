@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:57:03 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	parse_param(char *arg, bool *n_param, size_t *i)
 int	ft_echo(char **args)
 {
 	const size_t	args_qty = ft_tablen(args);
-	bool		n_param;
+	bool			n_param;
 	size_t			i;
 
 	i = 1;
