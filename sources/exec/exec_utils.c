@@ -6,7 +6,7 @@
 /*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:45:00 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/03 06:52:52 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 11:38:57 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,9 @@ void	cleanup_io_fds(t_exec *exec)
 	}
 }
 
-enum e_bool	handle_block_no_cmd(t_exec *exec)
-{
-	close_and_swap(exec->pipe_fds);
-	return (TRUE);
-}
 
-enum e_bool	handle_block_with_cmd(t_input *input, t_exec *exec, size_t i)
+
+int	handle_block_with_cmd(t_input *input, t_exec *exec, size_t i)
 {
 	int	builtin_result;
 
@@ -41,7 +37,7 @@ enum e_bool	handle_block_with_cmd(t_input *input, t_exec *exec, size_t i)
 		if (builtin_result == -1)
 		{
 			free_cmd(&exec->block.cmd);
-			return (FALSE);
+			return (1);
 		}
 		if (exec->block_qty == 1)
 			input->last_exit_status = builtin_result;
@@ -49,9 +45,9 @@ enum e_bool	handle_block_with_cmd(t_input *input, t_exec *exec, size_t i)
 	else if (!exec_cmd(input, exec, &exec->pid_child[i], i))
 	{
 		free_cmd(&exec->block.cmd);
-		return (FALSE);
+		return (1);
 	}
 	free_cmd(&exec->block.cmd);
 	close_and_swap(exec->pipe_fds);
-	return (TRUE);
+	return (0);
 }
