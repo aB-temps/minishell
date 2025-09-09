@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   print_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 11:33:44 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/03 06:26:47 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 16:21:37 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	print_cmd(t_cmd *cmd)
 		print_tab(cmd->cmd_args);
 	}
 	dprintf(STDERR_FILENO, UNDL "Builtin:" RST);
-	if (cmd->is_builtin == TRUE)
+	if (cmd->is_builtin == true)
 		dprintf(STDERR_FILENO, BOLD " Yes\n" RST);
 	else
 		dprintf(STDERR_FILENO, BOLD " No\n" RST);

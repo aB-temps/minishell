@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd_path.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/04 16:06:14 by enchevri          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2025/09/08 11:06:06 by enchevri         ###   ########lyon.fr   */
+=======
+/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +19,7 @@
 #include "token_formatting.h"
 #include "utils.h"
 
-static enum e_bool	search_path(char **path, char *cmd, char **cmd_path)
+static bool	search_path(char **path, char *cmd, char **cmd_path)
 {
 	int	i;
 
@@ -26,17 +30,17 @@ static enum e_bool	search_path(char **path, char *cmd, char **cmd_path)
 		*cmd_path = ft_strjoin(path[i], "/");
 		*cmd_path = str_free_to_join(*cmd_path, cmd);
 		if (!*cmd_path)
-			return (FALSE);
+			return (false);
 		if (!access(*cmd_path, X_OK))
-			return (TRUE);
+			return (true);
 		free(*cmd_path);
 		++i;
 	}
 	*cmd_path = NULL;
-	return (TRUE);
+	return (true);
 }
 
-static enum e_bool	get_splited_path(t_input *input, char ***splited_path)
+static bool	get_splited_path(t_input *input, char ***splited_path)
 {
 	char	*path;
 
@@ -44,11 +48,11 @@ static enum e_bool	get_splited_path(t_input *input, char ***splited_path)
 	if (!ft_strlen(path))
 	{
 		free(path);
-		return (FALSE);
+		return (false);
 	}
 	*splited_path = ft_split(path, ':');
 	free(path);
-	return (TRUE);
+	return (true);
 }
 
 char	*get_cmd_path(t_input *input, t_exec *exec, char *cmd)

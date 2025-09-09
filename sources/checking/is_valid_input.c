@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_valid_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:12:10 by abetemps          #+#    #+#             */
-/*   Updated: 2025/08/08 14:09:57 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "style.h"
 #include <unistd.h>
 
-static enum e_bool	are_quotes_paired(char *s)
+static bool	are_quotes_paired(char *s)
 {
 	size_t	i;
 	size_t	s_quotes;
@@ -34,23 +34,23 @@ static enum e_bool	are_quotes_paired(char *s)
 	return (s_quotes % 2 == 0 && d_quotes % 2 == 0);
 }
 
-enum e_bool	is_valid_input(char *line, t_input *input)
+bool	is_valid_input(char *line, t_input *input)
 {
 	size_t	i;
 
 	i = 0;
 	if (!ft_strlen(line))
-		return (FALSE);
+		return (false);
 	if (!are_quotes_paired(line))
 	{
 		print_syntax_error(input);
-		return (FALSE);
+		return (false);
 	}
 	while (line[i])
 	{
 		if (!is_whitespace(line[i]))
-			return (TRUE);
+			return (true);
 		i++;
 	}
-	return (FALSE);
+	return (false);
 }

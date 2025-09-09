@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/01 04:56:51 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/04 01:43:20 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,24 @@ void	clear_wds(char *cwd, char *target)
 	}
 }
 
-enum e_bool	safe_get_cwd(char **wd)
+bool	safe_get_cwd(char **wd)
 {
 	*wd = getcwd(*wd, PATH_MAX);
 	if (!(*wd))
 	{
 		ft_putstr_fd("cd: error getting current directory\n", STDERR_FILENO);
-		return (FALSE);
+		return (false);
 	}
-	return (TRUE);
+	return (true);
 }
 
-enum e_bool	init_target_from_arg(char **target, char *arg)
+bool	init_target_from_arg(char **target, char *arg)
 {
 	*target = ft_strdup(arg);
 	return (*target != NULL);
 }
 
-enum e_bool	init_target_from_home(char **target, t_minishell *minishell)
+bool	init_target_from_home(char **target, t_minishell *minishell)
 {
 	char	*home_value;
 
@@ -54,7 +54,7 @@ enum e_bool	init_target_from_home(char **target, t_minishell *minishell)
 	{
 		ft_putstr_fd("cd: HOME not set\n", STDERR_FILENO);
 		free(home_value);
-		return (FALSE);
+		return (false);
 	}
 	*target = home_value;
 	return (*target != NULL);

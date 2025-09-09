@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   format_command.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/29 14:35:58 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/01 19:20:52 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/08 12:35:27 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "token_formatting.h"
 
-static void	*joinback_args(t_token *array, size_t *k, size_t *arg_qty)
+static void	*joinback_args(t_token *array, ssize_t *k, size_t *arg_qty)
 {
 	char	*content;
 
@@ -38,7 +38,7 @@ static void	*joinback_args(t_token *array, size_t *k, size_t *arg_qty)
 	return (content);
 }
 
-static char	*fill_args_array(t_token *array, size_t *k, size_t *arg_qty)
+static char	*fill_args_array(t_token *array, ssize_t *k, size_t *arg_qty)
 {
 	char	*content;
 
@@ -57,7 +57,7 @@ static char	**command_args_to_array(t_input *input, t_token *array, ssize_t *i,
 {
 	char	**args_array;
 	size_t	j;
-	size_t	k;
+	ssize_t	k;
 
 	j = 0;
 	k = *i;
@@ -85,7 +85,7 @@ static char	**command_args_to_array(t_input *input, t_token *array, ssize_t *i,
 void	format_command(t_input *input, t_token *array, ssize_t *i)
 {
 	char	**tmp;
-	ssize_t	arg_qty;
+	size_t	arg_qty;
 
 	tmp = (char **)array[*i].formatted_content;
 	arg_qty = count_command_args(input, array, i);

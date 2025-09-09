@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_block.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:43:07 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/08 11:43:51 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 12:49:29 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static int	handle_block(t_exec *exec, t_input *input, size_t i)
 
 	cleanup_io_fds(exec);
 	free_cmd(&exec->block.cmd);
-	block_idx = i;
+	block_idx = (ssize_t)i;
 	ret = init_block_cmd(input, exec, &exec->block.cmd, &block_idx);
 	if (ret == -1)
 		return (1);
-	if (!create_files_in_block(input, exec, i))
+	if (!create_files_in_block(input, exec, (ssize_t)i))
 	{
 		ret = 0;
 		input->last_exit_status = 1;
@@ -38,10 +38,10 @@ static int	handle_block(t_exec *exec, t_input *input, size_t i)
 		close_and_swap(exec->pipe_fds);
 		return (0);
 	}
-	return(handle_block_with_cmd(input, exec, i));
+	return (handle_block_with_cmd(input, exec, i));
 }
 
-enum e_bool	set_blocks(t_exec *exec, t_input *input)
+bool	set_blocks(t_exec *exec, t_input *input)
 {
 	size_t	i;
 	int		ret;
@@ -51,12 +51,12 @@ enum e_bool	set_blocks(t_exec *exec, t_input *input)
 	{
 		if (i != exec->block_qty - 1)
 			if (pipe(exec->pipe_fds->fd2) == -1)
-				return (FALSE);
+				return (false);
 		ret = handle_block(exec, input, i);
 		if (ret == 1)
-			return (FALSE);
+			return (false);
 		i++;
 	}
 	close_fd_exec(input, exec);
-	return (TRUE);
+	return (true);
 }

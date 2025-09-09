@@ -6,68 +6,67 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 18:14:21 by abetemps          #+#    #+#             */
-/*   Updated: 2025/09/04 01:36:34 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 17:02:28 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins.h"
 
-static enum e_bool	is_valid_echo_param(char c)
+static bool	is_valid_echo_param(char c)
 {
-	const char	valid_params[1] = {'n'};
-	size_t		i;
+	size_t	i;
 
 	i = 0;
 	while (i < 1)
 	{
-		if (c == valid_params[i])
-			return (TRUE);
+		if (c == 'n')
+			return (true);
 		else
 			i++;
 	}
-	return (FALSE);
+	return (false);
 }
 
-static void	parse_param(char *arg, enum e_bool *n_param, size_t *i)
+static bool	parse_param(char *arg, bool *n_param, size_t *i)
 {
 	size_t	j;
 
 	j = 0;
-	while (arg[j] && is_whitespace(arg[j]) && arg[j] != '-')
-		j++;
-	if (!arg[j] || !arg[j + 1])
-		return ;
-	j++;
-	while (arg[j])
+	if (!arg[j + 1])
+		return (false);
+	while (arg[++j])
 	{
 		if (is_valid_echo_param(arg[j]))
 			*n_param = (arg[j] == 'n');
 		else
 		{
-			*n_param = FALSE;
-			return ;
+			*n_param = false;
+			return (false);
 		}
-		j++;
 	}
 	(*i)++;
+	return (true);
 }
 
 int	ft_echo(char **args)
 {
 	const size_t	args_qty = ft_tablen(args);
-	enum e_bool		n_param;
+	bool			n_param;
 	size_t			i;
 
 	i = 1;
-	n_param = FALSE;
-	if (args[i] && ft_strchr(args[i], '-'))
-		parse_param(args[i], &n_param, &i);
+	n_param = false;
+	while (i < args_qty && args[i][0] == '-')
+	{
+		if (!parse_param(args[i], &n_param, &i))
+			break ;
+	}
 	while (i < args_qty)
 	{
 		ft_putstr_fd(args[i], STDOUT_FILENO);
 		if (i < args_qty - 1)
 			ft_putstr_fd(" ", STDOUT_FILENO);
-		i++;
+		++i;
 	}
 	if (!n_param)
 		ft_putstr_fd("\n", STDOUT_FILENO);

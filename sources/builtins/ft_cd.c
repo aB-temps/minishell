@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/04 01:40:08 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	change_dir(char *cwd, char *target, t_minishell *minishell)
 	return (EXIT_SUCCESS);
 }
 
-static enum e_bool	init_wds(char **cwd, char **target, char **cmd,
+static bool	init_wds(char **cwd, char **target, char **cmd,
 		t_minishell *minishell)
 {
 	*cwd = getcwd(NULL, PATH_MAX);
@@ -52,9 +52,9 @@ static enum e_bool	init_wds(char **cwd, char **target, char **cmd,
 	else
 	{
 		if (!init_target_from_home(target, minishell))
-			return (FALSE);
+			return (false);
 	}
-	return (TRUE);
+	return (true);
 }
 
 static int	handle_oldpwd(char **target, t_minishell *minishell)

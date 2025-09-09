@@ -51,13 +51,18 @@ COMPONENTS			:=	PARSING 					\
 						STYLE						\
 						UTILS						\
 						HEREDOC						\
-						DEBUG						\
 						EXEC						\
 						ENV							\
 						BUILTINS					\
 						SIGNALS						\
+						DEBUG						\
 
 # FILES ===============================================================================
+
+F_DEBUG				:=	print_exec.c				\
+						print_input.c				\
+						print_heredoc.c				\
+						print_tab.c					\
 
 F_CHECKING			:=	check_syntax_error.c		\
 						is_operator.c				\
@@ -70,11 +75,6 @@ F_ENV				:=	env_array_to_list.c			\
 						env_list_to_array.c			\
 						find_env_var.c				\
 						get_env_value.c				\
-
-F_DEBUG				:=	print_input.c				\
-						print_tab.c					\
-						print_heredoc.c				\
-						print_exec.c				\
 
 F_EXEC				:=	start_exec.c				\
 						exec_cmd.c					\

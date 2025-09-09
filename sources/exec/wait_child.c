@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:49:29 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/08 11:32:06 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 12:42:06 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,18 @@ static void	handle_pid(int status, int *exit_status, int *last_block_has_pid)
 
 void	wait_child(t_exec *exec, int *exit_status)
 {
-	size_t	i;
+	ssize_t	i;
 	int		status;
 	int		last_block_has_pid;
 
 	i = -1;
 	last_block_has_pid = 0;
-	while (++i < exec->block_qty)
+	while ((size_t)++i < exec->block_qty)
 	{
 		if (exec->pid_child[i] > 0)
 		{
 			waitpid(exec->pid_child[i], &status, 0);
-			if (i == exec->block_qty - 1)
+			if ((size_t)i == exec->block_qty - 1)
 				handle_pid(status, exit_status, &last_block_has_pid);
 			else
 				last_block_has_pid = 1;

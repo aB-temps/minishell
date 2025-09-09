@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   init_block_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/03 20:03:31 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/01 19:21:22 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exec.h"
 #include "utils.h"
 
-static enum e_bool	setup_block_cmd(t_input *input, t_exec *exec, t_token token,
+static bool	setup_block_cmd(t_input *input, t_exec *exec, t_token token,
 		t_cmd *cmd)
 {
 	cmd->cmd_path = NULL;
@@ -23,7 +23,7 @@ static enum e_bool	setup_block_cmd(t_input *input, t_exec *exec, t_token token,
 		cmd->cmd_path = get_cmd_path(input, exec, cmd->cmd_args[0]);
 	else
 		cmd->cmd_path = NULL;
-	return (TRUE);
+	return (true);
 }
 
 static int	find_command_in_block(t_token *token_array, int start,

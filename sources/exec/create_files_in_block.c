@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_files_in_block.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 13:37:59 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/03 06:51:28 by enchevri         ###   ########lyon.fr   */
+/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-static enum e_bool	handle_redir_in(t_exec *exec, t_token current_token)
+static bool	handle_redir_in(t_exec *exec, t_token current_token)
 {
 	int	fd_temp;
 
@@ -26,7 +26,7 @@ static enum e_bool	handle_redir_in(t_exec *exec, t_token current_token)
 		if (fd_temp == -1)
 		{
 			perror(current_token.formatted_content);
-			return (FALSE);
+			return (false);
 		}
 		else
 		{
@@ -41,10 +41,10 @@ static enum e_bool	handle_redir_in(t_exec *exec, t_token current_token)
 			close(exec->block.io_fds[0]);
 		exec->block.io_fds[0] = ((int *)current_token.formatted_content)[1];
 	}
-	return (TRUE);
+	return (true);
 }
 
-static enum e_bool	handle_redir_out(t_exec *exec, t_token current_token)
+static bool	handle_redir_out(t_exec *exec, t_token current_token)
 {
 	int	flags;
 	int	fd_temp;
@@ -57,7 +57,7 @@ static enum e_bool	handle_redir_out(t_exec *exec, t_token current_token)
 	if (fd_temp == -1)
 	{
 		perror((char *)current_token.formatted_content);
-		return (FALSE);
+		return (false);
 	}
 	else
 	{
@@ -65,10 +65,10 @@ static enum e_bool	handle_redir_out(t_exec *exec, t_token current_token)
 			close(exec->block.io_fds[1]);
 		exec->block.io_fds[1] = fd_temp;
 	}
-	return (TRUE);
+	return (true);
 }
 
-static enum e_bool	handle_redirs_in_block(t_token *token_array, t_exec *exec,
+static bool	handle_redirs_in_block(t_token *token_array, t_exec *exec,
 		int start, int end)
 {
 	int	i;
@@ -79,20 +79,20 @@ static enum e_bool	handle_redirs_in_block(t_token *token_array, t_exec *exec,
 		if (token_array[i].type == APPEND || token_array[i].type == REDIR_OUT)
 		{
 			if (!handle_redir_out(exec, token_array[i]))
-				return (FALSE);
+				return (false);
 		}
 		else if (token_array[i].type == REDIR_IN
 			|| token_array[i].type == HEREDOC)
 		{
 			if (!handle_redir_in(exec, token_array[i]))
-				return (FALSE);
+				return (false);
 		}
 		i++;
 	}
-	return (TRUE);
+	return (true);
 }
 
-enum e_bool	create_files_in_block(t_input *input, t_exec *exec, ssize_t cmd_nb)
+bool	create_files_in_block(t_input *input, t_exec *exec, ssize_t cmd_nb)
 {
 	int		pipe_count;
 	int		i;

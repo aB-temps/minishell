@@ -1,17 +1,25 @@
+# Editor files
+.vscode
+
+# Build artifacts
 .build/*
 *.o
 *.a
 *.out
-*.txt
-.vscode
-minishell
-minishell_tester
-42_minishell_tester
-test
-infile
-outfile
-*.swp
-vgcore*
+
+# Test and debug files
+sources/debug/*
+includes/debug.h
 *.test
-ls
-out
+outfile*
+infile*
+vgcore*
+
+# Text files
+*.txt
+
+# Executables and binaries
+minishell
+
+# Logfiles
+*.log

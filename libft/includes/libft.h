@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 09:45:04 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/06 19:36:21 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/08 12:31:15 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <stdbool.h>
 # include <stdlib.h>
 
 # ifndef BUFFER_SIZE
@@ -43,12 +44,6 @@ typedef struct s_list
 	void					*content;
 	struct s_list			*next;
 }							t_list;
-
-enum						e_bool
-{
-	FALSE,
-	TRUE
-};
 
 int							ft_tolower(int c);
 int							ft_toupper(int c);
@@ -133,8 +128,8 @@ int							print_pointer(void *ptr);
 t_vector					*create_vector(size_t capacity,
 								size_t datatype_size,
 								void (*clear_array)(t_vector *));
-enum e_bool					grow_vector(t_vector *vec, size_t new_elements);
-enum e_bool					add_element(t_vector *vec, void *element);
+bool						grow_vector(t_vector *vec, size_t new_elements);
+bool						add_element(t_vector *vec, void *element);
 void						clear_vector(t_vector **vec);
 
 /*************************************************************/
