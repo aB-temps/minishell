@@ -7,15 +7,15 @@ RM		=	rm -f
 
 #-------------------------------- DIRECTORIES --------------------------------#
 INCLUDE_DIR		=	includes
-LIST_DIR		=	./src/list/
-UTILS_DIR		=	./src/utils/
-LIST_DB_CIR_DIR	=	./src/list_db_cir/
-CHAR_DIR		=	./src/char/
-STRING_DIR		=	./src/string/
-IO_DIR			=	./src/io/
-MEMORY_DIR		=	./src/memory/
-ADVANCE_DIR		=	./src/advance/
-VECTOR_DIR		=	./src/vectors/
+LIST_DIR		=	src/list/
+UTILS_DIR		=	src/utils/
+LIST_DB_CIR_DIR	=	src/list_db_cir/
+CHAR_DIR		=	src/char/
+STRING_DIR		=	src/string/
+IO_DIR			=	src/io/
+MEMORY_DIR		=	src/memory/
+ADVANCE_DIR		=	src/advance/
+VECTOR_DIR		=	src/vectors/
 BUILD_DIR		=	.build/
 
 #-------------------------------- SOURCE FILES -------------------------------#
