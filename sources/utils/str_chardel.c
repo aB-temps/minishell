@@ -6,11 +6,11 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:48:42 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:48:43 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/09 02:55:32 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/includes/libft.h"
+#include "libft.h"
 
 char	*str_chardel(char *s, char *c)
 {
