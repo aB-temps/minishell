@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_block.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/26 22:43:07 by enzo              #+#    #+#             */
-/*   Updated: 2025/09/08 12:49:29 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:17:21 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ static int	handle_block(t_exec *exec, t_input *input, size_t i)
 		ret = 0;
 		input->last_exit_status = 1;
 	}
-	else
-		input->last_exit_status = 0;
 	if (ret == 0)
 	{
 		if (input->last_exit_status != 1)
