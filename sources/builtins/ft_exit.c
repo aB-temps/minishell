@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: enzo <enzo@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 18:28:17 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/06 19:38:12 by enzo             ###   ########.fr       */
+/*   Updated: 2025/09/09 20:16:13 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ void	ft_exit(char **cmd, t_minishell *minishell)
 	int		error;
 
 	error = 0;
-	if (minishell->exec->block_qty == 1)
+	if (minishell->exec->block_qty == 1 && isatty(STDERR_FILENO))
 		ft_putendl_fd("exit", STDERR_FILENO);
 	if (!cmd[1])
 	{
-		exit_minishell(minishell->input, minishell->exec, EXIT_SUCCESS);
+		exit_minishell(minishell->input, minishell->exec,
+			minishell->input->last_exit_status);
 		return ;
 	}
 	if (!is_valid_number(cmd[1]))

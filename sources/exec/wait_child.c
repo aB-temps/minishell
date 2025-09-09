@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wait_child.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: enchevri <enchevri@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/05 18:49:29 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/08 12:42:06 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/09 20:13:57 by enchevri         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	wait_child(t_exec *exec, int *exit_status)
 	}
 	if (!last_block_has_pid)
 	{
-		if (exec->block_qty > 1 && *exit_status != 1)
+		if (exec->block_qty > 1)
 			*exit_status = 0;
 		if (g_sig != 0)
 			handle_no_pid();
