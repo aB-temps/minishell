@@ -6,11 +6,11 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 17:47:26 by abetemps          #+#    #+#             */
-/*   Updated: 2025/07/26 17:47:27 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/09 02:55:47 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/includes/libft.h"
+#include "libft.h"
 
 size_t	countocc(char *s, char *to_find)
 {
