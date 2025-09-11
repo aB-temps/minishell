@@ -6,7 +6,7 @@
 /*   By: abetemps <abetemps@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/24 21:04:11 by enchevri          #+#    #+#             */
-/*   Updated: 2025/09/08 12:31:49 by abetemps         ###   ########.fr       */
+/*   Updated: 2025/09/11 14:37:15 by abetemps         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ static int	handle_oldpwd(char **target, t_minishell *minishell)
 		ft_putstr_fd("cd: OLDPWD not set\n", STDERR_FILENO);
 		return (EXIT_FAILURE);
 	}
+	else
+		ft_putendl_fd(*target, STDOUT_FILENO);
 	return (EXIT_SUCCESS);
 }
 
